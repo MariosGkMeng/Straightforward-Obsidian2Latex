@@ -11,6 +11,7 @@ An Obsidian to Latex translator that is straightforward to use and has no b****t
 - Sections and subsections
 - Image display (however not yet with desirable placement)
 - Bullet lists (up to level 4 of indentation)
+- Numbered lists
 - Embedded notes
 
 # ➕ What it cannot convert (so far)
@@ -18,7 +19,6 @@ An Obsidian to Latex translator that is straightforward to use and has no b****t
 - (under dev.) Desirable placement for images
 - Bibliography
 - Equation numbering
-- Numbered lists
 - Bullet lists with indentation of level 5 and above
 
 # How to use
