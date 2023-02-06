@@ -11,8 +11,19 @@ An Obsidian to Latex translator that is straightforward to use and has no b****t
 
 # ➕ What it cannot convert (so far)
 
-- Figures generation
+- (under dev.) Figures generation
 - External links
 - Bibliography
 - Equation numbering
+- Bullet and numbered lists
 
+# How to use
+## Prerequisites
+1. Have Python 3 installed
+
+## Usage
+Go to the jupyter notebook. 
+
+For each user-defined parameter, go to the "PARAMETERS" section, wherein the 'PARS' dictionary is located.
+
+To set the paths for the .md file to be converted, change the 'PARS['📂']['md-file']' and 'PARS['📂']['tex-file']'.
