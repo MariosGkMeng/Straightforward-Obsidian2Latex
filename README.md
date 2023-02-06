@@ -13,6 +13,7 @@ An Obsidian to Latex translator that is straightforward to use and has no b****t
 - Bullet lists (up to level 4 of indentation)
 - Numbered lists
 - Embedded notes
+- Equations (although the equations in Obsidian are exactly the same as in Latex)
 
 # ➕ What it cannot convert (so far)
 
