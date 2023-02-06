@@ -7,16 +7,19 @@ An Obsidian to Latex translator that is straightforward to use and has no b****t
   - Long tables (tables that can expand to more than 1 pages)
   - Non-long tables
 - Internal links
+- External links
 - Sections and subsections
 - Image display (however not yet with desirable placement)
+- Bullet lists (up to level 4 of indentation)
+- Embedded notes
 
 # ➕ What it cannot convert (so far)
 
 - (under dev.) Desirable placement for images
-- External links
 - Bibliography
 - Equation numbering
-- Bullet and numbered lists
+- Numbered lists
+- Bullet lists with indentation of level 5 and above
 
 # How to use
 ## Prerequisites
