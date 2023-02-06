@@ -26,4 +26,4 @@ Go to the jupyter notebook.
 
 For each user-defined parameter, go to the "PARAMETERS" section, wherein the 'PARS' dictionary is located.
 
-To set the paths for the .md file to be converted, change the 'PARS['📂']['md-file']' and 'PARS['📂']['tex-file']'.
+To set the paths for the .md file to be converted, change the 'PARS['📂']['markdown-file']' and 'PARS['📂']['tex-file']'.
