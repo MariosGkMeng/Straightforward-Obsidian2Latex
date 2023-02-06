@@ -8,7 +8,7 @@ An Obsidian to Latex translator that is straightforward to use and has no b****t
   - Non-long tables
 - Internal links
 - Sections and subsections
-- Image displace (however not yet with desirable placement)
+- Image display (however not yet with desirable placement)
 
 # ➕ What it cannot convert (so far)
 
