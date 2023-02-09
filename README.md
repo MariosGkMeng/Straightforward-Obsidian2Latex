@@ -1,5 +1,5 @@
 # Straightforward-Obsidian2Latex
-An Obsidian to Latex translator that is straightforward to use and has no b****t unnecessary complexity as an end result.
+An Obsidian to Latex translator that is straightforward to use and has no 🐂💩 unnecessary complexity as an end result.
 
 # 💪 What it can convert (new capabilities to be appended soon)
 
