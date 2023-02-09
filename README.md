@@ -1,7 +1,7 @@
 # Straightforward-Obsidian2Latex
 An Obsidian to Latex translator that is straightforward to use and has no b****t unnecessary complexity as an end result.
 
-# ✔ What it can convert (new capabilities to be appended soon)
+# 💪 What it can convert (new capabilities to be appended soon)
 
 - [X] Tables
   - Long tables (tables that can expand to more than 1 pages)
@@ -15,7 +15,7 @@ An Obsidian to Latex translator that is straightforward to use and has no b****t
 - [X] Embedded notes (only for entire note content)
 - [X] Equations (although the equations in Obsidian are exactly the same as in Latex)
 
-# ➕ What it cannot convert (so far)
+# 👨‍💻🚧 What it cannot convert (so far)
 
 - [ ] (under dev.) Desirable placement for images
 - [ ] Bibliography
