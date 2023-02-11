@@ -14,15 +14,22 @@ An Obsidian to Latex translator that is straightforward to use and has no 🐂�
 - [X] Numbered lists
 - [X] Embedded notes (only for entire note content)
 - [X] Equations (although the equations in Obsidian are exactly the same as in Latex)
+- [X] Discard of text that is inside comments
+
+
 
 # 👨‍💻🚧 What it cannot convert (so far)
+## Frequently used functionalities
 
 - [ ] (under dev.) Desirable placement for images
 - [ ] Bibliography
 - [ ] Equation numbering
 - [ ] Bullet lists with indentation of level 5 and above
 - [ ] Specific parts of embedded notes (e.g. if the embedded note is "![[note_name# Some note section]]", the script would still paste the entire content of that note)
-- [ ] Discard of text that is inside comments
+
+## Niche/rarely encountered functionalities
+- [ ] Discard text inside comments **after** start of a (sub)section
+
 
 # How to use
 ## Prerequisites
