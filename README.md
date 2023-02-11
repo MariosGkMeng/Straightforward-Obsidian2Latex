@@ -34,6 +34,7 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 # How to use
 ## Prerequisites
 1. Have Python 3 installed
+2. Have Jupyter notebook editor installed (e.g. in Visual Studio Code)
 
 ## Usage
 Go to the jupyter notebook. 
