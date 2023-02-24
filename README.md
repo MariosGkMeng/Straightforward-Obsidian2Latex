@@ -15,6 +15,7 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 - [X] Embedded notes (only for entire note content)
 - [X] Equations (although the equations in Obsidian are exactly the same as in Latex)
 - [X] Discard of text that is inside comments
+- [X] Bold font
 
 
 
@@ -24,7 +25,6 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 - [ ] (under dev.) Desirable placement for images
 - [ ] Bibliography
 - [ ] Equation numbering
-- [ ] Bold font
 - [ ] Italic font
 - [ ] Bullet lists with indentation of level 5 and above
 - [ ] Specific parts of embedded notes (e.g. if the embedded note is "![[note_name# Some note section]]", the script would still paste the entire content of that note)
