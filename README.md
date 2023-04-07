@@ -17,7 +17,7 @@ An Obsidian to Latex translator that is straightforward to use and has no 🐂�
 - [X] Discard of text that is inside comments
 - [X] Bold font
 - [X] Removal of Obsidian Comments (not including comments from embedded notes)
-
+- [X] Specific parts of embedded notes (e.g. if the embedded note is "![[note_name# Some note section]]", the script would still paste the entire content of that note)
 
 
 # 👨‍💻🚧 What it cannot convert (so far)
@@ -28,7 +28,6 @@ An Obsidian to Latex translator that is straightforward to use and has no 🐂�
 - [ ] Equation numbering
 - [ ] Italic font
 - [ ] Bullet lists with indentation of level 5 and above
-- [ ] Specific parts of embedded notes (e.g. if the embedded note is "![[note_name# Some note section]]", the script would still paste the entire content of that note)
 - [ ] Remove markdown comments from embedded notes
 
 ## Niche/rarely encountered functionalities
