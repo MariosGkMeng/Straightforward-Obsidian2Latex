@@ -32,7 +32,7 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 - [ ] Remove markdown comments from embedded notes
 
 ## Niche/rarely encountered functionalities
-- [ ] Discard text inside comments **after** start of a (sub)section
+- [X] Discard text inside comments **after** start of a (sub)section
 
 
 # How to use
