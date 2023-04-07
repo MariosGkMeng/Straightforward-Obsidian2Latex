@@ -110,10 +110,11 @@ def embedded_references_recognizer(S):
         raise Exception('Input of the function must be a list of strings!')
         return np.nan
 
-    pattern_embedded = '!\[\[([\.'+all_chars+']+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
+    # pattern_embedded = '!\[\[([\.'+all_chars+']+)(\|[' + all_chars + ']+)?\]\]'
+    pattern_embedded_with_section = '!\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
     MATCHES = []
     for i, s in enum(S):
-        match_pattern_embedded = re.findall(pattern_embedded, s)
+        match_pattern_embedded = re.findall(pattern_embedded_with_section, s)
         if len(match_pattern_embedded) != 0:
             MATCHES.append([i, match_pattern_embedded])
             # path-finder
@@ -122,7 +123,7 @@ def embedded_references_recognizer(S):
     return MATCHES
 
 
-def embedded_references_path_finder(u):
+def embedded_references_path_finder(u, PARS):
 
     '''
     Finds the paths of embedded references in the vault
@@ -140,7 +141,7 @@ def embedded_references_path_finder(u):
 
 
 
-def unfold_embedded_notes(S, md__files_embedded):
+def unfold_embedded_notes(S, md__files_embedded, PARS):
 
     '''
     Unfolds the content of embedded notes.
@@ -160,43 +161,74 @@ def unfold_embedded_notes(S, md__files_embedded):
 
     ss1 = embedded_references_recognizer(S)
 
-    file_types = ['.png', '.pdf', 'jpg']
+    file_types = ['.png', '.pdf', '.jpg']
 
     for ln in ss1:
         line_number = ln[0]
-        line_embeds = ln[1]
-        for line_embed in line_embeds:
+        line_embed = ln[1]
 
-            has_extension = False
+        has_extension = False
 
-            embedded_ref = line_embed[0]
-            markdown_ref = '![[' + line_embed[0] + line_embed[1]    +    ']]'
-            for file_type in file_types:
-                if file_type in embedded_ref:
-                    has_extension = True
-                    # break
+        embedded_ref = line_embed[0][0]
+        section=line_embed[0][1]
+        markdown_ref = '![[' + line_embed[0][0] + section + line_embed[0][2]    +    ']]'
+        for file_type in file_types:
+            if file_type in embedded_ref:
+                has_extension = True
+                # break
 
-            if not has_extension: 
-                # means that it is a .md file, which we need to unfold
+        if not has_extension: 
+            # means that it is a .md file, which we need to unfold
 
-                if not embedded_ref in md__files_embedded:
-                    # Unfold this note ONLY when it hasn't already been unfolded
-                    md__files_embedded.append(embedded_ref)
+            if not embedded_ref in md__files_embedded:
+                # Unfold this note ONLY when it hasn't already been unfolded
+                md__files_embedded.append(embedded_ref)
 
-                    embedded_ref += '.md'
+                embedded_ref += '.md'
 
-                    path = embedded_references_path_finder(embedded_ref)
+                path = embedded_references_path_finder(embedded_ref, PARS)
 
-                    if len(path) == 0:
-                        raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁']['vault'])
+                if len(path) == 0:
+                    raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁']['vault'])
 
-                    try:
-                        with open(path, 'r', encoding='utf8') as f:
-                            content__embedded_notes = f.readlines()
-                    except:
-                        raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁']['vault'])
+                # try:
+                with open(path, 'r', encoding='utf8') as f:
+                    i_section_start = 0
+                    section_started = False
+                    i_section_end = -1
+                    content__embedded_notes = f.readlines()
+                    if section.startswith('#'):
+                        # has section
+                        pattern_how_many_sections = r'^#+'
+                        pattern_for_section = r'^#+\s\w+$' 
+                        for iL, ln_f in enum(content__embedded_notes):
+                            tmp_l = ln_f.replace('%% ', '').replace('%%', '').replace('\n', '').rstrip()
+                            search_results = re.findall(pattern_for_section, tmp_l)
+                            has_section = re.findall(pattern_how_many_sections, ln_f)
+                            if has_section:
+                                has_section = has_section[0]
+                                tmp_l = ln_f.replace(has_section, '').replace('%%', '').replace('\n', '').rstrip().lstrip()
+
+                                if not section_started:
+                                    section_started = True
+                                    i_section_start = iL+1
+                                    txt_find = search_results[0]
+                                    # section_hierarcy = len(re.findall(pattern_how_many_sections, txt_find)[0])
+                                    section_hierarcy = len(has_section)
 
 
-                    S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__embedded_notes))
+                                else:
+                                    if len(has_section) == section_hierarcy:
+                                        # section ended, since we found a new section with the same hierarchy
+                                        i_section_end = iL
+                                        break
+
+                        content__unfold = content__embedded_notes[i_section_start:i_section_end]
+
+                # except:
+                    # raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁']['vault'])
+
+
+                S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
  
     return S, md__files_embedded
