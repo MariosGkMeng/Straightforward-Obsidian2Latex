@@ -223,7 +223,10 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
                                         i_section_end = iL
                                         break
 
-                        content__unfold = content__embedded_notes[i_section_start:i_section_end]
+                        if i_section_end==-1:
+                            content__unfold = content__embedded_notes[i_section_start:]
+                        else:
+                            content__unfold = content__embedded_notes[i_section_start:i_section_end]
 
                 # except:
                     # raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁']['vault'])
