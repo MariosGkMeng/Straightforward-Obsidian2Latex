@@ -6,7 +6,7 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 - [X] Tables
   - Long tables (tables that can expand to more than 1 pages)
   - Non-long tables
-- [X] Internal links
+- [X] Internal links (sections and blocks)
 - [X] External links
 - [X] Sections and subsections
 - [X] Image display (however not yet with desirable placement)
