@@ -2,7 +2,7 @@ import re
 import os
 
 # For recognizing file names, section names, block names
-SPECIAL_CHARACTERS = ' %💬⚠💼🟢➕❓🔴✔🧑☺📁⚙🔒🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9'
+SPECIAL_CHARACTERS = " '%💬⚠💼🟢➕❓🔴✔🧑☺📁⚙🔒🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9"
 from remove_markdown_comment import *
 
 
@@ -20,7 +20,6 @@ def internal_links__identifier(S):
 
     pattern_sections = '\[\[([\w-]+)\#([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
     pattern_blocks = '\[\[([\w-]+)\#\^([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
-    
     MATCHES = []
     for i, s in enum(S):
         match_sections = re.findall(pattern_sections, s)
@@ -197,7 +196,8 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
                     section_started = False
                     i_section_end = -1
                     content__embedded_notes = f.readlines()
-                    if section.startswith('#'):
+                    maybe_found_section = section.startswith('#')
+                    if maybe_found_section:
                         # has section
                         pattern_how_many_sections = r'^#+'
                         pattern_for_section = r'^#+\s\w+$' 
@@ -223,10 +223,10 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
                                         i_section_end = iL
                                         break
 
-                        if i_section_end==-1:
-                            content__unfold = content__embedded_notes[i_section_start:]
-                        else:
-                            content__unfold = content__embedded_notes[i_section_start:i_section_end]
+                    if i_section_end==-1:
+                        content__unfold = content__embedded_notes[i_section_start:]
+                    else:
+                        content__unfold = content__embedded_notes[i_section_start:i_section_end]
 
                 # except:
                     # raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁']['vault'])
