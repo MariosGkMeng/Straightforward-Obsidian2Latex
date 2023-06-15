@@ -2,14 +2,14 @@ import re
 import os
 
 # For recognizing file names, section names, block names
-SPECIAL_CHARACTERS = ' %💬⚠💼🟢➕❓🔴✔🧑☺📁⚙🔒🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9'
+SPECIAL_CHARACTERS = " '%💬⚠💼🟢➕❓🔴✔🧑☺📁⚙🔒🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9"
 from remove_markdown_comment import *
 
 
 def internal_links__identifier(S):
 
     '''
-    Identifies internal links in the document, in the form of '[notename^linkname|name of reference]'
+    Identifies internal links in the document, in the form of '[[notename^linkname|name of reference]]'
     '''
 
 
@@ -20,7 +20,6 @@ def internal_links__identifier(S):
 
     pattern_sections = '\[\[([\w-]+)\#([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
     pattern_blocks = '\[\[([\w-]+)\#\^([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
-    
     MATCHES = []
     for i, s in enum(S):
         match_sections = re.findall(pattern_sections, s)
@@ -29,6 +28,13 @@ def internal_links__identifier(S):
             MATCHES.append([i, match_sections, match_blocks])
     
     return MATCHES
+
+# def external_links__identifier(S):
+#     '''
+#     Identifies external links in the document, in the form of '[[notename^linkname|name of reference]]'
+#     '''
+
+
 
 def internal_links__enforcer(S, sections_blocks, internal_links):
 
@@ -100,8 +106,6 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
     return S
 
 
-
-
 def embedded_references_recognizer(S):
 
 
@@ -121,6 +125,28 @@ def embedded_references_recognizer(S):
 
     
     return MATCHES
+
+
+def non_embedded_references_recognizer(S):
+
+
+    all_chars = '\w' + SPECIAL_CHARACTERS + '\-'
+    if not isinstance(S, list):
+        raise Exception('Input of the function must be a list of strings!')
+        return np.nan
+
+    # pattern_embedded = '\[\[([\.'+all_chars+']+)(\|[' + all_chars + ']+)?\]\]'
+    pattern_embedded_with_section = '\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
+    MATCHES = []
+    for i, s in enum(S):
+        match_pattern_embedded = re.findall(pattern_embedded_with_section, s)
+        if len(match_pattern_embedded) != 0:
+            MATCHES.append([i, match_pattern_embedded])
+            # path-finder
+
+    
+    return MATCHES
+
 
 
 def embedded_references_path_finder(u, PARS):
@@ -155,6 +181,8 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
 
     '''
 
+
+    ss0 = non_embedded_references_recognizer(S)
 
     if not isinstance(md__files_embedded, list):
         raise Exception('md__files_embedded variable must be of type list!')
@@ -197,7 +225,8 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
                     section_started = False
                     i_section_end = -1
                     content__embedded_notes = f.readlines()
-                    if section.startswith('#'):
+                    maybe_found_section = section.startswith('#')
+                    if maybe_found_section:
                         # has section
                         pattern_how_many_sections = r'^#+'
                         pattern_for_section = r'^#+\s\w+$' 
@@ -223,10 +252,10 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
                                         i_section_end = iL
                                         break
 
-                        if i_section_end==-1:
-                            content__unfold = content__embedded_notes[i_section_start:]
-                        else:
-                            content__unfold = content__embedded_notes[i_section_start:i_section_end]
+                    if i_section_end==-1:
+                        content__unfold = content__embedded_notes[i_section_start:]
+                    else:
+                        content__unfold = content__embedded_notes[i_section_start:i_section_end]
 
                 # except:
                     # raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁']['vault'])
