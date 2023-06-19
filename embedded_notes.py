@@ -148,6 +148,24 @@ def non_embedded_references_recognizer(S):
     return MATCHES
 
 
+def non_embedded_references_converter(S):
+    links = non_embedded_references_recognizer(S)
+
+    for link in links:
+        line = link[0]  
+        tmp1 = link[1][0]
+
+        if len(tmp1[2]) == 0:
+            S[line] = S[line].replace('[[' + tmp1[0] +  ']]', tmp1[0])
+
+        else:
+            S[line] = S[line].replace('[[' + tmp1[0]+tmp1[2] +  ']]', tmp1[2][1:])
+
+
+    return S
+    
+
+
 
 def embedded_references_path_finder(u, PARS):
 
