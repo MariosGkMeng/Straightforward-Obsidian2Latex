@@ -29,6 +29,8 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 - [ ] Italic font
 - [ ] Bullet lists with indentation of level 5 and above
 - [ ] Remove markdown comments from embedded notes
+- [ ] Remove link formatting from external links
+  - [ ] Add setting for the user to choose if (s)he wishes to print the external .md file reference in a .pdf and create a hyperlink to that .pdf
 
 ## Niche/rarely encountered functionalities
 - [X] Discard text inside comments **after** start of a (sub)section
