@@ -2,7 +2,7 @@ import re
 import os
 
 # For recognizing file names, section names, block names
-SPECIAL_CHARACTERS = " '%💬⚠💼🟢➕❓🔴✔🧑☺📁⚙🔒🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9"
+SPECIAL_CHARACTERS = " '%💬⚠💼🟢➕❓🔴✔🧑☺📁⚙🔒🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)"
 from remove_markdown_comment import *
 
 
@@ -163,7 +163,7 @@ def non_embedded_references_converter(S):
 
 
     return S
-    
+
 
 
 
