@@ -199,9 +199,6 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
 
     '''
 
-
-    ss0 = non_embedded_references_recognizer(S)
-
     if not isinstance(md__files_embedded, list):
         raise Exception('md__files_embedded variable must be of type list!')
 
@@ -259,7 +256,11 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
                                 if not section_started:
                                     section_started = True
                                     i_section_start = iL+1
-                                    txt_find = search_results[0]
+                                    
+                                    try:
+                                        txt_find = search_results[0]
+                                    except:
+                                        print("") # Embedded-Section-Error
                                     # section_hierarcy = len(re.findall(pattern_how_many_sections, txt_find)[0])
                                     section_hierarcy = len(has_section)
 
