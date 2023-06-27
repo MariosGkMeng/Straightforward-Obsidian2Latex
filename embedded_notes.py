@@ -18,8 +18,8 @@ def internal_links__identifier(S):
         return np.nan
 
 
-    pattern_sections = '\[\[([\w-]+)\#([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
-    pattern_blocks = '\[\[([\w-]+)\#\^([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
+    pattern_sections = '\[\[([\w\s-]+)\#([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
+    pattern_blocks = r'\[\[([\w\s-]+)\#\^([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
     MATCHES = []
     for i, s in enum(S):
         match_sections = re.findall(pattern_sections, s)
