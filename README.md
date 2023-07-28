@@ -35,6 +35,7 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 
 ## Niche/rarely encountered functionalities
 - [X] Discard text inside comments **after** start of a (sub)section
+- [ ] Properly convert results from querying commands in Obsidian. This will probably never be achieved with this converter, since it requires to have access to the obsidian dataview and dataviewjs outputs.
 
 
 # How to use
