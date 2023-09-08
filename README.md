@@ -16,6 +16,7 @@ An Obsidian to Latex translator that is straightforward to use and has no 🐂�
 - [X] Equations (although the equations in Obsidian are exactly the same as in Latex)
 - [X] Discard of text that is inside comments
 - [X] Bold font
+- [X] Highlighted font
 - [X] Removal of Obsidian Comments (not including comments from embedded notes)
 - [X] Specific parts of embedded notes (e.g. if the embedded note is "![[note_name# Some note section]]", the script would still paste the entire content of that note)
 
@@ -34,6 +35,7 @@ An Obsidian to Latex translator that is straightforward to use and has no 🐂�
 
 ## Niche/rarely encountered functionalities
 - [X] Discard text inside comments **after** start of a (sub)section
+- [ ] Properly convert results from querying commands in Obsidian. This will probably never be achieved with this converter, since it requires to have access to the obsidian dataview and dataviewjs outputs.
 
 
 # How to use
@@ -47,4 +49,4 @@ Go to the jupyter notebook.
 For each user-defined parameter, go to the "PARAMETERS" section, wherein the 'PARS' dictionary is located.
 
 To set the paths for the .md file to be converted, change the `PARS['📂']['markdown-file']` and `PARS['📂']['tex-file']`.
-Then, just run all code blocks and VOILA!
+Then, just run the code block under the section "Rest of code" and VOILA!
