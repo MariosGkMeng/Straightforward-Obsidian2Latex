@@ -2,9 +2,21 @@ import re
 import os
 
 # For recognizing file names, section names, block names
-SPECIAL_CHARACTERS = " '%💬⚠💼🟢➕❓🔴✔🧑☺📁⚙🔒🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)"
+SPECIAL_CHARACTERS = " '%💬⚠💼🟢➕❓🔴✔🧑☺📁⚙🔒🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
 from remove_markdown_comment import *
 
+
+def write_link_in_obsidian_format(s, link_type):
+
+    L1 = (len(s[1])>0)
+    if link_type == 'section':
+        link_prefix = '#'*L1
+    elif link_type == 'block':
+        link_prefix = '#^'*L1
+    else:
+        raise Exception('Nothing coded here')
+
+    return '[[' + s[0] + link_prefix + s[1] + '|'*(len(s[2])>0) + s[2].replace('|', "") + ']]'
 
 def internal_links__identifier(S):
 
@@ -60,21 +72,24 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
             Ii_sb = I[iS+1]
             if len(Ii_sb) != 0:
                 
+                line_number = I[0]
                 for i in Ii_sb:
                     section_i = Ii_sb[0][1]
                     idx = [j for j in range(len(sections_blocks[iS])) if sections_blocks[iS][j][1] == section_i]
                     if len(idx)>0: 
+                        # Found match between existing sections and blocks of the file and the referenced section
                         idx=idx[0]
 
-                        label = type_of_link[iS] + section_i.replace(' ', '-')
-                        label_of_source = ' \label{' + label + '}'
+                        label_latex_format = type_of_link[iS] + section_i.replace(' ', '-')
+                        label_of_source = ' \label{' + label_latex_format + '}'
                         hyperref_text = Ii_sb[0][-1].replace('|', '')
                         if len(hyperref_text) != 0:
                             hyperref_text = '{' + hyperref_text + '}'
                         else:
                             hyperref_text = '{' + 'ADD_NAME' + '}'
 
-                        if not label_of_source in S[sections_blocks[iS][idx][0]]:
+                        has_already_been_replaced = label_of_source in S[sections_blocks[iS][idx][0]]
+                        if not has_already_been_replaced:
                             # Has not already been replaced
 
                             label__in_line = S[sections_blocks[iS][idx][0]].replace('\n', '')
@@ -84,25 +99,25 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
                             if iS==0:
                                 S[sections_blocks[iS][idx][0]] = label__in_line + add__S_repl
                             else:
-                                S[sections_blocks[iS][idx][0]] = label__in_line.replace('^' + label, '') + add__S_repl
+                                S[sections_blocks[iS][idx][0]] = label__in_line.replace('^' + label_latex_format, '') + add__S_repl
 
 
                         hyperref = '\hyperref[' + label + ']' + hyperref_text
 
                         obsidian_hyperref = '[[' + Ii_sb[0][0] + type_of_link_obsidian[iS] + Ii_sb[0][1] + Ii_sb[0][2] + ']]'
-                        S[I[0]] = S[I[0]].replace(obsidian_hyperref, hyperref)
+                        S[line_number] = S[line_number].replace(obsidian_hyperref, hyperref)
+                    else:
+                        # did not find anything, therefore leaving the name only
 
-
-                    # else:
-                    #     # Just replace the labels, even though they are not being referenced
-                    #     for block in blocks:
-                    #         line_of_block, block_text = block
-                    #         block_text_1 = '^' + block_text
-                    #         S[line_of_block] = S[line_of_block].replace(block_text_1, ' \label{' + block_text + '}')
-
-
-
-
+                        link_name = Ii_sb[0][2].replace('|', "")
+                        if len(link_name)>0:
+                            if iS==0:
+                                type_of_link = 'section'
+                            else:
+                                type_of_link = 'block'
+                            text_to_replace = write_link_in_obsidian_format(Ii_sb[0], type_of_link)
+                            S[line_number] = S[line_number].replace(text_to_replace, link_name)
+                        
     return S
 
 
@@ -133,7 +148,6 @@ def non_embedded_references_recognizer(S):
     all_chars = '\w' + SPECIAL_CHARACTERS + '\-'
     if not isinstance(S, list):
         raise Exception('Input of the function must be a list of strings!')
-        return np.nan
 
     # pattern_embedded = '\[\[([\.'+all_chars+']+)(\|[' + all_chars + ']+)?\]\]'
     pattern_embedded_with_section = '\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
@@ -144,7 +158,6 @@ def non_embedded_references_recognizer(S):
             MATCHES.append([i, match_pattern_embedded])
             # path-finder
 
-    
     return MATCHES
 
 

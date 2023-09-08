@@ -13,7 +13,10 @@ def enum(x):
     return enumerate(x)
 
 def is_in_table_line(x):
-    x.startswith('|') and x.endswith('|')
+    if x.startswith('|') and x.endswith('|'):
+        return True
+    else: 
+        return False
 
 def remove_markdown_comments(S):
 
