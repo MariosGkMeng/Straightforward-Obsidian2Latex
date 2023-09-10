@@ -2,11 +2,11 @@ import re
 import os
 
 # For recognizing file names, section names, block names
-SPECIAL_CHARACTERS = " '%💬⚠💼🟢➕❓🔴✔🧑☺📁⚙🔒🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+SPECIAL_CHARACTERS = " '%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
 from remove_markdown_comment import *
 
 
-def write_link_in_obsidian_format(s, link_type):
+def write_link_in_obsidian_format(s, link_type, is_embedded = False):
 
     L1 = (len(s[1])>0)
     if link_type == 'section':
@@ -16,7 +16,7 @@ def write_link_in_obsidian_format(s, link_type):
     else:
         raise Exception('Nothing coded here')
 
-    return '[[' + s[0] + link_prefix + s[1] + '|'*(len(s[2])>0) + s[2].replace('|', "") + ']]'
+    return is_embedded*'!' + '[[' + s[0] + link_prefix + s[1].replace('#', '') + '|'*(len(s[2])>0) + s[2].replace('|', "") + ']]'
 
 def internal_links__identifier(S):
 
@@ -54,6 +54,8 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
     Converts the Obsidian internal links to Latex internal links
     '''
 
+    ADD_HYPERTARGET_AT_THE_END_OF_BLOCK = True
+
     type_of_link = ['sec:', '']
     type_of_link_obsidian = ['#', '#^']
     sections = sections_blocks[0]
@@ -61,10 +63,13 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
 
 
     # Just replace the labels, even though they are not being referenced                            ⚠WARNING--1
-    for block in blocks:
-        line_of_block, block_text = block
-        block_text_1 = '^' + block_text
-        S[line_of_block] = S[line_of_block].replace(block_text_1, ' \label{' + block_text + '}')
+    if ADD_HYPERTARGET_AT_THE_END_OF_BLOCK:
+        for block in blocks:
+            line_of_block, block_text = block
+            block_text_1 = '^' + block_text
+            S[line_of_block] = S[line_of_block].replace(block_text_1, ' \hypertarget{' + block_text + '}{}')
+    else:
+        raise Exception("NOTHING CODED FOR THIS CASE YET!")
 
 
     for I in internal_links:
@@ -81,7 +86,7 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
                         idx=idx[0]
 
                         label_latex_format = type_of_link[iS] + section_i.replace(' ', '-')
-                        label_of_source = ' \label{' + label_latex_format + '}'
+                        label_of_source = ' \hypertarget{' + label_latex_format + '}{}' 
                         hyperref_text = Ii_sb[0][-1].replace('|', '')
                         if len(hyperref_text) != 0:
                             hyperref_text = '{' + hyperref_text + '}'
@@ -102,9 +107,14 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
                                 S[sections_blocks[iS][idx][0]] = label__in_line.replace('^' + label_latex_format, '') + add__S_repl
 
 
-                        hyperref = '\hyperref[' + label + ']' + hyperref_text
+                        hyperref = '\hyperlink{' + label_latex_format + '}' + hyperref_text
 
-                        obsidian_hyperref = '[[' + Ii_sb[0][0] + type_of_link_obsidian[iS] + Ii_sb[0][1] + Ii_sb[0][2] + ']]'
+                        if iS==0:
+                            obsidian_hyperref = write_link_in_obsidian_format(Ii_sb[0], 'section')
+                        elif iS==1:
+                            obsidian_hyperref = write_link_in_obsidian_format(Ii_sb[0], 'block')
+                        else:
+                            raise Exception("Nothing coded here!")
                         S[line_number] = S[line_number].replace(obsidian_hyperref, hyperref)
                     else:
                         # did not find anything, therefore leaving the name only
@@ -215,9 +225,10 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
     if not isinstance(md__files_embedded, list):
         raise Exception('md__files_embedded variable must be of type list!')
 
-    ss1 = embedded_references_recognizer(S)
 
     file_types = ['.png', '.pdf', '.jpg']
+    ss1 = embedded_references_recognizer(S)
+
 
     for ln in ss1:
         line_number = ln[0]
@@ -227,7 +238,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
 
         embedded_ref = line_embed[0][0]
         section=line_embed[0][1]
-        markdown_ref = '![[' + line_embed[0][0] + section + line_embed[0][2]    +    ']]'
+        markdown_ref = write_link_in_obsidian_format([line_embed[0][0], section, line_embed[0][2]], 'section',is_embedded=True)
         for file_type in file_types:
             if file_type in embedded_ref:
                 has_extension = True
@@ -242,57 +253,85 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
 
                 embedded_ref += '.md'
 
-                path = embedded_references_path_finder(embedded_ref, PARS)
+                path_embedded_reference = embedded_references_path_finder(embedded_ref, PARS)
 
-                if len(path) == 0:
+                if len(path_embedded_reference) == 0:
                     raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁']['vault'])
 
-                # try:
-                with open(path, 'r', encoding='utf8') as f:
-                    i_section_start = 0
-                    section_started = False
-                    i_section_end = -1
-                    content__embedded_notes = f.readlines()
-                    maybe_found_section = section.startswith('#')
-                    if maybe_found_section:
-                        # has section
-                        pattern_how_many_sections = r'^#+'
-                        pattern_for_section = r'^#+\s\w+$' 
-                        for iL, ln_f in enum(content__embedded_notes):
-                            tmp_l = ln_f.replace('%% ', '').replace('%%', '').replace('\n', '').rstrip()
-                            search_results = re.findall(pattern_for_section, tmp_l)
-                            has_section = re.findall(pattern_how_many_sections, ln_f)
-                            if has_section:
-                                has_section = has_section[0]
-                                tmp_l = ln_f.replace(has_section, '').replace('%%', '').replace('\n', '').rstrip().lstrip()
-
-                                if not section_started:
-                                    section_started = True
-                                    i_section_start = iL+1
-                                    
-                                    try:
-                                        txt_find = search_results[0]
-                                    except:
-                                        print("") # Embedded-Section-Error
-                                    # section_hierarcy = len(re.findall(pattern_how_many_sections, txt_find)[0])
-                                    section_hierarcy = len(has_section)
-
-
-                                else:
-                                    if len(has_section) == section_hierarcy:
-                                        # section ended, since we found a new section with the same hierarchy
-                                        i_section_end = iL
-                                        break
-
-                    if i_section_end==-1:
-                        content__unfold = content__embedded_notes[i_section_start:]
-                    else:
-                        content__unfold = content__embedded_notes[i_section_start:i_section_end]
-
-                # except:
-                    # raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁']['vault'])
+                section_name = section.lstrip('#')
+                content__unfold = extract_section_from_file(path_embedded_reference, section_name)
 
 
                 S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
  
     return S, md__files_embedded
+
+
+def extract_section_from_file(obsidian_file, section):
+
+    file_hierarchy, Lines = get_file_hierarchy(obsidian_file)
+    if section == '':
+        return Lines
+
+    L = len(Lines)
+    have_found_the_section = False
+    have_found_the_end_of_section = False
+    for section_i in file_hierarchy:
+        if not have_found_the_section:
+            if section_i[2]==section:
+                have_found_the_section = True
+                level = section_i[1]
+
+                line_number_start = section_i[0]
+        else:
+            if section_i[1] == level:
+                have_found_the_end_of_section = True
+                line_number_end = section_i[0]
+                break
+
+    if have_found_the_section:
+        if not have_found_the_end_of_section:
+            line_number_end = L
+    else:
+        line_number_start = 0
+        line_number_end = L
+
+
+    extracted_text = Lines[line_number_start:line_number_end]
+
+
+    return extracted_text
+
+    
+def get_file_hierarchy(obsidian_file):
+    
+    if not isinstance(obsidian_file, str):
+        raise Exception('obsidian_file variable must be of type string, and specifically, a path!')
+
+    f = open(obsidian_file, 'r', encoding='utf8')
+    Lines = f.readlines()
+
+    pattern_how_many_sections = r'^#+'
+    # pattern_for_section = r'^#+\s.+$'
+
+    sections = []
+    for iL, ln_f in enum(Lines):
+        # search_results = re.findall(pattern_for_section, ln_f)
+        has_section = re.findall(pattern_how_many_sections, ln_f)
+
+        if has_section:
+            has_section = has_section[0]
+            section_hierarchy = len(has_section)
+            tmp_l = ln_f.replace(has_section, '').replace('%%', '').replace('\n', '').rstrip().lstrip()
+            section_i = [iL, section_hierarchy, tmp_l]
+
+            sections.append(section_i)
+
+    f.close()
+
+    return sections, Lines
+
+# file = 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\Literature\\Theory\\Theory\\Math\\Equations\\Lyapunov Stability.md'
+# pp=get_file_hierarchy(file)
+# oo = extract_section_from_file(file, 'Stability Definitions')
+# print('d')
