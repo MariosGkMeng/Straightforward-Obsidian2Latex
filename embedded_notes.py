@@ -188,8 +188,6 @@ def non_embedded_references_converter(S):
     return S
 
 
-
-
 def embedded_references_path_finder(u, PARS):
 
     '''
