@@ -29,6 +29,7 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 - [ ] Bibliography
 - [ ] Equation numbering
 - [ ] Italic font
+- [ ] Internal links: add page number next to the cross-reference, in case the document is printed
 - [ ] Bullet lists with indentation of level 5 and above
 - [ ] Maintain proper hierarchy of sections of the main note when a note with sections is embedded
 - [ ] Remove link formatting from external links
