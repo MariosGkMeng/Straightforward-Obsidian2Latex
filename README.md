@@ -33,6 +33,7 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 - [ ] Maintain proper hierarchy of sections of the main note when a note with sections is embedded
 - [ ] Remove link formatting from external links
   - [ ] Add setting for the user to choose if (s)he wishes to print the external .md file reference in a .pdf and create a hyperlink to that .pdf
+- [ ] EMOJIS: Latex does not include emojis. Therefore, so far they are replaced by text, however in the future I am considering to convert them to small pictures
 
 ## Niche/rarely encountered functionalities
 - [X] Discard text inside comments **after** start of a (sub)section
