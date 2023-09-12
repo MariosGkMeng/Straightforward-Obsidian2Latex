@@ -30,6 +30,7 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 - [ ] Equation numbering
 - [ ] Italic font
 - [ ] Bullet lists with indentation of level 5 and above
+- [ ] Maintain proper hierarchy of sections of the main note when a note with sections is embedded
 - [ ] Remove link formatting from external links
   - [ ] Add setting for the user to choose if (s)he wishes to print the external .md file reference in a .pdf and create a hyperlink to that .pdf
 
