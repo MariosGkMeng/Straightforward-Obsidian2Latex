@@ -16,6 +16,7 @@ def bullet_list_converter(S):
     end_type = ["\\end{itemize}\n", "\\end{enumerate}\n"]
 
     first_itemize = False
+    first_enumerate = False
     number_list = 1
 
     for line in lines:
@@ -60,7 +61,13 @@ def bullet_list_converter(S):
 
         elif line.startswith(tab_1* indent + str(number_list) + ". "):
             intent_list_type.append([indent, 1])
-            latex += tab_1* (indent) +  tab_1* (indent+1) + "\\item " + line[2 + indent*Lt:].strip() + "\n"
+            if not first_enumerate:
+                beg_enum_i = beg_enum
+                first_enumerate = True
+            else:
+                beg_enum_i = ''
+
+            latex += tab_1* (indent)*(len(beg_enum_i)>0) + beg_enum_i +  tab_1* (indent+1) + "\\item " + line[2 + indent*Lt:].strip() + "\n"
             number_list += 1
         
         elif line.startswith(tab_1* (indent+1) + str(number_list) + ". "):
@@ -77,8 +84,16 @@ def bullet_list_converter(S):
                 latex += tab_1 * indent +  end_type[[xx[1] for xx in intent_list_type if xx[0]==indent][0]]  
                 indent -= 1
 
+            while (indent > -1) and first_enumerate:
+                
+                latex += tab_1 * indent +  end_type[[xx[1] for xx in intent_list_type if xx[0]==indent][0]]  
+                indent -= 1
+
+                        
+
             latex += line + "\n"
             first_itemize = False
+            first_enumerate = False
             list_closed = True
             indent = 0
             number_list = 1

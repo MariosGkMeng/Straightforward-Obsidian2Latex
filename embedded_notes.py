@@ -91,7 +91,7 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
                         if len(hyperref_text) != 0:
                             hyperref_text = '{' + hyperref_text + '}'
                         else:
-                            hyperref_text = '{' + 'ADD_NAME' + '}'
+                            hyperref_text = '{' + 'ADD\\_NAME' + '}'
 
                         has_already_been_replaced = label_of_source in S[sections_blocks[iS][idx][0]]
                         if not has_already_been_replaced:
