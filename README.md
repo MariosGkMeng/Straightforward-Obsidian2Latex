@@ -12,7 +12,7 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 - [X] Image display (however not yet with desirable placement)
 - [X] Bullet lists (up to level 4 of indentation)
 - [X] Numbered lists
-- [X] Embedded notes (only for entire note content)
+- [X] Embedded notes
 - [X] Equations (although the equations in Obsidian are exactly the same as in Latex)
 - [X] Discard of text that is inside comments
 - [X] Bold font
