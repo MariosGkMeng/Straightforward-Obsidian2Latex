@@ -12,12 +12,12 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 - [X] Image display (however not yet with desirable placement)
 - [X] Bullet lists (up to level 4 of indentation)
 - [X] Numbered lists
-- [X] Embedded notes (only for entire note content)
+- [X] Embedded notes
 - [X] Equations (although the equations in Obsidian are exactly the same as in Latex)
 - [X] Discard of text that is inside comments
 - [X] Bold font
 - [X] Highlighted font
-- [X] Removal of Obsidian Comments (not including comments from embedded notes)
+- [X] Removal of Obsidian Comments
 - [X] Specific parts of embedded notes (e.g. if the embedded note is "![[note_name# Some note section]]", the script would still paste the entire content of that note)
 - [X] Convertion of codeblocks
 
@@ -29,7 +29,7 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 - [ ] Bibliography
 - [ ] Equation numbering
 - [ ] Italic font
-- [ ] Internal links: add page number next to the cross-reference, in case the document is printed
+- [ ] Regarding Internal links: add page number next to the cross-reference, in case the document is printed
 - [ ] Bullet lists with indentation of level 5 and above
 - [ ] Maintain proper hierarchy of sections of the main note when a note with sections is embedded
 - [ ] Remove link formatting from external links
@@ -39,6 +39,7 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 ## Niche/rarely encountered functionalities
 - [X] Discard text inside comments **after** start of a (sub)section
 - [ ] Properly convert results from querying commands in Obsidian. This will probably never be achieved with this converter, since it requires to have access to the obsidian dataview and dataviewjs outputs.
+- [ ] Convert anything that has to do with dataview, dataviewjs and inline queries
 
 
 # How to use
