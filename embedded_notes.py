@@ -229,7 +229,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
 
 
     for ln in ss1:
-        line_number = ln[0]
+        line_number = ln[0] #
         line_embed = ln[1]
 
         has_extension = False
@@ -244,8 +244,10 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
 
         if not has_extension: 
             # means that it is a .md file, which we need to unfold
-
-            if not embedded_ref in md__files_embedded:
+            # BUG_2 (line below): the following condition has the problem: if there's multiple times that the embedded_ref appears, but with a different section/block, then it will be ignored! 
+            CONDITION_1 = not embedded_ref in md__files_embedded
+            CONDITION_2 = True
+            if CONDITION_2:
                 # Unfold this note ONLY when it hasn't already been unfolded
                 md__files_embedded.append(embedded_ref)
 
@@ -259,7 +261,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
                 section_name = section.lstrip('#')
                 content__unfold = extract_section_from_file(path_embedded_reference, section_name)
 
-
+                # BUG_1: CHECK THE LINE BELOW: IT CREATES PROBLEMS WHEN WE JOIN THE LINES (BECAUSE THE LISTS ARE NOT RECOGNIZED)
                 S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
  
     return S, md__files_embedded

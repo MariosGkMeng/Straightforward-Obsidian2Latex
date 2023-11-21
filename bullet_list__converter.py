@@ -1,3 +1,4 @@
+import re
 
 def bullet_list_converter(S):
 
@@ -5,106 +6,95 @@ def bullet_list_converter(S):
 
     latex = ""
     lines = S.split("\n")
-    indent = 0
-    intent_list_type = []
-    # tab_1 = " "*4
     tab_1 = "\t"
-    Lt = len(tab_1)
-    beg_item = "\\begin{itemize}\n"
-    beg_enum = "\\begin{enumerate}\n"
+
+    begin_type = ["\\begin{itemize}\n", "\\begin{enumerate}\n"]
 
     end_type = ["\\end{itemize}\n", "\\end{enumerate}\n"]
 
-    first_itemize = False
-    first_enumerate = False
-    number_list = 1
+    INDENTATION = dict()
 
     for line in lines:
-        if line.startswith(tab_1* indent + "- ") or line.startswith(tab_1* indent + "* "):
-            
-            intent_list_type.append([indent, 0])
-            if not first_itemize: 
-                first_itemize = True
-                list_closed = False
-                beg_item_i = beg_item
-                Li = 1
-            else:
-                beg_item_i = ""
-                Li = 1
-            latex += tab_1* (indent)*(len(beg_item_i)>0) + beg_item_i +  tab_1* (indent+1) + "\\item " + line[2 + indent*Lt:].strip() + "\n"
-        elif line.startswith(tab_1* (indent + 1) + "- ") or line.startswith(tab_1* (indent + 1) + "* "):
-            latex += tab_1 * (indent+1) + beg_item
-            indent += 1
-            intent_list_type.append([indent, 0])
-            latex += tab_1 * (indent+1) + "\\item " + line[2 + (indent+0)*Lt:].strip() + "\n"
-        elif line.startswith(tab_1* (indent - 1) + "- ") or line.startswith(tab_1* (indent - 1) + "* ") and indent > 0:
-            indent -= 1
-            intent_list_type.append([indent, 0])
-            latex += tab_1 * indent + "\\end{itemize}\n"
-            latex += tab_1 * indent + "\\item " + line[2 + (indent-1)*Lt:].strip() + "\n"
-        
-        elif line.startswith(tab_1* (indent - 2) + "- ") or line.startswith(tab_1* (indent - 2) + "* ") and indent > 0:
-            # UNDER DEV ---> need to close previous lists
-            indent -= 2
-            intent_list_type.append([indent, 0])
-            latex += tab_1 * (indent-1) + "\\end{itemize}\n"
-            latex += tab_1 * (indent-1) + "\\item " + line[2 + (indent-2)*Lt:].strip() + "\n"
-        
-        elif line.startswith(tab_1* (indent - 3) + "- ") or line.startswith(tab_1* (indent - 3) + "* ") and indent > 0:
-            
-            # UNDER DEV ---> need to close previous lists
-            indent -= 3
-            intent_list_type.append([indent, 0])
-            latex += tab_1 * (indent-2) + "\\end{itemize}\n"
-            latex += tab_1 * (indent-2) + "\\item " + line[2 + (indent-3)*Lt:].strip() + "\n"
 
+        match_bullet_list = re.match(r'^([\t ]*-\s*)(.*)$', line)
+        match_numbered_list = re.match(r'^(\t*)\d+\.\s(.*)$', line)
 
-        elif line.startswith(tab_1* indent + str(number_list) + ". "):
-            intent_list_type.append([indent, 1])
-            if not first_enumerate:
-                beg_enum_i = beg_enum
-                first_enumerate = True
-            else:
-                beg_enum_i = ''
+        if match_bullet_list:
+            type_list = 0
+            match = match_bullet_list
 
-            latex += tab_1* (indent)*(len(beg_enum_i)>0) + beg_enum_i +  tab_1* (indent+1) + "\\item " + line[2 + indent*Lt:].strip() + "\n"
-            number_list += 1
-        
-        elif line.startswith(tab_1* (indent+1) + str(number_list) + ". "):
-            latex += tab_1 * (indent+1) + beg_enum
-            indent += 1
-            intent_list_type.append([indent, 1])
-            latex += tab_1 * (indent+1) + "\\item " + line[2 + (indent+0)*Lt:].strip() + "\n"
-            number_list += 1
+        elif match_numbered_list:
+            type_list = 1
+            match = match_numbered_list
 
         else:
-            
-            while (indent > -1) and first_itemize:
+            match = False
+
+        if match:
+            indentations = list(INDENTATION.keys())
+            indentation = len(match.group(1))
+            main_string = match.group(2)
+            main_string_latex = tab_1 * (indentation+1) +  '\\item ' + main_string + "\n"
+            if not str(indentation) in indentations:
+
                 
-                latex += tab_1 * indent +  end_type[[xx[1] for xx in intent_list_type if xx[0]==indent][0]]  
-                indent -= 1
+                # FIX the problem when sometimes the next indentation jumps deeper than one level
+                if len(indentations):
+                    indentation_ceiling = int(max(indentations))+1
+                    if indentation > indentation_ceiling:
+                        indentation = indentation_ceiling
+                #
 
-            while (indent > -1) and first_enumerate:
-                
-                latex += tab_1 * indent +  end_type[[xx[1] for xx in intent_list_type if xx[0]==indent][0]]  
-                indent -= 1
+                INDENTATION[str(indentation)] = 'open-' + str(type_list)
 
-                        
+                pre_text = tab_1 * indentation + begin_type[type_list]                        
 
-            latex += line + "\n"
-            first_itemize = False
-            first_enumerate = False
-            list_closed = True
-            indent = 0
-            number_list = 1
-            intent_list_type = []
+            else:
+                pre_text = ''
+
+                next_indentations = [x for x in indentations if x>str(indentation)]
+                next_indentations.sort(reverse=True)
+
+                for i in next_indentations:
+                    if INDENTATION[i].startswith('open'):
+                        type_list_i = int(INDENTATION[i][-1])
+                        pre_text += tab_1 * int(i) + end_type[type_list_i]
+                        INDENTATION[i] = 'closed'
+
+            latex += pre_text + main_string_latex
+
+        else:
+
+            # close any unclosed lists
+            s, INDENTATION = close_list(INDENTATION)
+            latex += s
+
+            # restart the indentation
+            INDENTATION = dict()
+
+            latex += line + '\n'
 
 
-    if not list_closed: 
-        # in case that the Lines end abruptly before getting the chance to close the list (rare)
-        while (indent > -1) and first_itemize:
-            
-            latex += tab_1 * indent + end_type[intent_list_type[indent][0]]
-            indent -= 1
+    s, INDENTATION = close_list(INDENTATION)
+    latex += s
+
 
     return latex.split("\n")
+
+
+def close_list(INDENTATION):
+
+    end_type = ["\\end{itemize}\n", "\\end{enumerate}\n"]
+
+    indentations = list(INDENTATION.keys())
+    indentations.sort(reverse=True)
+
+    s = ''
+
+    for i in indentations:
+        if INDENTATION[i].startswith('open'):
+            type_list_i = int(INDENTATION[i][-1])
+            s += "\t" * int(i) + end_type[type_list_i]
+            INDENTATION[i] = 'closed'
+
+    return s, INDENTATION
