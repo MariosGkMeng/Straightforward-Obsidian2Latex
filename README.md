@@ -82,5 +82,8 @@ The workaround that I have used consists of the following simple steps:
 Those steps above would normally require manual work, which would be annoying.
 
 A way to automatically create an equation-note with the right format, in the right folder is to use the **QUICKADD** community plugin.
-The video below illustrates how it creates those automatic equation notes.
+📽 The video below illustrates how it creates those automatic equation notes.
+
+https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/178bbe0f-b04c-43a0-a3d3-a6efebd6b9df
+
 
