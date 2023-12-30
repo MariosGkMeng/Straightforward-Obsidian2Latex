@@ -49,6 +49,9 @@ It is the most complete that I have seen among existing ones, since it offers mo
 ## Prerequisites
 1. Have Python 3 installed
 2. Have Jupyter notebook editor installed (e.g. in Visual Studio Code)
+3. Have Obsidian installed
+4. Install the following Obsidian plugins
+	1. Optional: QuickAdd (for quick insert of equation blocks)
 
 ## Usage
 Go to the jupyter notebook. 
@@ -57,3 +60,27 @@ For each user-defined parameter, go to the "PARAMETERS" section, wherein the 'PA
 
 To set the paths for the .md file to be converted, change the `PARS['📂']['markdown-file']` and `PARS['📂']['tex-file']`.
 Then, just run the code block under the section "Rest of code" and VOILA!
+
+
+### Adding equations
+Due to the inherent difficulty of equation numbering in Obsidian (read this [thread](https://forum.obsidian.md/t/automatic-equation-numbering-latex-math/1325) for details), there is no direct way to number and refer to the equations in Obsidian.
+
+The workaround that I have used consists of the following simple steps:
+
+1. Create a separate note wherein only the equation is to be added. The note has to obey a few formatting rules (see ?)
+
+
+
+#### Formatting rules of the equation note
+
+1. Name: The equations are to be labeled based on the **name** of the note. Therefore, for the code to be able to recognize them easily, I have created a name-based rule. If you wish to name the equation "conversion_law", then the name of the note should be "eq__block_conversion_law". Then, when in your document you refer to this equation, you can simply write "in equation \[\[eq\_\_block\_conversion\_law\]\]", and the final latex text would be "in equation \ref{conversion_law}".
+2. Structure: The note has to **only have that equation inside, and nothing else!**. It is recommended that you start with a section "# \%\% expr \%\%" and then add the equation, such that you can embed it like \!\[\[eq\_\_block\_conversion\_law#expr\]\]. That way, the title of the note is not visible, making the obsidian file more readable.
+3. Path: use a path of your choosing to put those equations. The reason for this is that in case you have a large vault, the code would have to search for the path of that note within the entire vault. Specifying a path for the equation blocks saves time.
+
+
+##### Automating the creation of that note based on the formatting rules
+Those steps above would normally require manual work, which would be annoying.
+
+A way to automatically create an equation-note with the right format, in the right folder is to use the **QUICKADD** community plugin.
+The video below illustrates how it creates those automatic equation notes.
+
