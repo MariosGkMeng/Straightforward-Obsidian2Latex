@@ -1,15 +1,14 @@
 import re
-
+from list_of_separate_lines import *
 def bullet_list_converter(S):
 
-    S = ''.join(S)
+    # S = ''.join(S)
 
     latex = ""
-    lines = S.split("\n")
+    lines = S#.split("\n")
     tab_1 = "\t"
 
     begin_type = ["\\begin{itemize}\n", "\\begin{enumerate}\n"]
-
     end_type = ["\\end{itemize}\n", "\\end{enumerate}\n"]
 
     INDENTATION = dict()
@@ -78,8 +77,9 @@ def bullet_list_converter(S):
     s, INDENTATION = close_list(INDENTATION)
     latex += s
 
-
-    return latex.split("\n")
+    LATEX = latex.split("\n")
+    return get_list_of_separate_string_lines(LATEX)
+    # return latex.split("\n")
 
 
 def close_list(INDENTATION):

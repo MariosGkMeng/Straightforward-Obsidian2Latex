@@ -2,9 +2,9 @@ import re
 import os
 
 # For recognizing file names, section names, block names
-SPECIAL_CHARACTERS = " '%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
 from remove_markdown_comment import *
-
+from list_of_separate_lines import *
 
 def write_link_in_obsidian_format(s, link_type, is_embedded = False):
 
@@ -131,7 +131,7 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
     return S
 
 
-def embedded_references_recognizer(S):
+def embedded_references_recognizer(S, options, mode):
 
 
     all_chars = '\w' + SPECIAL_CHARACTERS + '\-'
@@ -139,13 +139,33 @@ def embedded_references_recognizer(S):
         raise Exception('Input of the function must be a list of strings!')
         return np.nan
 
-    # pattern_embedded = '!\[\[([\.'+all_chars+']+)(\|[' + all_chars + ']+)?\]\]'
-    pattern_embedded_with_section = '!\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
+    pattern_embedded_with_section_0 = '!\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
+
+    if mode=='normal': 
+
+        if not options['treat_equation_blocks_separately']:
+            pattern_embedded_with_section = pattern_embedded_with_section_0
+        else:
+            # Adjusted regex pattern to exclude strings containing "[[eq__block and any other character]]"
+            pattern_embedded_with_section = '!(?!\[\[eq__block).*\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
+    
+    elif mode=='equation_blocks_only':
+        pattern_embedded_with_section = pattern_embedded_with_section_0
+
     MATCHES = []
     for i, s in enum(S):
         match_pattern_embedded = re.findall(pattern_embedded_with_section, s)
         if len(match_pattern_embedded) != 0:
-            MATCHES.append([i, match_pattern_embedded])
+
+            # Extract text starting with '%%lcmd' and ending with 'lcmd%%'
+            match_latex_command_from_obsidian = re.search(r'%%lcmd(.*?)lcmd%%', s)
+
+            extracted_latex_command_from_obsidian = ''
+            if match_latex_command_from_obsidian:
+                extracted_latex_command_from_obsidian = match_latex_command_from_obsidian.group(0)  # Get the entire matched text
+
+
+            MATCHES.append([i, match_pattern_embedded, extracted_latex_command_from_obsidian])
             # path-finder
 
     
@@ -172,6 +192,7 @@ def non_embedded_references_recognizer(S):
 
 
 def non_embedded_references_converter(S):
+
     links = non_embedded_references_recognizer(S)
 
     for link in links:
@@ -188,13 +209,13 @@ def non_embedded_references_converter(S):
     return S
 
 
-def embedded_references_path_finder(u, PARS):
+def embedded_references_path_finder(u, PARS, search_in = 'vault'):
 
     '''
     Finds the paths of embedded references in the vault
     '''
     files = []
-    vault_path = PARS['📁']['vault']
+    vault_path = PARS['📁'][search_in]
     # for folder, subfolders, files in os.walk(PARS['📁']['vault']):
     #    for f in files:
     #     if f.endswith('.md'): files_md.append(f)
@@ -206,7 +227,7 @@ def embedded_references_path_finder(u, PARS):
 
 
 
-def unfold_embedded_notes(S, md__files_embedded, PARS):
+def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 
     '''
     Unfolds the content of embedded notes.
@@ -219,14 +240,19 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
         2. md__files_embedded(List): a list that contains all embedded references. It is needed to ensure that we do not reach an infinite loop of unfolding notes
 
     '''
+    if mode=='normal':
+        where_to_search_for_embedded_notes = 'vault'
+    elif mode=='equation_blocks_only':
+        where_to_search_for_embedded_notes = 'equation_blocks'
+    else:
+        raise Exception("Nothing coded for this case!")
 
     if not isinstance(md__files_embedded, list):
         raise Exception('md__files_embedded variable must be of type list!')
 
 
     file_types = ['.png', '.pdf', '.jpg']
-    ss1 = embedded_references_recognizer(S)
-
+    ss1 = embedded_references_recognizer(S, PARS['⚙']['EMBEDDED REFERENCES'], mode)
 
     for ln in ss1:
         line_number = ln[0] #
@@ -247,23 +273,40 @@ def unfold_embedded_notes(S, md__files_embedded, PARS):
             # BUG_2 (line below): the following condition has the problem: if there's multiple times that the embedded_ref appears, but with a different section/block, then it will be ignored! 
             CONDITION_1 = not embedded_ref in md__files_embedded
             CONDITION_2 = True
-            if CONDITION_2:
+            if CONDITION_1:
                 # Unfold this note ONLY when it hasn't already been unfolded
                 md__files_embedded.append(embedded_ref)
 
                 embedded_ref += '.md'
 
-                path_embedded_reference = embedded_references_path_finder(embedded_ref, PARS)
+                path_embedded_reference = embedded_references_path_finder(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
 
                 if len(path_embedded_reference) == 0:
-                    raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁']['vault'])
+                    raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁'][where_to_search_for_embedded_notes])
 
                 section_name = section.lstrip('#')
                 content__unfold = extract_section_from_file(path_embedded_reference, section_name)
 
+
+
+                if mode!='equation_blocks_only':
+                    # since we don't expect to have comments in the single block (code optimization)
+                    content__unfold = remove_markdown_comments(content__unfold)
+                elif mode=='equation_blocks_only':
+                    # get the label of the equation from the note name
+                    equation_label = embedded_ref.replace("eq__block__","").replace(".md", "")
+                    if len(equation_label)==0:
+                        equation_label = 'empty_label'
+
+                    # add the equation label afterwards, so that later it is integrated in the latex file
+                    content__unfold[-1] += '\label{' + equation_label + '}'
+
                 # BUG_1: CHECK THE LINE BELOW: IT CREATES PROBLEMS WHEN WE JOIN THE LINES (BECAUSE THE LISTS ARE NOT RECOGNIZED)
                 S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
- 
+
+    if mode!='normal':
+        S = get_list_of_separate_string_lines(S)
+
     return S, md__files_embedded
 
 
@@ -278,11 +321,11 @@ def extract_section_from_file(obsidian_file, section):
     have_found_the_end_of_section = False
     for section_i in file_hierarchy:
         if not have_found_the_section:
-            if section_i[2]==section:
+            if section_i[2].replace("%%", "").replace('[[', "").replace(']]', "").strip()==section.replace("%%", ""):
                 have_found_the_section = True
                 level = section_i[1]
 
-                line_number_start = section_i[0]
+                line_number_start = section_i[0]+1
         else:
             if section_i[1] == level:
                 have_found_the_end_of_section = True
@@ -312,17 +355,17 @@ def get_file_hierarchy(obsidian_file):
     Lines = f.readlines()
 
     pattern_how_many_sections = r'^#+'
-    # pattern_for_section = r'^#+\s.+$'
+    comment_pattern = r'^\s*#+\s*%%.*%%.*$'  # Pattern to detect commented titles
 
     sections = []
-    for iL, ln_f in enum(Lines):
-        # search_results = re.findall(pattern_for_section, ln_f)
+    for iL, ln_f in enumerate(Lines):
         has_section = re.findall(pattern_how_many_sections, ln_f)
+        #is_commented_title = re.match(comment_pattern, ln_f)
 
-        if has_section:
+        if has_section: # and not is_commented_title:
             has_section = has_section[0]
             section_hierarchy = len(has_section)
-            tmp_l = ln_f.replace(has_section, '').replace('%%', '').replace('\n', '').rstrip().lstrip()
+            tmp_l = ln_f.replace(has_section, '').replace('\n', '').rstrip().lstrip()
             section_i = [iL, section_hierarchy, tmp_l]
 
             sections.append(section_i)
@@ -330,6 +373,7 @@ def get_file_hierarchy(obsidian_file):
     f.close()
 
     return sections, Lines
+
 
 # file = 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\Literature\\Theory\\Theory\\Math\\Equations\\Lyapunov Stability.md'
 # pp=get_file_hierarchy(file)

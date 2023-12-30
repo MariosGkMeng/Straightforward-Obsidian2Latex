@@ -28,7 +28,7 @@ def remove_markdown_comments(S):
 
     for i, s in enum(S):
         to_delete = []
-        occurences = [x.start() for x in re.finditer('%%', s)]
+        occurences = [x.start() for x in re.finditer(r'(?<!lcmd)%%(?!lcmd)', s)]
         L = len(occurences)
         if (L > 0):
 
