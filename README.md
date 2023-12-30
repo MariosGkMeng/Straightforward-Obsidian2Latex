@@ -1,6 +1,10 @@
 # Straightforward-Obsidian2Latex
 An Obsidian to Latex translator that is straightforward to use and has no 🐂💩 unnecessary complexity as an end result.
 
+It is the most complete that I have seen among existing ones, since it offers more niche functionalities, such as:
+- Correct table conversion
+- Unfolding content of embedded notes (other packages I have seen just keep the "![[embedded_note]]" in the final text, when in reality the content of that note should appear in the LateX file)
+
 # 💪 What it can convert (new capabilities regularly added)
 
 - [X] Tables
