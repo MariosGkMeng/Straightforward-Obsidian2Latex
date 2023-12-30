@@ -9,11 +9,13 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 - [X] Internal links (sections and blocks)
 - [X] External links
 - [X] Sections and subsections
+  - [X] Maintain proper hierarchy of sections of the main note when a note with sections is embedded
 - [X] Image display (however not yet with desirable placement)
 - [X] Bullet lists
 - [X] Numbered lists
 - [X] Embedded notes
 - [X] Equations (although the equations in Obsidian are exactly the same as in Latex)
+  - [X] Numbered equations
 - [X] Discard of text that is inside comments
 - [X] Bold font
 - [X] Highlighted font
@@ -27,10 +29,8 @@ An Obsidian to Latex translator that is straightforward to use and has no ğŸ‚ğŸ
 
 - [ ] (under dev.) Desirable placement for images
 - [ ] Bibliography
-- [ ] Equation numbering
 - [ ] Italic font
 - [ ] Regarding Internal links: add page number next to the cross-reference, in case the document is printed
-- [ ] Maintain proper hierarchy of sections of the main note when a note with sections is embedded
 - [ ] Remove link formatting from external links
   - [ ] Add setting for the user to choose if (s)he wishes to print the external .md file reference in a .pdf and create a hyperlink to that .pdf
 - [ ] EMOJIS: Latex does not include emojis. Therefore, so far they are replaced by text, however in the future I am considering to convert them to small pictures
