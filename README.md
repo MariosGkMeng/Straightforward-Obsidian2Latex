@@ -87,8 +87,3 @@ A way to automatically create an equation-note with the right format, in the rig
 
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/178bbe0f-b04c-43a0-a3d3-a6efebd6b9df
 
-
-
-https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/2afa177d-9252-4ab5-9ab4-92d7e668af9a
-
-
