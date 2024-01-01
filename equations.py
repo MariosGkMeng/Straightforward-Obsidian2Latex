@@ -14,45 +14,46 @@ def find_label_in_equation(input_string):
 
 
 def EQUATIONS__convert_non_numbered_to_numbered(S0):
-
-
     S = S0
-    pattern = re.compile(r'(\$\$)(.*?)(\$\$)')
+
+    # with the following pattern, the equation label will only be identified if it starts with "eq__block_"
+    pattern = re.compile(r'\$\$\s*(.*?)\s*\$\$(?:\s*\\label\{(eq__block_)([^}]+)\})?')
 
     for i, s in enumerate(S):
         matches = pattern.findall(s)
         text = s
 
         if matches:
+
+            # put a new line between any text before the equation and the equation
+            i_eq = text.find("$$")
+            if i_eq > 0:
+                text = text[:i_eq] + "\n" + text[i_eq+1:]
+            #
+
             for match in matches:
-                equation = match[1].strip()
-                
-                
-                # Check for label in the text after equation
-                label_match = find_label_in_equation(s)
+                equation = match[0].strip()
+                label_prefix = match[1] if match[1] else ""
+                label_name = match[2] if match[2] else ""
 
-                if label_match:
-                    label_name = label_match.group(1)
-                    
-                    modified_equation = f'\n\\begin{{equation}} \\label{{eq:{label_name}}} \n\t{equation}'
-                    
-                    equation = equation.replace(label_match.group(), '')  # Remove the label in the equation
+                # Create the modified equation with the label if present
+                modified_equation = f'\\begin{{equation}}' + (f' \\label{{eq:{label_name}}}' if label_name else '') + f'\n\t{equation}\n\\end{{equation}}'
 
+                # Replace the original equation with the modified one
+                text = text.replace(f'${match[0]}$', modified_equation)
 
-                else:
-                    modified_equation = f'\n\\begin{{equation}}\n\t{equation}'
-                
-                modified_equation += f'\n\\end{{equation}}\n'
-            
-            # Check and add newline before "\begin{equation}" if it's not at the beginning of a line
-            text = modified_equation 
-
-            # Add a new line after \end{equation} if there's any text after it
-            text = re.sub(r'\\end{equation}(\S)', r'\\end{equation}\n\1', text)
+                # Remove the extra label after the end{equation}
+                text = re.sub(r'\$\s*\\label\{eq__block_[^\}]+\}', '', text)
 
         S[i] = text.strip()
 
+
+    # Sometimes we still have unwanted "$" symbol before "\\begin{equation}", therefore need to remove it
+    pattern_remove_unwanted_previous_dollar = r'\$\s*(\\begin{equation})'
+    S = [re.sub(pattern_remove_unwanted_previous_dollar, r'\1', s) for s in S]
+
     return S
+
 
 
 def add_new_line_equations(S0):
@@ -128,6 +129,7 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
     equation_match = re.search(pattern, complete_equation, re.DOTALL)
 
     if equation_match:
+
         equation_content = equation_match.group(1)
         equation_content = equation_content.split('\\\\')
         equation_content = ('\\\\' + '\n' + '\t'*1).join(equation_content)
@@ -170,9 +172,12 @@ def EQUATIONS__check_and_correct_aligned_equations(S0):
         elif '\end{aligned}' in line:
             indexes_end.append(i)
 
+    
     if len(indexes_start) != len(indexes_end):
         raise Exception('Some Latex code line is missing!')
     
+    if len(indexes_start) == 0:
+        return S0
 
     INDEXES = [0]
     for i, idx in enum(indexes_start):
@@ -190,6 +195,19 @@ def EQUATIONS__check_and_correct_aligned_equations(S0):
             LISTS.append(S0[j+1:j1])
         else:
             # need modification
+
+
+            # Check if there is any text before the "$$ \\begin{aligned}" text, so we create a separate line with it
+            match_equation = re.search(r'^(.*?)\$\$\s*\\begin{aligned}', S0[j])
+            if match_equation:
+                text_before_equation_that_was_on_same_line = match_equation.group(1)
+
+                if len(text_before_equation_that_was_on_same_line) > 0:
+                    LISTS.append([text_before_equation_that_was_on_same_line])
+                    S0[j] = S0[j].replace(text_before_equation_that_was_on_same_line, "") # removing it for good measure
+            #
+
+
             LISTS.append(EQUATIONS__correct_aligned_equation(S0[j:j1+1]))
 
     S0_modified = []
@@ -219,3 +237,27 @@ def EQUATIONS__convert_equation_referencing(S0):
     
 
     return S
+
+
+def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embedded_ref):
+    
+    """
+    For an equation of the format '$$equation$$', it adds the label at the end, so that 
+    other functions in this file recognize it and place it in the correct LateX manner.
+    """
+
+
+    # get the label of the equation from the note name
+    equation_label = embedded_ref.replace("eq__block_","").replace(".md", "")
+    if len(equation_label)==0 or equation_label == "_":
+        equation_label = 'eq__block_empty_label'
+    else:
+        equation_label = 'eq__block_'+equation_label
+
+    # add the equation label afterwards, so that later it is integrated in the latex file
+    anything_after_equation_that_can_be_removed_by_rstrip = content__unfold[-1].replace(content__unfold[-1].rstrip(), "")    
+    
+    content__unfold[-1] = content__unfold[-1].rstrip()
+    content__unfold[-1] += '\label{' + equation_label + '}' + anything_after_equation_that_can_be_removed_by_rstrip
+
+    return content__unfold
