@@ -1,10 +1,12 @@
 import re
 import os
+import copy
 
 # For recognizing file names, section names, block names
 SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
 from remove_markdown_comment import *
 from list_of_separate_lines import *
+from equations import *
 
 def write_link_in_obsidian_format(s, link_type, is_embedded = False):
 
@@ -225,6 +227,46 @@ def embedded_references_path_finder(u, PARS, search_in = 'vault'):
     return ''
 
 
+def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
+
+
+    textFilePath = PARS['📁']['list_paths_notes']
+    
+    # Read the text file
+    with open(textFilePath, 'r', encoding='utf8') as file:
+        lines = file.readlines()
+    
+    # Search for the fileName in the lines and retrieve associated paths
+    matching_paths = [line.strip() for line in lines if line.startswith(fileName+":")]
+
+    if matching_paths:
+        # Process retrieved paths
+        for path_line in matching_paths:
+            path = path_line.split(': ')[1].strip()
+            if not os.path.exists(path):
+                new_path = embedded_references_path_finder(fileName + '.md', PARS, search_in=search_in)
+                if new_path:
+                    updated_line = f"{fileName}: {new_path}\n"
+                    lines[lines.index(path_line+'\n')] = updated_line
+                    with open(textFilePath, 'w', encoding='utf-8') as file:
+                        file.writelines(lines)
+                    # print(f"Updated path for '{fileName}' in the text file.")
+                    return new_path
+                else:
+                    raise Exception(f"Path '{path}' not found. Also, unable to find an alternative path for '{fileName}'.")
+            else:
+                return path
+
+    else:
+        path_found = embedded_references_path_finder(fileName + '.md', PARS, search_in='vault')
+        if path_found:
+            with open(textFilePath, 'a', encoding='utf-8') as file:
+                file.write(f"{fileName}: {path_found}\n")
+            # print(f"Path for '{fileName}' appended as a new line in the text file.")
+            return path_found
+        else:
+            raise Exception(f"No information found for '{fileName}' in the provided text file and unable to find an alternative path.")
+
 
 
 def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
@@ -240,6 +282,9 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
         2. md__files_embedded(List): a list that contains all embedded references. It is needed to ensure that we do not reach an infinite loop of unfolding notes
 
     '''
+
+    mode__collection_of_new_content = 'LISTS' # 'LISTS' or 'ELEMENTWISE'
+
     if mode=='normal':
         where_to_search_for_embedded_notes = 'vault'
     elif mode=='equation_blocks_only':
@@ -250,9 +295,13 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
     if not isinstance(md__files_embedded, list):
         raise Exception('md__files_embedded variable must be of type list!')
 
+    if mode__collection_of_new_content == 'LISTS':
+        LISTS_S = []
 
     file_types = ['.png', '.pdf', '.jpg']
     ss1 = embedded_references_recognizer(S, PARS['⚙']['EMBEDDED REFERENCES'], mode)
+
+    line_numbers_unfolded_notes = [ln[0] for ln in ss1]
 
     for ln in ss1:
         line_number = ln[0] #
@@ -276,10 +325,8 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
             if CONDITION_1:
                 # Unfold this note ONLY when it hasn't already been unfolded
                 md__files_embedded.append(embedded_ref)
-
-                embedded_ref += '.md'
-
-                path_embedded_reference = embedded_references_path_finder(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
+                
+                path_embedded_reference = get_embedded_reference_path(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
 
                 if len(path_embedded_reference) == 0:
                     raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁'][where_to_search_for_embedded_notes])
@@ -287,25 +334,31 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 section_name = section.lstrip('#')
                 content__unfold = extract_section_from_file(path_embedded_reference, section_name)
 
-
-
                 if mode!='equation_blocks_only':
                     # since we don't expect to have comments in the single block (code optimization)
                     content__unfold = remove_markdown_comments(content__unfold)
-                elif mode=='equation_blocks_only':
-                    # get the label of the equation from the note name
-                    equation_label = embedded_ref.replace("eq__block__","").replace(".md", "")
-                    if len(equation_label)==0:
-                        equation_label = 'empty_label'
+                else:
+                    content__unfold = EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embedded_ref)
 
-                    # add the equation label afterwards, so that later it is integrated in the latex file
-                    content__unfold[-1] += '\label{' + equation_label + '}'
-
-                # BUG_1: CHECK THE LINE BELOW: IT CREATES PROBLEMS WHEN WE JOIN THE LINES (BECAUSE THE LISTS ARE NOT RECOGNIZED)
                 S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
 
     if mode!='normal':
         S = get_list_of_separate_string_lines(S)
+    else:
+        if mode__collection_of_new_content == "LISTS":
+            # we perform this, since the bullet_list_converter function would not work if the bullet points don't appear in new lines (list elements)
+            z = 0
+            S1 = []
+            for i in line_numbers_unfolded_notes:
+                S1.append(S[z:i] + S[i].split('\n'))
+                z=i+1
+            
+            S1.append(S[z+1:])
+            S2 = []
+            for s in S1: S2+=s
+
+            S = S2
+
 
     return S, md__files_embedded
 
