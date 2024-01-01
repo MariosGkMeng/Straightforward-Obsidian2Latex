@@ -65,9 +65,7 @@ Then, just run the code block under the section "Rest of code" and VOILA!
 ### Adding equations
 Due to the inherent difficulty of equation numbering in Obsidian (read this [thread](https://forum.obsidian.md/t/automatic-equation-numbering-latex-math/1325) for details), there is no direct way to number and refer to the equations in Obsidian.
 
-The workaround that I have used consists of the following simple steps:
-
-1. Create a separate note wherein only the equation is to be added. The note has to obey a few formatting rules (see ?)
+The workaround that I have used requires creation of a separate note wherein only the equation is to be added. The note has to obey a few formatting rules (read below).
 
 
 
