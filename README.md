@@ -56,7 +56,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - Large Obsidian files consume significant RAM 
 - Equation referencing: so far need to create separate embedded notes that represent equation blocks, since Obsidian itself cannot interact with MathJax well enough to create an equation referencing system
 
-# How to use
+# ℹ How to use
 ## Prerequisites
 1. Have Python 3 installed
 2. Have Jupyter notebook editor installed (e.g. in Visual Studio Code)
@@ -66,9 +66,11 @@ It is the most complete that I have seen among existing ones, since it offers mo
  	2. Optional, helps write equations very fast: **Quick Latex for Obsidian**
 
 ## Usage
-Go to the jupyter notebook. 
+Go to the **jupyter notebook**. You only have to deal with that.
 
-For each user-defined parameter, go to the "PARAMETERS" section, wherein the 'PARS' dictionary is located.
+You should only change things in "PARAMETERS" section, specifically on the 'PARS' dictionary, which contains all the settings.
+
+### Set your paths
 
 To set the paths for the .md file to be converted, change the `PARS['📂']['markdown-file']` and `PARS['📂']['tex-file']`.
 Then, just run the code block under the section "Rest of code" and VOILA!
@@ -95,12 +97,14 @@ A way to automatically create an equation-note with the right format, in the rig
 
 📽 The videos below illustrate how it creates those automatic equation notes, reference them, and how it looks in LateX.
 
-###### video 1
+#### Example of Equation conversion
+
+##### video 1
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/178bbe0f-b04c-43a0-a3d3-a6efebd6b9df
 
-###### video 2
+##### video 2
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/1fe9b769-84be-495b-bad3-8a988472b952
-###### video 3
+##### video 3
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/a6948f18-9cbe-4b13-a4ec-a1736828ad8e
 
 
