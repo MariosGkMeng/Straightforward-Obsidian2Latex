@@ -54,7 +54,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - Works seamlessly with **embedded notes**. The benefits of using **embedded notes** are enlisted [here](#embedded-notes)
 
 # 😥 Weaknesses
-- Large Obsidian files consume significant RAM 
+- Large Obsidian files consume significant RAM (read [here](https://www.reddit.com/r/ObsidianMD/comments/scwg7a/obsidian_is_a_ram_hog/) as to why)
 - Equation referencing: so far need to create separate embedded notes that represent equation blocks, since Obsidian itself cannot interact with MathJax well enough to create an equation referencing system
 
 # ℹ How to use
