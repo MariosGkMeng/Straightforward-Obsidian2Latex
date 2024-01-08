@@ -123,6 +123,7 @@ Latex Text:    "In \cite{p62}, the authors mention that ..."
 
 BUT: as a user, you have to add the BibTex citation manually in your designated BibTex file, and use the "p62" as a name. That Bibtex file should be located in **the same path as `PARS['📁']['tex-file']`**!
 
+I will "relax" this rule soon.
 
 # 🟢 Good Practices in Obsidian
 ## Embedded notes
