@@ -45,6 +45,10 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - [ ] Convert anything that has to do with dataview, dataviewjs and inline queries
 
 
+# 😥 Weaknesses
+- Large Obsidian files consume significant RAM 
+- Equation referencing: so far need to create separate embedded notes that represent equation blocks, since Obsidian itself cannot interact with MathJax well enough to create an equation referencing system
+
 # How to use
 ## Prerequisites
 1. Have Python 3 installed
