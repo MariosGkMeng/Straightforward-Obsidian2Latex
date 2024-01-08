@@ -50,7 +50,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 # 😁🔋 Strengths
 - **Equations**: The equation-referencing system helps reference the equations using the note-linking feature, thus allowing perfect traceability of the equations
 - **Fast conversion:** Conversion to LateX is fast when the user allows the program to first find the note paths, log them in a textfile, and then not search for them again (unless moved to another folder, or have their names changed, in which case the tool searches anew within the vault)
-- Works seamlessly with **embedded notes**. The benefits of using **embedded notes** are enlisted [here](#Embedded notes)
+- Works seamlessly with **embedded notes**. The benefits of using **embedded notes** are enlisted [here](##Embedded notes)
 
 # 😥 Weaknesses
 - Large Obsidian files consume significant RAM 
