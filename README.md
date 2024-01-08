@@ -58,7 +58,10 @@ It is the most complete that I have seen among existing ones, since it offers mo
 # 😥 Weaknesses
 - Large Obsidian files consume significant RAM (read [here](https://www.reddit.com/r/ObsidianMD/comments/scwg7a/obsidian_is_a_ram_hog/) as to why)
 - Equation referencing: so far need to create separate embedded notes that represent equation blocks, since Obsidian itself cannot interact with MathJax well enough to create an equation referencing system
-- Direct text replacements are not possible, since we are using embedded notes, therefore those texts that we want to replace are not found in a single document (a solution can implemented, via tracking the links) 
+- ⚠ Direct text replacements are not possible, since we are using embedded notes, therefore those texts that we want to replace are not found in a single document (a solution can implemented, via tracking the links)
+	- Need a text replacement tool for the embedded parts!	
+
+
 # ℹ How to use
 ## Prerequisites
 1. Have Python 3 installed
