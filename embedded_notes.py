@@ -476,9 +476,3 @@ def get_file_hierarchy(obsidian_file):
     f.close()
 
     return sections, Lines
-
-
-# file = 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\Literature\\Theory\\Theory\\Math\\Equations\\Lyapunov Stability.md'
-# pp=get_file_hierarchy(file)
-# oo = extract_section_from_file(file, 'Stability Definitions')
-# print('d')
