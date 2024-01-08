@@ -47,6 +47,9 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - [ ] Convert anything that has to do with dataview, dataviewjs and inline queries
 - [ ] Regarding Internal links: add page number next to the cross-reference, in case the document is printed
 
+# 😁🔋 Strengths
+- **Equations**: The equation-referencing system helps reference the equations using the note-linking feature, thus allowing perfect traceability of the equations
+- **Fast conversion:** Conversion to LateX is fast when the user allows the program to first find the note paths, log them in a textfile, and then not search for them again (unless moved to another folder, or have their names changed, in which case the tool searches anew within the vault)
 
 # 😥 Weaknesses
 - Large Obsidian files consume significant RAM 
