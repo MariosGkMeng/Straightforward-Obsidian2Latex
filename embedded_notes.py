@@ -171,6 +171,9 @@ def embedded_references_recognizer(S, options, mode):
     elif mode=='equation_blocks_only':
         pattern_embedded_with_section = pattern_embedded_with_section_0
 
+    else:
+        raise Exception('Nothing coded for this case!')
+
     MATCHES = []
     for i, s in enum(S):
         match_pattern_embedded = re.findall(pattern_embedded_with_section, s)
