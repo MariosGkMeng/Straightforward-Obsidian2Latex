@@ -100,6 +100,8 @@ https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/1
 
 # 🟢 Good Practices in Obsidian
 ## Embedded notes
+Read in the [Obsidian website](https://help.obsidian.md/Linking+notes+and+files/Embed+files) for information on **what** they are.
+
 Embedded notes allow use to:
 - Make our work modular
 	- Reuse notes, i.e., making them repeatable
