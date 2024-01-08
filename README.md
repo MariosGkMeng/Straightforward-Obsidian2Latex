@@ -19,6 +19,8 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - [X] Image display (however not yet with desirable placement)
 - [X] Bullet lists
 - [X] Numbered lists
+- [X] References/bibliography
+	-  But so far only with my own referencing method
 - [X] Embedded notes
 - [X] Equations (although the equations in Obsidian are exactly the same as in Latex)
   - [X] Numbered equations
