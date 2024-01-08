@@ -22,6 +22,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - [X] References/bibliography
 	-  But so far only with my own referencing method
 - [X] Embedded notes
+	- Inluding section hierarchization (i.e., keeping track on what level of section the embedded note was, thus converting any sections inside it to subsections that adhere to the initial hierarchy
 - [X] Equations (although the equations in Obsidian are exactly the same as in Latex)
   - [X] Numbered equations
 - [X] Discard of text that is inside comments
