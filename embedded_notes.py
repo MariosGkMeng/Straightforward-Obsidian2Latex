@@ -78,12 +78,6 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
         for iS in range(2):
             Ii_sb = I[iS+1]
 
-            # try:
-            #     if Ii_sb[0][1] == 'Motivations to investigate high-dimensional neural networks':
-            #         print("f")
-            # except:
-            #     print("")
-
             if len(Ii_sb) != 0:
                 
                 line_number = I[0]
@@ -214,6 +208,16 @@ def non_embedded_references_recognizer(S):
 
 
 def replace_obsidian_bibliography_link_with_cite(s):
+
+    """
+    Converts citation style according to the following example:
+
+    Obsidian Text: "In [[p23]], the authors mention that ..."
+    Latex Text:    "In \cite{p23}, the authors mention that ..."
+    
+    """
+
+
     pattern = r'\[\[p(\d+)\]\]'  # Updated regular expression pattern with capturing group
     replaced_string = re.sub(pattern, r'\\cite{p\1}', s)
     return replaced_string
@@ -251,9 +255,6 @@ def search_embedded_reference_in_vault(u, PARS, search_in = 'vault'):
     '''
     files = []
     vault_path = PARS['📁'][search_in]
-    # for folder, subfolders, files in os.walk(PARS['📁']['vault']):
-    #    for f in files:
-    #     if f.endswith('.md'): files_md.append(f)
     os.chdir(vault_path)
     for root, dirs, files in os.walk(vault_path):
         if u in files: return os.path.join(root,u)
