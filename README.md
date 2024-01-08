@@ -1,5 +1,7 @@
 # Straightforward-Obsidian2Latex
-An Obsidian to Latex translator that is straightforward to use and has no 🐂💩 unnecessary complexity as an end result.
+Want to write your documents entirely in Obsidian, and then print them to LateX (e.g., for scientific papers and lab reports)?
+
+This Obsidian to Latex translator is **complete**, straightforward to use, and has no 🐂💩 unnecessary complexity as an end result.
 
 It is the most complete that I have seen among existing ones, since it offers more niche functionalities, such as:
 - Correct table conversion
