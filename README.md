@@ -62,7 +62,8 @@ It is the most complete that I have seen among existing ones, since it offers mo
 2. Have Jupyter notebook editor installed (e.g. in Visual Studio Code)
 3. Have Obsidian installed
 4. Install the following Obsidian plugins
-	1. Optional: QuickAdd (for quick insert of equation blocks)
+	1. Optional, helps speed up equation referencing: **QuickAdd** (for quick insert of equation blocks)
+ 	2. Optional, helps write equations very fast: **Quick Latex for Obsidian**
 
 ## Usage
 Go to the jupyter notebook. 
