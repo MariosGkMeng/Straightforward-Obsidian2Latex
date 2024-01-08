@@ -30,15 +30,13 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - [X] Removal of Obsidian Comments
 - [X] Specific parts of embedded notes (e.g. if the embedded note is "![[note_name# Some note section]]", the script would still paste the entire content of that note)
 - [X] Convertion of codeblocks
+- [X] Italic font
 
 
 # 👨‍💻🚧 What it cannot convert (so far)
 ## Frequently used functionalities
 
 - [ ] (under dev.) Desirable placement for images
-- [ ] Bibliography
-- [ ] Italic font
-- [ ] Regarding Internal links: add page number next to the cross-reference, in case the document is printed
 - [ ] Remove link formatting from external links
   - [ ] Add setting for the user to choose if (s)he wishes to print the external .md file reference in a .pdf and create a hyperlink to that .pdf
 - [ ] EMOJIS: Latex does not include emojis. Therefore, so far they are replaced by text, however in the future I am considering to convert them to small pictures
@@ -47,6 +45,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - [X] Discard text inside comments **after** start of a (sub)section
 - [ ] Properly convert results from querying commands in Obsidian. This will probably never be achieved with this converter, since it requires to have access to the obsidian dataview and dataviewjs outputs.
 - [ ] Convert anything that has to do with dataview, dataviewjs and inline queries
+- [ ] Regarding Internal links: add page number next to the cross-reference, in case the document is printed
 
 
 # 😥 Weaknesses
