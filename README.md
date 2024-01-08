@@ -98,5 +98,11 @@ https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/1
 
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/1fe9b769-84be-495b-bad3-8a988472b952
 
-# Notes on Good Practices in Obsidian
+# 🟢 Good Practices in Obsidian
 ## Embedded notes
+Embedded notes allow use to:
+- Make our work modular
+	- Reuse notes, i.e., making them repeatable
+ 	- Index the content of these notes (with more linked notes and/or tags) that apply only on that note --> doing that helps make the search for this note based on the indexing easier
+- Focus on specific small parts of a document, instead of searching it in large stand-alone documents
+	
