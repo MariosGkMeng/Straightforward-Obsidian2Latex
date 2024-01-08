@@ -48,7 +48,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - [ ] Regarding Internal links: add page number next to the cross-reference, in case the document is printed
 
 # 😁🔋 Strengths
-- **Equations**: The equation-referencing system helps reference the equations using the note-linking feature, thus allowing perfect traceability of the equations. The user can reference the equations in Obsidian and click/hover on their link to view them!
+- **Equations**: The equation-referencing system helps reference the equations using the note-linking feature, thus allowing perfect traceability of the equations. The user can reference the equations in Obsidian and click/hover on their link to view them! See [short video](#📽3) for a quick demonstration
 - **Fast conversion:** Conversion to LateX is fast when the user allows the program to first find the note paths, log them in a textfile, and then not search for them again (unless moved to another folder, or have their names changed, in which case the tool searches anew within the vault)
 - Works seamlessly with **embedded notes**. The benefits of using **embedded notes** are enlisted [here](#embedded-notes)
 
@@ -95,9 +95,15 @@ A way to automatically create an equation-note with the right format, in the rig
 
 📽 The videos below illustrate how it creates those automatic equation notes, reference them, and how it looks in LateX.
 
+###### 📽1
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/178bbe0f-b04c-43a0-a3d3-a6efebd6b9df
 
+###### 📽2
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/1fe9b769-84be-495b-bad3-8a988472b952
+###### 📽3
+https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/a6948f18-9cbe-4b13-a4ec-a1736828ad8e
+
+
 
 # 🟢 Good Practices in Obsidian
 ## Embedded notes
