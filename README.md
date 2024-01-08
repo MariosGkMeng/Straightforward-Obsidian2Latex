@@ -48,7 +48,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - [ ] Regarding Internal links: add page number next to the cross-reference, in case the document is printed
 
 # 😁🔋 Strengths
-- **Equations**: The equation-referencing system helps reference the equations using the note-linking feature, thus allowing perfect traceability of the equations
+- **Equations**: The equation-referencing system helps reference the equations using the note-linking feature, thus allowing perfect traceability of the equations. The user can reference the equations in Obsidian and click/hover on their link to view them!
 - **Fast conversion:** Conversion to LateX is fast when the user allows the program to first find the note paths, log them in a textfile, and then not search for them again (unless moved to another folder, or have their names changed, in which case the tool searches anew within the vault)
 - Works seamlessly with **embedded notes**. The benefits of using **embedded notes** are enlisted [here](#embedded-notes)
 
@@ -104,7 +104,9 @@ Read in the [Obsidian website](https://help.obsidian.md/Linking+notes+and+files/
 
 Embedded notes allow use to:
 - Make our work modular
-	- Reuse notes, i.e., making them repeatable
+	- Reuse notes, i.e., making them repeatable --> no need to manually copy/paste and rewrite things!
  	- Index the content of these notes (with more linked notes and/or tags) that apply only on that note --> doing that helps make the search for this note based on the indexing easier
 - Focus on specific small parts of a document, instead of searching it in large stand-alone documents
+- Use Obsidian for what it was made: creation of a **knowledge structure**: this means that smaller blocks of information are linked to each other based on their relationships and the meaning that they have to the creator. Therefore, writing a large document without embedded notes would result in you missing out in one of the most important features of Knowledge Management
+
 	
