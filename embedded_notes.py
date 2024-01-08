@@ -77,25 +77,38 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
     for I in internal_links:
         for iS in range(2):
             Ii_sb = I[iS+1]
+
+            # try:
+            #     if Ii_sb[0][1] == 'Motivations to investigate high-dimensional neural networks':
+            #         print("f")
+            # except:
+            #     print("")
+
             if len(Ii_sb) != 0:
                 
                 line_number = I[0]
                 for i in Ii_sb:
                     section_i = Ii_sb[0][1]
-                    idx = [j for j in range(len(sections_blocks[iS])) if sections_blocks[iS][j][1] == section_i]
+                    idx = [j for j in range(len(sections_blocks[iS])) if sections_blocks[iS][j][1] == section_i] # index of the section in the section list
                     if len(idx)>0: 
                         # Found match between existing sections and blocks of the file and the referenced section
                         idx=idx[0]
 
                         label_latex_format = type_of_link[iS] + section_i.replace(' ', '-')
-                        label_of_source = ' \hypertarget{' + label_latex_format + '}{}' 
                         hyperref_text = Ii_sb[0][-1].replace('|', '')
+
+                        if type_of_link[iS]!='sec:':
+                            label_of_source = ' \hypertarget{' + label_latex_format + '}' #+ '{}' 
+                        
+                        else:
+                            label_of_source = '\label{' + label_latex_format + '}' 
+
                         if len(hyperref_text) != 0:
                             hyperref_text = '{' + hyperref_text + '}'
                         else:
                             hyperref_text = '{' + 'ADD\\_NAME' + '}'
-
-                        has_already_been_replaced = label_of_source in S[sections_blocks[iS][idx][0]]
+                            
+                        has_already_been_replaced = label_of_source.strip() in S[sections_blocks[iS][idx][0]]
                         if not has_already_been_replaced:
                             # Has not already been replaced
 
@@ -109,7 +122,11 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
                                 S[sections_blocks[iS][idx][0]] = label__in_line.replace('^' + label_latex_format, '') + add__S_repl
 
 
-                        hyperref = '\hyperlink{' + label_latex_format + '}' + hyperref_text
+                        if label_latex_format.startswith("sec:"):
+                            hyperref = '\hyperref[' + label_latex_format + ']' + hyperref_text 
+                        else:
+                            hyperref = '\hyperlink{' + label_latex_format + '}' + hyperref_text 
+                        # for blocks, better write "hyperlink"
 
                         if iS==0:
                             obsidian_hyperref = write_link_in_obsidian_format(Ii_sb[0], 'section')
@@ -170,7 +187,7 @@ def embedded_references_recognizer(S, options, mode):
             MATCHES.append([i, match_pattern_embedded, extracted_latex_command_from_obsidian])
             # path-finder
 
-    
+    # to see the names of the embedded files: `[m[1][0][0] for m in MATCHES]`
     return MATCHES
 
 
@@ -193,25 +210,38 @@ def non_embedded_references_recognizer(S):
     return MATCHES
 
 
-def non_embedded_references_converter(S):
+def replace_obsidian_bibliography_link_with_cite(s):
+    pattern = r'\[\[p(\d+)\]\]'  # Updated regular expression pattern with capturing group
+    replaced_string = re.sub(pattern, r'\\cite{p\1}', s)
+    return replaced_string
+
+
+def non_embedded_references_converter(S, options):
 
     links = non_embedded_references_recognizer(S)
 
+    if options['treat_citations']:
+        # change citations, like: "[[p110]]" to "\cite{p110}"
+        for i, s in enum(S):
+            S[i] = replace_obsidian_bibliography_link_with_cite(s)
+
+
     for link in links:
         line = link[0]  
-        tmp1 = link[1][0]
+        for link1 in link[1]:
+            tmp1 = link1
 
-        if len(tmp1[2]) == 0:
-            S[line] = S[line].replace('[[' + tmp1[0] +  ']]', tmp1[0])
+            if len(tmp1[2]) == 0:
+                S[line] = S[line].replace('[[' + tmp1[0] +  ']]', tmp1[0])
 
-        else:
-            S[line] = S[line].replace('[[' + tmp1[0]+tmp1[2] +  ']]', tmp1[2][1:])
+            else:
+                S[line] = S[line].replace('[[' + tmp1[0]+tmp1[2] +  ']]', tmp1[2][1:])
 
 
     return S
 
 
-def embedded_references_path_finder(u, PARS, search_in = 'vault'):
+def search_embedded_reference_in_vault(u, PARS, search_in = 'vault'):
 
     '''
     Finds the paths of embedded references in the vault
@@ -230,27 +260,40 @@ def embedded_references_path_finder(u, PARS, search_in = 'vault'):
 def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
 
 
-    textFilePath = PARS['📁']['list_paths_notes']
+
+    path_list_of_notes = PARS['📁']['list_paths_notes'] # search in that list first, and if the file doesn't exist, then search the entire vault (which is time-consuming)
     
     # Read the text file
-    with open(textFilePath, 'r', encoding='utf8') as file:
+    with open(path_list_of_notes, 'r', encoding='utf8') as file:
         lines = file.readlines()
     
     # Search for the fileName in the lines and retrieve associated paths
     matching_paths = [line.strip() for line in lines if line.startswith(fileName+":")]
 
+
+    found_extension_that_is_not_md = False
+    extensions = ['.png', '.jpg', '.pdf']
+    for extension in extensions:
+        if fileName.endswith(extension):
+            found_extension_that_is_not_md = True
+            fileNameWithExtension = fileName
+
+    if not found_extension_that_is_not_md:
+        fileNameWithExtension = fileName + '.md'
+
     if matching_paths:
         # Process retrieved paths
         for path_line in matching_paths:
             path = path_line.split(': ')[1].strip()
-            if not os.path.exists(path):
-                new_path = embedded_references_path_finder(fileName + '.md', PARS, search_in=search_in)
+            PATH_DOES_NOT_EXIST = not os.path.exists(path)
+            if PATH_DOES_NOT_EXIST:
+                new_path = search_embedded_reference_in_vault(fileNameWithExtension, PARS, search_in=search_in)
                 if new_path:
+                    # update path_list_of_notes for the next time
                     updated_line = f"{fileName}: {new_path}\n"
                     lines[lines.index(path_line+'\n')] = updated_line
-                    with open(textFilePath, 'w', encoding='utf-8') as file:
+                    with open(path_list_of_notes, 'w', encoding='utf-8') as file:
                         file.writelines(lines)
-                    # print(f"Updated path for '{fileName}' in the text file.")
                     return new_path
                 else:
                     raise Exception(f"Path '{path}' not found. Also, unable to find an alternative path for '{fileName}'.")
@@ -258,9 +301,11 @@ def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
                 return path
 
     else:
-        path_found = embedded_references_path_finder(fileName + '.md', PARS, search_in='vault')
+
+        path_found = search_embedded_reference_in_vault(fileNameWithExtension, PARS, search_in='vault')
         if path_found:
-            with open(textFilePath, 'a', encoding='utf-8') as file:
+            with open(path_list_of_notes, 'a', encoding='utf-8') as file:
+                # update path_list_of_notes for the next time
                 file.write(f"{fileName}: {path_found}\n")
             # print(f"Path for '{fileName}' appended as a new line in the text file.")
             return path_found
@@ -320,9 +365,11 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
         if not has_extension: 
             # means that it is a .md file, which we need to unfold
             # BUG_2 (line below): the following condition has the problem: if there's multiple times that the embedded_ref appears, but with a different section/block, then it will be ignored! 
+            # We can use CONDITION_2, that allows all embedded notes to be inserted, with the risk of allowing infinite loops
+            # To solve that, we could track the "parent" of an embedded reference
             CONDITION_1 = not embedded_ref in md__files_embedded
             CONDITION_2 = True
-            if CONDITION_1:
+            if CONDITION_2:
                 # Unfold this note ONLY when it hasn't already been unfolded
                 md__files_embedded.append(embedded_ref)
                 
