@@ -41,6 +41,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - [ ] Remove link formatting from external links
   - [ ] Add setting for the user to choose if (s)he wishes to print the external .md file reference in a .pdf and create a hyperlink to that .pdf
 - [ ] EMOJIS: Latex does not include emojis. Therefore, so far they are replaced by text, however in the future I am considering to convert them to small pictures
+- [ ] Direct text replacements are not possible, since we are using embedded notes, therefore those texts that we want to replace are not found in a single document (a solution can implemented, via tracking the links) 
 
 ## Niche/rarely encountered functionalities
 - [X] Discard text inside comments **after** start of a (sub)section
@@ -57,7 +58,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 # 😥 Weaknesses
 - Large Obsidian files consume significant RAM (read [here](https://www.reddit.com/r/ObsidianMD/comments/scwg7a/obsidian_is_a_ram_hog/) as to why)
 - Equation referencing: so far need to create separate embedded notes that represent equation blocks, since Obsidian itself cannot interact with MathJax well enough to create an equation referencing system
-
+- Direct text replacements are not possible, since we are using embedded notes, therefore those texts that we want to replace are not found in a single document (a solution can implemented, via tracking the links) 
 # ℹ How to use
 ## Prerequisites
 1. Have Python 3 installed
