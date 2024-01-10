@@ -80,7 +80,8 @@ You should only change things in "PARAMETERS" section, specifically on the 'PARS
 
 ### 📁 Set your paths
 
-To set the paths for the .md file to be converted, change the:
+
+To set the paths for the .md file to be converted, inside the `straightforward_Obsidian2Latex.ipynb` file, under "User Parameters" section, change the:
 - `PARS['📂']['markdown-file']`
 - `PARS['📂']['tex-file']`
 - `PARS['📂']['list_paths_notes']` (create that text file in this path as well, otherwise you'll receive an error)
