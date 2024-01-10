@@ -87,7 +87,7 @@ Go to the **jupyter notebook**. You only have to deal with that.
 
 You should only change things in "PARAMETERS" section, specifically on the 'PARS' dictionary, which contains all the settings.
 
-### 📁 Set your paths
+### (⚠ IMPORTANT) 📁 Set your paths 
 
 
 To set the paths for the .md file to be converted, inside the `straightforward_Obsidian2Latex.ipynb` file, under "User Parameters" section, change the:
