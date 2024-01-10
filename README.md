@@ -142,9 +142,9 @@ Embedded notes allow us to:
 # Comparisons to other converters (➕under construction)
 
 
-|                  | Pandoc | This repo	 | Copy as Latex | 
+|                  | Pandoc Plugin | This repo	 | Copy as Latex | 
 | ---------------- | ------ | ---- | ---- |
 | Embedded notes   | ❌     | ✔    | ❌ |
-| Equations        | ❌     | ✔    | |
+| Equations        | ❌❓ --> maybe not, was not able to do it so far     | ✔    | |
 | Is fast          | ✔✔     | ✔    | |
 | Ignores comments | ✔       | ✔     | |
