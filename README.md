@@ -37,6 +37,9 @@ It is the most complete that I have seen among existing ones, since it offers mo
 # 👨‍💻🚧 What it cannot convert (so far)
 ## Frequently used functionalities
 
+- [ ] Captions for figures (will use the same logic as in the [Equation Referencing](#Adding-equations))
+- [ ] Figure size
+- [ ] Graphs in latex plotting environment
 - [ ] (under dev.) Desirable placement for images
 - [ ] Remove link formatting from external links
   - [ ] Add setting for the user to choose if (s)he wishes to print the external .md file reference in a .pdf and create a hyperlink to that .pdf
