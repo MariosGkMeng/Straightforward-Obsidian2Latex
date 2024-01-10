@@ -128,8 +128,12 @@ A way to automatically create an equation-note with the right format, in the rig
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/178bbe0f-b04c-43a0-a3d3-a6efebd6b9df
 
 ##### video 2
+[↩ back to list of videos](#-list-of-videos)
+
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/1fe9b769-84be-495b-bad3-8a988472b952
 ##### video 3
+[↩ back to list of videos](#-list-of-videos)
+
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/a6948f18-9cbe-4b13-a4ec-a1736828ad8e
 
 ### Adding citations
@@ -163,6 +167,8 @@ Install the "Quick Latex for Obsidian" Community plugin.
 📽 see video below on how fast you can write equations!
 
 #### video 4
+[↩ back to list of videos](#-list-of-videos)
+
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/95295ca1-3fce-457d-b18d-591ecd2796cb
 
 
