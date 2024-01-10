@@ -123,6 +123,7 @@ A way to automatically create an equation-note with the right format, in the rig
 #### Example of Equation conversion
 
 ##### video 1
+[↩ back to list of videos](#📽-List-of-videos)
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/178bbe0f-b04c-43a0-a3d3-a6efebd6b9df
 
 ##### video 2
