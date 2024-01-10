@@ -7,7 +7,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - Correct table conversion
 - Unfolding content of embedded notes (other packages I have seen just keep the "![[embedded_note]]" in the final text, when in reality the content of that note should appear in the LateX file)
 
-**Yes**, plugins for Obsidian to Latex already exist, but they have [limitations](#comparisons-to-other-converters) that do not allow the user to write in Obsidian freely
+**Yes**, plugins for Obsidian to Latex already exist, but they have [limitations](#comparisons-to-other-converters) that do not allow the user to write in Obsidian freely. **Yes**, I'd have loved to contribute to those projects, but I don't know Javascript and Typescript.
 
 # 💪 What it can convert (new capabilities regularly added)
 
