@@ -167,6 +167,8 @@ Install the "Quick Latex for Obsidian" Community plugin.
 📽 see video below on how fast you can write equations!
 
 #### video 4
+⚠ For the equation snippets, don't forget to press the Space key after inserting them (not mentioned in the video)
+
 [↩ back to list of videos](#-list-of-videos)
 
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/95295ca1-3fce-457d-b18d-591ecd2796cb
