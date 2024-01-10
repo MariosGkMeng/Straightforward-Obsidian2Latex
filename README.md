@@ -131,7 +131,7 @@ I will "relax" this rule soon.
 ## Embedded notes
 Read in the [Obsidian website](https://help.obsidian.md/Linking+notes+and+files/Embed+files) for information on **what** they are.
 
-Embedded notes allow use to:
+Embedded notes allow us to:
 - Make our work modular
 	- Reuse notes, i.e., making them repeatable --> no need to manually copy/paste and rewrite things!
  	- Index the content of these notes (with more linked notes and/or tags) that apply only on that note --> doing that helps make the search for this note based on the indexing easier
