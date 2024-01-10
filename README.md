@@ -100,7 +100,7 @@ To set the paths for the .md file to be converted, inside the `straightforward_O
 
 
 ### ▶ ▶ HOW TO RUN 
-Inside the `straightforward_Obsidian2Latex.ipynb`, after [Set your paths](#IMPORTANT-set-your-paths) run the code block under the section "Rest of code" and VOILA! Obviously, any code blocks above that have to be run before that!
+Inside the `straightforward_Obsidian2Latex.ipynb`, after setting your paths, run the code block under the section "Rest of code" and VOILA! Obviously, any code blocks above that have to be run before that!
 
 ### Adding equations
 Due to the inherent difficulty of equation numbering in Obsidian (read this [thread](https://forum.obsidian.md/t/automatic-equation-numbering-latex-math/1325) for details), there is no direct way to number and refer to the equations in Obsidian.
