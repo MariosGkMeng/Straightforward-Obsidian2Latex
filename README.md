@@ -96,8 +96,10 @@ To set the paths for the .md file to be converted, inside the `straightforward_O
 - `PARS['📂']['list_paths_notes']` (create that text file in this path as well, otherwise you'll receive an error)
 - `PARS['📂']['BIBTEX']`: this is only the name of the bibtex file. By default, it is to be included in the same path as the latex file
 
-Then, just run the code block under the section "Rest of code" and VOILA!
+Then, just 
 
+### ▶ ▶ HOW TO RUN 
+Inside the `straightforward_Obsidian2Latex.ipynb`, after [Set your paths](#-set-your-paths) run the code block under the section "Rest of code" and VOILA!
 
 ### Adding equations
 Due to the inherent difficulty of equation numbering in Obsidian (read this [thread](https://forum.obsidian.md/t/automatic-equation-numbering-latex-math/1325) for details), there is no direct way to number and refer to the equations in Obsidian.
