@@ -144,6 +144,19 @@ Embedded notes allow us to:
 - Focus on specific small parts of a document, instead of searching it in large stand-alone documents
 - Use Obsidian for what it was made: creation of a **knowledge structure**: this means that smaller blocks of information are linked to each other based on their relationships and the meaning that they have to the creator. Therefore, writing a large document without embedded notes would result in you missing out in one of the most important features of Knowledge Management
 
+
+## Automations and hacks
+### Lightning fast Latex equation writing in Obsidian
+Install the "Quick Latex for Obsidian" Community plugin. 
+
+📽 see video below on how fast you can write equations!
+
+
+https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/95295ca1-3fce-457d-b18d-591ecd2796cb
+
+
+
+
 	
 # Comparisons to other converters (➕under construction)
 
