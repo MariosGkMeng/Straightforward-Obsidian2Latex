@@ -40,17 +40,16 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - [ ] Captions for figures (will use the same logic as in the [Equation Referencing](#Adding-equations))
 - [ ] Figure size
 - [ ] Graphs in latex plotting environment
-- [ ] (under dev.) Desirable placement for images
-- [ ] Remove link formatting from external links
-  - [ ] Add setting for the user to choose if (s)he wishes to print the external .md file reference in a .pdf and create a hyperlink to that .pdf
-- [ ] EMOJIS: Latex does not include emojis. Therefore, so far they are replaced by text, however in the future I am considering to convert them to small pictures
-- [ ] Direct text replacements are not possible, since we are using embedded notes, therefore those texts that we want to replace are not found in a single document (a solution can implemented, via tracking the links) 
+- [ ] Table captions (will use the same logic as in the [Equation Referencing](#Adding-equations))
+- [ ] Desirable placement for images
 
 ## Niche/rarely encountered functionalities
 - [X] Discard text inside comments **after** start of a (sub)section
 - [ ] Properly convert results from querying commands in Obsidian. This will probably never be achieved with this converter, since it requires to have access to the obsidian dataview and dataviewjs outputs.
 - [ ] Convert anything that has to do with dataview, dataviewjs and inline queries
+- [ ] Automatic table size manipulation (not even LateX does that itself)
 - [ ] Regarding Internal links: add page number next to the cross-reference, in case the document is printed
+- [ ] EMOJIS: Latex does not include emojis. Therefore, so far they are replaced by text, however in the future I am considering to convert them to small pictures
 
 # 😁🔋 Strengths
 - **Equations**: The equation-referencing system helps reference the equations using the note-linking feature, thus allowing perfect traceability of the equations. The user can reference the equations in Obsidian and click/hover on their link to view them! See [short video](#video-3) for a quick demonstration
