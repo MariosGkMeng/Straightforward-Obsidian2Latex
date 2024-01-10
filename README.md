@@ -183,9 +183,9 @@ https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/9
 # Comparisons to other converters
  (➕under construction)
 
-|                  | Pandoc Plugin | This repo	 | Copy as Latex | 
-| ---------------- | ------ | ---- | ---- |
-| Embedded notes   | ❌     | ✔    | ❌ |
-| Equations        | ❌❓ --> maybe not, was not able to do it so far     | ✔    | |
-| Is fast          | ✔✔     | ✔    | |
-| Ignores comments | ✔       | ✔     | |
+|                  | Pandoc Plugin | This repo	 | Copy as Latex |  Enhancing Export |
+| ---------------- | ------ | ---- | ---- | ---- |
+| Embedded notes   | ❌     						| ✔    | ❌ | not running for me |
+| Equations        | ❌❓ --> maybe not, was not able to do it so far     | ✔  |  ✔   | not running for me |
+| Is fast          | ✔✔    						 | ✔    | ✔✔ | not running for me |
+| Ignores comments | ✔      						 | ✔     | ✔ | not running for me |
