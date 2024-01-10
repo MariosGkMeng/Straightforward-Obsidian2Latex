@@ -63,6 +63,15 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - ⚠ Direct text replacements are not possible, since we are using embedded notes, therefore those texts that we want to replace are not found in a single document (a solution can implemented, via tracking the links)
 	- Need a text replacement tool for the embedded parts!	
 
+# 📽 List of videos
+If you are inpatient and want to jump to some videos, here's the list:
+
+|     |     | 
+| --- | --- | 
+| [create equation block for referencing](#video-1)    |  create equation block for referencing   |
+| [convert and see the result in LateX](#video-2)     |  convert and see the result in LateX   |
+| [why this conversion system is very convenient](#video-3)    | why this conversion system is very convenient    |
+| [how to write equations quickly](#video-4)    | how to write equations quickly    |
 
 # ℹ How to use
 ## Prerequisites
@@ -151,7 +160,7 @@ Install the "Quick Latex for Obsidian" Community plugin.
 
 📽 see video below on how fast you can write equations!
 
-
+#### video 4
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/95295ca1-3fce-457d-b18d-591ecd2796cb
 
 
