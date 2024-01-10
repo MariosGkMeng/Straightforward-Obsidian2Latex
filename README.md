@@ -78,9 +78,14 @@ Go to the **jupyter notebook**. You only have to deal with that.
 
 You should only change things in "PARAMETERS" section, specifically on the 'PARS' dictionary, which contains all the settings.
 
-### Set your paths
+### 📁 Set your paths
 
-To set the paths for the .md file to be converted, change the `PARS['📂']['markdown-file']` and `PARS['📂']['tex-file']`.
+To set the paths for the .md file to be converted, change the:
+- `PARS['📂']['markdown-file']`
+- `PARS['📂']['tex-file']`
+- `PARS['📂']['list_paths_notes']` (create that text file in this path as well, otherwise you'll receive an error)
+- `PARS['📂']['BIBTEX']`: this is only the name of the bibtex file. By default, it is to be included in the same path as the latex file
+
 Then, just run the code block under the section "Rest of code" and VOILA!
 
 
