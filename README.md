@@ -139,3 +139,12 @@ Embedded notes allow us to:
 - Use Obsidian for what it was made: creation of a **knowledge structure**: this means that smaller blocks of information are linked to each other based on their relationships and the meaning that they have to the creator. Therefore, writing a large document without embedded notes would result in you missing out in one of the most important features of Knowledge Management
 
 	
+# Comparisons to other converters (➕under construction)
+
+
+|                  | Pandoc | This repo	 | Copy as Latex | 
+| ---------------- | ------ | ---- | ---- |
+| Embedded notes   | ❌     | ✔    | ❌ |
+| Equations        | ❌     | ✔    | |
+| Is fast          | ✔✔     | ✔    | |
+| Ignores comments | ✔       | ✔     | |
