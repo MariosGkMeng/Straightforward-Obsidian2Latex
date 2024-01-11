@@ -39,10 +39,10 @@ It is the most complete that I have seen among existing ones, since it offers mo
 # 👨‍💻🚧 What it cannot convert (so far)
 ## Frequently used functionalities
 
-- [ ] Captions for figures (will use the same logic as in the [Equation Referencing](#Adding-equations))
+- [ ] Captions for figures (will use the note-block logic, as in the [Equation Referencing](#Adding-equations))
 - [ ] Figure size
 - [ ] Graphs in latex plotting environment
-- [ ] Table captions (will use the same logic as in the [Equation Referencing](#Adding-equations))
+- [ ] Table captions (will use the note-block logic, as in the [Equation Referencing](#Adding-equations))
 - [ ] Desirable placement for images
 
 ## Niche/rarely encountered functionalities
@@ -105,7 +105,7 @@ To set the paths for the .md file to be converted, inside the `straightforward_O
 ### ▶ ▶ HOW TO RUN 
 Inside the `straightforward_Obsidian2Latex.ipynb`, after setting your paths, run the code block under the section "Rest of code" and VOILA! Obviously, any code blocks above that have to be run before that!
 
-### Adding equations
+### Adding equations ("Note-block" logic)
 Due to the inherent difficulty of equation numbering in Obsidian (read this [thread](https://forum.obsidian.md/t/automatic-equation-numbering-latex-math/1325) for details), there is no direct way to number and refer to the equations in Obsidian.
 
 The workaround that I have used requires creation of a separate note wherein only the equation is to be added. The note has to obey a few formatting rules, which can be automated with **QuickAdd**.
