@@ -105,7 +105,10 @@ To set the paths for the .md file to be converted, inside the `straightforward_O
 ### ▶ ▶ HOW TO RUN 
 Inside the `straightforward_Obsidian2Latex.ipynb`, after setting your paths, run the code block under the section "Rest of code" and VOILA! Obviously, any code blocks above that have to be run before that!
 
-### Adding equations ("Note-block" logic)
+### Adding equations
+This uses what we can call "**==note-block logic==**". I.e., writing the equation in a single note, but without writing anything else in that note (hence the "block" part of the name). We will use the same logic for Tables and Figures, so that their referencing becomes easier, and automatic upon name changes.
+
+
 Due to the inherent difficulty of equation numbering in Obsidian (read this [thread](https://forum.obsidian.md/t/automatic-equation-numbering-latex-math/1325) for details), there is no direct way to number and refer to the equations in Obsidian.
 
 The workaround that I have used requires creation of a separate note wherein only the equation is to be added. The note has to obey a few formatting rules, which can be automated with **QuickAdd**.
