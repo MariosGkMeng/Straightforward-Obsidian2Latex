@@ -9,6 +9,9 @@ It is the most complete that I have seen among existing ones, since it offers mo
 
 **Yes**, plugins for Obsidian to Latex already exist, but they have [limitations](#comparisons-to-other-converters) that do not allow the user to write in Obsidian freely. **Yes**, I'd have loved to contribute to those projects, but I don't know Javascript and Typescript.
 
+I consider LateX a very archaeic tool, not suited for the intense knowledge-work of 2024. It is clunky, and forces the researcher to write code, when they just want to write about their work 😩
+I want to see it not being used at all, but due to its legacy, I doubt it will happen any time soon. So, what we are left with is the need to translate content from proper tools (like Obsidian) to not-so-good old LateX. 
+
 # 💪 What it can convert (new capabilities regularly added)
 
 - [X] Tables
