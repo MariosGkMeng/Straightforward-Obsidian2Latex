@@ -97,6 +97,7 @@ To set the paths for the .md file to be converted, inside the `straightforward_O
 - `PARS['📂']['tex-file']`
 - `PARS['📂']['list_paths_notes']` (create that text file in this path as well, otherwise you'll receive an error)
 - `PARS['📂']['BIBTEX']`: this is only the name of the bibtex file. By default, it is to be included in the same path as the latex file
+- `PARS['📂']['equation_blocks']`: this is the path that contains your equation blocks (see [here](#adding-equations) on how it works). It is meant to speed up the searching, due to the fact that if you have a large vault, it would take time. However, this folder will only be parsed, if the note that contains the equation is not in the list of `PARS['📂']['list_paths_notes']`. 
 
 
 ### ▶ ▶ HOW TO RUN 
@@ -105,9 +106,9 @@ Inside the `straightforward_Obsidian2Latex.ipynb`, after setting your paths, run
 ### Adding equations
 Due to the inherent difficulty of equation numbering in Obsidian (read this [thread](https://forum.obsidian.md/t/automatic-equation-numbering-latex-math/1325) for details), there is no direct way to number and refer to the equations in Obsidian.
 
-The workaround that I have used requires creation of a separate note wherein only the equation is to be added. The note has to obey a few formatting rules, which can be automated with **QuickAdd** (read below).
+The workaround that I have used requires creation of a separate note wherein only the equation is to be added. The note has to obey a few formatting rules, which can be automated with **QuickAdd**.
 
-
+The folder that you specify in QuickAdd wherein your equation note/block is to be created must be the same as `PARS['📂']['equation_blocks']`.
 
 #### Formatting rules of the equation note
 
