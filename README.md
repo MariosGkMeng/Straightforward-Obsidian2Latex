@@ -49,7 +49,8 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - [X] Discard text inside comments **after** start of a (sub)section
 - [ ] Properly convert results from querying commands in Obsidian. This will probably never be achieved with this converter, since it requires to have access to the obsidian dataview and dataviewjs outputs.
 - [ ] [Admonition](https://github.com/javalent/admonitions) blocks (although I use that quite frequently, because it is very pleasant for the eye)
-- [ ] Convert anything that has to do with dataview, dataviewjs and inline queries
+- [ ] **VERY DIFFICULT**: Convert anything that has to do with dataview, dataviewjs and inline queries.
+	- This would be very useful, since dataview(js) is quite a powerful tool for organization of numerous things. An idea would be to convert it to .pdf, and merge it to the LateX file. Otherwise, a lot of programming is required!
 - [ ] Automatic table size manipulation (not even LateX does that itself)
 - [ ] Regarding Internal links: add page number next to the cross-reference, in case the document is printed
 - [ ] EMOJIS: Latex does not include emojis. Therefore, so far they are replaced by text, however in the future I am considering to convert them to small pictures
