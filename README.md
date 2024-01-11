@@ -171,6 +171,8 @@ Embedded notes allow us to:
 Install the "Quick Latex for Obsidian" Community plugin. 
 You can write **your own** snippets (see video below, wherein I show a few of my own as examples).
 
+🔋🔋🔋 This makes equation writing much faster than vanilla LateX, or vanilla Obsidian!
+
 📽 see video below on how fast you can write equations!
 
 #### video 4
