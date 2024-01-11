@@ -48,6 +48,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 ## Niche/rarely encountered functionalities
 - [X] Discard text inside comments **after** start of a (sub)section
 - [ ] Properly convert results from querying commands in Obsidian. This will probably never be achieved with this converter, since it requires to have access to the obsidian dataview and dataviewjs outputs.
+- [ ] [Admonition](https://github.com/javalent/admonitions) blocks (although I use that quite frequently, because it is very pleasant for the eye)
 - [ ] Convert anything that has to do with dataview, dataviewjs and inline queries
 - [ ] Automatic table size manipulation (not even LateX does that itself)
 - [ ] Regarding Internal links: add page number next to the cross-reference, in case the document is printed
