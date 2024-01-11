@@ -75,7 +75,7 @@ If you are inpatient and want to jump to some videos, here's the list:
 | [create equation block for referencing](#video-1)    |  create equation block for referencing   |
 | [convert and see the result in LateX](#video-2)     |  convert and see the result in LateX   |
 | [why this conversion system is very convenient](#video-3)    | why this conversion system is very convenient    |
-| [how to write equations quickly](#video-4)    | how to write equations quickly    |
+| [how to write equations quickly](#video-4)    | Much faster than vanilla LateX, or vanilla Obsidian!    |
 
 # ℹ How to use
 ## Prerequisites
