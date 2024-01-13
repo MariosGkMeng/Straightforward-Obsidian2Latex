@@ -178,6 +178,11 @@ Embedded notes allow us to:
 
 
 ## Automations and hacks
+
+### QuickAdd for automatic creation of notes based on templates
+
+Basically, the QuickAdd community plugin creates new notes based on user specified templates. You can make it place that note in specific folder, specify naming convention for that note, and a few other functionalities.
+
 ### Lightning fast Latex equation writing in Obsidian
 Install the "Quick Latex for Obsidian" Community plugin. 
 You can write **your own** snippets (see video below, wherein I show a few of my own as examples).
