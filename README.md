@@ -37,13 +37,14 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - [X] Specific parts of embedded notes (e.g. if the embedded note is "![[note_name# Some note section]]", the script would still paste the entire content of that note)
 - [X] Convertion of codeblocks
 - [X] Italic font
+- [X] [Admonition](https://github.com/javalent/admonitions) blocks (I use that quite frequently, because it is very pleasant for the eye)
+- [X] Captions for figures (will use the note-block logic, as in the [Equation Referencing](#Adding-equations))
+- [X] Figure size
 
 
 # 👨‍💻🚧 What it cannot convert (so far)
 ## Frequently used functionalities
 
-- [ ] Captions for figures (will use the note-block logic, as in the [Equation Referencing](#Adding-equations))
-- [ ] Figure size
 - [ ] Graphs in latex plotting environment
 - [ ] Table captions (will use the note-block logic, as in the [Equation Referencing](#Adding-equations))
 - [ ] Desirable placement for images
@@ -51,7 +52,6 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 ## Niche/rarely encountered functionalities
 - [X] Discard text inside comments **after** start of a (sub)section
 - [ ] Properly convert results from querying commands in Obsidian. This will probably never be achieved with this converter, since it requires to have access to the obsidian dataview and dataviewjs outputs.
-- [ ] [Admonition](https://github.com/javalent/admonitions) blocks (although I use that quite frequently, because it is very pleasant for the eye)
 - [ ] **VERY DIFFICULT**: Convert anything that has to do with dataview, dataviewjs and inline queries.
 	- This would be very useful, since dataview(js) is quite a powerful tool for organization of numerous things. An idea would be to convert it to .pdf, and merge it to the LateX file. Otherwise, a lot of programming is required!
 - [ ] Automatic table size manipulation (not even LateX does that itself)
