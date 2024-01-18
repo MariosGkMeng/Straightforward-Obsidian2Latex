@@ -1,0 +1,68 @@
+import os
+
+def search_embedded_reference_in_vault(u, PARS, search_in = 'vault'):
+
+    '''
+    Finds the paths of embedded references in the vault
+    '''
+    files = []
+    vault_path = PARS['📁'][search_in]
+    os.chdir(vault_path)
+    for root, dirs, files in os.walk(vault_path):
+        if u in files: return os.path.join(root,u)
+    return ''
+
+def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
+
+
+
+    path_list_of_notes = PARS['📁']['list_paths_notes'] # search in that list first, and if the file doesn't exist, then search the entire vault (which is time-consuming)
+    
+    # Read the text file
+    with open(path_list_of_notes, 'r', encoding='utf8') as file:
+        lines = file.readlines()
+    
+    # Search for the fileName in the lines and retrieve associated paths
+    matching_paths = [line.strip() for line in lines if line.startswith(fileName+":")]
+
+
+    found_extension_that_is_not_md = False
+    extensions = ['.png', '.jpg', '.pdf']
+    for extension in extensions:
+        if fileName.endswith(extension):
+            found_extension_that_is_not_md = True
+            fileNameWithExtension = fileName
+
+    if not found_extension_that_is_not_md:
+        fileNameWithExtension = fileName + '.md'
+
+    if matching_paths:
+        # Process retrieved paths
+        for path_line in matching_paths:
+            path = path_line.split(': ')[1].strip()
+            PATH_DOES_NOT_EXIST = not os.path.exists(path)
+            if PATH_DOES_NOT_EXIST:
+                new_path = search_embedded_reference_in_vault(fileNameWithExtension, PARS, search_in=search_in)
+                if new_path:
+                    # update path_list_of_notes for the next time
+                    updated_line = f"{fileName}: {new_path}\n"
+                    lines[lines.index(path_line+'\n')] = updated_line
+                    with open(path_list_of_notes, 'w', encoding='utf-8') as file:
+                        file.writelines(lines)
+                    return new_path
+                else:
+                    raise Exception(f"Path '{path}' not found. Also, unable to find an alternative path for '{fileName}'.")
+            else:
+                return path
+
+    else:
+
+        path_found = search_embedded_reference_in_vault(fileNameWithExtension, PARS, search_in='vault')
+        if path_found:
+            with open(path_list_of_notes, 'a', encoding='utf-8') as file:
+                # update path_list_of_notes for the next time
+                file.write(f"{fileName}: {path_found}\n")
+            # print(f"Path for '{fileName}' appended as a new line in the text file.")
+            return path_found
+        else:
+            raise Exception(f"No information found for '{fileName}' in the provided text file and unable to find an alternative path.")
