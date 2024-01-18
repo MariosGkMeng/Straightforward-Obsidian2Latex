@@ -441,8 +441,4 @@ def get_file_hierarchy(obsidian_file):
 
     f.close()
 
-<<<<<<< HEAD
     return sections, Lines
-=======
-    return sections, Lines
->>>>>>> dbcd333d13a390c0d927de58ec2ca526fdf4beb9
