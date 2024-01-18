@@ -5,7 +5,7 @@ import os
 SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
 from remove_markdown_comment import *
 from list_of_separate_lines import *
-
+from path_searching import *
 
 def find_label_in_equation(input_string):
     label_pattern = re.compile(r'\\label\s*{\s*(?:eq__block_)([^}]+)\s*}')
@@ -231,7 +231,28 @@ def EQUATIONS__convert_equation_referencing(S0):
     S = S0
     for i, s in enum(S):
         # Using re.sub to replace the matched pattern with the desired text
-        replaced_text = re.sub(pattern, r'\\ref{eq:\1}', s)
+        replaced_text = re.sub(pattern, r'\\cref{eq:\1}', s)
+
+        S[i] = replaced_text
+    
+
+    return S
+
+def FIGURES__convert_figure_referencing(S0):
+
+
+    """
+    Converts the note linking of the format "[[figure__block_figureName]]" to "\\ref{fig:figureName}"
+    """
+
+
+    # Regular expression pattern to match the specified format
+    pattern = r'\[\[figure__block_(.*?)\]\]'
+    
+    S = S0
+    for i, s in enum(S):
+        # Using re.sub to replace the matched pattern with the desired text
+        replaced_text = re.sub(pattern, r'\\cref{\1}', s)
 
         S[i] = replaced_text
     
@@ -247,12 +268,14 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
     """
 
 
+    block_prefix = "eq__block_"
+
     # get the label of the equation from the note name
-    equation_label = embedded_ref.replace("eq__block_","").replace(".md", "")
+    equation_label = embedded_ref.replace(block_prefix,"").replace(".md", "")
     if len(equation_label)==0 or equation_label == "_":
-        equation_label = 'eq__block_empty_label'
+        equation_label = block_prefix+'empty_label'
     else:
-        equation_label = 'eq__block_'+equation_label
+        equation_label = block_prefix+equation_label
 
     # add the equation label afterwards, so that later it is integrated in the latex file
     anything_after_equation_that_can_be_removed_by_rstrip = content__unfold[-1].replace(content__unfold[-1].rstrip(), "")    
@@ -261,3 +284,84 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
     content__unfold[-1] += '\label{' + equation_label + '}' + anything_after_equation_that_can_be_removed_by_rstrip
 
     return content__unfold
+
+
+def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, PARS):
+
+
+    look_for_fields = ['size_in_latex:: ', 'caption_short:: ', 'caption_long:: ']
+    fields = ['' for x in look_for_fields]
+
+    extensions = ['.png', '.jpg', '.pdf']
+
+    with open(path_embedded_reference, 'r', encoding='utf8') as file:
+        lines = file.readlines()
+
+    for i, field in enum(look_for_fields):
+        for line in lines:
+            if line.startswith(field):
+                fields[i] = line.replace(field, '').replace('\n', '').strip()
+
+        
+    #converted_image_text = images_converter([[0, get_embedded_reference_path(cc, PARS)]], PARS['⚙']['figures'])
+    cc=content__unfold[0].replace('![[',"").replace(']]', '')
+    for extension in extensions:
+        if extension in cc:
+            ii=cc.find(extension)
+            break
+    
+    try:
+        cc = cc[:ii]
+    except:
+        raise Exception('Did not find any extension among: ' + ', '.join(extensions))
+    
+
+    label = embedded_ref.replace('figure__block_', '')
+    converted = images_converter([[0, get_embedded_reference_path(cc + extension, PARS)]], PARS['⚙']['figures'], [look_for_fields, fields], label)
+
+    return converted
+
+
+
+def images_converter(images, PARAMETERS, fields, label):
+
+    '''
+    Converts Images given the path of the image file
+    '''
+
+    # NOTES:
+    # --- ", height=0.5\\textheight" addition causes the aspect ratio to break
+
+    caption_short = 'Caption short'
+    caption_long = 'Caption long'
+
+    if len(fields[1][0]) > 0: 
+        figure_width = fields[1][0]
+    else:
+        figure_width = 0.7
+
+    if len(fields[1][1]) > 0: 
+        caption_short = fields[1][1]
+    else:
+        caption_short = ''
+
+    if len(fields[1][2]) > 0: 
+        caption_long = fields[1][2]
+    else:
+        caption_long = ''
+
+
+    TO_PRINT = []
+    for IM in images:
+        path_img = '"' + IM[1].replace('\\', '/') + '"'
+        # label_img = IM[1].split('\\')[-1]
+        TO_PRINT.append(' \n'.join([
+        '\\begin{figure}' + '\label{fig:'+label+'}',
+        '	\centering',
+        '	\includegraphics[width=' + str(figure_width) + '\linewidth]'+\
+            '{"'+path_img+'"}',
+        '	\caption['+caption_short+']{'+caption_long+'}',
+        '   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
+        '\end{figure}']))
+
+    return TO_PRINT
