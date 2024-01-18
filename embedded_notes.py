@@ -7,6 +7,7 @@ SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔�
 from remove_markdown_comment import *
 from list_of_separate_lines import *
 from equations import *
+from path_searching import *
 
 def write_link_in_obsidian_format(s, link_type, is_embedded = False):
 
@@ -154,23 +155,31 @@ def embedded_references_recognizer(S, options, mode):
 
     pattern_embedded_with_section_0 = '!\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
 
-
+    # Pattern recognizing text starting with "[[eq__block"
+    pattern_eq_block = r'\[\[eq__block.*'
 
     if mode=='normal': 
 
         if not options['treat_equation_blocks_separately']:
             pattern_embedded_with_section = pattern_embedded_with_section_0
         else:
-            blocks_to_exclude = '|'.join(['eq__block', 'figure__block'])
+
             # Adjusted regex pattern to exclude strings containing "[[eq__block and any other character]]"
-            pattern_embedded_with_section = '!(?!\[\[('+ blocks_to_exclude + ')).*\[\[([\.' + all_chars + ']+)(\#[' + all_chars + ']+)?(\|[' + all_chars + ']+)?\]\]'
+            # pattern_embedded_with_section = '!(?!\[\[eq__block).*\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
+            pattern_embedded_with_section = '!(?!\[\[eq__block)(?!\[\[figure__block).*\[\[([\.' + all_chars + ']+)(\#[' + all_chars + ']+)?(\|[' + all_chars + ']+)?\]\]'
+
 
     
-    elif mode=='equation_blocks_only':
+    elif mode=='equation_blocks_only' or mode=='figure_blocks_only':
+        # Combined pattern
         pattern_embedded_with_section = pattern_embedded_with_section_0
 
-    elif mode=='figure_blocks_only':
-        pattern_embedded_with_section = pattern_embedded_with_section_0
+        # The following pattern doesn't work:
+        # pattern_embedded_with_section = r'!\[\[(eq__block[^\[\]\|]+)(#[^\[\]\|]+)?(\|[^\[\]\|]+)?\]\]' 
+        # output = [('eq__block_single__23#expr', '', '')]
+        # desired_output = [('eq__block_single__23', '#expr', '')]
+        # ChatGPT cannot correct it! 
+        # Therefore, I am making a patch
 
     else:
         raise Exception('Nothing coded for this case!')
@@ -255,74 +264,6 @@ def non_embedded_references_converter(S, options):
     return S
 
 
-def search_embedded_reference_in_vault(u, PARS, search_in = 'vault'):
-
-    '''
-    Finds the paths of embedded references in the vault
-    '''
-    files = []
-    vault_path = PARS['📁'][search_in]
-    os.chdir(vault_path)
-    for root, dirs, files in os.walk(vault_path):
-        if u in files: return os.path.join(root,u)
-    return ''
-
-
-def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
-
-
-
-    path_list_of_notes = PARS['📁']['list_paths_notes'] # search in that list first, and if the file doesn't exist, then search the entire vault (which is time-consuming)
-    
-    # Read the text file
-    with open(path_list_of_notes, 'r', encoding='utf8') as file:
-        lines = file.readlines()
-    
-    # Search for the fileName in the lines and retrieve associated paths
-    matching_paths = [line.strip() for line in lines if line.startswith(fileName+":")]
-
-
-    found_extension_that_is_not_md = False
-    extensions = ['.png', '.jpg', '.pdf']
-    for extension in extensions:
-        if fileName.endswith(extension):
-            found_extension_that_is_not_md = True
-            fileNameWithExtension = fileName
-
-    if not found_extension_that_is_not_md:
-        fileNameWithExtension = fileName + '.md'
-
-    if matching_paths:
-        # Process retrieved paths
-        for path_line in matching_paths:
-            path = path_line.split(': ')[1].strip()
-            PATH_DOES_NOT_EXIST = not os.path.exists(path)
-            if PATH_DOES_NOT_EXIST:
-                new_path = search_embedded_reference_in_vault(fileNameWithExtension, PARS, search_in=search_in)
-                if new_path:
-                    # update path_list_of_notes for the next time
-                    updated_line = f"{fileName}: {new_path}\n"
-                    lines[lines.index(path_line+'\n')] = updated_line
-                    with open(path_list_of_notes, 'w', encoding='utf-8') as file:
-                        file.writelines(lines)
-                    return new_path
-                else:
-                    raise Exception(f"Path '{path}' not found. Also, unable to find an alternative path for '{fileName}'.")
-            else:
-                return path
-
-    else:
-
-        path_found = search_embedded_reference_in_vault(fileNameWithExtension, PARS, search_in='vault')
-        if path_found:
-            with open(path_list_of_notes, 'a', encoding='utf-8') as file:
-                # update path_list_of_notes for the next time
-                file.write(f"{fileName}: {path_found}\n")
-            # print(f"Path for '{fileName}' appended as a new line in the text file.")
-            return path_found
-        else:
-            raise Exception(f"No information found for '{fileName}' in the provided text file and unable to find an alternative path.")
-
 
 
 def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
@@ -382,11 +323,14 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
             # To solve that, we could track the "parent" of an embedded reference
             CONDITION_1 = not embedded_ref in md__files_embedded
             CONDITION_2 = True
-            if CONDITION_1:
+            if CONDITION_2:
                 # Unfold this note ONLY when it hasn't already been unfolded
                 md__files_embedded.append(embedded_ref)
                 
-                path_embedded_reference = get_embedded_reference_path(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
+                try:
+                    path_embedded_reference = get_embedded_reference_path(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
+                except:
+                    print('d')
 
                 if len(path_embedded_reference) == 0:
                     raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁'][where_to_search_for_embedded_notes])
@@ -394,13 +338,25 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 section_name = section.lstrip('#')
                 content__unfold = extract_section_from_file(path_embedded_reference, section_name)
 
-                if mode!='equation_blocks_only':
+                if (mode!='equation_blocks_only') and (mode!='figure_blocks_only'):
+                    
                     # since we don't expect to have comments in the single block (code optimization)
                     content__unfold = remove_markdown_comments(content__unfold)
                 else:
-                    content__unfold = EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embedded_ref)
+                    if mode=='equation_blocks_only': 
+                        if embedded_ref.startswith('eq__block'):
+                            content__unfold = EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embedded_ref)
+                        elif embedded_ref.startswith('figure__block'):
+                            content__unfold = FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, PARS)
+                        else:
+                            content__unfold = ''
+                    elif mode=='figure_blocks_only': 
+                        raise Exception('Under construction!')
+                    else:
+                        raise Exception('Nothing coded for this case!')
 
-                S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
+                if len(content__unfold) > 0:
+                    S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
 
     if mode!='normal':
         S = get_list_of_separate_string_lines(S)
@@ -485,4 +441,8 @@ def get_file_hierarchy(obsidian_file):
 
     f.close()
 
+<<<<<<< HEAD
     return sections, Lines
+=======
+    return sections, Lines
+>>>>>>> dbcd333d13a390c0d927de58ec2ca526fdf4beb9
