@@ -308,8 +308,8 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 
         has_extension = False
 
-        embedded_ref = line_embed[0][1]
-        section=line_embed[0][2]
+        embedded_ref = line_embed[0][0]
+        section=line_embed[0][1]
         markdown_ref = write_link_in_obsidian_format([line_embed[0][0], section, line_embed[0][2]], 'section',is_embedded=True)
         for file_type in file_types:
             if file_type in embedded_ref:
