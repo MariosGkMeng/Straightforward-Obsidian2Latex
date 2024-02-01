@@ -37,7 +37,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - [X] Specific parts of embedded notes (e.g. if the embedded note is "![[note_name# Some note section]]", the script would still paste the entire content of that note)
 - [X] Convertion of codeblocks
 - [X] Italic font
-- [X] [Admonition](https://github.com/javalent/admonitions) blocks (I use that quite frequently, because it is very pleasant for the eye)
+- [X] [Admonition](https://f5-rtd-howto.readthedocs.io/en/dev/resources/resources_rtd-admonitions.html) blocks (I use that quite frequently, because it is very pleasant for the eye)
 - [X] Captions for figures (will use the note-block logic, as in the [Equation Referencing](#Adding-equations))
 - [X] Figure size
 
