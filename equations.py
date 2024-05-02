@@ -14,11 +14,17 @@ def find_label_in_equation(input_string):
 
 
 def EQUATIONS__convert_non_numbered_to_numbered(S0):
+        
+    """
+    Converts equations from the format "$$equation_here$$\\label{label}" to:
+    "\begin{equation} \\label{label} \n \t equation_here \n \end{equation}"
+    """
+
     S = S0
 
     # with the following pattern, the equation label will only be identified if it starts with "eq__block_"
     pattern = re.compile(r'\$\$\s*(.*?)\s*\$\$(?:\s*\\label\{(eq__block_)([^}]+)\})?')
-
+    
     for i, s in enumerate(S):
         matches = pattern.findall(s)
         text = s
@@ -32,12 +38,19 @@ def EQUATIONS__convert_non_numbered_to_numbered(S0):
             #
 
             for match in matches:
+                
                 equation = match[0].strip()
                 label_prefix = match[1] if match[1] else ""
                 label_name = match[2] if match[2] else ""
 
                 # Create the modified equation with the label if present
                 modified_equation = f'\\begin{{equation}}' + (f' \\label{{eq:{label_name}}}' if label_name else '') + f'\n\t{equation}\n\\end{{equation}}'
+
+                # Bad programming patch (due to not being able to fix it with Regex)
+                # Doing this because the equation will not be corrected when there's any between the equation body and the |"$" symbol
+                for k in range(4):
+                    text = text.replace(' '*k+'$', '$').replace('$'+' '*k, '$')
+                #
 
                 # Replace the original equation with the modified one
                 text = text.replace(f'${match[0]}$', modified_equation)
@@ -252,7 +265,7 @@ def FIGURES__convert_figure_referencing(S0):
     S = S0
     for i, s in enum(S):
         # Using re.sub to replace the matched pattern with the desired text
-        replaced_text = re.sub(pattern, r'\\cref{\1}', s)
+        replaced_text = re.sub(pattern, r'\\cref{fig:\1}', s)
 
         S[i] = replaced_text
     
@@ -281,7 +294,15 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
     anything_after_equation_that_can_be_removed_by_rstrip = content__unfold[-1].replace(content__unfold[-1].rstrip(), "")    
     
     content__unfold[-1] = content__unfold[-1].rstrip()
-    content__unfold[-1] += '\label{' + equation_label + '}' + anything_after_equation_that_can_be_removed_by_rstrip
+
+    add_new_line_after_label = True
+
+    if add_new_line_after_label:
+        tmp1 = '\n'
+    else:
+        tmp1 = ''
+
+    content__unfold[-1] += '\label{' + equation_label + '}' + anything_after_equation_that_can_be_removed_by_rstrip + tmp1
 
     return content__unfold
 
@@ -317,13 +338,13 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
     
 
     label = embedded_ref.replace('figure__block_', '')
-    converted = images_converter([[0, get_embedded_reference_path(cc + extension, PARS)]], PARS['⚙']['figures'], [look_for_fields, fields], label)
+    converted = images_converter([[0, get_embedded_reference_path(cc + extension, PARS)]], PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
 
     return converted
 
 
 
-def images_converter(images, PARAMETERS, fields, label):
+def images_converter(images, PARAMETERS, fields, label, latex_file_path):
 
     '''
     Converts Images given the path of the image file
@@ -332,36 +353,41 @@ def images_converter(images, PARAMETERS, fields, label):
     # NOTES:
     # --- ", height=0.5\\textheight" addition causes the aspect ratio to break
 
-    caption_short = 'Caption short'
-    caption_long = 'Caption long'
+    # get parameters of the latex figure command
+    latex_figure_field = [0.7, '', ''] # the defaults
 
-    if len(fields[1][0]) > 0: 
-        figure_width = fields[1][0]
-    else:
-        figure_width = 0.7
+    # change defaults, if user put something
+    for iF, f in enum(fields[1]):
+        if len(f)>0: latex_figure_field[iF] = f 
 
-    if len(fields[1][1]) > 0: 
-        caption_short = fields[1][1]
-    else:
-        caption_short = ''
-
-    if len(fields[1][2]) > 0: 
-        caption_long = fields[1][2]
-    else:
-        caption_long = ''
-
+    figure_width, caption_short, caption_long = latex_figure_field
 
     TO_PRINT = []
+
+
+    begin_figure = '\\begin{figure}'
+    if PARAMETERS['put_figure_below_text']: begin_figure += '[H]'
+
     for IM in images:
-        path_img = '"' + IM[1].replace('\\', '/') + '"'
+        path_img0 = IM[1].replace('\\', '/')
+
+        img_directory = '/'.join(path_img0.split('/')[:-1])
+        cndTmp1 = 0
+        path_img = '"'*cndTmp1 + path_img0 + '"'*cndTmp1
+
+        # check if image is in the same folder as the latex file (in which case, no need to have the absolute path)
+        if (img_directory == '/'.join(latex_file_path.replace('\\', '/').split('/')[:-1])) or (not PARAMETERS['include_path']):
+            path_img = path_img.replace(img_directory+'/', '')
+
         # label_img = IM[1].split('\\')[-1]
         TO_PRINT.append(' \n'.join([
-        '\\begin{figure}' + '\label{fig:'+label+'}',
+        begin_figure,
         '	\centering',
         '	\includegraphics[width=' + str(figure_width) + '\linewidth]'+\
             '{"'+path_img+'"}',
-        '	\caption['+caption_short+']{'+caption_long+'}',
+        '	\caption['+caption_short+']'+('{'+caption_long+'}')*(len(caption_long)>0),
         '   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
+        '   \label{fig:'+label+'}',
         '\end{figure}']))
 
     return TO_PRINT
