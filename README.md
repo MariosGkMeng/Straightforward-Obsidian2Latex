@@ -71,7 +71,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - Large Obsidian files consume significant RAM (read [here](https://www.reddit.com/r/ObsidianMD/comments/scwg7a/obsidian_is_a_ram_hog/) as to why)
 - Equation referencing: so far need to create separate embedded notes that represent equation blocks, since Obsidian itself cannot interact with MathJax well enough to create an equation referencing system
 - ⚠ Direct text replacements are not possible, since we are using embedded notes, therefore those texts that we want to replace are not found in a single document (a solution can implemented, via tracking the links)
-	- Need a text replacement tool for the embedded parts!	
+	- **Solution:** Use the text replacement tool in the jupyter file
 
 # 📽 List of videos
 If you are inpatient and want to jump to some videos, here's the list:
