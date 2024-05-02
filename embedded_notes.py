@@ -3,7 +3,8 @@ import os
 import copy
 
 # For recognizing file names, section names, block names
-SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+SPECIAL_CHARACTERS = r" ,':?%💬⚠✍⌛💼🟢➕❓⛏🔭❌👆🔴⭐✔🧑☺📁🗣⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+                     
 from remove_markdown_comment import *
 from list_of_separate_lines import *
 from equations import *
@@ -33,14 +34,33 @@ def internal_links__identifier(S):
         return np.nan
 
 
-    pattern_sections = '\[\[([\w\s-]+)\#([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
-    pattern_blocks = r'\[\[([\w\s-]+)\#\^([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
+    # OLD
+    # pattern_sections = '\[\[([\w\s-]+)\#([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
+    # pattern_blocks = r'\[\[([\w\s-]+)\#\^([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
+
+    # NEW (from ChatGPT)
+    pattern_sections = r'\[\[\s*([\w\s-]+)\s*#\s*([\w' + re.escape(SPECIAL_CHARACTERS) + r'\-]+)(\|[\w' + re.escape(SPECIAL_CHARACTERS) + r'\-]+)?\s*\]\]'
+    pattern_blocks = r'\[\[\s*([\w\s-]+)\s*#\^\s*([\w' + re.escape(SPECIAL_CHARACTERS) + r'\-]+)(\|[\w' + re.escape(SPECIAL_CHARACTERS) + r'\-]+)?\s*\]\]'
+
+
+
+    SPECIAL_CHARACTERS_1 = r" ,':?%💬⚠💼🟢➕✍⌛❓⛏❌🔴✔🗣🧑🔭👆☺📁⚙⭐🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+    pattern_sections_1 = r'\[\[\s*([\w\s-]+)\s*#\s*([\w' + re.escape(SPECIAL_CHARACTERS_1) + r'\-]+)(\|[\w' + re.escape(SPECIAL_CHARACTERS_1) + r'\-]+)?\s*\]\]'
+
+
+    # Even more recent, from: https://chat.openai.com/c/25974e18-74d7-4d0f-a772-9c570c016c4b
+
+    SPECIAL_CHARACTERS_2 = r" ,':?%💬⚠💼🟢➕✍⌛❓⛏❌🔴✔🗣🧑🔭👆☺📁⚙⭐🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+    pattern_sections_1 = r'\[\[\s*([^\[\]#]+)\s*#\s*([^\[\]|]+)(?:\|([^\[\]]+))?\s*\]\]'
+
     MATCHES = []
     for i, s in enum(S):
-        match_sections = re.findall(pattern_sections, s)
+        
+        # match_sections = re.findall(pattern_sections, s)
+        match_sections_1 = re.findall(pattern_sections_1, s)
         match_blocks = re.findall(pattern_blocks, s)
-        if len(match_sections) != 0 or len(match_blocks) != 0:
-            MATCHES.append([i, match_sections, match_blocks])
+        if len(match_sections_1) != 0 or len(match_blocks) != 0:
+            MATCHES.append([i, match_sections_1, match_blocks])
     
     return MATCHES
 
@@ -50,8 +70,48 @@ def internal_links__identifier(S):
 #     '''
 
 
+def unfold_all_embedded_notes(S, PARS):
+    
+    md__files_embedded_prev0 = []
+    md__files_embedded_prev = md__files_embedded_prev0.copy()
 
-def internal_links__enforcer(S, sections_blocks, internal_links):
+    lambda__unfold_embedded_notes = lambda x, y: unfold_embedded_notes(x, y, PARS, mode='normal')
+
+    [S, md__files_embedded_new] = lambda__unfold_embedded_notes(S, md__files_embedded_prev)
+
+    CND__LIST_OF_EMBEDDED_NOTES_IS_CHANGING = md__files_embedded_prev0 != md__files_embedded_new
+
+    while CND__LIST_OF_EMBEDDED_NOTES_IS_CHANGING:
+        md__files_embedded_prev0 = md__files_embedded_new.copy()
+        md__files_embedded_prev = md__files_embedded_prev0.copy()
+
+        [S, md__files_embedded_new] = lambda__unfold_embedded_notes(S, md__files_embedded_prev)
+
+        CND__LIST_OF_EMBEDDED_NOTES_IS_CHANGING = md__files_embedded_prev0 != md__files_embedded_new
+
+
+    return S, md__files_embedded_new
+
+
+def search_in_embedded_notes(S, PARS):
+
+    # Get all embedded references
+    [_, md__files_embedded_new] = unfold_all_embedded_notes(S, PARS)
+
+
+
+def char_replacement_sections(section):
+
+    section_character_replacements = [':']
+
+    for repl in section_character_replacements:
+        section = section.replace(repl, "")
+
+    return section
+
+
+
+def internal_links__enforcer(S, sections_blocks, internal_links, options):
 
     '''
     Converts the Obsidian internal links to Latex internal links
@@ -61,6 +121,7 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
 
     type_of_link = ['sec:', '']
     type_of_link_obsidian = ['#', '#^']
+
     sections = sections_blocks[0]
     blocks = sections_blocks[1]
 
@@ -82,15 +143,17 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
             if len(Ii_sb) != 0:
                 
                 line_number = I[0]
-                for i in Ii_sb:
-                    section_i = Ii_sb[0][1]
-                    idx = [j for j in range(len(sections_blocks[iS])) if sections_blocks[iS][j][1] == section_i] # index of the section in the section list
+                for Ii_sb_i in Ii_sb:
+                    section_i = Ii_sb_i[1]
+                    
+
+                    idx = [j for j in range(len(sections_blocks[iS])) if char_replacement_sections(sections_blocks[iS][j][1]) == section_i] # index of the section in the section list
                     if len(idx)>0: 
                         # Found match between existing sections and blocks of the file and the referenced section
                         idx=idx[0]
 
                         label_latex_format = type_of_link[iS] + section_i.replace(' ', '-')
-                        hyperref_text = Ii_sb[0][-1].replace('|', '')
+                        hyperref_text = Ii_sb_i[-1].replace('|', '')
 
                         if type_of_link[iS]!='sec:':
                             label_of_source = ' \hypertarget{' + label_latex_format + '}' #+ '{}' 
@@ -117,29 +180,36 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
                                 S[sections_blocks[iS][idx][0]] = label__in_line.replace('^' + label_latex_format, '') + add__S_repl
 
 
-                        if label_latex_format.startswith("sec:"):
-                            hyperref = '\hyperref[' + label_latex_format + ']' + hyperref_text 
-                        else:
-                            hyperref = '\hyperlink{' + label_latex_format + '}' + hyperref_text 
-                        # for blocks, better write "hyperlink"
+                        cnd__use_hyperref = (label_latex_format.startswith("sec:")) or (iS==0)
+                        cnd__use_hyperhyperlink = (iS==1) and (not (cnd__use_hyperref))
 
+                        if cnd__use_hyperref:
+                            hyperref = '\hyperref[' + label_latex_format + ']' + hyperref_text 
+                            if options['add_section_number_after_referencing']:
+                                hyperref += f": \\autoref{{{label_latex_format}}}"
+                        elif cnd__use_hyperhyperlink:
+                            # for blocks, better write "hyperlink"
+                            hyperref = '\hyperlink{' + label_latex_format + '}' + hyperref_text 
+                        else:
+                            raise Exception("Nothing coded here!")
+                        
                         if iS==0:
-                            obsidian_hyperref = write_link_in_obsidian_format(Ii_sb[0], 'section')
+                            obsidian_hyperref = write_link_in_obsidian_format(Ii_sb_i, 'section')
                         elif iS==1:
-                            obsidian_hyperref = write_link_in_obsidian_format(Ii_sb[0], 'block')
+                            obsidian_hyperref = write_link_in_obsidian_format(Ii_sb_i, 'block')
                         else:
                             raise Exception("Nothing coded here!")
                         S[line_number] = S[line_number].replace(obsidian_hyperref, hyperref)
                     else:
                         # did not find anything, therefore leaving the name only
 
-                        link_name = Ii_sb[0][2].replace('|', "")
+                        link_name = Ii_sb_i[2].replace('|', "")
                         if len(link_name)>0:
                             if iS==0:
                                 type_of_link = 'section'
                             else:
                                 type_of_link = 'block'
-                            text_to_replace = write_link_in_obsidian_format(Ii_sb[0], type_of_link)
+                            text_to_replace = write_link_in_obsidian_format(Ii_sb_i, type_of_link)
                             S[line_number] = S[line_number].replace(text_to_replace, link_name)
                         
     return S
@@ -147,6 +217,8 @@ def internal_links__enforcer(S, sections_blocks, internal_links):
 
 def embedded_references_recognizer(S, options, mode):
 
+    # BUG2: SOMEHOW THE "SPECIAL_CHARACTERS" VARIABLE IS NOT GLOBALLY CORRECT. CHANGES IN THE GLOBAL VARIABLE NOT APPLIED IN THE FUNCTION, THEREFORE WRITING IT HERE FOR NOW
+    SPECIAL_CHARACTERS = r" ,':?%💬⚠💼🔭🟢➕✍⌛⛏❓❌🔴⭐✔👆🧑☺📁🗣⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
 
     all_chars = '\w' + SPECIAL_CHARACTERS + '\-'
     if not isinstance(S, list):
@@ -158,37 +230,63 @@ def embedded_references_recognizer(S, options, mode):
     # Pattern recognizing text starting with "[[eq__block"
     pattern_eq_block = r'\[\[eq__block.*'
 
-    if mode=='normal': 
+    discard_special_cases = (mode=='normal') and options['treat_equation_blocks_separately']
+    pattern_embedded_with_section = pattern_embedded_with_section_0
+    special_cases = ['eq__block', 'figure__block']
 
-        if not options['treat_equation_blocks_separately']:
-            pattern_embedded_with_section = pattern_embedded_with_section_0
-        else:
+    # The following commented if clause was commented because both me and ChatGPT can't find a proper regex expression
+    # Replaced that with a dirty patch starting from `if discard_special_cases:`
+    # if mode=='normal': 
 
-            # Adjusted regex pattern to exclude strings containing "[[eq__block and any other character]]"
-            # pattern_embedded_with_section = '!(?!\[\[eq__block).*\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
-            pattern_embedded_with_section = '!(?!\[\[eq__block)(?!\[\[figure__block).*\[\[([\.' + all_chars + ']+)(\#[' + all_chars + ']+)?(\|[' + all_chars + ']+)?\]\]'
+    #     if not options['treat_equation_blocks_separately']:
+    #         pattern_embedded_with_section = pattern_embedded_with_section_0
+    #     else:
 
+    #         # Adjusted regex pattern to exclude strings containing "[[eq__block and any other character]]"
+    #         # pattern_embedded_with_section = '!(?!\[\[eq__block).*\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
+
+    #         pattern_embedded_with_section = '!(?!\[\[eq__block)(?!\[\[figure__block).*\[\[([\.' + all_chars + ']+)(\#[' + all_chars + ']+)?(\|[' + all_chars + ']+)?\]\]'
 
     
-    elif mode=='equation_blocks_only' or mode=='figure_blocks_only':
-        # Combined pattern
-        pattern_embedded_with_section = pattern_embedded_with_section_0
+    # elif mode=='equation_blocks_only' or mode=='figure_blocks_only':
+    #     # Combined pattern
+    #     pattern_embedded_with_section = pattern_embedded_with_section_0
 
-        # The following pattern doesn't work:
-        # pattern_embedded_with_section = r'!\[\[(eq__block[^\[\]\|]+)(#[^\[\]\|]+)?(\|[^\[\]\|]+)?\]\]' 
-        # output = [('eq__block_single__23#expr', '', '')]
-        # desired_output = [('eq__block_single__23', '#expr', '')]
-        # ChatGPT cannot correct it! 
-        # Therefore, I am making a patch
+    #     # The following pattern doesn't work:
+    #     # pattern_embedded_with_section = r'!\[\[(eq__block[^\[\]\|]+)(#[^\[\]\|]+)?(\|[^\[\]\|]+)?\]\]' 
+    #     # output = [('eq__block_single__23#expr', '', '')]
+    #     # desired_output = [('eq__block_single__23', '#expr', '')]
+    #     # ChatGPT cannot correct it! 
+    #     # Therefore, I am making a patch
 
-    else:
-        raise Exception('Nothing coded for this case!')
+    # else:
+    #     raise Exception('Nothing coded for this case!')
 
     MATCHES = []
     for i, s in enum(S):
         match_pattern_embedded = re.findall(pattern_embedded_with_section, s)
-        if len(match_pattern_embedded) != 0:
+        
+        # adding a dirty patch, cause both me and ChatGPT can't find a proper regex expression
+        if not "![[" in s: match_pattern_embedded = []
+    
+        # adding a dirty patch, cause both me and ChatGPT can't find a proper regex expression
+        if discard_special_cases:
+            match_pattern_embedded_tmp = []
+            if len(match_pattern_embedded) != 0:
+                for m in match_pattern_embedded:
+                    for sp in special_cases:
+                        is_not_special_case = True
+                        if m[0].startswith(sp):
+                            is_not_special_case = False
+                            break
+                        
+                    if is_not_special_case: match_pattern_embedded_tmp.append(m)
 
+            match_pattern_embedded = match_pattern_embedded_tmp
+
+        if len(match_pattern_embedded) != 0:
+            
+            
             # Extract text starting with '%%lcmd' and ending with 'lcmd%%'
             match_latex_command_from_obsidian = re.search(r'%%lcmd(.*?)lcmd%%', s)
 
@@ -206,6 +304,13 @@ def embedded_references_recognizer(S, options, mode):
 
 def non_embedded_references_recognizer(S):
 
+    '''
+    ⚠ Note that this does not pertain to internal links with sections!
+    '''
+
+
+    # BUG2: SOMEHOW THE "SPECIAL_CHARACTERS" VARIABLE IS NOT GLOBALLY CORRECT. CHANGES IN THE GLOBAL VARIABLE NOT APPLIED IN THE FUNCTION, THEREFORE WRITING IT HERE FOR NOW
+    SPECIAL_CHARACTERS = r" ,':?%💬⚠💼🔭🟢➕✍⌛⛏❓❌👆🔴⭐✔🧑☺📁🗣⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
 
     all_chars = '\w' + SPECIAL_CHARACTERS + '\-'
     if not isinstance(S, list):
@@ -298,7 +403,19 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
         LISTS_S = []
 
     file_types = ['.png', '.pdf', '.jpg']
-    ss1 = embedded_references_recognizer(S, PARS['⚙']['EMBEDDED REFERENCES'], mode)
+    PARS_EMBEDDED_REFS = PARS['⚙']['EMBEDDED REFERENCES']
+    ss1 = embedded_references_recognizer(S, PARS_EMBEDDED_REFS, mode)
+
+
+    if PARS_EMBEDDED_REFS['adapt_section_hierarchy']:
+        content_filter_1 = lambda x, Lines, lNum: change_section_hierarchy(x, Lines, lNum)
+    else:
+        content_filter_1 = lambda x, Lines, lNum: (x)
+
+    if PARS_EMBEDDED_REFS['write_obsidian_ref_name_on_latex_comment']:    
+        content_filter_2 = lambda x, mref: ['% Start obsidian ref:\n' + mref.replace("![[", "[[")] + x + ['\n% End obsidian ref\n']
+    else:
+        content_filter_2 = lambda x, mref: (x)
 
     line_numbers_unfolded_notes = [ln[0] for ln in ss1]
 
@@ -314,30 +431,33 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
         for file_type in file_types:
             if file_type in embedded_ref:
                 has_extension = True
-                # break
+                break
 
         if not has_extension: 
             # means that it is a .md file, which we need to unfold
-            # BUG_2 (line below): the following condition has the problem: if there's multiple times that the embedded_ref appears, but with a different section/block, then it will be ignored! 
+            # BUG_2 (line below): the following condition has the problem: 
+            # if there's multiple times that the embedded_ref appears, but with a different section/block, then it will be ignored! 
             # We can use CONDITION_2, that allows all embedded notes to be inserted, with the risk of allowing infinite loops
             # To solve that, we could track the "parent" of an embedded reference
             CONDITION_1 = not embedded_ref in md__files_embedded
             CONDITION_2 = True
             if CONDITION_2:
                 # Unfold this note ONLY when it hasn't already been unfolded
-                md__files_embedded.append(embedded_ref)
                 
+                md__files_embedded.append(embedded_ref)
+
                 try:
                     path_embedded_reference = get_embedded_reference_path(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
                 except:
-                    print('d')
+                    raise Exception("Error")
 
-                if len(path_embedded_reference) == 0:
-                    raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁'][where_to_search_for_embedded_notes])
+                if len(path_embedded_reference) == 0: raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁'][where_to_search_for_embedded_notes])
 
                 section_name = section.lstrip('#')
                 content__unfold = extract_section_from_file(path_embedded_reference, section_name)
 
+                content__unfold = content_filter_1(content__unfold, S, line_number)
+                    
                 if (mode!='equation_blocks_only') and (mode!='figure_blocks_only'):
                     
                     # since we don't expect to have comments in the single block (code optimization)
@@ -354,9 +474,10 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                         raise Exception('Under construction!')
                     else:
                         raise Exception('Nothing coded for this case!')
+                
+                if len(content__unfold) > 0: content__unfold = content_filter_2(content__unfold, markdown_ref)
 
-                if len(content__unfold) > 0:
-                    S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
+                S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
 
     if mode!='normal':
         S = get_list_of_separate_string_lines(S)
@@ -369,7 +490,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 S1.append(S[z:i] + S[i].split('\n'))
                 z=i+1
             
-            S1.append(S[z+1:])
+            S1.append(S[z:])
             S2 = []
             for s in S1: S2+=s
 
@@ -382,6 +503,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 def extract_section_from_file(obsidian_file, section):
 
     file_hierarchy, Lines = get_file_hierarchy(obsidian_file)
+
     if section == '':
         return Lines
 
@@ -420,15 +542,16 @@ def get_file_hierarchy(obsidian_file):
     if not isinstance(obsidian_file, str):
         raise Exception('obsidian_file variable must be of type string, and specifically, a path!')
 
-    f = open(obsidian_file, 'r', encoding='utf8')
-    Lines = f.readlines()
+    with open(obsidian_file, 'r', encoding='utf8') as f: Lines = f.readlines()
+    return get_hierarcy_from_lines(Lines), Lines
 
-    pattern_how_many_sections = r'^#+'
+
+def get_hierarcy_from_lines(Lines):
     comment_pattern = r'^\s*#+\s*%%.*%%.*$'  # Pattern to detect commented titles
 
     sections = []
     for iL, ln_f in enumerate(Lines):
-        has_section = re.findall(pattern_how_many_sections, ln_f)
+        has_section = extract_section_from_line(ln_f)
         #is_commented_title = re.match(comment_pattern, ln_f)
 
         if has_section: # and not is_commented_title:
@@ -439,6 +562,36 @@ def get_file_hierarchy(obsidian_file):
 
             sections.append(section_i)
 
-    f.close()
+    return sections
 
-    return sections, Lines
+
+def change_section_hierarchy(content__unfold, S, line_number):
+
+
+    # get file hierarchy of how lines are right now
+    secs = get_hierarcy_from_lines(S)
+    try:
+        idx = [i for i, j in enumerate(secs) if j[0]<line_number][-1]
+    except:
+        return content__unfold
+
+
+    level = secs[idx][1]
+
+    content__unfold_modified = []
+
+    for c in content__unfold:
+        has_section = extract_section_from_line(c)
+        if has_section:
+            previous_level = len(has_section[0])
+            c1 = has_section[0] + level*'#' + ' ' + c[previous_level:].lstrip()
+        else:
+            c1 = c
+
+        content__unfold_modified.append(c1)
+
+    return content__unfold_modified
+
+
+def extract_section_from_line(line):
+    return re.findall(r'^#+', line)
