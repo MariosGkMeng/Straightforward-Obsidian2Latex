@@ -1,20 +1,43 @@
 import os
 
+
+def count_calls(func):
+    def wrapper(*args, **kwargs):
+        wrapper.calls += 1
+        # print(f"Function '{func.__name__}' has been called {wrapper.calls} times.")
+        return func(*args, **kwargs)
+    wrapper.calls = 0
+    return wrapper
+
+@count_calls
 def search_embedded_reference_in_vault(u, PARS, search_in = 'vault'):
 
     '''
-    Finds the paths of embedded references in the vault
+    Finds the paths of embedded references in the vault (by far the most time-consuming process)
     '''
+    # global has_come_here_at_least_once
     files = []
     vault_path = PARS['📁'][search_in]
-    os.chdir(vault_path)
+    os.chdir(vault_path)    
+    
+    if search_embedded_reference_in_vault.calls == 1: 
+        search_embedded_reference_in_vault.calls = 0 # gotta reset the decorator count, cause jupyter notebook keeps the count from the previous run
+        msg1 = "Searching within the vault for (⚠NOTE: Searching within the vault for a note takes time, but then this note will not have to be searched again!): "
+        print(msg1)
+        print('-'*len(msg1))
+    
+    print('\t' + u + '. ')
     for root, dirs, files in os.walk(vault_path):
         if u in files: return os.path.join(root,u)
     return ''
 
 def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
 
-
+    '''
+    Because searching within the vault takes quite a bit of time for large vaults, this function first
+    searches in the textfile (PARS['📁']['list_paths_notes']) for the path. 
+    If it does not exist, it uses the `search_embedded_reference_in_vault` function to find it in the vault.
+    '''
 
     path_list_of_notes = PARS['📁']['list_paths_notes'] # search in that list first, and if the file doesn't exist, then search the entire vault (which is time-consuming)
     
@@ -32,6 +55,7 @@ def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
         if fileName.endswith(extension):
             found_extension_that_is_not_md = True
             fileNameWithExtension = fileName
+            break
 
     if not found_extension_that_is_not_md:
         fileNameWithExtension = fileName + '.md'
