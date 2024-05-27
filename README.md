@@ -120,7 +120,7 @@ This uses what we can call "**==note-block logic==**". I.e., writing the equatio
 
 Due to the inherent difficulty of equation numbering in Obsidian (read this [thread](https://forum.obsidian.md/t/automatic-equation-numbering-latex-math/1325) for details), there is no direct way to number and refer to the equations in Obsidian.
 
-The workaround that I have used requires creation of a separate note wherein only the equation is to be added. The note has to obey a few formatting rules, which can be automated with **QuickAdd**.
+The workaround that I have used requires creation of a separate note wherein only the equation is to be added. The note has to obey a few formatting rules, which can be automated with **QuickAdd**. To learn how to use it, please refer to the plugin guide. It is quite easy. 
 
 The folder that you specify in QuickAdd wherein your equation note/block is to be created must be the same as `PARS['📂']['equation_blocks']`.
 
@@ -164,7 +164,7 @@ Latex Text:    "In \cite{p62}, the authors mention that ..."
 
 BUT: as a user, you have to add the BibTex citation manually in your designated BibTex file, and use the "p62" as a name. That Bibtex file should be located in **the same path as `PARS['📁']['tex-file']`**!
 
-I will "relax" this rule soon.
+I will "relax"/parameterize this rule soon.
 
 # 🟢 Good Practices in Obsidian
 ## Embedded notes
