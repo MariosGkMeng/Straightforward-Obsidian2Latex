@@ -7,6 +7,10 @@ from remove_markdown_comment import *
 from list_of_separate_lines import *
 from path_searching import *
 
+
+# def regex_patterns_for_equations():
+    
+
 def find_label_in_equation(input_string):
     label_pattern = re.compile(r'\\label\s*{\s*(?:eq__block_)([^}]+)\s*}')
     label_match = label_pattern.search(input_string)
@@ -171,9 +175,6 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
     else:
         return None
 
-
-
-
 def EQUATIONS__check_and_correct_aligned_equations(S0):
 
     indexes_start = []
@@ -309,10 +310,8 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
 
 def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, PARS):
 
-
     look_for_fields = ['size_in_latex:: ', 'caption_short:: ', 'caption_long:: ']
-    fields = ['' for x in look_for_fields]
-
+    fields = ['' for _ in look_for_fields]
     extensions = ['.png', '.jpg', '.pdf']
 
     with open(path_embedded_reference, 'r', encoding='utf8') as file:
@@ -325,20 +324,32 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
 
         
     #converted_image_text = images_converter([[0, get_embedded_reference_path(cc, PARS)]], PARS['⚙']['figures'])
-    cc=content__unfold[0].replace('![[',"").replace(']]', '')
-    for extension in extensions:
-        if extension in cc:
-            ii=cc.find(extension)
-            break
-    
+    embedded_images_text = content__unfold[0]
     try:
-        cc = cc[:ii]
+        embedded_images = [x.replace(']]', '') for x in embedded_images_text.split("![[")[1:]]
     except:
-        raise Exception('Did not find any extension among: ' + ', '.join(extensions))
+        raise Exception("Probably could not find any images in your figure note file!")
+    
+    
+    embedded_images = [x[:x.find("|")] for x in embedded_images]
+    
+    # idx_extension = []
+    # extensions_found = []
+    # for extension in extensions:
+    #     for cc in embedded_images:
+    #         if extension in cc:
+    #             ii=cc.find(extension)
+    #             idx_extension.append(ii)
+    #             extensions_found.append(extension)
+    #             break    
+    # try:
+    #     embedded_images = [x[:idx_extension[i]] + extensions_found[i] for i, x in enum(embedded_images)]
+    # except:
+    #     raise Exception('While looking for image/pdf files, I did not find any extension among: ' + ', '.join(extensions))
     
 
     label = embedded_ref.replace('figure__block_', '')
-    converted = images_converter([[0, get_embedded_reference_path(cc + extension, PARS)]], PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
+    converted = images_converter([get_embedded_reference_path(x, PARS) for x in embedded_images], PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
 
     return converted
 
@@ -353,6 +364,8 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     # NOTES:
     # --- ", height=0.5\\textheight" addition causes the aspect ratio to break
 
+    subfigure_text_width = 1/len(images)
+
     # get parameters of the latex figure command
     latex_figure_field = [0.7, '', ''] # the defaults
 
@@ -365,11 +378,21 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     TO_PRINT = []
 
 
-    begin_figure = '\\begin{figure}'
-    if PARAMETERS['put_figure_below_text']: begin_figure += '[H]'
+    cnd__include_subfigures = len(images) > 1
+    cnd__no_subfigures = (not cnd__include_subfigures)
+    begin_figure = '\\begin{figure}'*cnd__no_subfigures + '\\begin{subfigure}'*cnd__include_subfigures
+    end_figure = '\end{figure}'*cnd__no_subfigures + '\end{subfigure}'*cnd__include_subfigures 
+    
+    fig_label = '\label{fig:'+label+'}'
+    
+    if PARAMETERS['put_figure_below_text']: 
+        if not cnd__include_subfigures:
+            begin_figure += '[H]'
+        else:
+            begin_figure += '[b]{'+ str(subfigure_text_width) +'\\textwidth}'
 
     for IM in images:
-        path_img0 = IM[1].replace('\\', '/')
+        path_img0 = IM.replace('\\', '/')
 
         img_directory = '/'.join(path_img0.split('/')[:-1])
         cndTmp1 = 0
@@ -379,15 +402,28 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
         if (img_directory == '/'.join(latex_file_path.replace('\\', '/').split('/')[:-1])) or (not PARAMETERS['include_path']):
             path_img = path_img.replace(img_directory+'/', '')
 
-        # label_img = IM[1].split('\\')[-1]
+        # label_img = IM.split('\\')[-1]
         TO_PRINT.append(' \n'.join([
         begin_figure,
         '	\centering',
-        '	\includegraphics[width=' + str(figure_width) + '\linewidth]'+\
-            '{"'+path_img+'"}',
+        '	\includegraphics[width=' + str(figure_width)*cnd__no_subfigures + '\linewidth]' + '{"'+path_img+'"}',
         '	\caption['+caption_short+']'+('{'+caption_long+'}')*(len(caption_long)>0),
         '   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
-        '   \label{fig:'+label+'}',
-        '\end{figure}']))
+        '   '+fig_label*cnd__no_subfigures,
+        end_figure]))
 
-    return TO_PRINT
+    y = []
+    if cnd__include_subfigures:
+        y.append('\\begin{figure}[H]\n')
+        y.append('\centering\n')
+        for fig_lines in TO_PRINT:
+            y.append(fig_lines)
+            y.append('\hfill\n')
+
+        y.append('\caption{}\n')
+        y.append(fig_label+'\n')
+        y.append('\end{figure}\n')
+    else:
+        y = TO_PRINT
+
+    return y
