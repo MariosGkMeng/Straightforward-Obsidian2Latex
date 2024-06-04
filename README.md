@@ -219,3 +219,17 @@ https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/9
 ## For the ReadMe file
 - [ ] Add video to show how the figure system works
 - [ ] Add video to show how the admonition system works
+- [ ] 
+
+
+# Please cite the following if you use it for publishable work
+```
+@misc{MariosGkionisObsidian2Latex,
+  author = {Marios Gkionis},
+  title = {Straightforward Obsidian to Latex},
+  year = {2023},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex}},
+}
+```
