@@ -215,3 +215,7 @@ https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/9
 | Is fast | ✔ (but only when most of the embedded references are listed in `PARS['📂']['list_paths_notes']`) | ✔✔ | ✔✔ | not running for me |
 | Ignores comments | ✔ | ✔ | ✔ | not running for me |
 
+# TODOs
+## For the ReadMe file
+- [ ] Add video to show how the figure system works
+- [ ] Add video to show how the admonition system works
