@@ -50,6 +50,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - [ ] Table captions (will use the note-block logic, as in the [Equation Referencing](#Adding-equations))
 - [ ] Desirable placement for images
 	- [X] Subplots (so far figures only have one plot)
+- [ ] Switching from 2 columns to 1 column per page (or any column number switch for that matter) --> needs a short "command language" for when the user is writing in Obsidian
 
 ## Niche/rarely encountered functionalities
 - [X] Discard text inside comments **after** start of a (sub)section
