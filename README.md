@@ -40,6 +40,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - [X] [Admonition](https://f5-rtd-howto.readthedocs.io/en/dev/resources/resources_rtd-admonitions.html) blocks (I use that quite frequently, because it is very pleasant for the eye)
 - [X] Captions for figures (will use the note-block logic, as in the [Equation Referencing](#Adding-equations))
 - [X] Figure size
+- [X] Subplots
 
 
 # 👨‍💻🚧 What it cannot convert (so far)
@@ -48,7 +49,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - [ ] Graphs in latex plotting environment
 - [ ] Table captions (will use the note-block logic, as in the [Equation Referencing](#Adding-equations))
 - [ ] Desirable placement for images
-	- [ ] Subplots (so far figures only have one plot)
+	- [X] Subplots (so far figures only have one plot)
 
 ## Niche/rarely encountered functionalities
 - [X] Discard text inside comments **after** start of a (sub)section
