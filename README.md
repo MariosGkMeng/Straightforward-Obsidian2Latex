@@ -1,3 +1,15 @@
+# Please cite the following if you use it for publishable work
+```
+@misc{MariosGkionisObsidian2Latex,
+  author = {Marios Gkionis},
+  title = {Straightforward Obsidian to Latex},
+  year = {2023},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex}},
+}
+```
+
 # Straightforward-Obsidian2Latex
 Want to write your documents entirely in Obsidian, and then print them to LateX (e.g., for scientific papers and lab reports)?
 
@@ -222,15 +234,3 @@ https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/9
 - [ ] Add video to show how the admonition system works
 - [ ] 
 
-
-# Please cite the following if you use it for publishable work
-```
-@misc{MariosGkionisObsidian2Latex,
-  author = {Marios Gkionis},
-  title = {Straightforward Obsidian to Latex},
-  year = {2023},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex}},
-}
-```
