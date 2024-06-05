@@ -322,34 +322,21 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
             if line.startswith(field):
                 fields[i] = line.replace(field, '').replace('\n', '').strip()
 
-        
-    #converted_image_text = images_converter([[0, get_embedded_reference_path(cc, PARS)]], PARS['⚙']['figures'])
     embedded_images_text = content__unfold[0]
     try:
         embedded_images = [x.replace(']]', '') for x in embedded_images_text.split("![[")[1:]]
     except:
         raise Exception("Probably could not find any images in your figure note file!")
     
+    embedded_images_1 = []
+    for image in embedded_images:
+        if "|" in image: image = image[:image.find("|")+1].replace("|", "")
+        embedded_images_1.append(image)
     
-    embedded_images = [x[:x.find("|")] for x in embedded_images]
-    
-    # idx_extension = []
-    # extensions_found = []
-    # for extension in extensions:
-    #     for cc in embedded_images:
-    #         if extension in cc:
-    #             ii=cc.find(extension)
-    #             idx_extension.append(ii)
-    #             extensions_found.append(extension)
-    #             break    
-    # try:
-    #     embedded_images = [x[:idx_extension[i]] + extensions_found[i] for i, x in enum(embedded_images)]
-    # except:
-    #     raise Exception('While looking for image/pdf files, I did not find any extension among: ' + ', '.join(extensions))
-    
-
+    embedded_images = embedded_images_1
     label = embedded_ref.replace('figure__block_', '')
-    converted = images_converter([get_embedded_reference_path(x, PARS) for x in embedded_images], PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
+    image_paths = [get_embedded_reference_path(x, PARS) for x in embedded_images]
+    converted = images_converter(image_paths, PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
 
     return converted
 
