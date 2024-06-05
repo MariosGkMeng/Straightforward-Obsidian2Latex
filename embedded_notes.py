@@ -3,16 +3,18 @@ import os
 import copy
 
 # For recognizing file names, section names, block names
-SPECIAL_CHARACTERS = r" ,':?%💬⚠✍⌛💼🟢➕❓⛏🔭❌👆🔴⭐✔🧑☺📁🗣⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+# SPECIAL_CHARACTERS =  = get_special_characters()
                      
 from remove_markdown_comment import *
 from list_of_separate_lines import *
 from equations import *
 from path_searching import *
+from special_characters import *
 
 def write_link_in_obsidian_format(s, link_type, is_embedded = False):
 
-    L1 = (len(s[1])>0)
+    link_section_or_block = s[1]
+    L1 = (len(link_section_or_block)>0)
     if link_type == 'section':
         link_prefix = '#'*L1
     elif link_type == 'block':
@@ -20,7 +22,10 @@ def write_link_in_obsidian_format(s, link_type, is_embedded = False):
     else:
         raise Exception('Nothing coded here')
 
-    return is_embedded*'!' + '[[' + s[0] + link_prefix + s[1].replace('#', '') + '|'*(len(s[2])>0) + s[2].replace('|', "") + ']]'
+    note_name = s[0]
+    alias = '|'*(len(s[2])>0) + s[2].replace('|', "")
+    text_inside_obsidian_link = note_name + link_prefix + link_section_or_block.replace('#', '') + alias
+    return is_embedded*'!' + '[[' + text_inside_obsidian_link + ']]'
 
 def internal_links__identifier(S):
 
@@ -44,13 +49,13 @@ def internal_links__identifier(S):
 
 
 
-    SPECIAL_CHARACTERS_1 = r" ,':?%💬⚠💼🟢➕✍⌛❓⛏❌🔴✔🗣🧑🔭👆☺📁⚙⭐🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+    SPECIAL_CHARACTERS_1 = get_special_characters()
     pattern_sections_1 = r'\[\[\s*([\w\s-]+)\s*#\s*([\w' + re.escape(SPECIAL_CHARACTERS_1) + r'\-]+)(\|[\w' + re.escape(SPECIAL_CHARACTERS_1) + r'\-]+)?\s*\]\]'
 
 
     # Even more recent, from: https://chat.openai.com/c/25974e18-74d7-4d0f-a772-9c570c016c4b
 
-    SPECIAL_CHARACTERS_2 = r" ,':?%💬⚠💼🟢➕✍⌛❓⛏❌🔴✔🗣🧑🔭👆☺📁⚙⭐🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+    SPECIAL_CHARACTERS_2 =  get_special_characters()
     pattern_sections_1 = r'\[\[\s*([^\[\]#]+)\s*#\s*([^\[\]|]+)(?:\|([^\[\]]+))?\s*\]\]'
 
     MATCHES = []
@@ -184,12 +189,12 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                         cnd__use_hyperhyperlink = (iS==1) and (not (cnd__use_hyperref))
 
                         if cnd__use_hyperref:
-                            hyperref = '\hyperref[' + label_latex_format + ']' + hyperref_text 
+                            hyperref = f'\hyperref[{label_latex_format}]' + hyperref_text 
                             if options['add_section_number_after_referencing']:
                                 hyperref += f": \\autoref{{{label_latex_format}}}"
                         elif cnd__use_hyperhyperlink:
                             # for blocks, better write "hyperlink"
-                            hyperref = '\hyperlink{' + label_latex_format + '}' + hyperref_text 
+                            hyperref = f'\hyperlink{{label_latex_format}}' + hyperref_text 
                         else:
                             raise Exception("Nothing coded here!")
                         
@@ -218,7 +223,13 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
 def embedded_references_recognizer(S, options, mode):
 
     # BUG2: SOMEHOW THE "SPECIAL_CHARACTERS" VARIABLE IS NOT GLOBALLY CORRECT. CHANGES IN THE GLOBAL VARIABLE NOT APPLIED IN THE FUNCTION, THEREFORE WRITING IT HERE FOR NOW
-    SPECIAL_CHARACTERS = r" ,':?%💬⚠💼🔭🟢➕✍⌛⛏❓❌🔴⭐✔👆🧑☺📁🗣⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+    SPECIAL_CHARACTERS = get_special_characters()
+
+    # repeated conditions
+    cnd__mode_is__normal                = mode=='normal'
+    # cnd__mode_is__equation_blocks_only  = mode=='equation_blocks_only'
+    # cnd__mode_is__figure_blocks_only    = mode=='figure_blocks_only'
+
 
     all_chars = '\w' + SPECIAL_CHARACTERS + '\-'
     if not isinstance(S, list):
@@ -230,13 +241,13 @@ def embedded_references_recognizer(S, options, mode):
     # Pattern recognizing text starting with "[[eq__block"
     pattern_eq_block = r'\[\[eq__block.*'
 
-    discard_special_cases = (mode=='normal') and options['treat_equation_blocks_separately']
+    discard_special_cases = (cnd__mode_is__normal) and options['treat_equation_blocks_separately']
     pattern_embedded_with_section = pattern_embedded_with_section_0
     special_cases = ['eq__block', 'figure__block']
 
     # The following commented if clause was commented because both me and ChatGPT can't find a proper regex expression
     # Replaced that with a dirty patch starting from `if discard_special_cases:`
-    # if mode=='normal': 
+    # if cnd__mode_is__normal: 
 
     #     if not options['treat_equation_blocks_separately']:
     #         pattern_embedded_with_section = pattern_embedded_with_section_0
@@ -248,7 +259,7 @@ def embedded_references_recognizer(S, options, mode):
     #         pattern_embedded_with_section = '!(?!\[\[eq__block)(?!\[\[figure__block).*\[\[([\.' + all_chars + ']+)(\#[' + all_chars + ']+)?(\|[' + all_chars + ']+)?\]\]'
 
     
-    # elif mode=='equation_blocks_only' or mode=='figure_blocks_only':
+    # elif cnd__mode_is__equation_blocks_only or cnd__mode_is__figure_blocks_only:
     #     # Combined pattern
     #     pattern_embedded_with_section = pattern_embedded_with_section_0
 
@@ -310,7 +321,7 @@ def non_embedded_references_recognizer(S):
 
 
     # BUG2: SOMEHOW THE "SPECIAL_CHARACTERS" VARIABLE IS NOT GLOBALLY CORRECT. CHANGES IN THE GLOBAL VARIABLE NOT APPLIED IN THE FUNCTION, THEREFORE WRITING IT HERE FOR NOW
-    SPECIAL_CHARACTERS = r" ,':?%💬⚠💼🔭🟢➕✍⌛⛏❓❌👆🔴⭐✔🧑☺📁🗣⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+    SPECIAL_CHARACTERS = get_special_characters()
 
     all_chars = '\w' + SPECIAL_CHARACTERS + '\-'
     if not isinstance(S, list):
@@ -344,32 +355,62 @@ def replace_obsidian_bibliography_link_with_cite(s):
     return replaced_string
 
 
-def non_embedded_references_converter(S, options):
+def non_embedded_references_converter(S, PARS):
 
     links = non_embedded_references_recognizer(S)
+    options = PARS['⚙']['EMBEDDED REFERENCES']
+    formatting_rules = PARS['⚙']['formatting_rules']['non_embedded_references']
+    
 
     if options['treat_citations']:
         # change citations, like: "[[p110]]" to "\cite{p110}"
         for i, s in enum(S):
             S[i] = replace_obsidian_bibliography_link_with_cite(s)
 
+    formatting_rules_keys = formatting_rules.keys()
+    
+    formatting_rules_to_check = ['notes_with_tags']
 
     for link in links:
         line = link[0]  
         for link1 in link[1]:
             tmp1 = link1
-
+            note_name = tmp1[0]
             if len(tmp1[2]) == 0:
-                S[line] = S[line].replace('[[' + tmp1[0] +  ']]', tmp1[0])
-
+                text_to_replace = f'[[{note_name}]]'
+                replacement_text = note_name
             else:
-                S[line] = S[line].replace('[[' + tmp1[0]+tmp1[2] +  ']]', tmp1[2][1:])
+                text_to_replace = f'[[{note_name+tmp1[2]}]]'
+                replacement_text = tmp1[2][1:]
 
+            f = formatting_rules_to_check[0]
+            if f in formatting_rules_keys:
+                note_path = get_embedded_reference_path(note_name, PARS, search_in = 'vault')
+                formatting_notes = formatting_rules[f]
+                replacement_text = formatting_rule__notes_with_tags(note_path, replacement_text, formatting_notes)
+                        
+            S[line] = S[line].replace(text_to_replace, replacement_text)
 
     return S
 
+def search_note_for_tag(note_path, tag):
+    
+    with open(note_path, 'r', encoding='utf8') as f: Lines = f.readlines()
+    for line in Lines: 
+        if tag in line:
+            return True
+        
+    return False
 
+def formatting_rule__notes_with_tags(note_path, initial_text, formatting_parameters):
+    
+    for format in formatting_parameters:
+        it_has_the_tag = search_note_for_tag(note_path, format[0])
+        if it_has_the_tag:
+            color = format[1]
+            return f'\\textcolor{{{color}}}{{{initial_text}}}'
 
+    return initial_text
 
 def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 
@@ -387,11 +428,17 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 
     mode__collection_of_new_content = 'LISTS' # 'LISTS' or 'ELEMENTWISE'
 
-    if mode=='normal':
+    # repeated conditions
+    cnd__mode_is__normal                = mode=='normal'
+    cnd__mode_is__equation_blocks_only  = mode=='equation_blocks_only'
+    cnd__mode_is__figure_blocks_only    = mode=='figure_blocks_only'
+    
+
+    if cnd__mode_is__normal:
         where_to_search_for_embedded_notes = 'vault'
-    elif mode=='equation_blocks_only':
+    elif cnd__mode_is__equation_blocks_only:
         where_to_search_for_embedded_notes = 'equation_blocks'
-    elif mode=='figure_blocks_only':
+    elif cnd__mode_is__figure_blocks_only:
         where_to_search_for_embedded_notes = 'figure_blocks'
     else:
         raise Exception("Nothing coded for this case!")
@@ -404,7 +451,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 
     file_types = ['.png', '.pdf', '.jpg']
     PARS_EMBEDDED_REFS = PARS['⚙']['EMBEDDED REFERENCES']
-    ss1 = embedded_references_recognizer(S, PARS_EMBEDDED_REFS, mode)
+    all_embedded_refs = embedded_references_recognizer(S, PARS_EMBEDDED_REFS, mode)
 
 
     if PARS_EMBEDDED_REFS['adapt_section_hierarchy']:
@@ -417,17 +464,15 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
     else:
         content_filter_2 = lambda x, mref: (x)
 
-    line_numbers_unfolded_notes = [ln[0] for ln in ss1]
+    line_numbers_unfolded_notes = [ln[0] for ln in all_embedded_refs]
 
-    for ln in ss1:
-        line_number = ln[0] #
-        line_embed = ln[1]
-
-        has_extension = False
-
+    for embedded_ref_info in all_embedded_refs:
+        line_number = embedded_ref_info[0]
+        line_embed = embedded_ref_info[1]             
         embedded_ref = line_embed[0][0]
-        section=line_embed[0][1]
-        markdown_ref = write_link_in_obsidian_format([line_embed[0][0], section, line_embed[0][2]], 'section',is_embedded=True)
+        section = line_embed[0][1]
+        markdown_ref = write_link_in_obsidian_format([embedded_ref, section, line_embed[0][2]], 'section', is_embedded=True)
+        has_extension = False
         for file_type in file_types:
             if file_type in embedded_ref:
                 has_extension = True
@@ -455,22 +500,20 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 
                 section_name = section.lstrip('#')
                 content__unfold = extract_section_from_file(path_embedded_reference, section_name)
-
                 content__unfold = content_filter_1(content__unfold, S, line_number)
                     
-                if (mode!='equation_blocks_only') and (mode!='figure_blocks_only'):
-                    
+                if (not cnd__mode_is__equation_blocks_only) and (not cnd__mode_is__figure_blocks_only):
                     # since we don't expect to have comments in the single block (code optimization)
                     content__unfold = remove_markdown_comments(content__unfold)
                 else:
-                    if mode=='equation_blocks_only': 
+                    if cnd__mode_is__equation_blocks_only: 
                         if embedded_ref.startswith('eq__block'):
                             content__unfold = EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embedded_ref)
                         elif embedded_ref.startswith('figure__block'):
                             content__unfold = FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, PARS)
                         else:
                             content__unfold = ''
-                    elif mode=='figure_blocks_only': 
+                    elif cnd__mode_is__figure_blocks_only: 
                         raise Exception('Under construction!')
                     else:
                         raise Exception('Nothing coded for this case!')
@@ -479,7 +522,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 
                 S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
 
-    if mode!='normal':
+    if not cnd__mode_is__normal:
         S = get_list_of_separate_string_lines(S)
     else:
         if mode__collection_of_new_content == "LISTS":
