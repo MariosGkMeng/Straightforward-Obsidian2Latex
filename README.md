@@ -15,6 +15,7 @@ Want to write your documents entirely in Obsidian, and then print them to LateX 
 Are you annoyed by:
 - The fact that you have to write code, just to make a nice report/paper?
 - How incomplete the "print to .pdf" command in Obsidian is?
+  
 Do you just want to be able to seamlessly write formal content in the same software as your notes, and print it from there, without the need to move to external software?
 
 This Obsidian to Latex translator is **complete**, straightforward to use, and has no 🐂💩 unnecessary complexity as an end result.
