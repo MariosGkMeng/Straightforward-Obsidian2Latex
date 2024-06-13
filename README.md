@@ -17,6 +17,7 @@ Are you annoyed by:
 - How incomplete the "print to .pdf" command in Obsidian is?
   
 Do you just want to be able to seamlessly write formal content in the same software as your notes, and print it from there, without the need to move to external software?
+Or do you just want to write pretty scientific documents without needing to learn Latex at all (with the exception of the equation environment)?
 
 This Obsidian to Latex translator is **complete**, straightforward to use, and has no 🐂💩 unnecessary complexity as an end result.
 
