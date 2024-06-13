@@ -1,39 +1,50 @@
 import re
 from list_of_separate_lines import *
+
+begin_type = ["\n\\begin{itemize}\n", "\n\\begin{enumerate}\n", "\n\\begin{todolist}\n"]
+end_type = ["\\end{itemize}\n", "\\end{enumerate}\n", "\\end{todolist}\n"]
+
 def bullet_list_converter(S):
 
     # S = ''.join(S)
+    cnd__do_not_add_new_line_if_it_already_exists = False
 
     latex = ""
     lines = S#.split("\n")
     tab_1 = "\t"
 
-    begin_type = ["\\begin{itemize}\n", "\\begin{enumerate}\n"]
-    end_type = ["\\end{itemize}\n", "\\end{enumerate}\n"]
-
     INDENTATION = dict()
 
     for line in lines:
 
-        match_bullet_list = re.match(r'^([\t ]*-\s*)(.*)$', line)
         match_numbered_list = re.match(r'^(\t*)\d+\.\s(.*)$', line)
+        match_checkbox_list = re.match(r'^([\t ]*-\s\[\s\]\s*)(.*)$', line)
+        match_bullet_list = re.match(r'^([\t ]*-\s*)(.*)$', line)
 
-        if match_bullet_list:
-            type_list = 0
-            match = match_bullet_list
+        match = False
 
-        elif match_numbered_list:
-            type_list = 1
-            match = match_numbered_list
+        if not line.startswith('---'): 
+            if match_bullet_list and not match_checkbox_list:
+                type_list = 0
+                match = match_bullet_list
 
-        else:
-            match = False
+            elif match_numbered_list:
+                type_list = 1
+                match = match_numbered_list
+
+            elif match_checkbox_list:
+                type_list = 2
+                match = match_checkbox_list
 
         if match:
             indentations = list(INDENTATION.keys())
             indentation = len(match.group(1))
             main_string = match.group(2)
-            main_string_latex = tab_1 * (indentation+1) +  '\\item ' + main_string + "\n"
+            main_string_latex = tab_1 * (indentation+1) +  '\\item ' + main_string + '\n'
+            if not cnd__do_not_add_new_line_if_it_already_exists:
+                if main_string_latex.rstrip().endswith('\n'): 
+                    main_string_latex += '\n'
+                    
             if not str(indentation) in indentations:
 
                 
@@ -71,7 +82,12 @@ def bullet_list_converter(S):
             # restart the indentation
             INDENTATION = dict()
 
-            latex += line + '\n'
+            add_line = line
+            if not cnd__do_not_add_new_line_if_it_already_exists:
+                # if add_line.rstrip().endswith('\n'): 
+                add_line += '\n'
+
+            latex += add_line
 
 
     s, INDENTATION = close_list(INDENTATION)
@@ -83,8 +99,6 @@ def bullet_list_converter(S):
 
 
 def close_list(INDENTATION):
-
-    end_type = ["\\end{itemize}\n", "\\end{enumerate}\n"]
 
     indentations = list(INDENTATION.keys())
     indentations.sort(reverse=True)
