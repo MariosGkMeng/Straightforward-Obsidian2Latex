@@ -1,8 +1,11 @@
 import re
 from list_of_separate_lines import *
+from remove_markdown_comment import *
 
 begin_type = ["\n\\begin{itemize}\n", "\n\\begin{enumerate}\n", "\n\\begin{todolist}\n"]
 end_type = ["\\end{itemize}\n", "\\end{enumerate}\n", "\\end{todolist}\n"]
+
+start_string = ['- ', '', '- [ ]']
 
 def bullet_list_converter(S):
 
@@ -38,7 +41,7 @@ def bullet_list_converter(S):
 
         if match:
             indentations = list(INDENTATION.keys())
-            indentation = len(match.group(1))
+            indentation = len(match.group(1)) - len(start_string[type_list])
             main_string = match.group(2)
             main_string_latex = tab_1 * (indentation+1) +  '\\item ' + main_string + '\n'
             if not cnd__do_not_add_new_line_if_it_already_exists:
@@ -57,7 +60,7 @@ def bullet_list_converter(S):
 
                 INDENTATION[str(indentation)] = 'open-' + str(type_list)
 
-                pre_text = tab_1 * indentation + begin_type[type_list]                        
+                pre_text = tab_1 * indentation + begin_type[type_list].replace('\n', '') + '\n'                       
 
             else:
                 pre_text = ''
@@ -68,8 +71,9 @@ def bullet_list_converter(S):
                 for i in next_indentations:
                     if INDENTATION[i].startswith('open'):
                         type_list_i = int(INDENTATION[i][-1])
-                        pre_text += tab_1 * int(i) + end_type[type_list_i]
+                        pre_text += tab_1 * int(i) + end_type[type_list_i].replace('\n', '') + '\n' 
                         INDENTATION[i] = 'closed'
+                        INDENTATION.pop(i)
 
             latex += pre_text + main_string_latex
 
@@ -85,7 +89,8 @@ def bullet_list_converter(S):
             add_line = line
             if not cnd__do_not_add_new_line_if_it_already_exists:
                 # if add_line.rstrip().endswith('\n'): 
-                add_line += '\n'
+                if not is_in_table_line(line):
+                    add_line += '\n'
 
             latex += add_line
 
