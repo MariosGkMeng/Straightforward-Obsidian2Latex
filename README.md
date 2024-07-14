@@ -11,6 +11,8 @@
 ```
 
 # Straightforward-Obsidian2Latex
+(navigate to next section if you want to skip the "sales pitch")
+
 Want to write your documents entirely in Obsidian, and then print them to LateX (e.g., for scientific papers and lab reports)?
 Are you annoyed by:
 - The fact that you have to write code, just to make a nice report/paper?
