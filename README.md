@@ -109,7 +109,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 	- **Solution:** Use the text replacement tool in the jupyter file
 
 # 📽 List of videos
-If you are inpatient and want to jump to some videos, here's the list:
+If you want to jump to some videos, here's the list:
 
 |     |     | 
 | --- | --- | 
