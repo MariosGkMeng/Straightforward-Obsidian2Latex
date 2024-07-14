@@ -67,12 +67,11 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 # 👨‍💻🚧 What it cannot convert (so far)
 ## Frequently used functionalities
 
-- [ ] Graphs in latex plotting environment
-- [ ] Table captions (will use the note-block logic, as in the [Equation Referencing](#Adding-equations))
+- [ ] Graphs with the latex plotting environment (won't be developing that soon, since most people use .pdf files for figures anyways)
 - [ ] Desirable placement for images
 	- [X] Subplots (so far figures only have one plot)
 - [ ] Switching from 2 columns to 1 column per page (or any column number switch for that matter) --> needs a short "command language" for when the user is writing in Obsidian
-- [ ] Formatting certain words based on rules
+- [X] Formatting certain words based on rules
 	- Examples
 	- Format text of mentioned notes based on
 		- their path (e.g., path with methods)
