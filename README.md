@@ -36,6 +36,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - [X] Tables
   - Long tables (tables that can expand to more than 1 pages)
   - Non-long tables
+  - Special formatting for each table (different package, coloring of rows)
 - [X] Internal links (sections and blocks)
 - [X] External links
 - [X] Sections and subsections
