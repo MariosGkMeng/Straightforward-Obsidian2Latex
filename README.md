@@ -87,6 +87,12 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - [ ] Regarding Internal links: add page number next to the cross-reference, in case the document is printed
 - [ ] EMOJIS: Latex does not include emojis. Therefore, so far they are replaced by text, however in the future I am considering to convert them to small pictures
 
+## ➕️ Working on at the moment 
+- Code maintenance
+- More niche table conversions
+- Moving the settings and user parameters from Python to Obsidian (so that the user won't have to bother with the Python scripts)
+
+
 # 😁🔋 Strengths
 - **Equations**:
 	- The equation-referencing system helps reference the equations using the **note-linking** feature, thus allowing perfect **traceability of the equations**. The user can reference the equations in Obsidian and click/hover on their link to view them! See [short video](#video-3) for a quick demonstration.
