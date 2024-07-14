@@ -41,7 +41,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - [X] External links
 - [X] Sections and subsections
   - [X] Maintain proper hierarchy of sections of the main note when a note with sections is embedded
-- [X] Image display (however not yet with desirable placement)
+- [X] Image/figure display with appropriate figure referencing, captions, and size in LateX
 - [X] Bullet lists
 - [X] Numbered lists
 - [X] References/bibliography
