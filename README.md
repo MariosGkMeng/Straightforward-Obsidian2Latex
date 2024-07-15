@@ -125,7 +125,7 @@ If you want to jump to some videos, here's the list:
 2. Have Jupyter notebook editor installed (e.g. in Visual Studio Code)
 3. Have Obsidian installed
 4. Install the following Obsidian plugins
-	1. Optional, helps speed up equation referencing: **QuickAdd** (for quick insert of equation blocks)
+	1. Helps speed up equation referencing: **QuickAdd** (for quick insert of equation blocks)
  	2. Optional, helps write equations very fast: **Quick Latex for Obsidian**
 
 ## Usage
