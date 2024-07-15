@@ -92,6 +92,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - Code maintenance
 - More niche table conversions
 - Moving the settings and user parameters from Python to Obsidian (so that the user won't have to bother with the Python scripts)
+- Workflow Optimization: Code to print to .pdf without needing to manually compile the LateX document  
 
 
 # 😁🔋 Strengths
