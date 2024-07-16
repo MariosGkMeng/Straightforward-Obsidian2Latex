@@ -1,11 +1,34 @@
 import re
 import os
+import numpy as np
 
 # For recognizing file names, section names, block names
 SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
 from remove_markdown_comment import *
 from list_of_separate_lines import *
 from path_searching import *
+
+
+ID__TABLES__alignment__center = 0
+ID__TABLES__alignment__right  = 1
+ID__TABLES__alignment__middle = 2
+
+
+ID__TABLES__PACKAGE__longtblr   = 0
+ID__TABLES__PACKAGE__tabularx   = 1
+ID__TABLES__PACKAGE__long_table = 2
+
+ID__CNV__TABLE_STARTED      = 0
+ID__CNV__TABLE_ENDED        = 1
+ID__CNV__IDENTICAL          = 2
+
+ID__STYLE__BOLD             = 0
+ID__STYLE__HIGHLIGHTER      = 1
+ID__STYLE__ITALIC           = 2
+
+
+# ⚠ does not work for longtblr!
+CMD__TABLE__TABULARX__CENTERING = '\\newcolumntype{Y}{>{\\centering\\arraybackslash}X}'
 
 
 # def regex_patterns_for_equations():
@@ -209,8 +232,6 @@ def EQUATIONS__check_and_correct_aligned_equations(S0):
             LISTS.append(S0[j+1:j1])
         else:
             # need modification
-
-
             # Check if there is any text before the "$$ \\begin{aligned}" text, so we create a separate line with it
             match_equation = re.search(r'^(.*?)\$\$\s*\\begin{aligned}', S0[j])
             if match_equation:
@@ -220,8 +241,6 @@ def EQUATIONS__check_and_correct_aligned_equations(S0):
                     LISTS.append([text_before_equation_that_was_on_same_line])
                     S0[j] = S0[j].replace(text_before_equation_that_was_on_same_line, "") # removing it for good measure
             #
-
-
             LISTS.append(EQUATIONS__correct_aligned_equation(S0[j:j1+1]))
 
     S0_modified = []
@@ -232,13 +251,9 @@ def EQUATIONS__check_and_correct_aligned_equations(S0):
 
 
 def EQUATIONS__convert_equation_referencing(S0):
-
-
     """
     Converts the note linking of the format "[[eq__block_equationName]]" to "\\ref{eq:equationName}"
     """
-
-
     # Regular expression pattern to match the specified format
     pattern = r'\[\[eq__block_(.*?)\]\]'
     
@@ -248,29 +263,26 @@ def EQUATIONS__convert_equation_referencing(S0):
         replaced_text = re.sub(pattern, r'\\cref{eq:\1}', s)
 
         S[i] = replaced_text
-    
-
     return S
 
-def FIGURES__convert_figure_referencing(S0):
-
-
-    """
-    Converts the note linking of the format "[[figure__block_figureName]]" to "\\ref{fig:figureName}"
-    """
-
-
+def convert_referencing(S0, mode):
     # Regular expression pattern to match the specified format
-    pattern = r'\[\[figure__block_(.*?)\]\]'
+    pattern = [r'\[\[table__block_(.*?)\]\]', r'\[\[figure__block_(.*?)\]\]']
+    replacement = [r'\\cref{fig:\1}', r'\\cref{tab:\1}']
     
     S = S0
+    if mode == 'figures':
+        idx = 0
+    elif mode == 'tables':
+        idx = 1
+    else:
+        raise NotImplementedError
+    
     for i, s in enum(S):
         # Using re.sub to replace the matched pattern with the desired text
-        replaced_text = re.sub(pattern, r'\\cref{fig:\1}', s)
-
+        replaced_text = re.sub(pattern[idx], replacement[idx], s)
         S[i] = replaced_text
     
-
     return S
 
 
@@ -308,12 +320,10 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
     return content__unfold
 
 
-def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, PARS):
-
-    look_for_fields = ['size_in_latex:: ', 'caption_short:: ', 'caption_long:: ']
+def get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields):
+    
     fields = ['' for _ in look_for_fields]
-    extensions = ['.png', '.jpg', '.pdf']
-
+    
     with open(path_embedded_reference, 'r', encoding='utf8') as file:
         lines = file.readlines()
 
@@ -321,6 +331,33 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
         for line in lines:
             if line.startswith(field):
                 fields[i] = line.replace(field, '').replace('\n', '').strip()
+                break
+                
+    return fields
+
+
+def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PARS):
+    
+    fields_to_fetch = ['caption:: ', 'package:: ', 'widths:: ']
+    fields_note = get_fields_from_Obsidian_note(path_embedded_reference, fields_to_fetch)
+    caption = fields_note[0]
+    package = fields_note[1]
+    widths = [f.strip() for f in fields_note[2].split(',')]
+    label = embedded_ref.replace('table__block_', '')
+    embedded_tables_text = convert__tables(content__unfold, caption, package, label, widths, PARS)
+    
+    embedded_tables_text_1 = []
+    for line in embedded_tables_text:
+        if not line.endswith('\n'):
+            line += '\n'
+        embedded_tables_text_1.append(line)
+    return embedded_tables_text_1
+
+def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, PARS):
+
+    look_for_fields = ['size_in_latex:: ', 'caption_short:: ', 'caption_long:: ']
+    fields = get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields)
+    extensions = ['.png', '.jpg', '.pdf']
 
     embedded_images_text = content__unfold[0]
     try:
@@ -401,7 +438,11 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
 
     y = []
     if cnd__include_subfigures:
-        y.append('\\begin{figure}[H]\n')
+        if PARAMETERS['put_figure_below_text']:
+            begin_fig_global = '\\begin{figure}[H]\n'
+        else:
+            begin_fig_global = '\\begin{figure}\n'
+        y.append(begin_fig_global)
         y.append('\centering\n')
         for fig_lines in TO_PRINT:
             y.append(fig_lines)
@@ -414,3 +455,226 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
         y = TO_PRINT
 
     return y
+
+
+def convert__tables(S, caption, package, label, widths, PARS):
+    '''
+    Converts tables depending on the user's preferences    
+    '''
+    format_column_names_with_bold = True
+    
+    latex_table_prefix = '#Latex/Table/'
+    latex_table_prefix_row_format_color = latex_table_prefix + 'Format/rowcolor/'
+    TABLE_SETTINGS = PARS['⚙']['TABLES']
+    if not package:
+        package = TABLE_SETTINGS['package']
+    else:
+        latex_table_package_prefix = latex_table_prefix+'package/'
+        if latex_table_package_prefix+'longtable' in package:
+            package = ID__TABLES__PACKAGE__long_table
+        elif latex_table_package_prefix+'tabularx' in package:
+            package = ID__TABLES__PACKAGE__tabularx
+        elif latex_table_package_prefix+'longtblr' in package:
+            package = ID__TABLES__PACKAGE__longtblr
+        else:
+            raise NotImplementedError
+        
+    # Mask internal links that have aliases, otherwise the converter gets confused
+    mask_alias = "--alias--"
+    for i, s in enum(S):
+        S[i] = s.replace("\\|", mask_alias)
+    #     
+        
+    add_txt = ''
+    if (ID__TABLES__alignment__center in TABLE_SETTINGS['alignment']) \
+        and package == ID__TABLES__PACKAGE__longtblr:
+        add_txt = '\centering '
+
+    has_custom_widths = False
+    if len(widths[0])>0:
+        has_custom_widths = True
+
+    if has_custom_widths:
+        table_width_custom_0 = ''.join(["|p{" + w + "}" for w in widths]) + '|'
+
+    # After having found the table
+    ## We expect that the 1st line defines the columns
+
+    for s in S:
+        if is_in_table_line(s):
+            cols = s.split('|')
+            break
+          
+    cols = [[x.lstrip().rstrip() for x in cols if len(x)>0 and x!='\n']]
+
+    if format_column_names_with_bold:
+        cols = [[f'**{x}**' for x in sublist] for sublist in cols]
+
+    data = []
+    for s in S[2:]:
+        c = s.split('|')
+        c = [x.lstrip().rstrip() for x in c if len(x.lstrip().rstrip())>0 and x!='\n']
+        
+        # check for table commands
+        latex_command_in_row = np.any([latex_table_prefix in ci for ci in c])
+        if latex_command_in_row:
+            # check for latex row color command
+            try: #if np.any([latex_table_prefix_row_format_color in ci for ci in c]):
+                i_c, cell_with_the_command = [(i, ci) for i, ci in enumerate(c) if latex_table_prefix_row_format_color in ci][0]
+                
+                text = c[i_c]
+                pattern = rf'{re.escape(latex_table_prefix_row_format_color)}([a-zA-Z]+)'
+                # Search for the pattern in the text
+                match = re.search(pattern, text)
+                # Extract and print the matched text if it exists
+                if match:
+                    color = match.group(1)
+                else:
+                    raise Exception("You probably have written the syntax of latex table row color formatting wrong!")
+
+                text_to_replace = latex_table_prefix_row_format_color+color
+                replacement_text = '\\rowcolor{' + color + '}'
+                cell_with_the_command = cell_with_the_command.replace(text_to_replace, replacement_text)
+                # Adding the replacement text in front, because it is inside commands (cheap patch for now ➕)
+                c[i_c] = (replacement_text + ' ')*0 + cell_with_the_command
+                
+            except:
+                None
+            
+        data.append(c)
+
+    y = cols + data
+
+    # CONVERT
+    N_cols = len(cols[0])
+
+    latex_table = []
+    addText = ''
+    for i, c in enum(y):
+        c1 = [add_txt + x for x in c]
+        if i==0: 
+            if TABLE_SETTINGS['any-hlines-at-all']:
+                addText = ' \hline'
+        else:
+            if TABLE_SETTINGS['hlines-to-all-rows']:
+                addText = ' \hline'
+        latex_table.append('    ' + " & ".join(c1) + ' \\\\' + addText)
+
+    lbefore = []
+
+    if package == ID__TABLES__PACKAGE__tabularx:
+
+
+        PCKG_NAME = '{tabularx}'
+
+        if ID__TABLES__alignment__center in TABLE_SETTINGS['alignment']:
+            lbefore.append(CMD__TABLE__TABULARX__CENTERING)
+            colPrefix = 'Y'
+        else:
+            colPrefix = 'X'
+
+        # the if-clause below was causing error with the illegal unit, therefore I commented it out
+        # if (ID__TABLES__alignment__middle in TABLE_SETTINGS['alignment']):
+            # lbefore.append('\\renewcommand\\tabularxcolumn[1]{m{#1}}')
+
+        if not has_custom_widths:
+            table_width = '|' + N_cols*(colPrefix+'|') 
+        else:
+            table_width = table_width_custom_0
+
+        latex_before_table = lbefore + [
+            '%\\begin{center}',
+            '\\begin{table}[ht]',
+            '\centering',
+            '\caption{' + caption + '}',
+            '\label{tab:' + label + '}',
+            '\\begin'+PCKG_NAME+'{\\textwidth}{' + table_width + '}',
+            '   \hline'
+        ]
+
+        latex_after_table = [
+            '   \hline',
+            '\end'+PCKG_NAME,
+            '\end{table}'
+        ]
+
+        LATEX = latex_before_table + latex_table + latex_after_table
+
+    elif package == ID__TABLES__PACKAGE__longtblr:
+
+        PCKG_NAME = '{longtblr}'
+
+
+        if not has_custom_widths:
+            table_width = N_cols*'X'
+        else:
+            # table_width = table_width_custom_0
+            raise NotImplementedError
+
+
+        latex_before_table = [
+            '%\\begin{center}',
+            '\\begin{table}[ht]',
+            '\centering',
+            '\caption{' + caption + '}',
+            '\label{tab:' + label + '}',
+            '\\begin' + PCKG_NAME + '[',
+            '\caption = {' + caption + '},',
+            'entry = {},',
+            'note{a} = {},',
+            'note{$\dag$} = {}]',
+            '   {colspec = {'+ table_width +'}, width = ' + str(TABLE_SETTINGS['rel-width']) + '\linewidth, hlines, rowhead = 2, rowfoot = 1}'
+            ]  
+
+        latex_after_table = [
+            '\end' + PCKG_NAME,
+            '\end{table}'
+        ]
+
+        add_hline_at_end = False # to be moved to user settings
+        if add_hline_at_end:
+            latex_after_table = '   \hline' + latex_after_table
+
+
+        LATEX = latex_before_table + latex_table + latex_after_table
+
+
+    elif package == ID__TABLES__PACKAGE__long_table:
+        PCKG_NAME = '{longtable}'
+
+        if not has_custom_widths:
+            table_width = N_cols*'|p{3cm}' + '|'
+        else:
+            table_width = table_width_custom_0
+
+
+        latex_before_table=[
+        	'%\\begin{center}',
+		    '\\begin{longtable}{' + table_width + '}',            
+            '\caption{' + caption + '}',
+            '\label{tab:' + label + '}\\\\',
+			'\hline',
+			''+latex_table[0],
+			'\hline',
+			'\endfirsthead % Use \endfirsthead for the line after the first header',
+			'\hline',
+			'\endfoot',
+            ]
+
+        latex_after_table = [
+            '\end' + PCKG_NAME,
+        ]
+
+        LATEX = latex_before_table + ['    '+x for x in latex_table[1:]] + latex_after_table
+        
+
+        
+    else:
+        raise Exception('NOTHING CODED HERE!')
+    
+    # Unmask internal link with alias
+    for i, s in enum(LATEX):
+        LATEX[i] = s.replace(mask_alias, "|") 
+    #
+    
+    return LATEX
