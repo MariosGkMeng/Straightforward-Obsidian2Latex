@@ -11,6 +11,9 @@ from equations import *
 from path_searching import *
 from special_characters import *
 
+
+special_cases = ['eq__block', 'figure__block', 'table__block']
+
 def write_link_in_obsidian_format(s, link_type, is_embedded = False):
 
     link_section_or_block = s[1]
@@ -56,7 +59,8 @@ def internal_links__identifier(S):
     # Even more recent, from: https://chat.openai.com/c/25974e18-74d7-4d0f-a772-9c570c016c4b
 
     SPECIAL_CHARACTERS_2 =  get_special_characters()
-    pattern_sections_1 = r'\[\[\s*([^\[\]#]+)\s*#\s*([^\[\]|]+)(?:\|([^\[\]]+))?\s*\]\]'
+    # pattern_sections_1 = r'\[\[\s*([^\[\]#]+)\s*#\s*([^\[\]|]+)(?:\|([^\[\]]+))?\s*\]\]'
+    pattern_sections_1 = r'(?<!\!)\[\[\s*([^\[\]#]+)\s*#\s*([^\[\]|]+)(?:\|([^\[\]]+))?\s*\]\]'
 
     MATCHES = []
     for i, s in enum(S):
@@ -76,6 +80,10 @@ def internal_links__identifier(S):
 
 
 def unfold_all_embedded_notes(S, PARS):
+    
+    """
+    Unfolds the content of all embedded notes
+    """
     
     md__files_embedded_prev0 = []
     md__files_embedded_prev = md__files_embedded_prev0.copy()
@@ -211,10 +219,10 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                         link_name = Ii_sb_i[2].replace('|', "")
                         if len(link_name)>0:
                             if iS==0:
-                                type_of_link = 'section'
+                                type_of_link_write = 'section'
                             else:
-                                type_of_link = 'block'
-                            text_to_replace = write_link_in_obsidian_format(Ii_sb_i, type_of_link)
+                                type_of_link_write = 'block'
+                            text_to_replace = write_link_in_obsidian_format(Ii_sb_i, type_of_link_write)
                             S[line_number] = S[line_number].replace(text_to_replace, link_name)
                         
     return S
@@ -227,9 +235,6 @@ def embedded_references_recognizer(S, options, mode):
 
     # repeated conditions
     cnd__mode_is__normal                = mode=='normal'
-    # cnd__mode_is__equation_blocks_only  = mode=='equation_blocks_only'
-    # cnd__mode_is__figure_blocks_only    = mode=='figure_blocks_only'
-
 
     all_chars = '\w' + SPECIAL_CHARACTERS + '\-'
     if not isinstance(S, list):
@@ -243,7 +248,7 @@ def embedded_references_recognizer(S, options, mode):
 
     discard_special_cases = (cnd__mode_is__normal) and options['treat_equation_blocks_separately']
     pattern_embedded_with_section = pattern_embedded_with_section_0
-    special_cases = ['eq__block', 'figure__block']
+    
 
     # The following commented if clause was commented because both me and ChatGPT can't find a proper regex expression
     # Replaced that with a dirty patch starting from `if discard_special_cases:`
@@ -346,9 +351,7 @@ def replace_obsidian_bibliography_link_with_cite(s):
 
     Obsidian Text: "In [[p23]], the authors mention that ..."
     Latex Text:    "In \cite{p23}, the authors mention that ..."
-    
     """
-
 
     pattern = r'\[\[p(\d+)\]\]'  # Updated regular expression pattern with capturing group
     replaced_string = re.sub(pattern, r'\\cite{p\1}', s)
@@ -415,7 +418,7 @@ def formatting_rule__notes_with_tags(note_path, initial_text, formatting_paramet
 def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 
     '''
-    Unfolds the content of embedded notes.
+    Unfolds the content of embedded notes in the given list of notes.
 
     ---------
     Arguments
@@ -432,6 +435,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
     cnd__mode_is__normal                = mode=='normal'
     cnd__mode_is__equation_blocks_only  = mode=='equation_blocks_only'
     cnd__mode_is__figure_blocks_only    = mode=='figure_blocks_only'
+    cnd__mode_is__table_blocks_only     = mode=='table_blocks_only'
     
 
     if cnd__mode_is__normal:
@@ -440,8 +444,15 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
         where_to_search_for_embedded_notes = 'equation_blocks'
     elif cnd__mode_is__figure_blocks_only:
         where_to_search_for_embedded_notes = 'figure_blocks'
+    elif cnd__mode_is__table_blocks_only:
+        where_to_search_for_embedded_notes = 'table_blocks'
     else:
         raise Exception("Nothing coded for this case!")
+
+    is_in_normal_case =\
+            (not cnd__mode_is__equation_blocks_only) and\
+            (not cnd__mode_is__figure_blocks_only) and\
+            (not cnd__mode_is__table_blocks_only)
 
     if not isinstance(md__files_embedded, list):
         raise Exception('md__files_embedded variable must be of type list!')
@@ -460,7 +471,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
         content_filter_1 = lambda x, Lines, lNum: (x)
 
     if PARS_EMBEDDED_REFS['write_obsidian_ref_name_on_latex_comment']:    
-        content_filter_2 = lambda x, mref: ['% Start obsidian ref:\n' + mref.replace("![[", "[[")] + x + ['\n% End obsidian ref\n']
+        content_filter_2 = lambda x, mref: ['\n% Start obsidian ref:\n\t%' + mref.replace("![[", "").replace("]]", "")] + ['\n'] + x + ['\n% End obsidian ref\n']
     else:
         content_filter_2 = lambda x, mref: (x)
 
@@ -502,23 +513,29 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 content__unfold = extract_section_from_file(path_embedded_reference, section_name)
                 content__unfold = content_filter_1(content__unfold, S, line_number)
                     
-                if (not cnd__mode_is__equation_blocks_only) and (not cnd__mode_is__figure_blocks_only):
+                if is_in_normal_case:
                     # since we don't expect to have comments in the single block (code optimization)
                     content__unfold = remove_markdown_comments(content__unfold)
                 else:
-                    if cnd__mode_is__equation_blocks_only: 
+                    if cnd__mode_is__equation_blocks_only:                  
+                        # ➕ there is an unclear method here: 
+                        # for now I am using the `cnd__mode_is__equation_blocks_only` for anything that is a specific block (equations, figures, tables)
+                        # will correct in the future                       
                         if embedded_ref.startswith('eq__block'):
                             content__unfold = EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embedded_ref)
                         elif embedded_ref.startswith('figure__block'):
                             content__unfold = FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, PARS)
+                        elif embedded_ref.startswith('table__block'):
+                            content__unfold = TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PARS)
                         else:
                             content__unfold = ''
                     elif cnd__mode_is__figure_blocks_only: 
-                        raise Exception('Under construction!')
+                        raise NotImplementedError
                     else:
-                        raise Exception('Nothing coded for this case!')
+                        raise NotImplementedError
                 
-                if len(content__unfold) > 0: content__unfold = content_filter_2(content__unfold, markdown_ref)
+                if len(content__unfold) > 0: 
+                    content__unfold = content_filter_2(content__unfold, markdown_ref)
 
                 S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
 
