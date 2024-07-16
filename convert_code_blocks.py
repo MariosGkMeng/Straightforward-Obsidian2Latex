@@ -54,22 +54,31 @@ def code_block_converter(S, PARS):
                         colupper = settings__admonition_block[1]
                         title = kind_of_block
 
-                        begin_text = '\\begin{'+'tcolorbox'+'}[width=\\textwidth,colback={' + color + '},title={' + title + '},outer arc=0mm,colupper='+colupper+']'
                         end_text = '\end{'+'tcolorbox'+'}'
 
                         # Check for observation block
                         if kind_of_block == 'attention':
+                            t_type = 'Observation'
                             j = i+1
                             while True:
                                 if S[j]:
-                                    if not 'Observation' in S[j]:
+                                    if not t_type in S[j]:
                                         break
                                     else:
-                                        S[j] = '{\Large \\textbf{Observation}}\n\n'
+                                        S[j] = '{\Large \\textbf{' + t_type + '}}\n\n\\newline'
                                         S[j+1] = ''
+                                        title = ' '
+                                        color = 'cyan'
                                         break
                         
-                                        
+                        begin_text =\
+                            '\\begin{'+\
+                            'tcolorbox'+\
+                            '}[width=\\textwidth,colback={' +\
+                            color +\
+                            '},title={' +\
+                            title + '},outer arc=0mm,colupper='+colupper+']'
+
                 else:
                     language_additive = ''
                     begin_text = begin_text_0
@@ -84,5 +93,3 @@ def code_block_converter(S, PARS):
         S1.append(s1)
 
     return S1
-
-
