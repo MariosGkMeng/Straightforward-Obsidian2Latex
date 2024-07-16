@@ -266,9 +266,10 @@ def EQUATIONS__convert_equation_referencing(S0):
     return S
 
 def convert_referencing(S0, mode):
+    
     # Regular expression pattern to match the specified format
     pattern = [r'\[\[table__block_(.*?)\]\]', r'\[\[figure__block_(.*?)\]\]']
-    replacement = [r'\\cref{fig:\1}', r'\\cref{tab:\1}']
+    replacement = [r'\\cref{tab:\1}', r'\\cref{fig:\1}']
     
     S = S0
     if mode == 'figures':
@@ -500,18 +501,25 @@ def convert__tables(S, caption, package, label, widths, PARS):
     # After having found the table
     ## We expect that the 1st line defines the columns
 
-    for s in S:
+    iS_table_start = -1
+
+    for iS, s in enumerate(S):
         if is_in_table_line(s):
             cols = s.split('|')
+            iS_table_start = iS
             break
           
+          
+    if iS_table_start==-1:
+        raise Exception("Did not find any tables!")
+    
     cols = [[x.lstrip().rstrip() for x in cols if len(x)>0 and x!='\n']]
 
     if format_column_names_with_bold:
         cols = [[f'**{x}**' for x in sublist] for sublist in cols]
 
     data = []
-    for s in S[2:]:
+    for s in S[iS_table_start+2:]:
         c = s.split('|')
         c = [x.lstrip().rstrip() for x in c if len(x.lstrip().rstrip())>0 and x!='\n']
         
