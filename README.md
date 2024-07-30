@@ -1,3 +1,4 @@
+(made some recent updates on the interface so that you don't have to trigger it using Python. Will write it in the ReadMe soon)
 # Please cite the following if you use it for publishable work (i.e., if you write your paper in Obsidian, and use this code to print to Latex)
 ```
 @misc{MariosGkionisObsidian2Latex,
