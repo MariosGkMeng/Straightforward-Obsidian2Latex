@@ -1,4 +1,8 @@
-(made some recent updates on the interface so that you don't have to trigger it using Python. Will write it in the ReadMe soon)
+Some recent updates (will write them in the ReadMe soon)
+- on the interface so that you don't have to trigger it using Python
+- you can pure latex commands within the obsidian files and they will not be touched by the translator
+
+
 # Please cite the following if you use it for publishable work (i.e., if you write your paper in Obsidian, and use this code to print to Latex)
 ```
 @misc{MariosGkionisObsidian2Latex,
