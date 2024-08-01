@@ -1,7 +1,6 @@
 import re
 import os
 import copy
-
 # For recognizing file names, section names, block names
 # SPECIAL_CHARACTERS =  = get_special_characters()
                      
@@ -10,8 +9,6 @@ from list_of_separate_lines import *
 from equations import *
 from path_searching import *
 from special_characters import *
-
-
 special_cases = ['eq__block', 'figure__block', 'table__block']
 
 def write_link_in_obsidian_format(s, link_type, is_embedded = False):
@@ -36,11 +33,9 @@ def internal_links__identifier(S):
     Identifies internal links in the document, in the form of '[[notename^linkname|name of reference]]'
     '''
 
-
     if not isinstance(S, list):
         raise Exception('Input of the function must be a list of strings!')
         return np.nan
-
 
     # OLD
     # pattern_sections = '\[\[([\w\s-]+)\#([\w' + SPECIAL_CHARACTERS + '\-]+)(\|[\w' + SPECIAL_CHARACTERS + '\-]+)?\]\]'
@@ -50,11 +45,8 @@ def internal_links__identifier(S):
     pattern_sections = r'\[\[\s*([\w\s-]+)\s*#\s*([\w' + re.escape(SPECIAL_CHARACTERS) + r'\-]+)(\|[\w' + re.escape(SPECIAL_CHARACTERS) + r'\-]+)?\s*\]\]'
     pattern_blocks = r'\[\[\s*([\w\s-]+)\s*#\^\s*([\w' + re.escape(SPECIAL_CHARACTERS) + r'\-]+)(\|[\w' + re.escape(SPECIAL_CHARACTERS) + r'\-]+)?\s*\]\]'
 
-
-
     SPECIAL_CHARACTERS_1 = get_special_characters()
     pattern_sections_1 = r'\[\[\s*([\w\s-]+)\s*#\s*([\w' + re.escape(SPECIAL_CHARACTERS_1) + r'\-]+)(\|[\w' + re.escape(SPECIAL_CHARACTERS_1) + r'\-]+)?\s*\]\]'
-
 
     # Even more recent, from: https://chat.openai.com/c/25974e18-74d7-4d0f-a772-9c570c016c4b
 
@@ -72,19 +64,16 @@ def internal_links__identifier(S):
             MATCHES.append([i, match_sections_1, match_blocks])
     
     return MATCHES
-
 # def external_links__identifier(S):
 #     '''
 #     Identifies external links in the document, in the form of '[[notename^linkname|name of reference]]'
 #     '''
-
 
 def unfold_all_embedded_notes(S, PARS):
     
     """
     Unfolds the content of all embedded notes
     """
-    
     md__files_embedded_prev0 = []
     md__files_embedded_prev = md__files_embedded_prev0.copy()
 
@@ -102,27 +91,19 @@ def unfold_all_embedded_notes(S, PARS):
 
         CND__LIST_OF_EMBEDDED_NOTES_IS_CHANGING = md__files_embedded_prev0 != md__files_embedded_new
 
-
     return S, md__files_embedded_new
-
 
 def search_in_embedded_notes(S, PARS):
 
     # Get all embedded references
     [_, md__files_embedded_new] = unfold_all_embedded_notes(S, PARS)
 
-
-
 def char_replacement_sections(section):
-
     section_character_replacements = [':']
-
     for repl in section_character_replacements:
         section = section.replace(repl, "")
 
     return section
-
-
 
 def internal_links__enforcer(S, sections_blocks, internal_links, options):
 
@@ -133,6 +114,8 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
     ADD_HYPERTARGET_AT_THE_END_OF_BLOCK = True
 
     type_of_link = ['sec:', '']
+    type_ref = ['section', 'block']
+
     type_of_link_obsidian = ['#', '#^']
 
     sections = sections_blocks[0]
@@ -148,9 +131,10 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
     else:
         raise Exception("NOTHING CODED FOR THIS CASE YET!")
 
-
     for I in internal_links:
         for iS in range(2):
+            is_section_block = iS==0
+            is_internal_ref_block = iS==1
             Ii_sb = I[iS+1]
 
             if len(Ii_sb) != 0:
@@ -159,7 +143,6 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                 for Ii_sb_i in Ii_sb:
                     section_i = Ii_sb_i[1]
                     
-
                     idx = [j for j in range(len(sections_blocks[iS])) if char_replacement_sections(sections_blocks[iS][j][1]) == section_i] # index of the section in the section list
                     if len(idx)>0: 
                         # Found match between existing sections and blocks of the file and the referenced section
@@ -187,14 +170,13 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                             add__S_repl = ' \label{' + type_of_link[iS] + section_i.replace(' ', '-') + '}'
 
                             # Perform replacements on the label
-                            if iS==0:
+                            if is_section_block:
                                 S[sections_blocks[iS][idx][0]] = label__in_line + add__S_repl
                             else:
                                 S[sections_blocks[iS][idx][0]] = label__in_line.replace('^' + label_latex_format, '') + add__S_repl
 
-
-                        cnd__use_hyperref = (label_latex_format.startswith("sec:")) or (iS==0)
-                        cnd__use_hyperhyperlink = (iS==1) and (not (cnd__use_hyperref))
+                        cnd__use_hyperref = (label_latex_format.startswith("sec:")) or (is_section_block)
+                        cnd__use_hyperhyperlink = (is_internal_ref_block) and (not (cnd__use_hyperref))
 
                         if cnd__use_hyperref:
                             hyperref = f'\hyperref[{label_latex_format}]' + hyperref_text 
@@ -206,19 +188,14 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                         else:
                             raise Exception("Nothing coded here!")
                         
-                        if iS==0:
-                            obsidian_hyperref = write_link_in_obsidian_format(Ii_sb_i, 'section')
-                        elif iS==1:
-                            obsidian_hyperref = write_link_in_obsidian_format(Ii_sb_i, 'block')
-                        else:
-                            raise Exception("Nothing coded here!")
+                        obsidian_hyperref = write_link_in_obsidian_format(Ii_sb_i, type_ref[iS])
                         S[line_number] = S[line_number].replace(obsidian_hyperref, hyperref)
                     else:
                         # did not find anything, therefore leaving the name only
 
                         link_name = Ii_sb_i[2].replace('|', "")
                         if len(link_name)>0:
-                            if iS==0:
+                            if is_section_block:
                                 type_of_link_write = 'section'
                             else:
                                 type_of_link_write = 'block'
@@ -226,7 +203,6 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                             S[line_number] = S[line_number].replace(text_to_replace, link_name)
                         
     return S
-
 
 def embedded_references_recognizer(S, options, mode):
 
@@ -301,8 +277,7 @@ def embedded_references_recognizer(S, options, mode):
             match_pattern_embedded = match_pattern_embedded_tmp
 
         if len(match_pattern_embedded) != 0:
-            
-            
+              
             # Extract text starting with '%%lcmd' and ending with 'lcmd%%'
             match_latex_command_from_obsidian = re.search(r'%%lcmd(.*?)lcmd%%', s)
 
@@ -310,20 +285,17 @@ def embedded_references_recognizer(S, options, mode):
             if match_latex_command_from_obsidian:
                 extracted_latex_command_from_obsidian = match_latex_command_from_obsidian.group(0)  # Get the entire matched text
 
-
             MATCHES.append([i, match_pattern_embedded, extracted_latex_command_from_obsidian])
             # path-finder
 
     # to see the names of the embedded files: `[m[1][0][0] for m in MATCHES]`
     return MATCHES
 
-
 def non_embedded_references_recognizer(S):
 
     '''
     ⚠ Note that this does not pertain to internal links with sections!
     '''
-
 
     # BUG2: SOMEHOW THE "SPECIAL_CHARACTERS" VARIABLE IS NOT GLOBALLY CORRECT. CHANGES IN THE GLOBAL VARIABLE NOT APPLIED IN THE FUNCTION, THEREFORE WRITING IT HERE FOR NOW
     SPECIAL_CHARACTERS = get_special_characters()
@@ -342,7 +314,6 @@ def non_embedded_references_recognizer(S):
             # path-finder
 
     return MATCHES
-
 
 def replace_obsidian_bibliography_link_with_cite(s):
 
@@ -437,7 +408,6 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
     cnd__mode_is__figure_blocks_only    = mode=='figure_blocks_only'
     cnd__mode_is__table_blocks_only     = mode=='table_blocks_only'
     
-
     if cnd__mode_is__normal:
         where_to_search_for_embedded_notes = 'vault'
     elif cnd__mode_is__equation_blocks_only:
@@ -447,7 +417,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
     elif cnd__mode_is__table_blocks_only:
         where_to_search_for_embedded_notes = 'table_blocks'
     else:
-        raise Exception("Nothing coded for this case!")
+        raise NotImplementedError
 
     is_in_normal_case =\
             (not cnd__mode_is__equation_blocks_only) and\
@@ -507,7 +477,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 except:
                     raise Exception("Error")
 
-                if len(path_embedded_reference) == 0: raise Exception('File: ' + embedded_ref + ' cannot be found in ' + PARS['📁'][where_to_search_for_embedded_notes])
+                if len(path_embedded_reference) == 0: raise Exception(f'File: {embedded_ref} cannot be found in {PARS["📁"][where_to_search_for_embedded_notes]}')
 
                 section_name = section.lstrip('#')
                 content__unfold = extract_section_from_file(path_embedded_reference, section_name)
@@ -555,10 +525,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
             for s in S1: S2+=s
 
             S = S2
-
-
     return S, md__files_embedded
-
 
 def extract_section_from_file(obsidian_file, section):
 
@@ -590,13 +557,9 @@ def extract_section_from_file(obsidian_file, section):
         line_number_start = 0
         line_number_end = L
 
-
     extracted_text = Lines[line_number_start:line_number_end]
-
-
     return extracted_text
 
-    
 def get_file_hierarchy(obsidian_file):
     
     if not isinstance(obsidian_file, str):
@@ -604,7 +567,6 @@ def get_file_hierarchy(obsidian_file):
 
     with open(obsidian_file, 'r', encoding='utf8') as f: Lines = f.readlines()
     return get_hierarcy_from_lines(Lines), Lines
-
 
 def get_hierarcy_from_lines(Lines):
     comment_pattern = r'^\s*#+\s*%%.*%%.*$'  # Pattern to detect commented titles
@@ -624,9 +586,7 @@ def get_hierarcy_from_lines(Lines):
 
     return sections
 
-
 def change_section_hierarchy(content__unfold, S, line_number):
-
 
     # get file hierarchy of how lines are right now
     secs = get_hierarcy_from_lines(S)
@@ -635,9 +595,7 @@ def change_section_hierarchy(content__unfold, S, line_number):
     except:
         return content__unfold
 
-
     level = secs[idx][1]
-
     content__unfold_modified = []
 
     for c in content__unfold:
@@ -651,7 +609,6 @@ def change_section_hierarchy(content__unfold, S, line_number):
         content__unfold_modified.append(c1)
 
     return content__unfold_modified
-
 
 def extract_section_from_line(line):
     return re.findall(r'^#+', line)
