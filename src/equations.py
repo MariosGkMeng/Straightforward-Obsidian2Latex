@@ -34,6 +34,21 @@ CMD__TABLE__TABULARX__CENTERING = '\\newcolumntype{Y}{>{\\centering\\arraybacksl
 # def regex_patterns_for_equations():
     
 
+def get_start_and_end_indexes(strings, S):
+    indexes_start = []
+    indexes_end = []
+    for i, line in enum(S):
+        if strings[0] in line:
+            indexes_start.append(i)
+        elif strings[1] in line:
+            indexes_end.append(i)        
+            
+    if len(indexes_start) != len(indexes_end):
+        raise Exception('Some Latex code line is missing!')
+
+    return indexes_start, indexes_end
+
+
 def find_label_in_equation(input_string):
     label_pattern = re.compile(r'\\label\s*{\s*(?:eq__block_)([^}]+)\s*}')
     label_match = label_pattern.search(input_string)
@@ -200,19 +215,8 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
 
 def EQUATIONS__check_and_correct_aligned_equations(S0):
 
-    indexes_start = []
-    indexes_end = []
-
-    for i, line in enum(S0):
-        if '\\begin{aligned}' in line:
-            indexes_start.append(i)
-        elif '\end{aligned}' in line:
-            indexes_end.append(i)
-
-    
-    if len(indexes_start) != len(indexes_end):
-        raise Exception('Some Latex code line is missing!')
-    
+    indexes_start, indexes_end = get_start_and_end_indexes(['\\begin{aligned}', '\end{aligned}'], S0)
+        
     if len(indexes_start) == 0:
         return S0
 
