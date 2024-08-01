@@ -112,7 +112,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - Large Obsidian files consume significant RAM (read [here](https://www.reddit.com/r/ObsidianMD/comments/scwg7a/obsidian_is_a_ram_hog/) as to why)
 - Equation referencing: so far need to create separate embedded notes that represent equation blocks, since Obsidian itself cannot interact with MathJax well enough to create an equation referencing system
 - ⚠ Direct text replacements are not possible, since we are using embedded notes, therefore those texts that we want to replace are not found in a single document (a solution can implemented, via tracking the links)
-	- **Solution:** Use the text replacement tool in the jupyter file
+	- **Solution:** Use the text replacement tool in `converter.py`.
 
 # 📽 List of videos
 If you want to jump to some videos, here's the list:
@@ -127,21 +127,20 @@ If you want to jump to some videos, here's the list:
 # ℹ How to use
 ## Prerequisites
 1. Have Python 3 installed
-2. Have Jupyter notebook editor installed (e.g. in Visual Studio Code)
-3. Have Obsidian installed
-4. Install the following Obsidian plugins
+2. Have Obsidian installed
+3. Install the following Obsidian plugins
 	1. Helps speed up equation referencing: **QuickAdd** (for quick insert of equation blocks)
  	2. Optional, helps write equations very fast: **Quick Latex for Obsidian**
 
 ## Usage
-Go to the **jupyter notebook**. You only have to deal with that.
+Go to `converter.py`. You only have to deal with that.
 
-You should only change things in "PARAMETERS" section, specifically on the 'PARS' dictionary, which contains all the settings.
+You should only change things in the 'PARS' dictionary, which contains all the settings.
 
 ### (⚠ IMPORTANT) 📁 Set your paths 
 
 
-To set the paths for the .md file to be converted, inside the `straightforward_Obsidian2Latex.ipynb` file, under "User Parameters" section, change the:
+To set the paths for the .md file to be converted, inside `converter.py`, under "User Parameters" section, change the:
 
 
 | Path                             | Note                                                                                                                               | Additional note                                                                                                                                                                                                                                                                                |
@@ -159,7 +158,7 @@ The only modification you will need to do in order to use the vault as I intende
 
 
 ### ▶ ▶ HOW TO RUN 
-Inside the `straightforward_Obsidian2Latex.ipynb`, after setting your paths, run the code block under the section "Rest of code" and VOILA! Obviously, any code blocks above that have to be run before that!
+In `converter.py`, after setting your paths, run the code block under the section "Rest of code" and VOILA! Obviously, any code blocks above that have to be run before that!
 
 ### Adding equations
 This uses what we can call "**==note-block logic==**". I.e., writing the equation in a single note, but without writing anything else in that note (hence the "block" part of the name). We will use the same logic for Tables and Figures, so that their referencing becomes easier, and automatic upon name changes.
