@@ -1,7 +1,0 @@
-% You add your paths below
-% - "PATH__OBSIDIAN_NOTE_FILE" refers to the Obsidian note file you wish to convert to PATH__LATEX_FILE
-% - "PATH__LATEX_FILE"         refers to the path of the LateX file
-
-
-PATH__OBSIDIAN_NOTE_FILE: C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Score Function Gradient Estimators
-PATH__LATEX_FILE:         C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Score Function Gradient Estimators
