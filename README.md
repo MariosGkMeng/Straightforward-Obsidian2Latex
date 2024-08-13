@@ -141,8 +141,11 @@ You should only change things in the 'PARS' dictionary, which contains all the s
 
 
 To set the paths for the .md file to be converted, inside `converter.py`, under "User Parameters" section, change the:
+- PATHS['command_note']. It corresponds to the path of `👨‍💻convert_to_latex.md`.
 
+You won't need to change anything else inside `converter.py`, since the other paths are given in `👨‍💻convert_to_latex.md`.
 
+%%
 | Path                             | Note                                                                                                                               | Additional note                                                                                                                                                                                                                                                                                |
 | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `PARS['📂']['markdown-file']`    | The path to the markdown file you want to convert                                                                                  |                                                                                                                                                                                                                                                                                                |
@@ -151,7 +154,7 @@ To set the paths for the .md file to be converted, inside `converter.py`, under 
 | `PARS['📂']['BIBTEX']`           | this is only the name of the bibtex file. By default, it is to be included in the same path as the latex file (will fix soon)      |                                                                                                                                                                                                                                                                                                |
 | `PARS['📂']['equation_blocks']`                                 | this is the path that contains your equation blocks (see [here](#adding-equations) on how it works). It is meant to speed up the searching, due to the fact that if you have a large vault, it would take time. However, this folder will only be parsed, if the note that contains the equation is not in the list of `PARS['📂']['list_paths_notes']`.                                                                                                                                    |                                                                                                                                                                                                                                                                                                |
 
-
+%%
 ### Using the example vault
 You can use the example vault in order to see how the converter works, and a showcase of what it can convert.
 The only modification you will need to do in order to use the vault as I intended to is to rename the "obsidian" folder to ".obsidian", since the latter name implies a hidden folder, github does not allow me to upload it, therefore I had to rename it.
