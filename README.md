@@ -154,7 +154,7 @@ The only modification you will need to do in order to use the vault as I intende
 
 
 ### ▶ ▶ HOW TO RUN 
-In `converter.py`, after setting your paths, run the code block under the section "Rest of code" and VOILA! Obviously, any code blocks above that have to be run before that!
+In `👨‍💻convert_to_latex.md`, click on the links next to the `code_run:: ` field. The 1st command performs the conversion from Obsidian to Latex, the 2nd compiles the latex file to .pdf.
 
 ### Adding equations
 This uses what we can call "**==note-block logic==**". I.e., writing the equation in a single note, but without writing anything else in that note (hence the "block" part of the name). We will use the same logic for Tables and Figures, so that their referencing becomes easier, and automatic upon name changes.
