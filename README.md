@@ -1,10 +1,3 @@
-⚠ Will update the ReadMe soon.
-Some recent updates (will write them in the ReadMe soon)
-- on the interface so that you don't have to trigger it using Python
-	- I started using an Obsidian note that triggers the code and wherein you can specify which note you wish to convert, but I haven't added it to the repo yet
-- you can write pure latex commands within the obsidian files and they will not be touched by the translator
-
-
 # Please cite the following if you use it for publishable work (i.e., if you write your paper in Obsidian, and use this code to print to Latex)
 ```
 @misc{MariosGkionisObsidian2Latex,
