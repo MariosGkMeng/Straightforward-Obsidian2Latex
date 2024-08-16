@@ -364,7 +364,16 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
     fields = get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields)
     extensions = ['.png', '.jpg', '.pdf']
 
-    embedded_images_text = content__unfold[0]
+    i = None
+    for i, c in enum(content__unfold):
+        if '![[' in c:
+            break
+    
+    if not i is None:
+        embedded_images_text = content__unfold[i]
+    else:
+        raise Exception("Did not find an image in your figure block note, or you did not place it in the beginning of a new line!")
+    
     try:
         embedded_images = [x.replace(']]', '') for x in embedded_images_text.split("![[")[1:]]
     except:
