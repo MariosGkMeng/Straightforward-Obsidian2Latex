@@ -3,7 +3,7 @@
 
 # Set base path and file name
 BASE_PATH="C:/Users/mariosg/OneDrive - NTNU/FILES/workTips/✍Writing"
-FILE_NAME="✍⌛writing--PHEN--Mathematical Phenomena of Neural Networks"
+FILE_NAME="file_to_be_converted.md"
 TEXFILE="$BASE_PATH/$FILE_NAME.tex"
 PDFFILE="$BASE_PATH/$FILE_NAME.pdf"
 
