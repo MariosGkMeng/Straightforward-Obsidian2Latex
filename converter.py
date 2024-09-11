@@ -18,7 +18,7 @@ from remove_markdown_comment import *
 from symbol_replacements import *
 from embedded_notes import *
 from bullet_list__converter import *
-from convert_code_blocks import code_block_converter
+from convert_code_blocks import *
 from list_of_separate_lines import *
 from equations import *
 from path_searching import *
@@ -164,25 +164,26 @@ PARS = conv_dict({
                                        'names': ['longtblr', 'tabularx'],
                                 'before-lines': ['{colspec}']
                             },
-            'packages-to-load':[    # Which packages to load on the LateX preamble
-                                'hyperref',
-                                'graphicx',
-                                'subcaption',        # for subfigures
-                                'amssymb',           # need more symbols
-                                'titlesec',          # so that we can add more subsections (using 'paragraph')
-                                'xcolor, soul',      # for the highlighter
-                                'amsmath',
-                                'amsfonts',
-                                'cancel',
-                                'minted',
-                                'apacite',           # apa citation style
-                                'caption',           # to set smaller vertical spacing between two figures
-                                'cleveref',
-                                'tcolorbox',
-                                'float',             # to make the figures stay between the text at which they are defined
-                                'pdfpages',
-                                'totcount',
-                                'lipsum'
+            'packages-to-load':[ # preamble packages,# comment       
+                                ['hyperref',          ''],
+                                ['graphicx',          ''],
+                                ['subcaption',        'for subfigures'],
+                                ['amssymb',           'need more symbols'],
+                                ['titlesec',           "so that we can add more subsections (using 'paragraph')"],
+                                ['xcolor, soul',        'for the highlighter'],
+                                ['amsmath',              ''],
+                                ['amsfonts',              ''],
+                                ['cancel',                ''],
+                                ['minted',                 ''],
+                                ['apacite',           'apa citation style'],
+                                ['caption',           'to set smaller vertical spacing between two figures'],
+                                ['cleveref',             ''],
+                                ['tcolorbox',            ''],
+                                ['float',             'to make the figures stay between the text at which they are defined'],
+                                ['pdfpages',             ''],
+                                ['totcount',             ''],
+                                ['lipsum',               ''],
+                                ['natbib',            "Such that we avoid the error (`Illegal parameter number in definition of \\reserved@a`) of not being able to add citations in captions"]
                                 ],
           'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
                                         ['✔',              '\\checkmark',            1],
@@ -227,11 +228,11 @@ def package_loader():
     page_margin         = settings['margin']
 
     out = ['\\usepackage[table]{xcolor}']
-    packages_to_load.append('tabularx')
-    packages_to_load.append('longtable')
-    packages_to_load.append('tabularray')
+    packages_to_load.append(['tabularx', ''])
+    packages_to_load.append(['longtable', ''])
+    packages_to_load.append(['tabularray', ''])
     
-    out += ['\\usepackage{'+x+'}' for x in packages_to_load]
+    out += ['\\usepackage{'+pkg[0]+'}' + (' % ' + pkg[1])*(len(pkg[1])>0) for pkg in packages_to_load]
 
     out.append('\\usepackage{enumitem,amssymb}')
     out.append('\\newlist{todolist}{itemize}{2}')
@@ -261,7 +262,7 @@ def replace_hyperlinks(S):
     url_regex = "http[s]?://[^)]+"
 
     markup_regex = '\[({0})]\(\s*({1})\s*\)'.format(name_regex, url_regex)
-    markup_regex_no_alias = r'(http[s]?://[^)]+)'
+    markup_regex_no_alias = r'(http[s]?://\S+)' # Non-greedy regex to match URLs, stopping at the first space or punctuation after the URL
 
     S_1 = []
     for s in S:
@@ -275,6 +276,7 @@ def replace_hyperlinks(S):
         
         if not matched_with_alias:
             for match in re.findall(markup_regex_no_alias, s1):
+                match = match.rstrip('.,)')  # Remove trailing punctuation like .,)
                 markdown_link = match
                 latex_link = "\\href{"+match+"}"
                 s1 = s1.replace(markdown_link, latex_link)
@@ -589,6 +591,7 @@ if not SEARCH_IN_FILE:
     
 
     for i in range(int(len(tmp1)/2)):
+        raise Exception("You have tables outside the table note format! Please fix that!")
         new_table = symbol_replacement(convert__tables(content[tmp1[2*i]:tmp1[2*i+1]:step]), table_new_col_symbol_reverse)
         LATEX_TABLES.append(new_table)
 
@@ -649,6 +652,8 @@ if not SEARCH_IN_FILE:
     title = symbol_replacement(path_file.split('\\')[-1].replace('_', '\_'), PARS['par']['symbols-to-replace'])[0]
     
     LATEX = symbol_replacement(LATEX, [[PARS['⚙']['paragraph']['insert_new_line_symbol'] , '\\newpage', 1]])
+
+    LATEX = convert_inline_code(LATEX)
 
     PREAMBLE = ['\documentclass{article}'] +\
             package_loader() +\
