@@ -2,6 +2,21 @@ import re
 import os
 from remove_markdown_comment import *
 
+def convert_inline_code_of_line(text):
+    # Regular expression to find inline code enclosed in backticks
+    pattern = r'`([^`]+)`'
+    
+    # Replace the inline code with \texttt{} format
+    latex_text = re.sub(pattern, r'\\texttt{\1}', text)
+    
+    return latex_text
+
+
+def convert_inline_code(S):
+    S1 = []
+    for s in S: S1.append(convert_inline_code_of_line(s))
+    return S1
+        
 
 def code_block_converter(S, PARS):
 
