@@ -66,6 +66,8 @@ ID__STYLE__BOLD             = 0
 ID__STYLE__HIGHLIGHTER      = 1
 ID__STYLE__ITALIC           = 2
 
+ID__DOCUMENT_CLASS__ARTICLE = 'article'
+ID__DOCUMENT_CLASS__EXTARTICLE = 'extarticle'
 
 # ⚠ does not work for longtblr!
 CMD__TABLE__TABULARX__CENTERING = '\\newcolumntype{Y}{>{\\centering\\arraybackslash}X}'
@@ -98,7 +100,8 @@ replace_with = '\\beta_{2}'
 
 PARS = conv_dict({
     '⚙': # SETTINGS
-        {'TABLES':{
+        {'document_class': {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': '9pt'},
+        'TABLES':{
                             'package': ID__TABLES__PACKAGE__tabularx,
                 'hlines-to-all-rows': '🟢',
                  'any-hlines-at-all': '🟢',
@@ -106,7 +109,7 @@ PARS = conv_dict({
                                         ID__TABLES__alignment__middle],
                         'rel-width': 1.2,
                 },
-        'margin': '0.9in',
+        'margin': '0.5in',
         'EXCEPTIONS': 
                     {'raise_exception__when__embedded_reference_not_found': '🔴'},
         'INTERNAL_LINKS': 
@@ -126,7 +129,9 @@ PARS = conv_dict({
         'paragraph':{
                     'indent_length_of_first_line': 0,    # 0 if no indent is desired. Recommended 20 for usual indent
                     'if_text_before_first_section___place_before_table_of_contents': '🔴',
-                    'insert_new_line_symbol': '---' 
+                    'insert_new_line_symbol':                                        '---',
+                    'add_table_of_contents':                                        '🔴',
+                    'add_new_page_before_bibliography':                             '🔴' 
         }, 
         'author': 'Marios Gkionis',
         'hyperlink_setup': hyperlinkSetup,
@@ -641,7 +646,8 @@ if not SEARCH_IN_FILE:
             line_first_section = i
             break
 
-    if PARS['⚙']['paragraph']['if_text_before_first_section___place_before_table_of_contents']:
+    paragraph = PARS['⚙']['paragraph']
+    if paragraph['if_text_before_first_section___place_before_table_of_contents']:
         # BUG2: anything that needs special conversion will not be converted!!
         if len(sections)>0:
             text_before_first_section = '\n\n'.join([s for s in content[:line_first_section] if len(s)>0])
@@ -649,13 +655,16 @@ if not SEARCH_IN_FILE:
 
     #
 
+    # LATEX = symbol_replacement(LATEX, [['_', '\_', 1]]) # DON'T UNCOMMENT!
     title = symbol_replacement(path_file.split('\\')[-1].replace('_', '\_'), PARS['par']['symbols-to-replace'])[0]
     
-    LATEX = symbol_replacement(LATEX, [[PARS['⚙']['paragraph']['insert_new_line_symbol'] , '\\newpage', 1]])
+    LATEX = symbol_replacement(LATEX, [[paragraph['insert_new_line_symbol'] , '\\newpage', 1]])
 
     LATEX = convert_inline_code(LATEX)
+    
+    document_class = PARS['⚙']['document_class']
 
-    PREAMBLE = ['\documentclass{article}'] +\
+    PREAMBLE = ['\documentclass' + f"[{document_class['fontsize']}]" + '{' + document_class['class'] + '}'] +\
             package_loader() +\
             ['\n'] + ['\sethlcolor{yellow}'] + ['\n'] + ['\n'*2] +\
             ['\setcounter{secnumdepth}{4}'] +\
@@ -667,9 +676,9 @@ if not SEARCH_IN_FILE:
             ['\\author{' + PARS['⚙']['author'] + '}']+\
             ['\\title{'+ title +'}\n\maketitle'	]+\
             [text_before_first_section]+\
-            ['\\tableofcontents \n \\newpage']
+            ['\\tableofcontents \n \\newpage'*paragraph['add_table_of_contents']]
 
-    LATEX = PREAMBLE + LATEX + ['\\newpage \n \\bibliographystyle{apacite}']+\
+    LATEX = PREAMBLE + LATEX + ['\\newpage \n '*paragraph['add_new_page_before_bibliography'] + '\\bibliographystyle{apacite}']+\
         ['\\bibliography{' + PATHS['bibtex_file_name'] + '}'] + ['\end{document}']
 
     with open(PATHS['tex-file'], 'w', encoding='utf8') as f:
