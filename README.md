@@ -90,7 +90,20 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 
 ## ➕️ Working on at the moment 
 - Code maintenance
+- Creating warning messages for errors that the user makes when writing the note
 - More niche table conversions
+
+## 💀 What can cause errors
+In this section, I will be writing what actions will cause errors in this version of the code.
+
+1. Writing equations outside of the equation-block notes (read [here](#Adding-equations)). A correct conversion happens only when the equations are inside these special note files.
+2. Writing tables and figures outside of their designated table-block and figure-block notes (same as with the equations)
+3. Writing text using underscores without the escape character ("_" instead of "\_"), unless written in specific environments, such as equations
+4. Having the following characters appear an odd number of times in the document:
+	a. "\*\*"
+	b. "\*"
+	c. "\=\="
+
 
 
 # 😁🔋 Strengths
