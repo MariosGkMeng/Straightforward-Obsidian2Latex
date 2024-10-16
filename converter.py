@@ -10,7 +10,7 @@ from cProfile import Profile
 from pstats import SortKey, Stats
 #
 
-# Add the src directory to the Python path
+# Add the src directory to the Python pathf
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
 
@@ -22,199 +22,10 @@ from convert_code_blocks import *
 from list_of_separate_lines import *
 from equations import *
 from path_searching import *
+from get_parameters import *
 
 
-
-# Helper functions
-def conv_dict(D):
-    for key, value in D.items():
-        if value == '🟢':
-            D[key] = True
-        elif value == '🔴':
-            D[key] = False
-        elif isinstance(value, dict):
-            D[key] = conv_dict(value)
-    return D
-
-def python_format_path(path, to_python = False):
-    
-    if not to_python:
-        return path.replace('\\\\', '\\')
-    else:
-        return path.replace('\\', '\\\\')
-
-
-# is_in_table_line = lambda x: x.startswith('|') and x.endswith('|')
-# enum             = lambda x: enumerate(x)
-#
-
-# Global constants
-ID__TABLES__alignment__center = 0
-ID__TABLES__alignment__right  = 1
-ID__TABLES__alignment__middle = 2
-
-
-ID__TABLES__PACKAGE__longtblr   = 0
-ID__TABLES__PACKAGE__tabularx   = 1
-ID__TABLES__PACKAGE__long_table = 2
-
-ID__CNV__TABLE_STARTED      = 0
-ID__CNV__TABLE_ENDED        = 1
-ID__CNV__IDENTICAL          = 2
-
-ID__STYLE__BOLD             = 0
-ID__STYLE__HIGHLIGHTER      = 1
-ID__STYLE__ITALIC           = 2
-
-ID__DOCUMENT_CLASS__ARTICLE = 'article'
-ID__DOCUMENT_CLASS__EXTARTICLE = 'extarticle'
-
-# ⚠ does not work for longtblr!
-CMD__TABLE__TABULARX__CENTERING = '\\newcolumntype{Y}{>{\\centering\\arraybackslash}X}'
-#
-
-# USER PARAMETERS
-path_vault          = 'C:\\Users\\mariosg\OneDrive - NTNU\FILES\\workTips\\'
-# path_vault          = 'C:\\Users\\mariosg\OneDrive - NTNU\FILES\\workTips\\' + 'Literature\\Straightforward-Obsidian2Latex\\example_vault\\'
-path0               = path_vault + 'AUTOMATIONS\\'
-path_file_testing   = path_vault + 'code testing\\test_2'
-path_equation_blocks = path_vault + '✍Writing\\equation blocks'
-path_list_note_paths = path_vault + 'DO_NOT_DELETE__note_paths.txt'
-path_BIBTEX          = path_vault + '✍Writing\\BIBTEX'
-
-path_file = 'who cares'
-
-hyperlinkSetup="""
-\hypersetup{
-colorlinks   = true,    % Colours links instead of ugly boxes
-urlcolor     = blue,    % Colour for external hyperlinks
-linkcolor    = blue,    % Colour of internal links
-citecolor    = blue      % Colour of citations
-}
-"""
-
-
-SEARCH_IN_FILE = False
-text_to_seach = 'w_{E_{2}}'
-replace_with = '\\beta_{2}' 
-
-PARS = conv_dict({
-    '⚙': # SETTINGS
-        {'document_class': {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': '9pt'},
-        'TABLES':{
-                            'package': ID__TABLES__PACKAGE__tabularx,
-                'hlines-to-all-rows': '🟢',
-                 'any-hlines-at-all': '🟢',
-                         'alignment':  [ID__TABLES__alignment__center,
-                                        ID__TABLES__alignment__middle],
-                        'rel-width': 1.2,
-                },
-        'margin': '0.5in',
-        'EXCEPTIONS': 
-                    {'raise_exception__when__embedded_reference_not_found': '🔴'},
-        'INTERNAL_LINKS': 
-                        {'add_section_number_after_referencing': '🟢'  # if True, then we have "\hyperref[sBootstrapping-and-the-iterative-logic-in-estimation]{here}: \autoref{sBootstrapping-and-the-iterative-logic-in-estimation}". 
-                        },        
-        'EMBEDDED REFERENCES':  
-                        {'convert_non_embedded_references': '🟢',  # if True, then references such as "[[another note]]" will be changed to "another note". If FAlse, they will remain as is
-                         'treat_equation_blocks_separately': '🟢', # if True, then the equation blocks are treated separately, in order to increase speed
-                                          'treat_citations': '🟢',
-                                 'adapt_section_hierarchy': '🟢', # if True, then whenever there are sections in an embedded reference, their hierarchy will change, based on whether the embedded note was already in sections (so we don't break the hierarchy)
-                'write_obsidian_ref_name_on_latex_comment': '🟢'}, 
-        'figures': 
-                        {'reduce spacing between figures': '🔴',
-                                  'put_figure_below_text': '🟢',
-                                           'include_path': '🟢'}, # not including the path works only if all the figures are in the same folder (appropriate for Overleaf projects)
-                                                       
-        'paragraph':{
-                    'indent_length_of_first_line': 0,    # 0 if no indent is desired. Recommended 20 for usual indent
-                    'if_text_before_first_section___place_before_table_of_contents': '🔴',
-                    'insert_new_line_symbol':                                        '---',
-                    'add_table_of_contents':                                        '🔴',
-                    'add_new_page_before_bibliography':                             '🔴' 
-        }, 
-        'author': 'Marios Gkionis',
-        'hyperlink_setup': hyperlinkSetup,
-        'code_blocks': {
-                        'admonition':  [
-                                        ['default', ['white', 'black']],
-                                        ['warning', ['red', 'white']],
-                                        ['quote',   ['gray', 'black']]
-                                       ]
-            },
-        'formatting_rules':{
-                    'non_embedded_references': { # find list of colors here: https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX
-                                                'notes_with_tags': [ # add tag, color ("\textcolor{}{}" function)
-                                                                    ["#Latex/Formatting/method",         "teal"],
-                                                                    ["#Latex/Formatting/characteristic", "gray"],
-                                                                    ["#Latex/Formatting/task",           "red"],
-                                                                    ['#Latex/Formatting/math-term',      "brown"]
-                                                                    ]}
-        }},
-    '📁': # Paths
-           {
-                 'command_note': path_vault+'✍Writing\\👨‍💻convert_to_latex.md',
-                'markdown-file': path_file+'.md',  # Markdown (.md) file for conversion
-                     'tex-file': path_file+'.tex',  # LateX (.tex) file (converted from the .md file)  
-                        'vault': path_vault,
-              'equation_blocks': path_equation_blocks,
-             'list_paths_notes': path_list_note_paths, # saves time from searching of the note's path
-                  'bash_script': path_vault + '✍Writing\\compile_and_open.sh',
-             'bibtex_file_name': 'BIBTEX'           # your bibtex file name 
-            },
-    'par':
-        {
-            'tabular-package':
-                            {
-                                       'names': ['longtblr', 'tabularx'],
-                                'before-lines': ['{colspec}']
-                            },
-            'packages-to-load':[ # preamble packages,# comment       
-                                ['hyperref',          ''],
-                                ['graphicx',          ''],
-                                ['subcaption',        'for subfigures'],
-                                ['amssymb',           'need more symbols'],
-                                ['titlesec',           "so that we can add more subsections (using 'paragraph')"],
-                                ['xcolor, soul',        'for the highlighter'],
-                                ['amsmath',              ''],
-                                ['amsfonts',              ''],
-                                ['cancel',                ''],
-                                ['minted',                 ''],
-                                ['apacite',           'apa citation style'],
-                                ['caption',           'to set smaller vertical spacing between two figures'],
-                                ['cleveref',             ''],
-                                ['tcolorbox',            ''],
-                                ['float',             'to make the figures stay between the text at which they are defined'],
-                                ['pdfpages',             ''],
-                                ['totcount',             ''],
-                                ['lipsum',               ''],
-                                ['natbib',            "Such that we avoid the error (`Illegal parameter number in definition of \\reserved@a`) of not being able to add citations in captions"]
-                                ],
-          'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
-                                        ['✔',              '\\checkmark',            1],
-                                        ['🟢',              '$\\\\blacklozenge$',    2],
-                                        ['🔴',              '\\\maltese',            2],
-                                        ['➕',              '**TODO: **',            2],    # Alternatives: ['$\\\\boxplus$']
-                                        ['🔗',              'LINK',                  1],
-                                        ['\implies',        '\Rightarrow',            1],
-                                        ['❓❓',              '?',                     1],
-                                        ['❓',              '?',                      1],
-                                        ['❌',              'NO',                    1],
-                                        ['🤔',               '',                     1],
-                                        ['⚠',               '!!',                    1],
-                                        ['📚',              '',                      1],
-                                        ['⌛',               '',                     1],
-                                        ['🔭',              '',                     1],
-                                        ['👆',              '',                      1],
-                                        ['💭',              '',                      1]
-                                        ]
-        },
-        #                                        ['\\text',          '\\textnormal',          1],
-
-    'EQUATIONS':
-               {'convert_non_numbered_to_numbered': '🟢'} # If True, all equations are numbered
-
-})
+PARS = get_parameters()
 
 #                                         ['&',              '\&',                      1],
 
@@ -233,11 +44,14 @@ def package_loader():
     page_margin         = settings['margin']
 
     out = ['\\usepackage[table]{xcolor}']
-    packages_to_load.append(['tabularx', ''])
-    packages_to_load.append(['longtable', ''])
-    packages_to_load.append(['tabularray', ''])
+    packages_to_load.append(['tabularx', None, ''])
+    packages_to_load.append(['longtable', None, ''])
+    packages_to_load.append(['tabularray', None, ''])
     
-    out += ['\\usepackage{'+pkg[0]+'}' + (' % ' + pkg[1])*(len(pkg[1])>0) for pkg in packages_to_load]
+    doc_class = PARS['⚙']['document_class']['class']
+    
+    out += [f"\\usepackage{{{pkg[0]}}}{(' % ' + pkg[2]) if len(pkg[2]) > 0 else ''}" for pkg in packages_to_load if pkg[1]!=doc_class]
+    # delete following when not needed:  ['\\usepackage{'+pkg[0]+'}' + (' % ' + pkg[1])*(len(pkg[1])>0) for pkg in packages_to_load]
 
     out.append('\\usepackage{enumitem,amssymb}')
     out.append('\\newlist{todolist}{itemize}{2}')
@@ -283,7 +97,7 @@ def replace_hyperlinks(S):
             for match in re.findall(markup_regex_no_alias, s1):
                 match = match.rstrip('.,)')  # Remove trailing punctuation like .,)
                 markdown_link = match
-                latex_link = "\\href{"+match+"}"
+                latex_link = "\\url{"+match+"}"
                 s1 = s1.replace(markdown_link, latex_link)
                 matched_with_alias = True
 
@@ -394,7 +208,7 @@ def simple_stylistic_replacements(S, type=None):
             for R in replacements:
                 s = s.replace(R[0], R[1])
         else:
-            raise Exception("error for this case, for now")
+            raise Exception("You have added an odd number of the '" + style_char + "' character in the string: '" + s + "'")
         
         S1.append(s)
     
@@ -421,9 +235,9 @@ def images_converter(images, PARAMETERS):
         TO_PRINT.append(' \n'.join([
         '\\begin{figure}',
         '	\centering',
-        '	\includegraphics[width=' + str(figure_width) + '\linewidth]'+\
+        f'	\includegraphics[width={figure_width}\linewidth]'+\
             '{"'+path_img+'"}',
-        '	\caption['+caption_short+']{'+caption_long+'}',
+        f'	\caption[{caption_short}]{{{caption_long}}}',
         '   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
         '	\label{fig:'+label_img+'}',
         '\end{figure}']))
@@ -482,6 +296,7 @@ for i in range(Lc+1):
         sections.append([i, content_0.replace('#### ', '').replace('\n', '')])
 
     content_0 = content[i]
+    add_star = ''
     content[i] = re.sub(r'### (.*)', r'\\subsubsection{\1}', content[i].replace('%%', ''))
     if content[i] != content_0:
         sections.append([i, content_0.replace('### ', '').replace('\n', '')])
@@ -566,7 +381,7 @@ blocks = get_reference_blocks(content)
 content = internal_links__enforcer(content, [sections, blocks], internal_links__identifier(content), PARS['⚙']['INTERNAL_LINKS'])
 #
 
-if not SEARCH_IN_FILE:
+if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
 
     if PARS['EQUATIONS']['convert_non_numbered_to_numbered']:
         content = EQUATIONS__convert_non_numbered_to_numbered(content)
@@ -656,25 +471,28 @@ if not SEARCH_IN_FILE:
     #
 
     # LATEX = symbol_replacement(LATEX, [['_', '\_', 1]]) # DON'T UNCOMMENT!
-    title = symbol_replacement(path_file.split('\\')[-1].replace('_', '\_'), PARS['par']['symbols-to-replace'])[0]
-    
+    # title = PARS['⚙']['title'] if PARS['⚙']['title'] else symbol_replacement(path_file.split('\\')[-1].replace('_', '\_'), PARS['par']['symbols-to-replace'])[0]
+    title = PARS['⚙']['title'] if PARS['⚙']['title'] else ''
     LATEX = symbol_replacement(LATEX, [[paragraph['insert_new_line_symbol'] , '\\newpage', 1]])
 
     LATEX = convert_inline_code(LATEX)
     
     document_class = PARS['⚙']['document_class']
 
-    PREAMBLE = ['\documentclass' + f"[{document_class['fontsize']}]" + '{' + document_class['class'] + '}'] +\
+
+    doc_class_fontsize = f'[{document_class["fontsize"]}]' if len(document_class['fontsize'])>0 else ''
+
+    PREAMBLE = [f"\\documentclass{doc_class_fontsize}{{{document_class['class']}}}"] +\
             package_loader() +\
             ['\n'] + ['\sethlcolor{yellow}'] + ['\n'] + ['\n'*2] +\
             ['\setcounter{secnumdepth}{4}'] +\
             ['\setlength{\parskip}{7pt} % paragraph spacing'] +\
             ['\let\oldmarginpar\marginpar'] +\
-            ['\\renewcommand\marginpar[1]{\oldmarginpar{\\tiny #1}} % Change "small" to your desired font size]'] +\
+            ['\\renewcommand\marginpar[1]{\oldmarginpar{\\tiny #1}} % Change "small" to your desired font size]'] + ['\n'*2] +\
             ['\\begin{document}']+\
-            ['\date{}']+\
-            ['\\author{' + PARS['⚙']['author'] + '}']+\
-            ['\\title{'+ title +'}\n\maketitle'	]+\
+            ['\date{}'*PARS['⚙']['use_date']]+\
+            [f"\\author{PARS['⚙']['author']}"*(len(PARS['⚙']['author'])>0)]+\
+            [f'\\title{title}\n\maketitle'*(len(title)>0)]+\
             [text_before_first_section]+\
             ['\\tableofcontents \n \\newpage'*paragraph['add_table_of_contents']]
 
@@ -704,6 +522,10 @@ if not SEARCH_IN_FILE:
 
 
 else:
+    
+    text_to_seach = PARS['⚙']['SEARCH_IN_FILE']['text_to_seach']
+    replace_with = PARS['⚙']['SEARCH_IN_FILE']['replace_with']
+    
     ALL_EMBEDDED_NOTES = md__equations_embedded_new + md_notes_embedded
     MATCHES = []
     for note in ALL_EMBEDDED_NOTES:
