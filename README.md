@@ -218,6 +218,54 @@ I will "relax"/parameterize this rule soon.
 Regretably, LateX suffers from one more flaw; that of needing to be concious of packages that should not be loaded together. 
 This is controlled in `get_parameters.py`, in the `PARS['par']['packages-to-load']` list. The first entry of this list contains the package, the second contains the document class for which this package should **not** be loaded (e.g., the package `cleveref` should not be loaded when using the `ifacconf` document class).
 
+### For things that are not converted yet
+Despite the fact that there are still a few features that have not yet been fully developed, it is possible to fully compose a document completely via Obsidian. 
+This is possible through the recognition of **LateX command snippets**. A command snippet is something that looks like:
+
+``` python
+plt.figure()
+plt.plot(x, y)
+plt.show()
+```
+This is a snippet that contains code. The first line "``` python" declares the start of the snippet and its _language_.
+
+The converter is able to recognize such snippets and print them in their corresponding format.
+
+👆However, if the language of the snippet is specified as `latex`, then the converter will simply paste those lines of latex code to the .tex file without any formatting, thus allowing these lines to run properly in LateX. 
+
+Examples: 
+
+```latex
+\lipsum[1-3]
+```
+
+```latex
+\begin{frontmatter}
+	
+	\title{Style for IFAC Conferences & Symposia: Use Title Case for Paper Title\thanksref{footnoteinfo}} 
+	% Title, preferably not more than 10 words.
+	
+	\thanks[footnoteinfo]{Sponsor and financial support acknowledgment goes here. Paper titles should be written in uppercase and lowercase letters, not all uppercase.}
+	
+	\author[First]{First A. Author} 
+	\author[Second]{Second B. Author, Jr.} 
+	\author[Third]{Third C. Author}
+	
+	\address[First]{National Institute of Standards and Technology, Boulder, CO 80305 USA (e-mail: author@ boulder.nist.gov).}
+	\address[Second]{Colorado State University, Fort Collins, CO 80523 USA (e-mail: author@lamar. colostate.edu)}
+	\address[Third]{Electrical Engineering Department,Seoul National University, Seoul, Korea, (e-mail: author@snu.ac.kr)}
+	
+	\begin{abstract}                % Abstract of not more than 250 words.
+		\lipsum[1]
+	\end{abstract}
+	
+	\begin{keyword}
+		Five to ten keywords, preferably chosen from the IFAC keyword list.
+	\end{keyword}
+	
+\end{frontmatter}
+```
+
 
 # 🟢 Good Practices in Obsidian
 ## Embedded notes
