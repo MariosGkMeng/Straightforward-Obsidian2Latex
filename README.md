@@ -270,6 +270,8 @@ https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/9
 # TODOs
 - [X] Add a toy-vault with the appropriate paths and folders --> adjust the paths in the code accordingly
 	- [ ] Add comments within the note for the user to learn interactively
+- [ ] Move the parameter selection from `get_parameters.py` to an Obsidian note
+	- [ ] Provide option for using different parameters for each note that is converted
 ## For the ReadMe file
 - [ ] Add video to show how the figure system works
 - [ ] Add video to show how the admonition system works
