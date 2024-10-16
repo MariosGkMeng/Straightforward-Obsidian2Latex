@@ -214,6 +214,11 @@ BUT: as a user, you have to add the BibTex citation manually in your designated 
 
 I will "relax"/parameterize this rule soon.
 
+### Mapping packages that should not be combined
+Regretably, LateX suffers from one more flaw; that of needing to be concious of packages that should not be loaded together. 
+This is controlled in `get_parameters.py`, in the `PARS['par']['packages-to-load']` list. The first entry of this list contains the package, the second contains the document class for which this package should **not** be loaded (e.g., the package `cleveref` should not be loaded when using the `ifacconf` document class).
+
+
 # 🟢 Good Practices in Obsidian
 ## Embedded notes
 Read in the [Obsidian website](https://help.obsidian.md/Linking+notes+and+files/Embed+files) for information on **what** they are.
