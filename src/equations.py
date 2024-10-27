@@ -17,6 +17,8 @@ ID__TABLES__alignment__middle = 2
 ID__TABLES__PACKAGE__longtblr   = 0
 ID__TABLES__PACKAGE__tabularx   = 1
 ID__TABLES__PACKAGE__long_table = 2
+ID__TABLES__PACKAGE__tabular    = 3
+
 
 ID__CNV__TABLE_STARTED      = 0
 ID__CNV__TABLE_ENDED        = 1
@@ -41,7 +43,10 @@ def get_start_and_end_indexes(strings, S):
         if strings[0] in line:
             indexes_start.append(i)
         elif strings[1] in line:
-            indexes_end.append(i)        
+            indexes_end.append(i)
+        elif strings[0] in line and strings[1] in line:
+            indexes_start.append(i)
+            indexes_end.append(i)
             
     if len(indexes_start) != len(indexes_end):
         raise Exception('Some Latex code line is missing!')
@@ -179,36 +184,41 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
 
     complete_equation = ''.join(latex_equations)
 
-    pattern = r'\$\$\s*\\begin{aligned}\s*(.*?)\s*\\end{aligned}(\s*\$\$\\label\{(eq__block_[^}]+)\})?'
+    aligned_or_split = ['aligned', 'split']
+    patterns = [fr'\$\$\s*\\begin\{{{s}\}}\s*(.*?)\s*\\end\{{{s}\}}(\s*\$\$\\label\{{(eq__block_[^}}]+)\}})?' for s in aligned_or_split]
+    # with the above pattern, the algorithm expects to find the label after the equation
+    
+    
+    for j, pattern in enumerate(patterns):
 
-    equation_match = re.search(pattern, complete_equation, re.DOTALL)
+        equation_match = re.search(pattern, complete_equation, re.DOTALL)
 
-    if equation_match:
+        if equation_match:
 
-        equation_content = equation_match.group(1)
-        equation_content = equation_content.split('\\\\')
-        equation_content = ('\\\\' + '\n' + '\t'*1).join(equation_content)
+            equation_content = equation_match.group(1)
+            equation_content = equation_content.split('\\\\')
+            equation_content = ('\\\\' + '\n' + '\t'*1).join(equation_content)
 
-        label_match = equation_match.group(2)
+            label_match = equation_match.group(2)
 
-        label_name = ""
-        if label_match:
-            label_name = re.search(r'\\label\{(eq__block_([^}]+))\}', label_match).group(1)
-            label_name = label_name.replace("eq__block_", "")
+            label_name = ""
+            if label_match:
+                label_name = re.search(r'\\label\{(eq__block_([^}]+))\}', label_match).group(1)
+                label_name = label_name.replace("eq__block_", "")
 
-        label_statement = rf"\label{{eq:{label_name}}}" if label_name else ""
+            label_statement = rf"\label{{eq:{label_name}}}" if label_name else "%no_label_statement"
 
-        new_equation = rf"""
-\begin{{equation}}{label_statement}
-    \begin{{aligned}}
-        {equation_content.strip()}
-    \end{{aligned}}
-\end{{equation}}
-"""
+            new_equation = rf"""
+            \begin{{equation}}{label_statement}
+                \begin{{{aligned_or_split[j]}}}
+                    {equation_content.strip()}
+                \end{{{aligned_or_split[j]}}}
+            \end{{equation}}
+            """
 
-        new_equation = new_equation.split('\n')
-        new_equation = new_equation[1:-1]
-        return new_equation
+            new_equation = new_equation.split('\n')
+            new_equation = new_equation[1:-1]
+            return new_equation
 
     else:
         return None
@@ -216,7 +226,10 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
 def EQUATIONS__check_and_correct_aligned_equations(S0):
 
     indexes_start, indexes_end = get_start_and_end_indexes(['\\begin{aligned}', '\end{aligned}'], S0)
-        
+    indexes_start_add, indexes_end_add = get_start_and_end_indexes(['\\begin{split}', '\end{split}'], S0)
+    indexes_start += indexes_start_add
+    indexes_end += indexes_end_add
+
     if len(indexes_start) == 0:
         return S0
 
@@ -254,27 +267,36 @@ def EQUATIONS__check_and_correct_aligned_equations(S0):
     return S0_modified
 
 
-def EQUATIONS__convert_equation_referencing(S0):
+def EQUATIONS__convert_equation_referencing(S0, cleveref_allowed = False):
     """
     Converts the note linking of the format "[[eq__block_equationName]]" to "\\ref{eq:equationName}"
     """
     # Regular expression pattern to match the specified format
     pattern = r'\[\[eq__block_(.*?)\]\]'
     
+    if cleveref_allowed:
+        pattern_ref = r'\\Cref{eq:\1}'
+    else:
+        pattern_ref = r'\\ref{eq:\1}'
+    
     S = S0
     for i, s in enum(S):
         # Using re.sub to replace the matched pattern with the desired text
-        replaced_text = re.sub(pattern, r'\\cref{eq:\1}', s)
+        replaced_text = re.sub(pattern, pattern_ref, s)
 
         S[i] = replaced_text
     return S
 
-def convert_referencing(S0, mode):
+def convert_referencing(S0, mode, cleveref_allowed = False):
     
     # Regular expression pattern to match the specified format
     pattern = [r'\[\[table__block_(.*?)\]\]', r'\[\[figure__block_(.*?)\]\]']
-    replacement = [r'\\cref{tab:\1}', r'\\cref{fig:\1}']
     
+    if cleveref_allowed:
+        replacement = [r'\\Cref{tab:\1}', r'\\Cref{fig:\1}']
+    else:
+        replacement = [r'\\ref{tab:\1}', r'\\ref{fig:\1}']
+        
     S = S0
     if mode == 'figures':
         idx = 0
@@ -311,6 +333,14 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
     # add the equation label afterwards, so that later it is integrated in the latex file
     anything_after_equation_that_can_be_removed_by_rstrip = content__unfold[-1].replace(content__unfold[-1].rstrip(), "")    
     
+    # clean the equation from characters after the equation itself, because they mess the conversion
+    Lc = len(content__unfold)-1
+    for z in range(Lc+1):
+        if '$$' in content__unfold[Lc-z]: 
+            break
+    content__unfold = content__unfold[:Lc-z+1]
+    #
+    
     content__unfold[-1] = content__unfold[-1].rstrip()
 
     add_new_line_after_label = True
@@ -320,7 +350,7 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
     else:
         tmp1 = ''
 
-    content__unfold[-1] += '\label{' + equation_label + '}' + anything_after_equation_that_can_be_removed_by_rstrip + tmp1
+    content__unfold[-1] += f'\label{{{equation_label}}}{anything_after_equation_that_can_be_removed_by_rstrip}{tmp1}'
 
     return content__unfold
 
@@ -333,12 +363,45 @@ def get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields):
         lines = file.readlines()
 
     for i, field in enum(look_for_fields):
+        found_field = False
         for line in lines:
             if line.startswith(field):
                 fields[i] = line.replace(field, '').replace('\n', '').strip()
+                found_field = True
                 break
-                
+        if not found_field:
+            fields[i] = ''                
     return fields
+
+
+def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, new_values):
+    """
+    Replace the values of specified fields in an Obsidian note with new values.
+
+    :param path_embedded_reference: Path to the Obsidian note file.
+    :param look_for_fields: A list of field names to search for.
+    :param new_values: A list of new values to replace the field values with.
+    """
+    
+    # Ensure we have the same number of fields and values to replace
+    if len(look_for_fields) != len(new_values):
+        raise ValueError("The number of fields and new values must be the same.")
+    
+    # Read the content of the file
+    with open(path_embedded_reference, 'r', encoding='utf8') as file:
+        lines = file.readlines()
+
+    # Modify the lines where the fields are found
+    for i, field in enumerate(look_for_fields):
+        for j, line in enumerate(lines):
+            if line.startswith(field):
+                # Replace the field value with the new one
+                lines[j] = f"{field} {new_values[i]}\n"
+                break
+
+    # Write the updated content back to the file
+    with open(path_embedded_reference, 'w', encoding='utf8') as file:
+        file.writelines(lines)
 
 
 def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PARS):
@@ -360,7 +423,14 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
 
 def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, PARS):
 
-    look_for_fields = ['size_in_latex:: ', 'caption_short:: ', 'caption_long:: ']
+    look_for_fields = [
+        'size_in_latex:: ',
+        'caption_short:: ',
+        'caption_long:: ',
+        'subfigure_widths:: ',
+        'subfigure_abs_or_rel:: '
+        ]
+    
     fields = get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields)
     extensions = ['.png', '.jpg', '.pdf']
 
@@ -405,13 +475,13 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     subfigure_text_width = 1/len(images)
 
     # get parameters of the latex figure command
-    latex_figure_field = [0.7, '', ''] # the defaults
+    latex_figure_field = [0.7, '', '', '', ''] # the defaults
 
     # change defaults, if user put something
     for iF, f in enum(fields[1]):
         if len(f)>0: latex_figure_field[iF] = f 
 
-    figure_width, caption_short, caption_long = latex_figure_field
+    figure_width, caption_short, caption_long, subfigure_widths, subfigure_abs_or_rel = latex_figure_field
 
     TO_PRINT = []
 
@@ -424,12 +494,22 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     fig_label = '\label{fig:'+label+'}'
     
     if PARAMETERS['put_figure_below_text']: 
-        if not cnd__include_subfigures:
-            begin_figure += '[H]'
+        if cnd__no_subfigures:
+            begin_figure = [begin_figure + '[htb]'] #'[H]'
         else:
-            begin_figure += '[b]{'+ str(subfigure_text_width) +'\\textwidth}'
+            try:
+                widths = subfigure_widths.split(',')
+                widths = [float(p.strip()) for p in widths]
+                sumW = np.sum(widths)
+                if subfigure_abs_or_rel!='rel' and subfigure_abs_or_rel!='abs': subfigure_abs_or_rel='rel'
+                if subfigure_abs_or_rel == 'rel' or sumW>1:
+                    widths = [p/sumW for p in widths]
+            except:
+                widths = [subfigure_text_width for _ in range(len(images))]
+                
+            begin_figure = [begin_figure + f'[b]{{{widths[i]}\\textwidth}}' for i in range(len(images))]
 
-    for IM in images:
+    for i_img, IM in enumerate(images):
         path_img0 = IM.replace('\\', '/')
 
         img_directory = '/'.join(path_img0.split('/')[:-1])
@@ -442,7 +522,7 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
 
         # label_img = IM.split('\\')[-1]
         TO_PRINT.append(' \n'.join([
-        begin_figure,
+        begin_figure[i_img],
         '	\centering',
         '	\includegraphics[width=' + str(figure_width)*cnd__no_subfigures + '\linewidth]' + '{"'+path_img+'"}',
         '	\caption['+caption_short+']'+('{'+caption_long+'}')*(len(caption_long)>0),
@@ -453,7 +533,7 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     y = []
     if cnd__include_subfigures:
         if PARAMETERS['put_figure_below_text']:
-            begin_fig_global = '\\begin{figure}[H]\n'
+            begin_fig_global = '\\begin{figure}[htb]\n' # '\\begin{figure}[H]\n'
         else:
             begin_fig_global = '\\begin{figure}\n'
         y.append(begin_fig_global)
@@ -476,6 +556,9 @@ def convert__tables(S, caption, package, label, widths, PARS):
     Converts tables depending on the user's preferences    
     '''
     format_column_names_with_bold = True
+    if PARS['num_columns'] > 1:
+        txt_textwith = f"{{{1/PARS['num_columns']}\\textwidth}}"
+        # PARS['num_columns'] {\\textwidth}
     
     latex_table_prefix = '#Latex/Table/'
     latex_table_prefix_row_format_color = latex_table_prefix + 'Format/rowcolor/'
@@ -490,6 +573,8 @@ def convert__tables(S, caption, package, label, widths, PARS):
             package = ID__TABLES__PACKAGE__tabularx
         elif latex_table_package_prefix+'longtblr' in package:
             package = ID__TABLES__PACKAGE__longtblr
+        elif latex_table_package_prefix+'tabular' in package:
+            package = ID__TABLES__PACKAGE__tabular
         else:
             raise NotImplementedError
         
@@ -609,9 +694,9 @@ def convert__tables(S, caption, package, label, widths, PARS):
             '\centering',
             '\caption{' + caption + '}',
             '\label{tab:' + label + '}',
-            '\\begin'+PCKG_NAME+'{\\textwidth}{' + table_width + '}',
+            '\\begin' + PCKG_NAME + txt_textwith + '{' + table_width + '}',
             '   \hline'
-        ]
+        ] 
 
         latex_after_table = [
             '   \hline',
@@ -687,11 +772,35 @@ def convert__tables(S, caption, package, label, widths, PARS):
         ]
 
         LATEX = latex_before_table + ['    '+x for x in latex_table[1:]] + latex_after_table
+    
+    elif package == ID__TABLES__PACKAGE__tabular:
+        PCKG_NAME = '{tabular}'
         
+        if not has_custom_widths:
+            table_width = N_cols*'|p{3cm}' + '|'
+        else:
+            table_width = table_width_custom_0
 
+        latex_before_table = lbefore + [
+            '%\\begin{center}',
+            '\\begin{table}[ht]',
+            '\centering',
+            '\caption{' + caption + '}',
+            '\label{tab:' + label + '}',
+            '\\begin' + PCKG_NAME + '{' + table_width + '}',
+            '   \hline'
+        ] 
+
+        latex_after_table = [
+            '   \hline',
+            '\end'+PCKG_NAME,
+            '\end{table}'
+        ]
+
+        LATEX = latex_before_table + latex_table + latex_after_table
         
     else:
-        raise Exception('NOTHING CODED HERE!')
+        raise NotImplementedError
     
     # Unmask internal link with alias
     for i, s in enum(LATEX):
