@@ -29,16 +29,17 @@ def code_block_converter(S, PARS):
     counter = 0
     S1 = []
     code_block_obsidian = '```' 
-
+    language = ''
     settings__admonition = PARS['⚙']['code_blocks']['admonition']
     for i, s in enum(S):
         s1 = s
         if s1.startswith(code_block_obsidian):
+            language = ''
             code_block_has_started = counter%2 == 0
             if code_block_has_started:
                 language = s1.replace(code_block_obsidian, '').lstrip().rstrip()
 
-                if language:
+                if len(language)>0:
                     if language=='latex':
                         language_additive = ''
                         begin_text = ''
@@ -94,7 +95,7 @@ def code_block_converter(S, PARS):
                             begin_text =\
                                 '\\begin{'+\
                                 'tcolorbox'+\
-                                '}[width=\\textwidth,colback={' +\
+                                '}[width=' + str(1/PARS['num_columns']) + '\\textwidth,colback={' +\
                                 color +\
                                 '},title={' +\
                                 title + '},outer arc=0mm,colupper='+colupper+']'
@@ -109,6 +110,8 @@ def code_block_converter(S, PARS):
 
             counter += 1
 
+        if language=='latex': s1 = s1.replace('&', '#&')
+            
         S1.append(s1)
 
     return S1
