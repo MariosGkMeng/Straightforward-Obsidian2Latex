@@ -177,7 +177,7 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
 
                         cnd__use_hyperref = (label_latex_format.startswith("sec:")) or (is_section_block)
                         cnd__use_hyperhyperlink = (is_internal_ref_block) and (not (cnd__use_hyperref))
-
+    
                         if cnd__use_hyperref:
                             hyperref = f'\hyperref[{label_latex_format}]' + hyperref_text 
                             if options['add_section_number_after_referencing']:
@@ -441,7 +441,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
         content_filter_1 = lambda x, Lines, lNum: (x)
 
     if PARS_EMBEDDED_REFS['write_obsidian_ref_name_on_latex_comment']:    
-        content_filter_2 = lambda x, mref: ['\n% Start obsidian ref:\n\t%' + mref.replace("![[", "").replace("]]", "")] + ['\n'] + x + ['\n% End obsidian ref\n']
+        content_filter_2 = lambda x, mref: ['\n% Start obsidian ref:\n\t%' + mref.replace("![[", "").replace("]]", "").replace("#", "\##")] + ['\n'] + x + ['\n% End obsidian ref\n']
     else:
         content_filter_2 = lambda x, mref: (x)
 
