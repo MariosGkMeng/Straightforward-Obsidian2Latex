@@ -1,4 +1,4 @@
-def get_parameters():
+def get_parameters(version = 'default'):
     
     '''
     Get the parameters for the file conversion
@@ -69,11 +69,29 @@ def get_parameters():
     citecolor    = blue      % Colour of citations
     }
     """
-
+    
+    
+    # apply parameter changes based on specific notes
+    if version == 'default':
+        
+        V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': ''}
+        V__author = 'Marios Gkionis'
+        
+    elif version =='[[👆👆RL--writing--1]]':
+        
+        V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': '9pt'}
+        V__author = ''
+        
+    elif version =='[[✍⌛writing--FaultDiag--Drillstring--MAIN]]':
+        
+        V__document_class = {'class': ID__DOCUMENT_CLASS__CONFERENCE__IFAC, 'fontsize': ''}
+        V__author = ''
+         
+    
     PARS = conv_dict({
-        '⚙': # SETTINGS
+        '⚙': # SETTINGS 
             {'SEARCH_IN_FILE': {'condition':'🔴', 'text_to_seach': 'w_{E_{2}}','replace_with': '\\beta_{2}'},
-             'document_class': {'class': ID__DOCUMENT_CLASS__CONFERENCE__IFAC, 'fontsize': ''},
+             'document_class': V__document_class,
             'TABLES':{
                                 'package': ID__TABLES__PACKAGE__tabularx,
                     'hlines-to-all-rows': '🟢',
@@ -92,13 +110,13 @@ def get_parameters():
             'EMBEDDED REFERENCES':  
                             {'convert_non_embedded_references': '🟢',  # if True, then references such as "[[another note]]" will be changed to "another note". If FAlse, they will remain as is
                             'treat_equation_blocks_separately': '🟢', # if True, then the equation blocks are treated separately, in order to increase speed
-                                            'treat_citations': '🟢',
-                                    'adapt_section_hierarchy': '🟢', # if True, then whenever there are sections in an embedded reference, their hierarchy will change, based on whether the embedded note was already in sections (so we don't break the hierarchy)
+                                             'treat_citations': '🟢',
+                                     'adapt_section_hierarchy': '🟢', # if True, then whenever there are sections in an embedded reference, their hierarchy will change, based on whether the embedded note was already in sections (so we don't break the hierarchy)
                     'write_obsidian_ref_name_on_latex_comment': '🟢'}, 
             'figures': 
                             {'reduce spacing between figures': '🔴',
-                                    'put_figure_below_text': '🟢',
-                                            'include_path': '🟢'}, # not including the path works only if all the figures are in the same folder (appropriate for Overleaf projects)
+                                      'put_figure_below_text': '🟢',
+                                               'include_path': '🟢'}, # not including the path works only if all the figures are in the same folder (appropriate for Overleaf projects)
                                                         
             'paragraph':{
                         'indent_length_of_first_line': 0,    # 0 if no indent is desired. Recommended 20 for usual indent
@@ -107,14 +125,15 @@ def get_parameters():
                         'add_table_of_contents':                                        '🔴',
                         'add_new_page_before_bibliography':                             '🔴' 
             }, 
-            'author': '',
+            'author': V__author,
             'title': '',
             'hyperlink_setup': hyperlinkSetup,
             'code_blocks': {
                             'admonition':  [
                                             ['default', ['white', 'black']],
                                             ['warning', ['red', 'white']],
-                                            ['quote',   ['gray', 'black']]
+                                            ['quote',   ['gray', 'black']],
+                                            ['todo',    ['yellow', 'red']]
                                         ]
                 },
             'formatting_rules':{
@@ -126,15 +145,15 @@ def get_parameters():
                                                                         ['#Latex/Formatting/math-term',      "brown"]
                                                                         ]}
             }},
-        '📁': # Paths
+        '📁': # Paths 
             {
                     'command_note': path_vault+'✍Writing\\👨‍💻convert_to_latex.md',
-                    'markdown-file': path_file+'.md',  # Markdown (.md) file for conversion
+                   'markdown-file': path_file+'.md',  # Markdown (.md) file for conversion
                         'tex-file': path_file+'.tex',  # LateX (.tex) file (converted from the .md file)  
-                            'vault': path_vault,
-                'equation_blocks': path_equation_blocks,
+                           'vault': path_vault,
+                 'equation_blocks': path_equation_blocks,
                 'list_paths_notes': path_list_note_paths, # saves time from searching of the note's path
-                    'bash_script': path_vault + '✍Writing\\compile_and_open.sh',
+                     'bash_script': path_vault + '✍Writing\\compile_and_open.sh',
                 'bibtex_file_name': 'BIBTEX'           # your bibtex file name 
                 },
         'par':
@@ -145,25 +164,27 @@ def get_parameters():
                                     'before-lines': ['{colspec}']
                                 },
                 'packages-to-load':[ # preamble packages, #exclude for doc_class  # comment (placed inside the latex file, next to the package loading)      
-                                    ['hyperref',  None,                                       ''],
-                                    ['graphicx',  None,                                     ''],
-                                    ['subcaption', None,                                    'for subfigures'],
-                                    ['amssymb',    None,                                    'need more symbols'],
-                                    ['titlesec',   None,                                    "so that we can add more subsections (using 'paragraph')"],
+                                    ['hyperref',    None,                                    ''],
+                                    ['graphicx',    None,                                    ''],
+                                    ['subcaption',  None,                                    'for subfigures'],
+                                    ['amssymb',     None,                                    'need more symbols'],
+                                    ['titlesec',    None,                                    "so that we can add more subsections (using 'paragraph')"],
                                     ['xcolor, soul',None,                                   'for the highlighter'],
-                                    ['amsmath',      None,                                  ''],
-                                    ['amsfonts',   None,                                    ''],
-                                    ['cancel',      None,                                   ''],
-                                    ['minted',     None,                                    ''],
-                                    ['apacite',    None,                                    'apa citation style'],
-                                    ['caption',    None,                                    'to set smaller vertical spacing between two figures'],
-                                    ['cleveref',   ID__DOCUMENT_CLASS__CONFERENCE__IFAC,    ''],
-                                    ['tcolorbox',  None,                                    ''],
-                                    ['float',       None,                                   'to make the figures stay between the text at which they are defined'],
-                                    ['pdfpages',   None,                                     ''],
-                                    ['totcount',   None,                                     ''],
-                                    ['lipsum',     None,                                     ''],
-                                    ['natbib',     None,                                     "Such that we avoid the error (`Illegal parameter number in definition of \\reserved@a`) of not being able to add citations in captions"]
+                                    ['amsmath',     None,                                    ''],
+                                    ['amsfonts',    None,                                    ''],
+                                    ['cancel',      None,                                    ''],
+                                    ['minted',      None,                                    ''],
+                                    ['apacite',     None,                                    'apa citation style'],
+                                    ['caption',     None,                                    'to set smaller vertical spacing between two figures'],
+                                    ['cleveref',    None,    'for clever references'],
+                                    ['tcolorbox',   None,                                    ''],
+                                    ['float',       None,                                    'to make the figures stay between the text at which they are defined'],
+                                    ['pdfpages',    None,                                     ''],
+                                    ['totcount',    None,                                     ''],
+                                    ['lipsum',      None,                                     ''],
+                                    ['ragged2e',    None,                                     'can wrap text for tables in the tabularx environment'],
+                                    ['natbib',      None,                                     "Such that we avoid the error (`Illegal parameter number in definition of \\reserved@a`) of not being able to add citations in captions"],
+                                    ['pdfcomment',  None,                                     'for popup comments in the .pdf']
                                     ],
             'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
                                             ['✔',              '\\checkmark',            1],
@@ -189,5 +210,6 @@ def get_parameters():
         'EQUATIONS':
                 {'convert_non_numbered_to_numbered': '🟢'} # If True, all equations are numbered
     })
+       
 
     return PARS
