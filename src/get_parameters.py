@@ -41,6 +41,7 @@ def get_parameters(version = 'default'):
     ID__STYLE__BOLD             = 0
     ID__STYLE__HIGHLIGHTER      = 1
     ID__STYLE__ITALIC           = 2
+    ID__STYLE__STRIKEOUT        = 3
 
     ID__DOCUMENT_CLASS__ARTICLE = 'article'
     ID__DOCUMENT_CLASS__EXTARTICLE = 'extarticle'
@@ -168,7 +169,7 @@ def get_parameters(version = 'default'):
                                     ['graphicx',    None,                                    ''],
                                     ['subcaption',  None,                                    'for subfigures'],
                                     ['amssymb',     None,                                    'need more symbols'],
-                                    ['titlesec',    None,                                    "so that we can add more subsections (using 'paragraph')"],
+                                    ['titlesec',    ID__DOCUMENT_CLASS__CONFERENCE__IFAC,    "so that we can add more subsections (using 'paragraph')"],
                                     ['xcolor, soul',None,                                   'for the highlighter'],
                                     ['amsmath',     None,                                    ''],
                                     ['amsfonts',    None,                                    ''],
@@ -176,7 +177,7 @@ def get_parameters(version = 'default'):
                                     ['minted',      None,                                    ''],
                                     ['apacite',     None,                                    'apa citation style'],
                                     ['caption',     None,                                    'to set smaller vertical spacing between two figures'],
-                                    ['cleveref',    None,    'for clever references'],
+                                    ['cleveref',    None,                                    'for clever references'],
                                     ['tcolorbox',   None,                                    ''],
                                     ['float',       None,                                    'to make the figures stay between the text at which they are defined'],
                                     ['pdfpages',    None,                                     ''],
@@ -184,7 +185,9 @@ def get_parameters(version = 'default'):
                                     ['lipsum',      None,                                     ''],
                                     ['ragged2e',    None,                                     'can wrap text for tables in the tabularx environment'],
                                     ['natbib',      None,                                     "Such that we avoid the error (`Illegal parameter number in definition of \\reserved@a`) of not being able to add citations in captions"],
-                                    ['pdfcomment',  None,                                     'for popup comments in the .pdf']
+                                    ['pdfcomment',  None,                                     'for popup comments in the .pdf'],
+                                    ['booktabs',    None,                                      'so that the toprule command works'],
+                                    ['soul',        None,                                      'to strikeout text using \\st{}']
                                     ],
             'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
                                             ['✔',              '\\checkmark',            1],
