@@ -1,6 +1,5 @@
 import os
 
-
 def count_calls(func):
     def wrapper(*args, **kwargs):
         wrapper.calls += 1
@@ -27,8 +26,15 @@ def search_embedded_reference_in_vault(u, PARS, search_in = 'vault'):
         print('-'*len(msg1))
     
     print('\t' + u + '. ')
+    # for root, dirs, files in os.walk(vault_path):
+    #     if u in files: return os.path.join(root,u)
+    u_lower = u.lower()
     for root, dirs, files in os.walk(vault_path):
-        if u in files: return os.path.join(root,u)
+        for file in files:
+            if u_lower == file.lower():
+                return os.path.join(root, file)
+
+    
     return ''
 
 def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
@@ -46,6 +52,7 @@ def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
         lines = file.readlines()
     
     # Search for the fileName in the lines and retrieve associated paths
+    fileName = fileName.strip().replace('.md', '')
     matching_paths = [line.strip() for line in lines if line.startswith(fileName+":")]
 
 
@@ -80,13 +87,22 @@ def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
                 return path
 
     else:
-
-        path_found = search_embedded_reference_in_vault(fileNameWithExtension, PARS, search_in='vault')
-        if path_found:
-            with open(path_list_of_notes, 'a', encoding='utf-8') as file:
-                # update path_list_of_notes for the next time
-                file.write(f"{fileName}: {path_found}\n")
-            # print(f"Path for '{fileName}' appended as a new line in the text file.")
-            return path_found
+        fileName = fileName.replace('/', '\\').strip()
+        is_entire_path = '\\' in fileName
+        if not is_entire_path:
+            path_found = search_embedded_reference_in_vault(fileNameWithExtension, PARS, search_in='vault')
+            if path_found: 
+                update_list_of_embedded_note_paths(fileName, path_found, path_list_of_notes)
+                return path_found
+            else:
+                raise Exception(f"No information found for '{fileName}' in the provided text file and unable to find an alternative path.")
         else:
-            raise Exception(f"No information found for '{fileName}' in the provided text file and unable to find an alternative path.")
+            path_found = PARS['📁']['vault'] + fileName
+            update_list_of_embedded_note_paths(fileName, path_found, path_list_of_notes)
+            return path_found
+        
+def update_list_of_embedded_note_paths(filename, path, path_list_of_notes):
+    with open(path_list_of_notes, 'a', encoding='utf-8') as file:
+        # update path_list_of_notes for the next time
+        file.write(f"{filename}: {path}\n")
+        # print(f"Path for '{fileName}' appended as a new line in the text file.")
