@@ -491,7 +491,7 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     if cover_all_columns:
         str_figure = 'figure*'
     else:
-        str_cols = 'figure'
+        str_figure = 'figure'
         subfigure_text_width = subfigure_text_width/PARAMETERS['num_columns']
         
     cnd__include_subfigures = len(images) > 1
