@@ -431,7 +431,8 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
         'caption_long:: ',
         'subfigure_widths:: ',
         'subfigure_abs_or_rel:: ',
-        'cover_all_columns:: '
+        'cover_all_columns:: ',
+        'caption_sub:: '
         ]
     
     fields = get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields)
@@ -477,13 +478,13 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     # --- ", height=0.5\\textheight" addition causes the aspect ratio to break
 
     # get parameters of the latex figure command
-    latex_figure_field = [0.7, '', '', '', '', False] # the defaults
+    latex_figure_field = [0.7, '', '', '', '', False, ''] # the defaults
 
     # change defaults, if user put something
     for iF, f in enum(fields[1]):
         if len(f)>0: latex_figure_field[iF] = f 
 
-    figure_width, caption_short, caption_long, subfigure_widths, subfigure_abs_or_rel, cover_all_columns = latex_figure_field
+    figure_width, caption_short, caption_long, subfigure_widths, subfigure_abs_or_rel, cover_all_columns, caption_sub = latex_figure_field
 
     TO_PRINT = []
     subfigure_text_width = 1/len(images)
@@ -493,7 +494,6 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
         str_cols = 'figure'
         subfigure_text_width = subfigure_text_width/PARAMETERS['num_columns']
         
-    
     cnd__include_subfigures = len(images) > 1
     cnd__no_subfigures = (not cnd__include_subfigures)
     begin_figure = f'\\begin{{{str_figure}}}'*cnd__no_subfigures + '\\begin{subfigure}'*cnd__include_subfigures
@@ -501,6 +501,12 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     
     fig_label = '\label{fig:'+label+'}'
     
+    if cnd__include_subfigures:
+        if len(caption_sub)==0:
+            caption_sub = ['' for i in range(len(images))]
+    else:
+        caption_sub = [caption_long]
+        
     if PARAMETERS['put_figure_below_text']: 
         if cnd__no_subfigures:
             begin_figure = [begin_figure + '[htb]'] #'[H]'
@@ -529,11 +535,12 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
             path_img = path_img.replace(img_directory+'/', '')
 
         # label_img = IM.split('\\')[-1]
+        caption_long_img = caption_sub[i_img]
         TO_PRINT.append(' \n'.join([
         begin_figure[i_img],
         '	\centering',
-        '	\includegraphics[width=' + str(figure_width)*cnd__no_subfigures + '\linewidth]' + '{"'+path_img+'"}',
-        '	\caption['+caption_short+']'+('{'+caption_long+'}')*(len(caption_long)>0),
+        f'	\includegraphics[width={str(figure_width)*cnd__no_subfigures}\linewidth]' + '{"'+path_img+'"}',
+        '	\caption['+caption_short+']'+('{'+caption_long_img+'}')*(len(caption_long)>0),
         '   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
         '   '+fig_label*cnd__no_subfigures,
         end_figure]))
@@ -550,7 +557,7 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
             y.append(fig_lines)
             y.append('\hfill\n')
 
-        y.append('\caption{}\n')
+        y.append(f'\caption{{{caption_long}}}\n')
         y.append(fig_label+'\n')
         y.append(f'\end{{{str_figure}}}\n')
     else:
