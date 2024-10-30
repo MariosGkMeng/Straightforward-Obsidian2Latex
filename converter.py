@@ -25,7 +25,37 @@ from path_searching import *
 from get_parameters import *
 
 
+
+# Global constants
+ID__TABLES__alignment__center = 0
+ID__TABLES__alignment__right  = 1
+ID__TABLES__alignment__middle = 2
+
+
+ID__TABLES__PACKAGE__longtblr   = 0
+ID__TABLES__PACKAGE__tabularx   = 1
+ID__TABLES__PACKAGE__long_table = 2
+
+ID__CNV__TABLE_STARTED      = 0
+ID__CNV__TABLE_ENDED        = 1
+ID__CNV__IDENTICAL          = 2
+
+ID__STYLE__BOLD             = 0
+ID__STYLE__HIGHLIGHTER      = 1
+ID__STYLE__ITALIC           = 2
+ID__STYLE__STRIKEOUT        = 3
+
+ID__DOCUMENT_CLASS__ARTICLE = 'article'
+ID__DOCUMENT_CLASS__EXTARTICLE = 'extarticle'
+ID__DOCUMENT_CLASS__CONFERENCE__IFAC = 'ifacconf'
+
+
+
+
 PARS = get_parameters()
+
+doc_classes__2_cols = ['ifacconf'] # document classes that use 2 columns
+
 
 #                                         ['&',              '\&',                      1],
 
@@ -50,8 +80,7 @@ def package_loader():
     
     doc_class = PARS['⚙']['document_class']['class']
     
-    out += [f"\\usepackage{{{pkg[0]}}}{(' % ' + pkg[2]) if len(pkg[2]) > 0 else ''}" for pkg in packages_to_load if pkg[1]!=doc_class]
-    # delete following when not needed:  ['\\usepackage{'+pkg[0]+'}' + (' % ' + pkg[1])*(len(pkg[1])>0) for pkg in packages_to_load]
+    out += [f"{(pkg[1]==doc_class)*'%💀'}\\usepackage{{{pkg[0]}}}{(' % ' + pkg[2]) if len(pkg[2]) > 0 else ''}" for pkg in packages_to_load]
 
     out.append('\\usepackage{enumitem,amssymb}')
     out.append('\\newlist{todolist}{itemize}{2}')
@@ -69,7 +98,7 @@ def package_loader():
  
     # out.append('\\usepackage[dvipsnames]{xcolor}') # creates bug
     out.append(settings['hyperlink_setup'])
-    
+        
     return out
 
 
@@ -183,6 +212,13 @@ def simple_stylistic_replacements(S, type=None):
         replacement_func = lambda repl, string:  repl.append(['*'+string+'*', '\\textit{' + string + '}'])
         l = 1
         is_pair = True
+    
+    elif type == ID__STYLE__STRIKEOUT:
+        style_char = '\~\~'
+        replacement_func = lambda repl, string:  repl.append([f'~~{string}~~', f'\\st{{{string}}}'])
+        l = 2
+        is_pair = True
+
 
 
     else:
@@ -260,6 +296,12 @@ def get_reference_blocks(S):
 PATHS = PARS['📁']
 
 markdown_file = get_fields_from_Obsidian_note(PATHS['command_note'], ['convert_note:: '])[0]
+PARS = get_parameters(version=markdown_file)
+
+has_2_cols = (PARS['⚙']['document_class']['class'] in doc_classes__2_cols) or False
+
+PARS['num_columns'] = int(has_2_cols*2 + (not has_2_cols)*1)
+
 # open obsidian note
 
 PATHS['markdown-file'] = get_embedded_reference_path(markdown_file.replace("[[", '').replace("]]", '')+'.md', PARS)
@@ -275,6 +317,15 @@ content = remove_markdown_comments(content)
 # Convert bullet and numbered lists
 content = bullet_list_converter(content)
 
+
+# Look for Appendix (in reverse order)
+for i_l, line in enumerate(reversed(content)):
+    if line.startswith('# Appendix'):
+        # Calculate the correct index in the original list
+        original_index = len(content) - 1 - i_l
+        content[original_index] = content[original_index].replace('# Appendix', '\\appendix')
+        break
+#
 
 # Replace headers and map sections \==================================================
 Lc = len(content)-1
@@ -353,16 +404,17 @@ for i, ln in enum(embeded_refs):
 
 
 md__equations_embedded_new = []
+cleveref_allowed = [p for p in PARS['par']['packages-to-load'] if p[0]=='cleveref'][0][1] != PARS['⚙']['document_class']['class']
 if PARS['⚙']['EMBEDDED REFERENCES']['treat_equation_blocks_separately']:
     # this means that all equation blocks were ignored, and we need to unfold them now
     [content, md__equations_embedded_new] = unfold_embedded_notes(content, [], PARS, mode='equation_blocks_only')
 
     # check for references in those equations, and convert to LateX system
-    content = EQUATIONS__convert_equation_referencing(content)
+    content = EQUATIONS__convert_equation_referencing(content, cleveref_allowed = cleveref_allowed)
 
-content = convert_referencing(content, 'figures')
+content = convert_referencing(content, 'figures', cleveref_allowed = cleveref_allowed)
 content = EQUATIONS__check_and_correct_aligned_equations(content)
-content = convert_referencing(content, 'tables')
+content = convert_referencing(content, 'tables', cleveref_allowed = cleveref_allowed)
 
 # Find sections and blocks again, since the content lines have been re-arranged
 i0 = 0
@@ -441,11 +493,15 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
 
 
     LATEX = symbol_replacement(LATEX, PARS['par']['symbols-to-replace'])
-    LATEX = simple_stylistic_replacements(LATEX, type=ID__STYLE__BOLD)
-    LATEX = simple_stylistic_replacements(LATEX, type=ID__STYLE__HIGHLIGHTER)
-    LATEX = simple_stylistic_replacements(LATEX, type=ID__STYLE__ITALIC)
+    styles_replacement = [ID__STYLE__BOLD, ID__STYLE__HIGHLIGHTER, ID__STYLE__ITALIC]#, ID__STYLE__STRIKEOUT]
+    
+    for style in styles_replacement:
+        LATEX = simple_stylistic_replacements(LATEX, type=style)
+    
 
     LATEX = code_block_converter(LATEX, PARS)
+    LATEX = symbol_replacement(LATEX, [['\#&', '&', 1]])
+
 
     # Replace "%" with "\%" (after having replaced obsidian comments of course)
     # LATEX = [x.replace("%", "\%") for x in LATEX]
@@ -473,7 +529,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     # LATEX = symbol_replacement(LATEX, [['_', '\_', 1]]) # DON'T UNCOMMENT!
     # title = PARS['⚙']['title'] if PARS['⚙']['title'] else symbol_replacement(path_file.split('\\')[-1].replace('_', '\_'), PARS['par']['symbols-to-replace'])[0]
     title = PARS['⚙']['title'] if PARS['⚙']['title'] else ''
-    LATEX = symbol_replacement(LATEX, [[paragraph['insert_new_line_symbol'] , '\\newpage', 1]])
+    LATEX = symbol_replacement(LATEX, [[paragraph['insert_new_line_symbol'] , '\\clearpage', 1]])
 
     LATEX = convert_inline_code(LATEX)
     
@@ -482,7 +538,11 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
 
     doc_class_fontsize = f'[{document_class["fontsize"]}]' if len(document_class['fontsize'])>0 else ''
 
+    is_ifac = document_class['class'] == 'ifacconf'
+    
     PREAMBLE = [f"\\documentclass{doc_class_fontsize}{{{document_class['class']}}}"] +\
+            [is_ifac*'\\newcounter{part} % fix the issue in the class'] +\
+            [is_ifac*'\counterwithin*{section}{part}'] +\
             package_loader() +\
             ['\n'] + ['\sethlcolor{yellow}'] + ['\n'] + ['\n'*2] +\
             ['\setcounter{secnumdepth}{4}'] +\
