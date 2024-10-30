@@ -117,7 +117,7 @@ See [[table__block_1]], [[table__block_2]], and [[table__block_long]].
 ![[table__block_long#table]]
 
 # Latex commands
-When there is something niche, or some translation functionality that hasn't been developed yet, you can write a latex command within the code-block functionality of Obsidian, and the translator will not touch it. Use the following syntax:
+When there is something niche, or some translation functionality that hasn't been developed yet, you can write a latex command within the code-block functionality of Obsidian, and the translator will not touch it. Use the syntax according to the following example:
 
 ```latex
 \lipsum[1-4]
