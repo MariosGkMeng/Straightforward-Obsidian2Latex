@@ -53,14 +53,9 @@ def get_parameters(version = 'default'):
 
     # USER PARAMETERS
     path_vault          = 'C:\\Users\\mariosg\OneDrive - NTNU\FILES\\workTips\\'
-    # path_vault          = 'C:\\Users\\mariosg\OneDrive - NTNU\FILES\\workTips\\' + 'Literature\\Straightforward-Obsidian2Latex\\example_vault\\'
-    path0               = path_vault + 'AUTOMATIONS\\'
-    path_file_testing   = path_vault + 'code testing\\test_2'
     path_equation_blocks = path_vault + '✍Writing\\equation blocks'
     path_list_note_paths = path_vault + 'DO_NOT_DELETE__note_paths.txt'
     path_BIBTEX          = path_vault + '✍Writing\\BIBTEX'
-
-    path_file = 'who cares'
 
     hyperlinkSetup="""
     \hypersetup{
@@ -149,7 +144,6 @@ def get_parameters(version = 'default'):
         '📁': # Paths 
             {
                     'command_note': path_vault+'✍Writing\\👨‍💻convert_to_latex.md',
-                   'markdown-file': path_file+'.md',  # Markdown (.md) file for conversion
                         'tex-file': path_file+'.tex',  # LateX (.tex) file (converted from the .md file)  
                            'vault': path_vault,
                  'equation_blocks': path_equation_blocks,
