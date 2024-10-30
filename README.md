@@ -151,7 +151,7 @@ To set the paths for the .md file to be converted, inside `converter.py`, under 
 
 You won't need to change anything else inside `converter.py`, since the other paths are given in `👨‍💻convert_to_latex.md`.
 
-`👨‍💻convert_to_latex.md` contains the instructions inside commands.
+`👨‍💻convert_to_latex.md` contains the instructions inside commands. 
 
 
 ### Using the example vault
@@ -160,7 +160,8 @@ The only modification you will need to do in order to use the vault as I intende
 
 
 ### ▶ ▶ HOW TO RUN 
-In `👨‍💻convert_to_latex.md`, click on the links next to the `code_run:: ` field. The 1st command performs the conversion from Obsidian to Latex, the 2nd compiles the latex file to .pdf.
+In `👨‍💻convert_to_latex.md`, click on the links next to the `code_run:: ` field. The 1st command performs the conversion from Obsidian to Latex, the 2nd compiles the latex file to .pdf. 
+Make sure you first set the correct path to the `converter.py` file that runs the code. This basically opens the python file, which executes it. Make sure that the default app for opening the python file is python, not some editor (otherwise, you need to trigger a .bat file that triggers the .py file).
 
 ### Adding equations
 This uses what we can call "**==note-block logic==**". I.e., writing the equation in a single note, but without writing anything else in that note (hence the "block" part of the name). We will use the same logic for Tables and Figures, so that their referencing becomes easier, and automatic upon name changes.
