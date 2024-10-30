@@ -406,13 +406,15 @@ def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, ne
 
 def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PARS):
     
-    fields_to_fetch = ['caption:: ', 'package:: ', 'widths:: ']
+    fields_to_fetch = ['caption:: ', 'package:: ', 'widths:: ', 'use_hlines:: ', 'use_vlines:: ']
     fields_note = get_fields_from_Obsidian_note(path_embedded_reference, fields_to_fetch)
     caption = fields_note[0]
     package = fields_note[1]
     widths = [f.strip() for f in fields_note[2].split(',')]
+    use_hlines = fields_note[3]
+    use_vlines = fields_note[4]
     label = embedded_ref.replace('table__block_', '')
-    embedded_tables_text = convert__tables(content__unfold, caption, package, label, widths, PARS)
+    embedded_tables_text = convert__tables(content__unfold, caption, package, label, widths, use_hlines, use_vlines, PARS)
     
     embedded_tables_text_1 = []
     for line in embedded_tables_text:
@@ -428,7 +430,8 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
         'caption_short:: ',
         'caption_long:: ',
         'subfigure_widths:: ',
-        'subfigure_abs_or_rel:: '
+        'subfigure_abs_or_rel:: ',
+        'cover_all_columns:: '
         ]
     
     fields = get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields)
@@ -457,6 +460,7 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
     embedded_images = embedded_images_1
     label = embedded_ref.replace('figure__block_', '')
     image_paths = [get_embedded_reference_path(x, PARS) for x in embedded_images]
+    PARS['⚙']['figures']['num_columns'] = PARS['num_columns']
     converted = images_converter(image_paths, PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
 
     return converted
@@ -472,24 +476,28 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     # NOTES:
     # --- ", height=0.5\\textheight" addition causes the aspect ratio to break
 
-    subfigure_text_width = 1/len(images)
-
     # get parameters of the latex figure command
-    latex_figure_field = [0.7, '', '', '', ''] # the defaults
+    latex_figure_field = [0.7, '', '', '', '', False] # the defaults
 
     # change defaults, if user put something
     for iF, f in enum(fields[1]):
         if len(f)>0: latex_figure_field[iF] = f 
 
-    figure_width, caption_short, caption_long, subfigure_widths, subfigure_abs_or_rel = latex_figure_field
+    figure_width, caption_short, caption_long, subfigure_widths, subfigure_abs_or_rel, cover_all_columns = latex_figure_field
 
     TO_PRINT = []
-
-
+    subfigure_text_width = 1/len(images)
+    if cover_all_columns:
+        str_figure = 'figure*'
+    else:
+        str_cols = 'figure'
+        subfigure_text_width = subfigure_text_width/PARAMETERS['num_columns']
+        
+    
     cnd__include_subfigures = len(images) > 1
     cnd__no_subfigures = (not cnd__include_subfigures)
-    begin_figure = '\\begin{figure}'*cnd__no_subfigures + '\\begin{subfigure}'*cnd__include_subfigures
-    end_figure = '\end{figure}'*cnd__no_subfigures + '\end{subfigure}'*cnd__include_subfigures 
+    begin_figure = f'\\begin{{{str_figure}}}'*cnd__no_subfigures + '\\begin{subfigure}'*cnd__include_subfigures
+    end_figure = f'\end{{{str_figure}}}'*cnd__no_subfigures + '\end{subfigure}'*cnd__include_subfigures 
     
     fig_label = '\label{fig:'+label+'}'
     
@@ -533,9 +541,9 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     y = []
     if cnd__include_subfigures:
         if PARAMETERS['put_figure_below_text']:
-            begin_fig_global = '\\begin{figure}[htb]\n' # '\\begin{figure}[H]\n'
+            begin_fig_global = f'\\begin{{{str_figure}}}[htb]\n' # '\\begin{figure}[H]\n'
         else:
-            begin_fig_global = '\\begin{figure}\n'
+            begin_fig_global = f'\\begin{{{str_figure}}}\n'
         y.append(begin_fig_global)
         y.append('\centering\n')
         for fig_lines in TO_PRINT:
@@ -544,14 +552,14 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
 
         y.append('\caption{}\n')
         y.append(fig_label+'\n')
-        y.append('\end{figure}\n')
+        y.append(f'\end{{{str_figure}}}\n')
     else:
         y = TO_PRINT
 
     return y
 
 
-def convert__tables(S, caption, package, label, widths, PARS):
+def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, PARS):
     '''
     Converts tables depending on the user's preferences    
     '''
@@ -592,9 +600,32 @@ def convert__tables(S, caption, package, label, widths, PARS):
     has_custom_widths = False
     if len(widths[0])>0:
         has_custom_widths = True
+        
+    vline_map = [['', False], ['🟢', True], ['🔴', False]]
+    vline_def = False
+    hline_map = [['', False], ['🟢', True], ['🔴', False]]
+    hline_def = False
+
+    got_val = False
+    for vl in vline_map:
+        if use_vlines == vl[0]:
+                got_val = True
+                use_vlines = vl[1]
+                break
+    if not got_val: use_vlines = vline_def      
+            
+    got_val = False
+    for hl in hline_map:
+        if use_hlines == hl[0]:
+                got_val = True
+                use_hlines = hl[1]
+                break
+    if not got_val: use_hlines = hline_def      
+
 
     if has_custom_widths:
-        table_width_custom_0 = ''.join(["|p{" + w + "}" for w in widths]) + '|'
+        vl = '|' if use_vlines else ''
+        table_width_custom_0 = ''.join([f"{vl}p{{{w}}}" for w in widths]) + vl
 
     # After having found the table
     ## We expect that the 1st line defines the columns
@@ -660,10 +691,11 @@ def convert__tables(S, caption, package, label, widths, PARS):
         c1 = [add_txt + x for x in c]
         if i==0: 
             if TABLE_SETTINGS['any-hlines-at-all']:
-                addText = ' \hline'
+                addText = ' \hline' if use_hlines else ''
         else:
             if TABLE_SETTINGS['hlines-to-all-rows']:
-                addText = ' \hline'
+                addText = ' \hline' if use_hlines else ''
+                
         latex_table.append('    ' + " & ".join(c1) + ' \\\\' + addText)
 
     lbefore = []
@@ -749,7 +781,7 @@ def convert__tables(S, caption, package, label, widths, PARS):
         PCKG_NAME = '{longtable}'
 
         if not has_custom_widths:
-            table_width = N_cols*'|p{3cm}' + '|'
+            table_width = N_cols*(vl+'p{3cm}') + vl
         else:
             table_width = table_width_custom_0
 
@@ -777,7 +809,7 @@ def convert__tables(S, caption, package, label, widths, PARS):
         PCKG_NAME = '{tabular}'
         
         if not has_custom_widths:
-            table_width = N_cols*'|p{3cm}' + '|'
+            table_width = N_cols*(vl+'p{3cm}') + vl
         else:
             table_width = table_width_custom_0
 
@@ -787,8 +819,8 @@ def convert__tables(S, caption, package, label, widths, PARS):
             '\centering',
             '\caption{' + caption + '}',
             '\label{tab:' + label + '}',
-            '\\begin' + PCKG_NAME + '{' + table_width + '}',
-            '   \hline'
+            f'\\begin{PCKG_NAME}{{{table_width}}}',
+            '   \\bottomrule',
         ] 
 
         latex_after_table = [
@@ -797,6 +829,7 @@ def convert__tables(S, caption, package, label, widths, PARS):
             '\end{table}'
         ]
 
+        latex_table[0] += '\midrule'
         LATEX = latex_before_table + latex_table + latex_after_table
         
     else:
