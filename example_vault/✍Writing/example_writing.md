@@ -58,6 +58,9 @@ In [[eq__block_Einstein]], we see that...
 ![[figure__block_gradient_steps#fig]]
 
 ### With subfigures
+See [[figure__block_1]].
+
+
 - ➕ Allow user to create more complex configurations
 ![[figure__block_1#fig]]
 
@@ -105,8 +108,19 @@ Click [here](https://www.youtube.com/).
 
 # Tables
 
-| Col1                      | Col2                 | Col3                                                                                 | Col4                                                                       |
-| ------------------------- | -------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| a11                       | a12                  | Some more text                                                                       | even more text                                                             |
-| a21                       | Equation: $E=mc^{2}$ | Some more textSome more textSome more textSome more textSome more textSome more text | even more text even more text even more text even more text even more text |
-| Reference [[eq__block_1]] | 1                    | 1                                                                                    | 1                                                                          |
+See [[table__block_1]], [[table__block_2]], and [[table__block_long]].
+
+![[table__block_1#table]]
+
+![[table__block_2#table]]
+
+![[table__block_long#table]]
+
+# Latex commands
+When there is something niche, or some translation functionality that hasn't been developed yet, you can write a latex command within the code-block functionality of Obsidian, and the translator will not touch it. Use the following syntax:
+
+```latex
+\lipsum[1-4]
+```
+# Appendix
+![[example_writing--Appendix]]
