@@ -1,7 +1,4 @@
 - [ ] Allow user to create more complex configurations
 - [ ] Tables
-	- [ ] Use the QuickAdd logic for tables
-	- [ ] Allow user to modify the column widths from Obsidian
-	- [ ] Allow entries be empty
 	- [ ] Fancy formatting
 - [ ] Allow the user to change settings from Obsidian, instead of Python
