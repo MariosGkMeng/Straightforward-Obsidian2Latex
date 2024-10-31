@@ -144,7 +144,6 @@ def get_parameters(version = 'default'):
         '📁': # Paths 
             {
                     'command_note': path_vault+'✍Writing\\👨‍💻convert_to_latex.md',
-                        'tex-file': path_file+'.tex',  # LateX (.tex) file (converted from the .md file)  
                            'vault': path_vault,
                  'equation_blocks': path_equation_blocks,
                 'list_paths_notes': path_list_note_paths, # saves time from searching of the note's path
