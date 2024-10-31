@@ -307,6 +307,7 @@ PARS['num_columns'] = int(has_2_cols*2 + (not has_2_cols)*1)
 PATHS['markdown-file'] = get_embedded_reference_path(markdown_file.replace("[[", '').replace("]]", '')+'.md', PARS)
 split_path=PATHS['markdown-file'].split('\\')
 PATHS['tex-file'] = '\\'.join(split_path[:-1])+'\\'+split_path[-1].replace('.md', '') + '.tex'
+PARS['📁']['tex-file'] = PATHS['tex-file']
 with open(PATHS['markdown-file'], 'r', encoding='utf8') as f:
     content = f.readlines()
 
