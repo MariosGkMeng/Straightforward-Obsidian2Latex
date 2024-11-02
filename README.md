@@ -318,6 +318,8 @@ https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/9
 
 
 # 💀 Potential errors
+Some errors are linked to specific LateX editors. Since Obsidian is a local program, it makes sense that you might chose to use a local latex editor. Those can be sometimes finnicky and overly strict with compilation errors. A workaround is to use Overleaf, in which case you would need to copy the `.tex` file content to Overleaf, and make sure that your figures are all uploaded. So far, you should put the figures in the same path as the latex file, and set the parameter: `use_overleaf_all_in_the_same_folder` to `🟢` or `True`.
+
 - Missing `.sty` files and packages
 	- `latex2pydata.sty` missing. Did not have this issue with my conversions. My `minted.sty` file does not require the latex2pydata package. Working on it.
 
