@@ -1,11 +1,1 @@
-eq__block_Einstein: C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Literature\Straightforward-Obsidian2Latex\example_vault\✍Writing\equation blocks\eq__block_Einstein.md
-figure__block_gradient_steps: C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Literature\Straightforward-Obsidian2Latex\example_vault\✍Writing\figure blocks\figure__block_gradient_steps.md
-Pasted image 20240609012140.png: C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Literature\Straightforward-Obsidian2Latex\example_vault\✍Writing\figure blocks\Pasted image 20240609012140.png
-figure__block_1: C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Literature\Straightforward-Obsidian2Latex\example_vault\✍Writing\figure blocks\figure__block_1.md
-Pasted image 20240609012221.png: C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Literature\Straightforward-Obsidian2Latex\example_vault\✍Writing\figure blocks\Pasted image 20240609012221.png
-Pasted image 20240609012251.png: C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Literature\Straightforward-Obsidian2Latex\example_vault\✍Writing\figure blocks\Pasted image 20240609012251.png
-p1: C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Literature\Straightforward-Obsidian2Latex\example_vault\📚Literature\Notes\p1.md
-formatting: C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Literature\Straightforward-Obsidian2Latex\example_vault\✍Writing\formatting.md
-embedded with sections: C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Literature\Straightforward-Obsidian2Latex\example_vault\✍Writing\embedded with sections.md
-eq__block_1: C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Literature\Straightforward-Obsidian2Latex\example_vault\✍Writing\equation blocks\eq__block_1.md
-dev-tasks: C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\Literature\Straightforward-Obsidian2Latex\example_vault\dev-tasks.md
+
