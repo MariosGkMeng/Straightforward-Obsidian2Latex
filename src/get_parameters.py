@@ -52,7 +52,7 @@ def get_parameters(version = 'default'):
     #
 
     # USER PARAMETERS
-    path_vault          = 'C:\\Users\\mariosg\OneDrive - NTNU\FILES\\workTips\\'
+    path_vault          = 'C:\\MARIOS\\Straightforward-Obsidian2Latex\\example_vault\\'
     path_equation_blocks = path_vault + '✍Writing\\equation blocks'
     path_list_note_paths = path_vault + 'DO_NOT_DELETE__note_paths.txt'
     path_BIBTEX          = path_vault + '✍Writing\\BIBTEX'
@@ -68,12 +68,11 @@ def get_parameters(version = 'default'):
     
     
     # apply parameter changes based on specific notes
-    if version == 'default':
         
-        V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': ''}
-        V__author = 'Marios Gkionis'
+    V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': ''}
+    V__author = 'Marios Gkionis'
         
-    elif version =='[[👆👆RL--writing--1]]':
+    if version =='[[👆👆RL--writing--1]]':
         
         V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': '9pt'}
         V__author = ''
