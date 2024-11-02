@@ -591,7 +591,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         elif latex_table_package_prefix+'tabular' in package:
             package = ID__TABLES__PACKAGE__tabular
         else:
-	    package = ID__TABLES__PACKAGE__tabular	# assign default package
+            package = ID__TABLES__PACKAGE__tabular	# assign default package
         
     # Mask internal links that have aliases, otherwise the converter gets confused
     mask_alias = "--alias--"
