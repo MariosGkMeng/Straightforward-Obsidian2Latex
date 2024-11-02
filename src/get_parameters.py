@@ -68,12 +68,11 @@ def get_parameters(version = 'default'):
     
     
     # apply parameter changes based on specific notes
-    if version == 'default':
         
-        V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': ''}
-        V__author = 'Marios Gkionis'
+    V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': ''}
+    V__author = 'Marios Gkionis'
         
-    elif version =='[[👆👆RL--writing--1]]':
+    if version =='[[👆👆RL--writing--1]]':
         
         V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': '9pt'}
         V__author = ''
