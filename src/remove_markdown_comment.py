@@ -1,18 +1,10 @@
 import re
 
-
-def conv_dict(D):
-    for key in D.keys():
-        if D[key] == '🟢':
-            D[key] = True
-        elif D[key] == '🔴':
-            D[key] = False
-    return D
-
 def enum(x):
     return enumerate(x)
 
 def is_in_table_line(x):
+    x = x.lstrip().rstrip()
     if x.startswith('|') and x.endswith('|'):
         return True
     else: 
@@ -53,8 +45,8 @@ def remove_markdown_comments(S):
                     idx0 = occurences[j2]+2
                     idx1 = occurences[j2+1]
                     text_in_comment = s[idx0:idx1]
-                    to_delete.append('%%'+text_in_comment+'%% ') # ⚠WARNING-2: Bad programming (sloppy way to remove additional space)                                          
-                    to_delete.append(' %%'+text_in_comment+'%% ')                                         
+                    # to_delete.append('%%'+text_in_comment+'%% ') # ⚠WARNING-2: Bad programming (sloppy way to remove additional space)                                          
+                    # to_delete.append(' %%'+text_in_comment+'%% ')                                         
                     to_delete.append('%%'+text_in_comment+'%%')                     
 
 
