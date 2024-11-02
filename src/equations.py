@@ -531,7 +531,7 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
         path_img = '"'*cndTmp1 + path_img0 + '"'*cndTmp1
 
         # check if image is in the same folder as the latex file (in which case, no need to have the absolute path)
-        if (img_directory == '/'.join(latex_file_path.replace('\\', '/').split('/')[:-1])) or (not PARAMETERS['include_path']):
+        if (img_directory == '/'.join(latex_file_path.replace('\\', '/').split('/')[:-1])) or (not PARAMETERS['include_path']) or PARAMETERS['use_overleaf_all_in_the_same_folder']:
             path_img = path_img.replace(img_directory+'/', '')
 
         # label_img = IM.split('\\')[-1]
@@ -629,9 +629,8 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
                 break
     if not got_val: use_hlines = hline_def      
 
-
-    if has_custom_widths:
-        vl = '|' if use_vlines else ''
+    vl = '|' if use_vlines else ''
+    if has_custom_widths:        
         table_width_custom_0 = ''.join([f"{vl}p{{{w}}}" for w in widths]) + vl
 
     # After having found the table
