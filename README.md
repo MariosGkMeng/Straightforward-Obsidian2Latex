@@ -316,6 +316,11 @@ https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/9
 | Is fast | ✔ (but only when most of the embedded references are listed in `PARS['📂']['list_paths_notes']`) | ✔✔ | ✔✔ | not running for me |
 | Ignores comments | ✔ | ✔ | ✔ | not running for me |
 
+
+# 💀 Potential errors
+- Missing `.sty` files and packages
+	- `latex2pydata.sty` missing. Did not have this issue with my conversions. My `minted.sty` file does not require the latex2pydata package. Working on it.
+
 # TODOs
 - [ ] Add promo video of the tool, showing how it looks like to write a complete manuscript
 - [X] Add a toy-vault with the appropriate paths and folders --> adjust the paths in the code accordingly
