@@ -552,13 +552,22 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
             ['\\renewcommand\marginpar[1]{\oldmarginpar{\\tiny #1}} % Change "small" to your desired font size]'] + ['\n'*2] +\
             ['\\begin{document}']+\
             ['\date{}'*PARS['⚙']['use_date']]+\
-            [f"\\author{PARS['⚙']['author']}"*(len(PARS['⚙']['author'])>0)]+\
+            [f"\\author{{{PARS['⚙']['author']}}}"*(len(PARS['⚙']['author'])>0)]+\
             [f'\\title{title}\n\maketitle'*(len(title)>0)]+\
             [text_before_first_section]+\
             ['\\tableofcontents \n \\newpage'*paragraph['add_table_of_contents']]
 
     LATEX = PREAMBLE + LATEX + ['\\newpage \n '*paragraph['add_new_page_before_bibliography'] + '\\bibliographystyle{apacite}']+\
         ['\\bibliography{' + PATHS['bibtex_file_name'] + '}'] + ['\end{document}']
+
+    if '[[✍⌛writing--FaultDiag--Drillstring--MAIN]]' in markdown_file:
+        LATEX_1 = []
+        for l in LATEX:
+            LATEX_1.append(l.replace('C:/Users/mariosg/OneDrive - NTNU/FILES/workTips/Analyses/PINNs+MTL/FaultDiag/FaultDiag/simulation results/plots/', ''))
+            
+        LATEX = LATEX_1
+        
+
 
     with open(PATHS['tex-file'], 'w', encoding='utf8') as f:
         for l in LATEX:
