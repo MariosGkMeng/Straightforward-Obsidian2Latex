@@ -363,12 +363,13 @@ def get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields):
         lines = file.readlines()
 
     for i, field in enum(look_for_fields):
+        fields[i] = []
         found_field = False
         for line in lines:
             if line.startswith(field):
-                fields[i] = line.replace(field, '').replace('\n', '').strip()
+                fields[i].append(line.replace(field, '').replace('\n', '').strip())
                 found_field = True
-                break
+                # break
         if not found_field:
             fields[i] = ''                
     return fields
@@ -408,11 +409,14 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
     
     fields_to_fetch = ['caption:: ', 'package:: ', 'widths:: ', 'use_hlines:: ', 'use_vlines:: ']
     fields_note = get_fields_from_Obsidian_note(path_embedded_reference, fields_to_fetch)
-    caption = fields_note[0]
-    package = fields_note[1]
-    widths = [f.strip() for f in fields_note[2].split(',')]
-    use_hlines = fields_note[3]
-    use_vlines = fields_note[4]
+    caption = fields_note[0] if len(fields_note[0])==0 else fields_note[0][0]
+    package = fields_note[1] if len(fields_note[1])==0 else fields_note[1][0]
+    try:
+        widths = [f.strip() for f in fields_note[2][0].split(',')]
+    except:
+        widths = [f.strip() for f in fields_note[2].split(',')]
+    use_hlines = fields_note[3] if len(fields_note[3])==0 else fields_note[3][0]
+    use_vlines = fields_note[4] if len(fields_note[4])==0 else fields_note[4][0]
     label = embedded_ref.replace('table__block_', '')
     embedded_tables_text = convert__tables(content__unfold, caption, package, label, widths, use_hlines, use_vlines, PARS)
     
@@ -482,7 +486,9 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
 
     # change defaults, if user put something
     for iF, f in enum(fields[1]):
-        if len(f)>0: latex_figure_field[iF] = f 
+        if len(f)>0: 
+            if len(f[0])>0:
+                latex_figure_field[iF] = f[0]
 
     figure_width, caption_short, caption_long, subfigure_widths, subfigure_abs_or_rel, cover_all_columns, caption_sub = latex_figure_field
 
@@ -591,7 +597,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         elif latex_table_package_prefix+'tabular' in package:
             package = ID__TABLES__PACKAGE__tabular
         else:
-            package = ID__TABLES__PACKAGE__tabular	# assign default package
+            raise NotImplementedError
         
     # Mask internal links that have aliases, otherwise the converter gets confused
     mask_alias = "--alias--"
