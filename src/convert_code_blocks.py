@@ -1,6 +1,9 @@
 import re
 import os
 from remove_markdown_comment import *
+from path_searching import *
+from embedded_notes import non_embedded_references_recognizer
+from equations import get_fields_from_Obsidian_note
 
 def convert_inline_code_of_line(text):
     # Regular expression to find inline code enclosed in backticks
@@ -17,6 +20,30 @@ def convert_inline_code(S):
     for s in S: S1.append(convert_inline_code_of_line(s))
     return S1
         
+def convert_inline_commands_with_choice(S, PARS):
+    
+    pattern = r"`= *choice\(.*?`"
+    pattern2 = r"\]\]\.[a-zA-Z0-9_.-]+"
+
+    pp=[(i, l) for i, l in enumerate(S) if 'choice(' in l]
+
+    for p_i in pp:
+        p = p_i[1]
+        mm = re.findall(pattern, p)
+        for m in mm:
+            ee = non_embedded_references_recognizer([m])
+            field = re.search(pattern2, m)[0].replace(']].', '') + ':: '
+            filePath = get_embedded_reference_path(f'{ee[0][1][0][0]}', PARS, search_in = 'vault')
+            fields_res = get_fields_from_Obsidian_note(filePath, [field])[0]
+            if fields_res[0] == 'true':
+                replace_with = fields_res[1]
+                if replace_with.startswith(2*' '): replace_with = replace_with[1:]
+            else:
+                replace_with = ''
+                
+            S[p_i[0]] = S[p_i[0]].replace(m, replace_with)
+            
+    return S
 
 def code_block_converter(S, PARS):
 
