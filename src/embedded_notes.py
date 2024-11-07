@@ -72,7 +72,7 @@ def internal_links__identifier(S):
 def unfold_all_embedded_notes(S, PARS):
     
     """
-    Unfolds the content of all embedded notes
+    Unfolds the content of all embedded notes (Like when it is written in the form: "![[note#section]] or ![[note^block]]")
     """
     md__files_embedded_prev0 = []
     md__files_embedded_prev = md__files_embedded_prev0.copy()
@@ -83,6 +83,7 @@ def unfold_all_embedded_notes(S, PARS):
 
     CND__LIST_OF_EMBEDDED_NOTES_IS_CHANGING = md__files_embedded_prev0 != md__files_embedded_new
 
+    # unfold notes until there is nothing to unfold (loop is needed because there is "depth" in the embedded notes)
     while CND__LIST_OF_EMBEDDED_NOTES_IS_CHANGING:
         md__files_embedded_prev0 = md__files_embedded_new.copy()
         md__files_embedded_prev = md__files_embedded_prev0.copy()
@@ -145,22 +146,18 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                     
                     idx = [j for j in range(len(sections_blocks[iS])) if char_replacement_sections(sections_blocks[iS][j][1]) == section_i] # index of the section in the section list
                     if len(idx)>0: 
-                        # Found match between existing sections and blocks of the file and the referenced section
+                        
+                        # Found match between existing sections and blocks of the file and the referenced section. 
+                        # If there are many sections with the same name, the second (third, and so on) will just be ignored
                         idx=idx[0]
 
                         label_latex_format = type_of_link[iS] + section_i.replace(' ', '-')
                         hyperref_text = Ii_sb_i[-1].replace('|', '')
 
-                        if type_of_link[iS]!='sec:':
-                            label_of_source = ' \hypertarget{' + label_latex_format + '}' #+ '{}' 
-                        
-                        else:
-                            label_of_source = '\label{' + label_latex_format + '}' 
+                        latex_cmd = '\hypertarget' if type_of_link[iS]!='sec:' else '\label'
+                        label_of_source = f'{latex_cmd}{{{label_latex_format}}}'
 
-                        if len(hyperref_text) != 0:
-                            hyperref_text = '{' + hyperref_text + '}'
-                        else:
-                            hyperref_text = '{' + 'ADD\\_NAME' + '}'
+                        hyperref_text = '{' + hyperref_text + '}' if len(hyperref_text) != 0 else '{' + 'ADD\\_NAME' + '}'
                             
                         has_already_been_replaced = label_of_source.strip() in S[sections_blocks[iS][idx][0]]
                         if not has_already_been_replaced:
@@ -179,12 +176,12 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                         cnd__use_hyperhyperlink = (is_internal_ref_block) and (not (cnd__use_hyperref))
 
                         if cnd__use_hyperref:
-                            hyperref = f'\hyperref[{label_latex_format}]' + hyperref_text 
+                            hyperref = f'\hyperref[{label_latex_format}]{hyperref_text}'
                             if options['add_section_number_after_referencing']:
                                 hyperref += f": \\autoref{{{label_latex_format}}}"
                         elif cnd__use_hyperhyperlink:
                             # for blocks, better write "hyperlink"
-                            hyperref = f'\hyperlink{{label_latex_format}}' + hyperref_text 
+                            hyperref = f'\hyperlink{{{label_latex_format}}}' + hyperref_text 
                         else:
                             raise Exception("Nothing coded here!")
                         
