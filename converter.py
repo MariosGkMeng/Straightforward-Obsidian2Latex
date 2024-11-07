@@ -192,6 +192,7 @@ def simple_stylistic_replacements(S, type=None):
     - Bold font
     - Highlighted font
     - Italic font
+    - Strikeout (under dev.)
     
     '''
 
@@ -295,7 +296,7 @@ def get_reference_blocks(S):
 
 PATHS = PARS['📁']
 
-markdown_file = get_fields_from_Obsidian_note(PATHS['command_note'], ['convert_note:: '])[0]
+markdown_file = get_fields_from_Obsidian_note(PATHS['command_note'], ['convert_note:: '])[0][0]
 PARS = get_parameters(version=markdown_file)
 
 has_2_cols = (PARS['⚙']['document_class']['class'] in doc_classes__2_cols) or False
@@ -473,6 +474,9 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     #     for idx_table in IDX__TABLES:
     #         LATEX_TABLES.append(convert__tables(content[idx_table[0]:idx_table[1]]))
         
+
+    content = convert_inline_commands_with_choice(content, PARS)
+
 
     if PARS['⚙']['EMBEDDED REFERENCES']['convert_non_embedded_references']:        
         content = non_embedded_references_converter(content, PARS) 
