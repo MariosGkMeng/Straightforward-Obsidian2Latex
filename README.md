@@ -64,6 +64,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - [X] Figure size
 - [X] Subplots
 - [X] Conditional Formatting: colored text for notes that contain specific tag(s)
+- [X] (**NEW**) Performing dataview inline code in the form: `= choice([[note]].field[0], [[note]].field[1], "")`. This enhances parameterization of the document.
 
 
 # 👨‍💻🚧 What it cannot convert (so far)
