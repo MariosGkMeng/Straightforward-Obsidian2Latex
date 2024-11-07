@@ -177,7 +177,7 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
 
                         cnd__use_hyperref = (label_latex_format.startswith("sec:")) or (is_section_block)
                         cnd__use_hyperhyperlink = (is_internal_ref_block) and (not (cnd__use_hyperref))
-    
+
                         if cnd__use_hyperref:
                             hyperref = f'\hyperref[{label_latex_format}]' + hyperref_text 
                             if options['add_section_number_after_referencing']:
@@ -530,7 +530,6 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 def extract_section_from_file(obsidian_file, section):
 
     file_hierarchy, Lines = get_file_hierarchy(obsidian_file)
-
     if section == '':
         return Lines
 
@@ -579,6 +578,10 @@ def get_hierarcy_from_lines(Lines):
         if has_section: # and not is_commented_title:
             has_section = has_section[0]
             section_hierarchy = len(has_section)
+            
+            # set section hierarchy to zero, if we are in the Appendix
+            if ln_f.startswith('# Appendix'): section_hierarchy = 0
+            
             tmp_l = ln_f.replace(has_section, '').replace('\n', '').rstrip().lstrip()
             section_i = [iL, section_hierarchy, tmp_l]
 
