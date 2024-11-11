@@ -210,12 +210,14 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
 
             if aligned_or_split[j] == 'align':
                 begin_end_eq = ['', '']
+                label_statement_alternative = label_statement
             else:
                 begin_end_eq = [f'\\begin{{equation}}{label_statement}', f'\end{{equation}}']
+                label_statement_alternative = ''
                 
             new_equation = rf"""
             {begin_end_eq[0]}
-                \begin{{{aligned_or_split[j]}}}
+                \begin{{{aligned_or_split[j]}}}{label_statement_alternative}
                     {equation_content.strip()}
                 \end{{{aligned_or_split[j]}}}
             {begin_end_eq[1]}
