@@ -208,7 +208,7 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
 
             label_statement = rf"\label{{eq:{label_name}}}" if label_name else "%no_label_statement"
 
-            if aligned_or_split[j] != 'align':
+            if aligned_or_split[j] == 'align':
                 begin_end_eq = ['', '']
             else:
                 begin_end_eq = [f'\\begin{{equation}}{label_statement}', f'\end{{equation}}']
