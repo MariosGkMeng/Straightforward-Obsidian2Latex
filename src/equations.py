@@ -1,14 +1,32 @@
+# Import packages
 import re
-import os
+import sys
+import glob, os
 import numpy as np
+from os.path import exists
+import subprocess
+# For time profiling
+from cProfile import Profile
+from pstats import SortKey, Stats
+#
 
-# For recognizing file names, section names, block names
-SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+# Add the src directory to the Python pathf
+sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+
+
 from remove_markdown_comment import *
+from symbol_replacements import *
+from embedded_notes import *
+from bullet_list__converter import *
+from convert_code_blocks import *
 from list_of_separate_lines import *
+from equations import *
 from path_searching import *
+from get_parameters import *
 
 
+
+# Global constants
 ID__TABLES__alignment__center = 0
 ID__TABLES__alignment__right  = 1
 ID__TABLES__alignment__middle = 2
@@ -17,8 +35,6 @@ ID__TABLES__alignment__middle = 2
 ID__TABLES__PACKAGE__longtblr   = 0
 ID__TABLES__PACKAGE__tabularx   = 1
 ID__TABLES__PACKAGE__long_table = 2
-ID__TABLES__PACKAGE__tabular    = 3
-
 
 ID__CNV__TABLE_STARTED      = 0
 ID__CNV__TABLE_ENDED        = 1
@@ -27,829 +43,583 @@ ID__CNV__IDENTICAL          = 2
 ID__STYLE__BOLD             = 0
 ID__STYLE__HIGHLIGHTER      = 1
 ID__STYLE__ITALIC           = 2
+ID__STYLE__STRIKEOUT        = 3
+
+ID__DOCUMENT_CLASS__ARTICLE = 'article'
+ID__DOCUMENT_CLASS__EXTARTICLE = 'extarticle'
+ID__DOCUMENT_CLASS__CONFERENCE__IFAC = 'ifacconf'
 
 
-# ⚠ does not work for longtblr!
-CMD__TABLE__TABULARX__CENTERING = '\\newcolumntype{Y}{>{\\centering\\arraybackslash}X}'
 
 
-# def regex_patterns_for_equations():
+PARS = get_parameters()
+
+doc_classes__2_cols = ['ifacconf'] # document classes that use 2 columns
+
+
+#                                         ['&',              '\&',                      1],
+
+#
+
+# REST OF CODE
+new_table_version = False # had it as a user parameter, but it should always be fixed to False
+def package_loader():
+
+    packages_to_load    = []
+    packages_to_load +=PARS['par']['packages-to-load']
     
+    settings = PARS['⚙']
+    
+    tables_package      = settings['TABLES']['package']
+    page_margin         = settings['margin']
 
-def get_start_and_end_indexes(strings, S):
-    indexes_start = []
-    indexes_end = []
-    for i, line in enum(S):
-        if strings[0] in line:
-            indexes_start.append(i)
-        elif strings[1] in line:
-            indexes_end.append(i)
-        elif strings[0] in line and strings[1] in line:
-            indexes_start.append(i)
-            indexes_end.append(i)
-            
-    if len(indexes_start) != len(indexes_end):
-        raise Exception('Some Latex code line is missing!')
+    out = ['\\usepackage[table]{xcolor}']
+    packages_to_load.append(['tabularx', None, ''])
+    packages_to_load.append(['longtable', None, ''])
+    packages_to_load.append(['tabularray', None, ''])
+    
+    doc_class = PARS['⚙']['document_class']['class']
+    
+    out += [f"{(pkg[1]==doc_class)*'%💀'}\\usepackage{{{pkg[0]}}}{(' % ' + pkg[2]) if len(pkg[2]) > 0 else ''}" for pkg in packages_to_load]
 
-    return indexes_start, indexes_end
+    out.append('\\usepackage{enumitem,amssymb}')
+    out.append('\\newlist{todolist}{itemize}{2}')
+    out.append('\setlist[todolist]{label=$\square$}')
+    
+    out.append('\\newtotcounter{citnum} %From the package documentation')
+    out.append('\def\oldbibitem{} \let\oldbibitem=\\bibitem')
+    out.append('\def\\bibitem{\stepcounter{citnum}\oldbibitem}')
 
-
-def find_label_in_equation(input_string):
-    label_pattern = re.compile(r'\\label\s*{\s*(?:eq__block_)([^}]+)\s*}')
-    label_match = label_pattern.search(input_string)
-    return label_match
-
-
-def EQUATIONS__convert_non_numbered_to_numbered(S0):
+    paragraph_indent = f"\\setlength{{\\parindent}}{{{str(settings['paragraph']['indent_length_of_first_line'])+'pt'}}}"
+    out.append(paragraph_indent)
+    
+    if len(page_margin) > 0:
+        out.append('\\usepackage[margin='+ page_margin + ']{geometry}')
+ 
+    # out.append('\\usepackage[dvipsnames]{xcolor}') # creates bug
+    out.append(settings['hyperlink_setup'])
         
-    """
-    Converts equations from the format "$$equation_here$$\\label{label}" to:
-    "\begin{equation} \\label{label} \n \t equation_here \n \end{equation}"
-    """
+    return out
 
-    S = S0
 
-    # with the following pattern, the equation label will only be identified if it starts with "eq__block_"
-    pattern = re.compile(r'\$\$\s*(.*?)\s*\$\$(?:\s*\\label\{(eq__block_)([^}]+)\})?')
+def replace_hyperlinks(S):
     
-    for i, s in enumerate(S):
-        matches = pattern.findall(s)
-        text = s
+    # Anything that isn't a square closing bracket
+    name_regex = "[^]]+"
+    # http:// or https:// followed by anything but a closing paren
+    url_regex = "http[s]?://[^)]+"
 
-        if matches:
+    markup_regex = '\[({0})]\(\s*({1})\s*\)'.format(name_regex, url_regex)
+    markup_regex_no_alias = r'(http[s]?://\S+)' # Non-greedy regex to match URLs, stopping at the first space or punctuation after the URL
 
-            # put a new line between any text before the equation and the equation
-            i_eq = text.find("$$")
-            if i_eq > 0:
-                text = text[:i_eq] + "\n" + text[i_eq+1:]
-            #
+    S_1 = []
+    for s in S:
+        s1 = s 
+        matched_with_alias = False
+        for match in re.findall(markup_regex, s1):
+            markdown_link = '[' + match[0] + '](' + match[1] + ')'
+            latex_link = "\\href{" + match[1] + "}{" + match[0] + "}"
+            s1 = s1.replace(markdown_link, latex_link)
+            matched_with_alias = True
+        
+        if not matched_with_alias:
+            for match in re.findall(markup_regex_no_alias, s1):
+                match = match.rstrip('.,)')  # Remove trailing punctuation like .,)
+                markdown_link = match
+                latex_link = "\\url{"+match+"}"
+                s1 = s1.replace(markdown_link, latex_link)
+                matched_with_alias = True
 
-            for match in matches:
-                
-                equation = match[0].strip()
-                label_prefix = match[1] if match[1] else ""
-                label_name = match[2] if match[2] else ""
+        S_1.append(s1)
+    
+    return S_1
 
-                # Create the modified equation with the label if present
-                modified_equation = f'\\begin{{equation}}' + (f' \\label{{eq:{label_name}}}' if label_name else '') + f'\n\t{equation}\n\\end{{equation}}'
+def identify__tables(S):
 
-                # Bad programming patch (due to not being able to fix it with Regex)
-                # Doing this because the equation will not be corrected when there's any between the equation body and the |"$" symbol
-                for k in range(4):
-                    text = text.replace(' '*k+'$', '$').replace('$'+' '*k, '$')
-                #
+    table_indexes = []
+    table_has_started = False
 
-                # Replace the original equation with the modified one
-                text = text.replace(f'${match[0]}$', modified_equation)
+    is_table_line_2 = False
+    is_table_line = False
 
-                # Remove the extra label after the end{equation}
-                text = re.sub(r'\$\s*\\label\{eq__block_[^\}]+\}', '', text)
+    new_table_version = False # had it as a user parameter, but it should always be fixed to False
 
-        S[i] = text.strip()
+    if not new_table_version:
+        for i, l in enum(S):
+            is_table_line = is_in_table_line(l)
+            if is_table_line or is_table_line_2:
+                idx__table_line = i
+                if (not table_has_started):
+                    table_has_started = True
+                    idx__table_start = i
+            # ⚠ NEVER add "or (i == len(S)-1)" to the condition below    
+            elif (not is_table_line and table_has_started):
+                table_has_started = False
+                idx__table_end = i
+                table_indexes.append(idx__table_start)
+                table_indexes.append(idx__table_end)
 
-
-    # Sometimes we still have unwanted "$" symbol before "\\begin{equation}", therefore need to remove it
-    pattern_remove_unwanted_previous_dollar = r'\$\s*(\\begin{equation})'
-    S = [re.sub(pattern_remove_unwanted_previous_dollar, r'\1', s) for s in S]
-
-    return S
-
-
-
-def add_new_line_equations(S0):
-
-    # This function assumes that the '\n' symbol hasn't been added yet
-
-    method = 2 # 1 or 2
-
-    S = S0
-
-    if method==1:
-
-        # under dev.
-        S = [s for s in S]
-         
-    elif method==2:
-
-        for i, s in enum(S):
-
-            if not s.endswith('$$') and s.endswith('$'):
-                if i<len(S):
-                    # add new line after the equation
-                    S[i+1] = '\n' + S[i+1]
-
-            if not s.startswith('$$') and s.startswith('$'):
-                if i>0: 
-                    if not S[i-1].endswith('\n'):
-                        S[i-1] = S[i-1] + '\n'*2
+    else:
+        table_has_started = False
+        table_line_idx = -1
+        for i, l in enum(S):
+            is_table_line_i = is_in_table_line(l)
+            if is_table_line_i and not table_has_started: 
+                table_has_started = True
+                table_line_idx = i
+                idx__table_start = i
+            elif table_has_started:
+                if not is_table_line_i:
+                    if i+1<=len(S):
+                        if not (is_in_table_line(S[i-1]) and is_in_table_line(S[i+1])):
+                            idx__table_end = i
+                            table_indexes.append(idx__table_start)
+                            table_indexes.append(idx__table_end)
+                            table_has_started = False  
                     else:
-                        S[i-1] = S[i-1] + '\n'
+                        raise NotImplementedError
 
-            # if not s.endswith('$$') and s.endswith('$'):
-            #     if i<len(S):
 
+    return table_indexes
 
-    else:
-        raise Exception("Nothing coded for this case!")
 
-    return S
 
+def simple_stylistic_replacements(S, type=None):
 
-import re
-
-def EQUATIONS__correct_aligned_equation(latex_equations):
-
-    """
-
-    Aligned equations in obsidian are written in the format:
-    $$ \begin{aligned}
-    E_{g}(t)&=\frac{1}{N} \sum_{i} \big< (\bar{z}_{i}-z_{i})^{2} \big>  + \sigma_{\epsilon}^{2}  \\
-    &= \frac{1}{N} \sum_{i}\left[(\sigma_{\bar{w}}^{2}+(\sigma_{w}^{0})^{2})e^{- \frac{2\lambda_{i}t}{\tau}} 
-    +\frac{\sigma_{\epsilon}^{2}}{\lambda_{i}}(1-e^{- \frac{\lambda_{i}t}{\tau}})^{2} \right] &&
-    \end{aligned}$$
-
-    However, this is not the exact format that works with LateX.
-
-    THe desired format would be:
-
-    \begin{equation}
-        \begin{split}
-            E_{g}(t)&=\frac{1}{N} \sum_{i} \big< (\bar{z}_{i}-z_{i})^{2} \big>  + \sigma_{\epsilon}^{2}  \\
-            &= \frac{1}{N} \sum_{i}\left[(\sigma_{\bar{w}}^{2}+(\sigma_{w}^{0})^{2})e^{- \frac{2\lambda_{i}t}{\tau}} 
-            +\frac{\sigma_{\epsilon}^{2}}{\lambda_{i}}(1-e^{- \frac{\lambda_{i}t}{\tau}})^{2} \right] &&
-        \end{split}
-    \end{equation}
-
-    """
-
-    complete_equation = ''.join(latex_equations)
-
-    aligned_or_split = ['aligned', 'split']
-    patterns = [fr'\$\$\s*\\begin\{{{s}\}}\s*(.*?)\s*\\end\{{{s}\}}(\s*\$\$\\label\{{(eq__block_[^}}]+)\}})?' for s in aligned_or_split]
-    # with the above pattern, the algorithm expects to find the label after the equation
-    
-    
-    for j, pattern in enumerate(patterns):
-
-        equation_match = re.search(pattern, complete_equation, re.DOTALL)
-
-        if equation_match:
-
-            equation_content = equation_match.group(1)
-            equation_content = equation_content.split('\\\\')
-            equation_content = ('\\\\' + '\n' + '\t'*1).join(equation_content)
-
-            label_match = equation_match.group(2)
-
-            label_name = ""
-            if label_match:
-                label_name = re.search(r'\\label\{(eq__block_([^}]+))\}', label_match).group(1)
-                label_name = label_name.replace("eq__block_", "")
-
-            label_statement = rf"\label{{eq:{label_name}}}" if label_name else "%no_label_statement"
-
-            new_equation = rf"""
-            \begin{{equation}}{label_statement}
-                \begin{{{aligned_or_split[j]}}}
-                    {equation_content.strip()}
-                \end{{{aligned_or_split[j]}}}
-            \end{{equation}}
-            """
-
-            new_equation = new_equation.split('\n')
-            new_equation = new_equation[1:-1]
-            return new_equation
-
-    else:
-        return None
-
-def EQUATIONS__check_and_correct_aligned_equations(S0):
-
-    indexes_start, indexes_end = get_start_and_end_indexes(['\\begin{aligned}', '\end{aligned}'], S0)
-    indexes_start_add, indexes_end_add = get_start_and_end_indexes(['\\begin{split}', '\end{split}'], S0)
-    indexes_start += indexes_start_add
-    indexes_end += indexes_end_add
-
-    if len(indexes_start) == 0:
-        return S0
-
-    INDEXES = [0]
-    for i, idx in enum(indexes_start):
-        INDEXES.append(idx)
-        INDEXES.append(indexes_end[i])
-
-    INDEXES.append(len(S0))
-
-    LISTS = []
-    for i, idx in enum(INDEXES[:-1]):
-        j = idx
-        j1 = INDEXES[i+1]
-        if i%2==0:
-            # no need for modification
-            LISTS.append(S0[j+1:j1])
-        else:
-            # need modification
-            # Check if there is any text before the "$$ \\begin{aligned}" text, so we create a separate line with it
-            match_equation = re.search(r'^(.*?)\$\$\s*\\begin{aligned}', S0[j])
-            if match_equation:
-                text_before_equation_that_was_on_same_line = match_equation.group(1)
-
-                if len(text_before_equation_that_was_on_same_line) > 0:
-                    LISTS.append([text_before_equation_that_was_on_same_line])
-                    S0[j] = S0[j].replace(text_before_equation_that_was_on_same_line, "") # removing it for good measure
-            #
-            LISTS.append(EQUATIONS__correct_aligned_equation(S0[j:j1+1]))
-
-    S0_modified = []
-    for list in LISTS:
-        S0_modified += list
-
-    return S0_modified
-
-
-def EQUATIONS__convert_equation_referencing(S0, cleveref_allowed = False):
-    """
-    Converts the note linking of the format "[[eq__block_equationName]]" to "\\ref{eq:equationName}"
-    """
-    # Regular expression pattern to match the specified format
-    pattern = r'\[\[eq__block_(.*?)\]\]'
-    
-    if cleveref_allowed:
-        pattern_ref = r'\\Cref{eq:\1}'
-    else:
-        pattern_ref = r'\\ref{eq:\1}'
-    
-    S = S0
-    for i, s in enum(S):
-        # Using re.sub to replace the matched pattern with the desired text
-        replaced_text = re.sub(pattern, pattern_ref, s)
-
-        S[i] = replaced_text
-    return S
-
-def convert_referencing(S0, mode, cleveref_allowed = False):
-    
-    # Regular expression pattern to match the specified format
-    pattern = [r'\[\[table__block_(.*?)\]\]', r'\[\[figure__block_(.*?)\]\]']
-    
-    if cleveref_allowed:
-        replacement = [r'\\Cref{tab:\1}', r'\\Cref{fig:\1}']
-    else:
-        replacement = [r'\\ref{tab:\1}', r'\\ref{fig:\1}']
-        
-    S = S0
-    if mode == 'figures':
-        idx = 0
-    elif mode == 'tables':
-        idx = 1
-    else:
-        raise NotImplementedError
-    
-    for i, s in enum(S):
-        # Using re.sub to replace the matched pattern with the desired text
-        replaced_text = re.sub(pattern[idx], replacement[idx], s)
-        S[i] = replaced_text
-    
-    return S
-
-
-def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embedded_ref):
-    
-    """
-    For an equation of the format '$$equation$$', it adds the label at the end, so that 
-    other functions in this file recognize it and place it in the correct LateX manner.
-    """
-
-
-    block_prefix = "eq__block_"
-
-    # get the label of the equation from the note name
-    equation_label = embedded_ref.replace(block_prefix,"").replace(".md", "")
-    if len(equation_label)==0 or equation_label == "_":
-        equation_label = block_prefix+'empty_label'
-    else:
-        equation_label = block_prefix+equation_label
-
-    # add the equation label afterwards, so that later it is integrated in the latex file
-    anything_after_equation_that_can_be_removed_by_rstrip = content__unfold[-1].replace(content__unfold[-1].rstrip(), "")    
-    
-    # clean the equation from characters after the equation itself, because they mess the conversion
-    Lc = len(content__unfold)-1
-    for z in range(Lc+1):
-        if '$$' in content__unfold[Lc-z]: 
-            break
-    content__unfold = content__unfold[:Lc-z+1]
-    #
-    
-    content__unfold[-1] = content__unfold[-1].rstrip()
-
-    add_new_line_after_label = True
-
-    if add_new_line_after_label:
-        tmp1 = '\n'
-    else:
-        tmp1 = ''
-
-    content__unfold[-1] += f'\label{{{equation_label}}}{anything_after_equation_that_can_be_removed_by_rstrip}{tmp1}'
-
-    return content__unfold
-
-
-def get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields):
-    
-    fields = ['' for _ in look_for_fields]
-    
-    with open(path_embedded_reference, 'r', encoding='utf8') as file:
-        lines = file.readlines()
-
-    for i, field in enum(look_for_fields):
-        fields[i] = []
-        found_field = False
-        for line in lines:
-            if line.startswith(field):
-                fields[i].append(line.replace(field, '').replace('\n', '').strip())
-                found_field = True
-                # break
-        if not found_field:
-            fields[i] = ''                
-    return fields
-
-
-def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, new_values):
-    """
-    Replace the values of specified fields in an Obsidian note with new values.
-
-    :param path_embedded_reference: Path to the Obsidian note file.
-    :param look_for_fields: A list of field names to search for.
-    :param new_values: A list of new values to replace the field values with.
-    """
-    
-    # Ensure we have the same number of fields and values to replace
-    if len(look_for_fields) != len(new_values):
-        raise ValueError("The number of fields and new values must be the same.")
-    
-    # Read the content of the file
-    with open(path_embedded_reference, 'r', encoding='utf8') as file:
-        lines = file.readlines()
-
-    # Modify the lines where the fields are found
-    for i, field in enumerate(look_for_fields):
-        for j, line in enumerate(lines):
-            if line.startswith(field):
-                # Replace the field value with the new one
-                lines[j] = f"{field} {new_values[i]}\n"
-                break
-
-    # Write the updated content back to the file
-    with open(path_embedded_reference, 'w', encoding='utf8') as file:
-        file.writelines(lines)
-
-
-def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PARS):
-    
-    fields_to_fetch = ['caption:: ', 'package:: ', 'widths:: ', 'use_hlines:: ', 'use_vlines:: ']
-    fields_note = get_fields_from_Obsidian_note(path_embedded_reference, fields_to_fetch)
-    caption = fields_note[0] if len(fields_note[0])==0 else fields_note[0][0]
-    package = fields_note[1] if len(fields_note[1])==0 else fields_note[1][0]
-    try:
-        widths = [f.strip() for f in fields_note[2][0].split(',')]
-    except:
-        widths = [f.strip() for f in fields_note[2].split(',')]
-    use_hlines = fields_note[3] if len(fields_note[3])==0 else fields_note[3][0]
-    use_vlines = fields_note[4] if len(fields_note[4])==0 else fields_note[4][0]
-    label = embedded_ref.replace('table__block_', '')
-    embedded_tables_text = convert__tables(content__unfold, caption, package, label, widths, use_hlines, use_vlines, PARS)
-    
-    embedded_tables_text_1 = []
-    for line in embedded_tables_text:
-        if not line.endswith('\n'):
-            line += '\n'
-        embedded_tables_text_1.append(line)
-    return embedded_tables_text_1
-
-def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, PARS):
-
-    look_for_fields = [
-        'size_in_latex:: ',
-        'caption_short:: ',
-        'caption_long:: ',
-        'subfigure_widths:: ',
-        'subfigure_abs_or_rel:: ',
-        'cover_all_columns:: ',
-        'caption_sub:: '
-        ]
-    
-    fields = get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields)
-    extensions = ['.png', '.jpg', '.pdf']
-
-    i = None
-    for i, c in enum(content__unfold):
-        if '![[' in c:
-            break
-    
-    if not i is None:
-        embedded_images_text = content__unfold[i]
-    else:
-        raise Exception("Did not find an image in your figure block note, or you did not place it in the beginning of a new line!")
-    
-    try:
-        embedded_images = [x.replace(']]', '') for x in embedded_images_text.split("![[")[1:]]
-    except:
-        raise Exception("Probably could not find any images in your figure note file!")
-    
-    embedded_images_1 = []
-    for image in embedded_images:
-        if "|" in image: image = image[:image.find("|")+1].replace("|", "")
-        embedded_images_1.append(image)
-    
-    embedded_images = embedded_images_1
-    label = embedded_ref.replace('figure__block_', '')
-    image_paths = [get_embedded_reference_path(x, PARS) for x in embedded_images]
-    PARS['⚙']['figures']['num_columns'] = PARS['num_columns']
-    converted = images_converter(image_paths, PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
-
-    return converted
-
-
-
-def images_converter(images, PARAMETERS, fields, label, latex_file_path):
 
     '''
+    For simple stylistic replacements. Includes conversions of:
+    - Bold font
+    - Highlighted font
+    - Italic font
+    - Strikeout (under dev.)
+    
+    '''
+
+    if type == ID__STYLE__BOLD:
+        style_char = '\*\*'
+        replacement_func = lambda repl, string:  repl.append(['**'+string+'**', '\\textbf{' + string + '}'])
+        l = 2
+        is_pair = True
+    
+    elif type == ID__STYLE__HIGHLIGHTER:
+        style_char = '\=\='
+        replacement_func = lambda repl, string:  repl.append(['=='+string+'==', '\hl{' + string + '}'])
+        l = 2
+        is_pair = True
+
+    elif type == ID__STYLE__ITALIC:
+        style_char = '\*'
+        replacement_func = lambda repl, string:  repl.append(['*'+string+'*', '\\textit{' + string + '}'])
+        l = 1
+        is_pair = True
+    
+    elif type == ID__STYLE__STRIKEOUT:
+        style_char = '\~\~'
+        replacement_func = lambda repl, string:  repl.append([f'~~{string}~~', f'\\st{{{string}}}'])
+        l = 2
+        is_pair = True
+
+
+
+    else:
+        raise NotImplementedError
+
+    if is_pair:
+        l_iter = 2
+    else:
+        raise NotImplementedError
+
+    S1 = []
+    for s in S:
+        occurences = [x.start() for x in re.finditer(style_char, s)]
+        L = len(occurences)
+
+        if L % l == 0:
+            replacements = []
+            for i in range(int(L/l_iter)):
+                o0 = occurences[2*i]
+                o1 = occurences[2*i+1]
+                replacement_func(replacements, s[o0+l:o1])
+                
+            for R in replacements:
+                s = s.replace(R[0], R[1])
+        else:
+            raise Exception("You have added an odd number of the '" + style_char + "' character in the string: '" + s + "'")
+        
+        S1.append(s)
+    
+    return S1
+
+ 
+
+def images_converter(images, PARAMETERS):
+
+    '''
+    DEPRECIATED
     Converts Images given the path of the image file
     '''
 
     # NOTES:
     # --- ", height=0.5\\textheight" addition causes the aspect ratio to break
 
-    # get parameters of the latex figure command
-    latex_figure_field = [0.7, '', '', '', '', False, ''] # the defaults
-
-    # change defaults, if user put something
-    for iF, f in enum(fields[1]):
-        if len(f)>0: 
-            if len(f[0])>0:
-                latex_figure_field[iF] = f[0]
-
-    figure_width, caption_short, caption_long, subfigure_widths, subfigure_abs_or_rel, cover_all_columns, caption_sub = latex_figure_field
-
     TO_PRINT = []
-    subfigure_text_width = 1/len(images)
-    if cover_all_columns:
-        str_figure = 'figure*'
-    else:
-        str_figure = 'figure'
-        subfigure_text_width = subfigure_text_width/PARAMETERS['num_columns']
-        
-    cnd__include_subfigures = len(images) > 1
-    cnd__no_subfigures = (not cnd__include_subfigures)
-    begin_figure = f'\\begin{{{str_figure}}}'*cnd__no_subfigures + '\\begin{subfigure}'*cnd__include_subfigures
-    end_figure = f'\end{{{str_figure}}}'*cnd__no_subfigures + '\end{subfigure}'*cnd__include_subfigures 
-    
-    fig_label = '\label{fig:'+label+'}'
-    
-    if cnd__include_subfigures:
-        if len(caption_sub)==0:
-            caption_sub = ['' for i in range(len(images))]
-    else:
-        caption_sub = [caption_long]
-        
-    if PARAMETERS['put_figure_below_text']: 
-        if cnd__no_subfigures:
-            begin_figure = [begin_figure + '[htb]'] #'[H]'
-        else:
-            try:
-                widths = subfigure_widths.split(',')
-                widths = [float(p.strip()) for p in widths]
-                sumW = np.sum(widths)
-                if subfigure_abs_or_rel!='rel' and subfigure_abs_or_rel!='abs': subfigure_abs_or_rel='rel'
-                if subfigure_abs_or_rel == 'rel' or sumW>1:
-                    widths = [p/sumW for p in widths]
-            except:
-                widths = [subfigure_text_width for _ in range(len(images))]
-                
-            begin_figure = [begin_figure + f'[b]{{{widths[i]}\\textwidth}}' for i in range(len(images))]
-
-    for i_img, IM in enumerate(images):
-        path_img0 = IM.replace('\\', '/')
-
-        img_directory = '/'.join(path_img0.split('/')[:-1])
-        cndTmp1 = 0
-        path_img = '"'*cndTmp1 + path_img0 + '"'*cndTmp1
-
-        # check if image is in the same folder as the latex file (in which case, no need to have the absolute path)
-        if (img_directory == '/'.join(latex_file_path.replace('\\', '/').split('/')[:-1])) or (not PARAMETERS['include_path']) or PARAMETERS['use_overleaf_all_in_the_same_folder']:
-            path_img = path_img.replace(img_directory+'/', '')
-
-        # label_img = IM.split('\\')[-1]
-        caption_long_img = caption_sub[i_img]
+    for IM in images:
+        path_img = '"' + IM[1].replace('\\', '/') + '"'
+        label_img = IM[1].split('\\')[-1]
+        caption_short = 'Caption short'
+        caption_long = 'Caption long'
+        figure_width = 0.7
         TO_PRINT.append(' \n'.join([
-        begin_figure[i_img],
+        '\\begin{figure}',
         '	\centering',
-        f'	\includegraphics[width={str(figure_width)*cnd__no_subfigures}\linewidth]' + '{"'+path_img+'"}',
-        '	\caption['+caption_short+']'+('{'+caption_long_img+'}')*(len(caption_long)>0),
+        f'	\includegraphics[width={figure_width}\linewidth]'+\
+            '{"'+path_img+'"}',
+        f'	\caption[{caption_short}]{{{caption_long}}}',
         '   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
-        '   '+fig_label*cnd__no_subfigures,
-        end_figure]))
+        '	\label{fig:'+label_img+'}',
+        '\end{figure}']))
 
-    y = []
-    if cnd__include_subfigures:
-        if PARAMETERS['put_figure_below_text']:
-            begin_fig_global = f'\\begin{{{str_figure}}}[htb]\n' # '\\begin{figure}[H]\n'
-        else:
-            begin_fig_global = f'\\begin{{{str_figure}}}\n'
-        y.append(begin_fig_global)
-        y.append('\centering\n')
-        for fig_lines in TO_PRINT:
-            y.append(fig_lines)
-            y.append('\hfill\n')
+    return TO_PRINT
 
-        y.append(f'\caption{{{caption_long}}}\n')
-        y.append(fig_label+'\n')
-        y.append(f'\end{{{str_figure}}}\n')
+def get_reference_blocks(S):
+    Lc = len(S)-1
+    blocks = []
+    for i in range(Lc+1):
+        s = S[i].replace('\n', '')
+        pattern = r"\^[\w\-]*$"
+        link_label = re.findall(pattern, s)
+        if len(link_label) > 0:
+            blocks.append([i, link_label[0].replace('^', '')])    
+        
+    return blocks
+
+
+PATHS = PARS['📁']
+
+markdown_file = get_fields_from_Obsidian_note(PATHS['command_note'], ['convert_note:: '])[0][0]
+PARS = get_parameters(version=markdown_file)
+
+has_2_cols = (PARS['⚙']['document_class']['class'] in doc_classes__2_cols) or False
+
+PARS['num_columns'] = int(has_2_cols*2 + (not has_2_cols)*1)
+
+# open obsidian note
+
+PATHS['markdown-file'] = get_embedded_reference_path(markdown_file.replace("[[", '').replace("]]", '')+'.md', PARS)
+split_path=PATHS['markdown-file'].split('\\')
+PATHS['tex-file'] = '\\'.join(split_path[:-1])+'\\'+split_path[-1].replace('.md', '') + '.tex'
+PARS['📁']['tex-file'] = PATHS['tex-file']
+with open(PATHS['markdown-file'], 'r', encoding='utf8') as f:
+    content = f.readlines()
+
+content = remove_markdown_comments(content)
+
+[content, md_notes_embedded] = unfold_all_embedded_notes(content, PARS)
+
+# Convert bullet and numbered lists
+content = bullet_list_converter(content)
+
+
+# Look for Appendix (in reverse order)
+for i_l, line in enumerate(reversed(content)):
+    if line.startswith('# Appendix'):
+        # Calculate the correct index in the original list
+        original_index = len(content) - 1 - i_l
+        content[original_index] = content[original_index].replace('# Appendix', '\\appendix')
+        break
+#
+
+# Replace headers and map sections \==================================================
+Lc = len(content)-1
+sections = []
+for i in range(Lc+1):
+    # ⚠ The sequence of replacements matters: 
+    # ---- replace the lowest-level subsections first
+    content_00 = content[i]
+
+    content_0 = content[i]
+
+    content[i] = re.sub(r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
+    content[i] = re.sub(r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
+    content[i] = re.sub(r'####### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
+    content[i] = re.sub(r'###### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
+    content[i] = re.sub(r'##### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
+    content[i] = re.sub(r'#### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
+    if content[i] != content_0:
+        sections.append([i, content_0.replace('#### ', '').replace('\n', '')])
+
+    content_0 = content[i]
+    add_star = ''
+    content[i] = re.sub(r'### (.*)', r'\\subsubsection{\1}', content[i].replace('%%', ''))
+    if content[i] != content_0:
+        sections.append([i, content_0.replace('### ', '').replace('\n', '')])
+
+    content_0 = content[i]
+    content[i] = re.sub(r'## (.*)', r'\\subsection{\1}', content[i].replace('%%', ''))
+    if content[i] != content_0:
+        sections.append([i, content_0.replace('## ', '').replace('\n', '')])
+
+    content_0 = content[i]
+    content[i] = re.sub(r'# (.*)', r'\\section{\1}', content[i].replace('%%', ''))
+    if content[i] != content_0:
+        sections.append([i, content_0.replace('# ', '').replace('\n', '')])
+
+# \==================================================\==================================================
+
+table_new_col_symbol = [['&',               '\&',                     1]]
+content = symbol_replacement(content, table_new_col_symbol)
+
+# find reference blocks \==================================================
+#---1. they have to be at the end of the sentence (i.e. before "\n")
+blocks = get_reference_blocks(content)
+# \==================================================
+
+# Find and apply internal links
+internal_links = internal_links__identifier(content)
+content = internal_links__enforcer(content, [sections, blocks], internal_links, PARS['⚙']['INTERNAL_LINKS'])
+#
+
+# Convert figures \==================================================
+
+embeded_refs = embedded_references_recognizer(content, PARS['⚙']['EMBEDDED REFERENCES'], 'normal')
+
+# ➕ add more image refs
+# replace "content[line_number]" accordingly and see the result
+
+for i, ln in enum(embeded_refs):
+
+    line_number = ln[0]
+    line_refs = ln[1]
+    for lnrf in line_refs:
+
+        converted_image_text = images_converter([[line_number, get_embedded_reference_path(lnrf[0], PARS)]], PARS['⚙']['figures'])
+        
+        for img_txt_cnv in converted_image_text:
+            tmp1 = '![[' + lnrf[0]
+            tmp2 = lnrf[2]
+
+            reference_is_image_with_manual_resize = ('.png' in lnrf[0] or '.jpg' in lnrf[0]) and (tmp2.replace('|','')).isnumeric()
+            content[line_number] = content[line_number].replace(tmp1 + tmp2*reference_is_image_with_manual_resize + ']]', img_txt_cnv)
+
+# \==================================================
+# content = add_new_line_equations(content)
+
+
+md__equations_embedded_new = []
+cleveref_allowed = [p for p in PARS['par']['packages-to-load'] if p[0]=='cleveref'][0][1] != PARS['⚙']['document_class']['class']
+if PARS['⚙']['EMBEDDED REFERENCES']['treat_equation_blocks_separately']:
+    # this means that all equation blocks were ignored, and we need to unfold them now
+    [content, md__equations_embedded_new] = unfold_embedded_notes(content, [], PARS, mode='equation_blocks_only')
+
+    # check for references in those equations, and convert to LateX system
+    content = EQUATIONS__convert_equation_referencing(content, cleveref_allowed = cleveref_allowed)
+
+content = convert_referencing(content, 'figures', cleveref_allowed = cleveref_allowed)
+content = EQUATIONS__check_and_correct_aligned_equations(content)
+content = convert_referencing(content, 'tables', cleveref_allowed = cleveref_allowed)
+
+# Find sections and blocks again, since the content lines have been re-arranged
+i0 = 0
+for iS, sec in enumerate(sections):
+    for i, s in enumerate(content[i0:]):
+        tmp1 = sec[1]
+        if ("section{" + tmp1 in s) or ("paragraph{" + tmp1 in s):            
+            break        
+    sections[iS][0] = i + i0
+    i0 = i
+
+blocks = get_reference_blocks(content)
+#
+
+# Find and apply internal links ---> repeat, in case of references within the unfolded notes``
+content = internal_links__enforcer(content, [sections, blocks], internal_links__identifier(content), PARS['⚙']['INTERNAL_LINKS'])
+#
+
+if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
+
+    if PARS['EQUATIONS']['convert_non_numbered_to_numbered']:
+        content = EQUATIONS__convert_non_numbered_to_numbered(content)
+        # Problematic: C1 = content[2:3]
+
+    IDX__TABLES = [0]
+    TYPE_OF_CNV = [ID__CNV__IDENTICAL]
+    tmp1 = identify__tables(content)
+    tmp2 = [ID__CNV__TABLE_STARTED for _ in tmp1]
+    tmp2[1::2] = [ID__CNV__IDENTICAL for _ in tmp1[1::2]]
+    IDX__TABLES += tmp1
+    TYPE_OF_CNV += tmp2
+
+    Lc = len(content)-1
+    if IDX__TABLES[-1] < Lc: 
+        IDX__TABLES.append(Lc)
+        TYPE_OF_CNV.append(ID__CNV__IDENTICAL)
+
+    LATEX_TABLES = []
+
+    if new_table_version: 
+        step = 2
     else:
-        y = TO_PRINT
-
-    return y
-
-
-def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, PARS):
-    '''
-    Converts tables depending on the user's preferences    
-    '''
-    format_column_names_with_bold = True
-    if PARS['num_columns'] > 1:
-        txt_textwith = f"{{{1/PARS['num_columns']}\\textwidth}}"
-        # PARS['num_columns'] {\\textwidth}
+        step = 1
     
-    latex_table_prefix = '#Latex/Table/'
-    latex_table_prefix_row_format_color = latex_table_prefix + 'Format/rowcolor/'
-    TABLE_SETTINGS = PARS['⚙']['TABLES']
-    if not package:
-        package = TABLE_SETTINGS['package']
-    else:
-        latex_table_package_prefix = latex_table_prefix+'package/'
-        if latex_table_package_prefix+'longtable' in package:
-            package = ID__TABLES__PACKAGE__long_table
-        elif latex_table_package_prefix+'tabularx' in package:
-            package = ID__TABLES__PACKAGE__tabularx
-        elif latex_table_package_prefix+'longtblr' in package:
-            package = ID__TABLES__PACKAGE__longtblr
-        elif latex_table_package_prefix+'tabular' in package:
-            package = ID__TABLES__PACKAGE__tabular
-        else:
-            raise NotImplementedError
+    table_new_col_symbol_reverse = [['\&',               '&',                     1]]
+    
+
+    for i in range(int(len(tmp1)/2)):
+        raise Exception("You have tables outside the table note format! Please fix that!")
+        new_table = symbol_replacement(convert__tables(content[tmp1[2*i]:tmp1[2*i+1]:step]), table_new_col_symbol_reverse)
+        LATEX_TABLES.append(new_table)
+
+    # for i, L in enum(content):
+
+    #     for idx_table in IDX__TABLES:
+    #         LATEX_TABLES.append(convert__tables(content[idx_table[0]:idx_table[1]]))
         
-    # Mask internal links that have aliases, otherwise the converter gets confused
-    mask_alias = "--alias--"
-    for i, s in enum(S):
-        S[i] = s.replace("\\|", mask_alias)
-    #     
+
+    content = convert_inline_commands_with_choice(content, PARS)
+
+
+    if PARS['⚙']['EMBEDDED REFERENCES']['convert_non_embedded_references']:        
+        content = non_embedded_references_converter(content, PARS) 
+
+    # Replace "#" with "" (temporary patch ➕)
+    content = [x.replace("#", "") for x in content]
+
+    LATEX = []
+    i0 = IDX__TABLES[0]
+    i_tables = 0
+    for j, i in enum(IDX__TABLES[1:]):
+        if TYPE_OF_CNV[j] == ID__CNV__IDENTICAL:
+            LATEX += content[i0:i]
+        elif TYPE_OF_CNV[j] == ID__CNV__TABLE_STARTED:
+            LATEX += LATEX_TABLES[i_tables]
+            i_tables += 1
         
-    add_txt = ''
-    if (ID__TABLES__alignment__center in TABLE_SETTINGS['alignment']) \
-        and package == ID__TABLES__PACKAGE__longtblr:
-        add_txt = '\centering '
+        i0 = i
 
-    has_custom_widths = False
-    if len(widths[0])>0:
-        has_custom_widths = True
-        
-    vline_map = [['', False], ['🟢', True], ['🔴', False]]
-    vline_def = False
-    hline_map = [['', False], ['🟢', True], ['🔴', False]]
-    hline_def = False
 
-    got_val = False
-    for vl in vline_map:
-        if use_vlines == vl[0]:
-                got_val = True
-                use_vlines = vl[1]
-                break
-    if not got_val: use_vlines = vline_def      
-            
-    got_val = False
-    for hl in hline_map:
-        if use_hlines == hl[0]:
-                got_val = True
-                use_hlines = hl[1]
-                break
-    if not got_val: use_hlines = hline_def      
+    LATEX = symbol_replacement(LATEX, PARS['par']['symbols-to-replace'])
+    styles_replacement = [ID__STYLE__BOLD, ID__STYLE__HIGHLIGHTER, ID__STYLE__ITALIC]#, ID__STYLE__STRIKEOUT]
+    
+    for style in styles_replacement:
+        LATEX = simple_stylistic_replacements(LATEX, type=style)
+    
 
-    vl = '|' if use_vlines else ''
-    if has_custom_widths:        
-        table_width_custom_0 = ''.join([f"{vl}p{{{w}}}" for w in widths]) + vl
+    LATEX = code_block_converter(LATEX, PARS)
+    LATEX = symbol_replacement(LATEX, [['\#&', '&', 1]])
 
-    # After having found the table
-    ## We expect that the 1st line defines the columns
 
-    iS_table_start = -1
+    # Replace "%" with "\%" (after having replaced obsidian comments of course)
+    # LATEX = [x.replace("%", "\%") for x in LATEX]
 
-    for iS, s in enumerate(S):
-        if is_in_table_line(s):
-            cols = s.split('|')
-            iS_table_start = iS
+    LATEX = replace_hyperlinks(LATEX)
+
+
+    # get text before section, so that it is added after the title, before the table of contents
+    text_before_first_section = ''
+
+    for i, s in enum(content):
+        if s.startswith('\\section'):
+            line_first_section = i
             break
-          
-          
-    if iS_table_start==-1:
-        raise Exception("Did not find any tables!")
-    
-    cols = [[x.lstrip().rstrip() for x in cols if len(x)>0 and x!='\n']]
 
-    if format_column_names_with_bold:
-        cols = [[f'**{x}**' for x in sublist] for sublist in cols]
+    paragraph = PARS['⚙']['paragraph']
+    if paragraph['if_text_before_first_section___place_before_table_of_contents']:
+        # BUG2: anything that needs special conversion will not be converted!!
+        if len(sections)>0:
+            text_before_first_section = '\n\n'.join([s for s in content[:line_first_section] if len(s)>0])
+            content = content[line_first_section:]
 
-    data = []
-    for s in S[iS_table_start+2:]:
-        c = s.split('|')
-        c = [x.lstrip().rstrip() for x in c if len(x.lstrip().rstrip())>0 and x!='\n']
-        
-        # check for table commands
-        latex_command_in_row = np.any([latex_table_prefix in ci for ci in c])
-        if latex_command_in_row:
-            # check for latex row color command
-            try: #if np.any([latex_table_prefix_row_format_color in ci for ci in c]):
-                i_c, cell_with_the_command = [(i, ci) for i, ci in enumerate(c) if latex_table_prefix_row_format_color in ci][0]
-                
-                text = c[i_c]
-                pattern = rf'{re.escape(latex_table_prefix_row_format_color)}([a-zA-Z]+)'
-                # Search for the pattern in the text
-                match = re.search(pattern, text)
-                # Extract and print the matched text if it exists
-                if match:
-                    color = match.group(1)
-                else:
-                    raise Exception("You probably have written the syntax of latex table row color formatting wrong!")
-
-                text_to_replace = latex_table_prefix_row_format_color+color
-                replacement_text = '\\rowcolor{' + color + '}'
-                cell_with_the_command = cell_with_the_command.replace(text_to_replace, replacement_text)
-                # Adding the replacement text in front, because it is inside commands (cheap patch for now ➕)
-                c[i_c] = (replacement_text + ' ')*0 + cell_with_the_command
-                
-            except:
-                None
-            
-        data.append(c)
-
-    y = cols + data
-
-    # CONVERT
-    N_cols = len(cols[0])
-
-    latex_table = []
-    addText = ''
-    for i, c in enum(y):
-        c1 = [add_txt + x for x in c]
-        if i==0: 
-            if TABLE_SETTINGS['any-hlines-at-all']:
-                addText = ' \hline' if use_hlines else ''
-        else:
-            if TABLE_SETTINGS['hlines-to-all-rows']:
-                addText = ' \hline' if use_hlines else ''
-                
-        latex_table.append('    ' + " & ".join(c1) + ' \\\\' + addText)
-
-    lbefore = []
-
-    if package == ID__TABLES__PACKAGE__tabularx:
-
-
-        PCKG_NAME = '{tabularx}'
-
-        if ID__TABLES__alignment__center in TABLE_SETTINGS['alignment']:
-            lbefore.append(CMD__TABLE__TABULARX__CENTERING)
-            colPrefix = 'Y'
-        else:
-            colPrefix = 'X'
-
-        # the if-clause below was causing error with the illegal unit, therefore I commented it out
-        # if (ID__TABLES__alignment__middle in TABLE_SETTINGS['alignment']):
-            # lbefore.append('\\renewcommand\\tabularxcolumn[1]{m{#1}}')
-
-        if not has_custom_widths:
-            table_width = '|' + N_cols*(colPrefix+'|') 
-        else:
-            table_width = table_width_custom_0
-
-        latex_before_table = lbefore + [
-            '%\\begin{center}',
-            '\\begin{table}[ht]',
-            '\centering',
-            '\caption{' + caption + '}',
-            '\label{tab:' + label + '}',
-            '\\begin' + PCKG_NAME + txt_textwith + '{' + table_width + '}',
-            '   \hline'
-        ] 
-
-        latex_after_table = [
-            '   \hline',
-            '\end'+PCKG_NAME,
-            '\end{table}'
-        ]
-
-        LATEX = latex_before_table + latex_table + latex_after_table
-
-    elif package == ID__TABLES__PACKAGE__longtblr:
-
-        PCKG_NAME = '{longtblr}'
-
-
-        if not has_custom_widths:
-            table_width = N_cols*'X'
-        else:
-            # table_width = table_width_custom_0
-            raise NotImplementedError
-
-
-        latex_before_table = [
-            '%\\begin{center}',
-            '\\begin{table}[ht]',
-            '\centering',
-            '\caption{' + caption + '}',
-            '\label{tab:' + label + '}',
-            '\\begin' + PCKG_NAME + '[',
-            '\caption = {' + caption + '},',
-            'entry = {},',
-            'note{a} = {},',
-            'note{$\dag$} = {}]',
-            '   {colspec = {'+ table_width +'}, width = ' + str(TABLE_SETTINGS['rel-width']) + '\linewidth, hlines, rowhead = 2, rowfoot = 1}'
-            ]  
-
-        latex_after_table = [
-            '\end' + PCKG_NAME,
-            '\end{table}'
-        ]
-
-        add_hline_at_end = False # to be moved to user settings
-        if add_hline_at_end:
-            latex_after_table = '   \hline' + latex_after_table
-
-
-        LATEX = latex_before_table + latex_table + latex_after_table
-
-
-    elif package == ID__TABLES__PACKAGE__long_table:
-        PCKG_NAME = '{longtable}'
-
-        if not has_custom_widths:
-            table_width = N_cols*(vl+'p{3cm}') + vl
-        else:
-            table_width = table_width_custom_0
-
-
-        latex_before_table=[
-        	'%\\begin{center}',
-		    '\\begin{longtable}{' + table_width + '}',            
-            '\caption{' + caption + '}',
-            '\label{tab:' + label + '}\\\\',
-			'\hline',
-			''+latex_table[0],
-			'\hline',
-			'\endfirsthead % Use \endfirsthead for the line after the first header',
-			'\hline',
-			'\endfoot',
-            ]
-
-        latex_after_table = [
-            '\end' + PCKG_NAME,
-        ]
-
-        LATEX = latex_before_table + ['    '+x for x in latex_table[1:]] + latex_after_table
-    
-    elif package == ID__TABLES__PACKAGE__tabular:
-        PCKG_NAME = '{tabular}'
-        
-        if not has_custom_widths:
-            table_width = N_cols*(vl+'p{3cm}') + vl
-        else:
-            table_width = table_width_custom_0
-
-        latex_before_table = lbefore + [
-            '%\\begin{center}',
-            '\\begin{table}[ht]',
-            '\centering',
-            '\caption{' + caption + '}',
-            '\label{tab:' + label + '}',
-            f'\\begin{PCKG_NAME}{{{table_width}}}',
-            '   \\bottomrule',
-        ] 
-
-        latex_after_table = [
-            '   \hline',
-            '\end'+PCKG_NAME,
-            '\end{table}'
-        ]
-
-        latex_table[0] += '\midrule'
-        LATEX = latex_before_table + latex_table + latex_after_table
-        
-    else:
-        raise NotImplementedError
-    
-    # Unmask internal link with alias
-    for i, s in enum(LATEX):
-        LATEX[i] = s.replace(mask_alias, "|") 
     #
+
+    # LATEX = symbol_replacement(LATEX, [['_', '\_', 1]]) # DON'T UNCOMMENT!
+    # title = PARS['⚙']['title'] if PARS['⚙']['title'] else symbol_replacement(path_file.split('\\')[-1].replace('_', '\_'), PARS['par']['symbols-to-replace'])[0]
+    title = PARS['⚙']['title'] if PARS['⚙']['title'] else ''
+    LATEX = symbol_replacement(LATEX, [[paragraph['insert_new_line_symbol'] , '\\clearpage', 1]])
+
+    LATEX = convert_inline_code(LATEX)
     
-    return LATEX
+    document_class = PARS['⚙']['document_class']
+
+
+    doc_class_fontsize = f'[{document_class["fontsize"]}]' if len(document_class['fontsize'])>0 else ''
+
+    is_ifac = document_class['class'] == 'ifacconf'
+    
+    PREAMBLE = [f"\\documentclass{doc_class_fontsize}{{{document_class['class']}}}"] +\
+            [is_ifac*'\\newcounter{part} % fix the issue in the class'] +\
+            [is_ifac*'\counterwithin*{section}{part}'] +\
+            package_loader() +\
+            ['\n'] + ['\sethlcolor{yellow}'] + ['\n'] + ['\n'*2] +\
+            ['\setcounter{secnumdepth}{4}'] +\
+            ['\setlength{\parskip}{7pt} % paragraph spacing'] +\
+            ['\let\oldmarginpar\marginpar'] +\
+            ['\\renewcommand\marginpar[1]{\oldmarginpar{\\tiny #1}} % Change "small" to your desired font size]'] + ['\n'*2] +\
+            ['\\begin{document}']+\
+            ['\date{}'*PARS['⚙']['use_date']]+\
+            [f"\\author{{{PARS['⚙']['author']}}}"*(len(PARS['⚙']['author'])>0)]+\
+            [f'\\title{title}\n\maketitle'*(len(title)>0)]+\
+            [text_before_first_section]+\
+            ['\\tableofcontents \n \\newpage'*paragraph['add_table_of_contents']]
+
+    LATEX = PREAMBLE + LATEX + ['\\newpage \n '*paragraph['add_new_page_before_bibliography'] + '\\bibliographystyle{apacite}']+\
+        ['\\bibliography{' + PATHS['bibtex_file_name'] + '}'] + ['\end{document}']
+
+    if '[[✍⌛writing--FaultDiag--Drillstring--MAIN]]' in markdown_file:
+        LATEX_1 = []
+        for l in LATEX:
+            LATEX_1.append(l.replace('C:/Users/mariosg/OneDrive - NTNU/FILES/workTips/Analyses/PINNs+MTL/FaultDiag/FaultDiag/simulation results/plots/', ''))
+            
+        LATEX = LATEX_1
+        
+
+
+    with open(PATHS['tex-file'], 'w', encoding='utf8') as f:
+        for l in LATEX:
+            if not l.endswith('\n'): l+='\n'
+            f.write(l)
+
+
+    # Print Messages
+    print__what_was_converted = 'Converted note: ' + PATHS['markdown-file'] + ' into ' + PATHS['tex-file']
+
+    MESSAGES_TO_PRINT = [print__what_was_converted]
+
+    [print(msg) for msg in MESSAGES_TO_PRINT]
+        
+    # # Run the bash script (somehow it is not working from python for now 🤔)
+    # try:
+    #     result = subprocess.run(PATHS['bash_script'], shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    #     print("Output:", result.stdout.decode())
+    #     print("Errors:", result.stderr.decode())
+    # except subprocess.CalledProcessError as e:
+    #     print("Error:", e.stderr.decode())
+
+
+else:
+    
+    text_to_seach = PARS['⚙']['SEARCH_IN_FILE']['text_to_seach']
+    replace_with = PARS['⚙']['SEARCH_IN_FILE']['replace_with']
+    
+    ALL_EMBEDDED_NOTES = md__equations_embedded_new + md_notes_embedded
+    MATCHES = []
+    for note in ALL_EMBEDDED_NOTES:
+        note_path = get_embedded_reference_path(note, PARS, search_in = 'vault')
+        with open(note_path, 'r', encoding='utf8') as file: content_i = '\n'.join(file.readlines())
+        has_the_search_text = text_to_seach in content_i
+        if has_the_search_text: 
+            MATCHES.append(note_path)
+
+        
+    if replace_with:
+        for note in MATCHES:
+            with open(note, 'r', encoding='utf8') as file:
+                content_i = ''.join(file.readlines())
+                content_i = content_i.replace(text_to_seach, replace_with)
+            
+            with open(note, 'w', encoding='utf8') as file:
+                file.write(content_i)    
+
+
+    print("Finished Searching")
+#
