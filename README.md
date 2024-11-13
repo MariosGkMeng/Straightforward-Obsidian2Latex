@@ -1,4 +1,5 @@
-# Please cite the following if you use it for publishable work (i.e., if you write your paper in Obsidian, and use this code to print to Latex)
+# Citing this work
+Please cite the following if you use it for publishable work (i.e., if you write your paper in Obsidian, and use this code to print to Latex)
 ```
 @misc{MariosGkionisObsidian2Latex,
   author = {Marios Gkionis},
