@@ -38,7 +38,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 
 **Yes**, plugins for Obsidian to Latex already exist, but they have [limitations](#comparisons-to-other-converters) that do not allow the user to write in Obsidian freely. **Yes**, I'd have loved to contribute to those projects, but I don't know Javascript and Typescript.
 
-I consider LateX a very archaeic tool, not suited for the intense knowledge-work of 2024. It is clunky, and forces the researcher to write code, when they just want to write about their work 😩
+I consider LateX a very archaeic tool (Overleaf has come a long way and is quite comfortable to use), not suited for the intense knowledge-work of 2024. It is clunky, and forces the researcher to write code, when they just want to write about their work 😩
 I want to see it not being used at all, but due to its legacy, I doubt it will happen any time soon. So, what we are left with is the need to translate content from proper tools (like Obsidian) to not-so-good old LateX. 
 
 # 💪 What it can convert (new capabilities regularly added)
@@ -129,6 +129,22 @@ In this section, I will be writing what actions will cause errors in this versio
 - Equation referencing: so far need to create separate embedded notes that represent equation blocks, since Obsidian itself cannot interact with MathJax well enough to create an equation referencing system
 - ⚠ Direct text replacements are not possible, since we are using embedded notes, therefore those texts that we want to replace are not found in a single document (a solution can implemented, via tracking the links)
 	- **Solution:** Use the text replacement tool in `converter.py`.
+
+# Comparison to Overleaf
+
+## Where Obsidian thrives
+
+- First of all, it's FREE. Overleaf's advanced features require payment (most of which can be replicated by Obsidian)
+- Much cleaner editor than Overleaf. Even though Overleaf is quite clean to use, it cannot compare to Obsidian. Obsidian is just more minimalistic (ok, as long as one does not obsess over style)
+- Can keep your report/publication/book/etc connected to your note-taking ecosystem, instead of having to move around to an external source. That way, all the notes stay linked with the report you are writing
+- Math: Much faster and cleaner equation writing (read the section about Equations and check the videos).
+- More aesthetically pleasing
+- Can write comments between the text, instead of requiring a new line (there are ways to go around it in Overleaf, but the comment text doesn't disappear when we hover the cursor away from it)
+
+## Where Overleaf thrives
+- Can write comments in a Google-docs-like manner
+- More distraction-free, since one can't obsess over plugins and workflows, which is the BIG TRAP of using Obsidian (https://www.youtube.com/watch?v=baKCC2uTbRc). Helps with avoiding procrastination
+- Can track changes (though Obsidian with github can work better)
 
 # 📽 List of videos
 If you want to jump to some videos, here's the list:
