@@ -10,8 +10,15 @@
 }
 ```
 
+# Quicker readthrough
+- Skip the first section if you want to skip the "sales pitch"
+- Start by doing: clone the repo, open Obsidian. In Obsidian, select "open folder as vault", and select the `example_vault` in the repo
+	- Unzip the `obsidian.zip` file and rename the folder `.obsidian` (github doesn't allow folders that start with `.`)
+ - Open the `example_writing` note in Obsidian and check out the functionalities
+ - Convert the note using the `👨‍💻convert_to_latex` note
+
+
 # Straightforward-Obsidian2Latex
-(navigate to next section if you want to skip the "sales pitch")
 
 Want to write your documents entirely in Obsidian, and then print them to LateX (e.g., for scientific papers and lab reports)?
 Are you annoyed by:
