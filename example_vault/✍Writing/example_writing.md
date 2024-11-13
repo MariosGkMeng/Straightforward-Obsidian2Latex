@@ -122,5 +122,10 @@ When there is something niche, or some translation functionality that hasn't bee
 ```latex
 \lipsum[1-4]
 ```
+
+# Inline code parameterization
+We used method_1. `=choice([[fields_for_report]].argument_1[0], [[fields_for_report]].argument_1[1], "")` `=choice([[fields_for_report]].idea_1[0], [[fields_for_report]].idea_1[1], "")`
+
+
 # Appendix
 ![[example_writing--Appendix]]
