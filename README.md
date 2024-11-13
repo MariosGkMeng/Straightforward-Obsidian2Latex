@@ -216,6 +216,26 @@ BUT: as a user, you have to add the BibTex citation manually in your designated 
 
 I will "relax"/parameterize this rule soon.
 
+
+### (NEW) Converting inline (dataview) code
+For when you want to parameterize your document, here's a handy trick. You might have some fields in a note that contain text that you programmatically insert into your document. 
+
+For example, assume that you have a note titled `fields_for_report`. In that note, you might have the field:
+
+```markdown
+argument_1:: true
+argument_1:: We use this method, because it's awesome.
+```
+The first entry of `argument_1` is a boolean that we set to `true` if we want to print the message (the second entry of `argument_1`).
+
+And then, in the `main` note (the one you want to convert to latex), you can write: 
+
+```markdown
+We used method_1. `=choice([[fields_for_report]].argument_1[0], [[fields_for_report]].argument_1[1], "")`
+```
+
+
+
 ### Mapping packages that should not be combined
 Regretably, LateX suffers from one more flaw; that of needing to be concious of packages that should not be loaded together. 
 This is controlled in `get_parameters.py`, in the `PARS['par']['packages-to-load']` list. The first entry of this list contains the package, the second contains the document class for which this package should **not** be loaded (e.g., the package `cleveref` should not be loaded when using the `ifacconf` document class).
