@@ -100,6 +100,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - Code maintenance
 - Creating warning messages for errors that the user makes when writing the note
 - More niche table conversions
+- Inline code rendering for agile document parameterization
 
 ## 💀 What can cause errors
 In this section, I will be writing what actions will cause errors in this version of the code.
