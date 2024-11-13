@@ -124,6 +124,7 @@ When there is something niche, or some translation functionality that hasn't bee
 ```
 
 # Inline code parameterization
+Open [[fields_for_report|this note]] to modify the fields and add more.
 We used method_1. `=choice([[fields_for_report]].argument_1[0], [[fields_for_report]].argument_1[1], "")` `=choice([[fields_for_report]].idea_1[0], [[fields_for_report]].idea_1[1], "")`
 
 
