@@ -39,6 +39,9 @@ Example: In [[p1]], we see that... ^ad3b86
 
 # Equations
 Both equations and subfigures are written in the form of embedded notes, since they are encoded as notes.
+```ad-warning
+If you write an equation outside of the designated template in an embedded note, then the conversion will be faulty!
+```
 ## Writing the equation
 
 Steps:
