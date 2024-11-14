@@ -21,7 +21,11 @@ Please cite the following if you use it for publishable work (i.e., if you write
 
 # Straightforward-Obsidian2Latex
 
-Want to write your documents entirely in Obsidian, and then print them to LateX (e.g., for scientific papers and lab reports)?
+- Do you want to
+	- write your documents entirely in Obsidian, and then print them to LateX (e.g., for scientific papers and lab reports)?
+	- print pretty .pdf files from Obsidian, while maintaining all the links?
+
+ 
 Are you annoyed by:
 - The fact that you have to write code, just to make a nice report/paper?
 - How incomplete the "print to .pdf" command in Obsidian is?
