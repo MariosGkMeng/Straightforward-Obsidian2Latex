@@ -7,7 +7,7 @@ AltE_Flag := false
         ; Perform action for Alt + E + E
         AltE_Flag := false ; Reset the flag
         ; MsgBox, You pressed Alt + E + E!
-        Run, C:\Users\mariosg\OneDrive - NTNU\FILES\AUTOMATIONS\convert_to_latex.bat, C:\Users\mariosg\OneDrive - NTNU\FILES\AUTOMATIONS
+        Run, path_to_bat_file\convert_to_latex.bat, path_to_bat_file
     } else {
         ; Set the flag and start a timer
         AltE_Flag := true
