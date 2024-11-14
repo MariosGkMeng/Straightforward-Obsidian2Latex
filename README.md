@@ -173,9 +173,8 @@ If you want to jump to some videos, here's the list:
  	2. Optional, helps write equations very fast: **Quick Latex for Obsidian**
 
 ## Usage
-Go to `converter.py`. You only have to deal with that.
 
-You should only change things in the 'PARS' dictionary, which contains all the settings.
+In the note `👨‍💻convert_to_latex.md` you can specify which note you wish to convert, and then trigger the `converter.py` script to perform the conversion.
 
 ### (⚠ IMPORTANT) 📁 Set your paths 
 
