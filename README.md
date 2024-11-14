@@ -141,10 +141,12 @@ In this section, I will be writing what actions will cause errors in this versio
 - More aesthetically pleasing
 - Can write comments between the text, instead of requiring a new line (there are ways to go around it in Overleaf, but the comment text doesn't disappear when we hover the cursor away from it)
 
+
 ## Where Overleaf thrives
 - Can write comments in a Google-docs-like manner
 - More distraction-free, since one can't obsess over plugins and workflows, which is the BIG TRAP of using Obsidian (https://www.youtube.com/watch?v=baKCC2uTbRc). Helps with avoiding procrastination
 - Can track changes (though Obsidian with github can work better)
+- Can define custom functions
 
 # 📽 List of videos
 If you want to jump to some videos, here's the list:
