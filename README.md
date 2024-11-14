@@ -27,8 +27,9 @@ Please cite the following if you use it for publishable work (i.e., if you write
 
  
 Are you annoyed by:
-- The fact that you have to write code, just to make a nice report/paper?
 - How incomplete the "print to .pdf" command in Obsidian is?
+- The fact that you have to write code, just to make a nice report/paper (though LateX is not very hard to use in Overleaf)?
+
   
 Do you just want to be able to seamlessly write formal content in the same software as your notes, and print it from there, without the need to move to external software?
 Or do you just want to write pretty scientific documents without needing to learn Latex at all (with the exception of the equation environment)?
