@@ -589,6 +589,9 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     if PARS['num_columns'] > 1:
         txt_textwith = f"{{{1/PARS['num_columns']}\\textwidth}}"
         # PARS['num_columns'] {\\textwidth}
+    else:
+        txt_textwith = 1
+        
     
     latex_table_prefix = '#Latex/Table/'
     latex_table_prefix_row_format_color = latex_table_prefix + 'Format/rowcolor/'
