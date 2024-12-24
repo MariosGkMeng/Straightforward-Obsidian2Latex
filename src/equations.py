@@ -590,7 +590,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         txt_textwith = f"{{{1/PARS['num_columns']}\\textwidth}}"
         # PARS['num_columns'] {\\textwidth}
     else:
-        txt_textwith = 1
+        txt_textwith = '1'
         
     
     latex_table_prefix = '#Latex/Table/'
