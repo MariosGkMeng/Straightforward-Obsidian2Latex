@@ -209,7 +209,7 @@ Due to the inherent difficulty of equation numbering in Obsidian (read this [thr
 
 The workaround that I have used requires creation of a separate note wherein only the equation is to be added. The note has to obey a few formatting rules, which can be automated with **QuickAdd**. To learn how to use it, please refer to the plugin guide. It is quite easy. 
 
-The folder that you specify in QuickAdd wherein your equation note/block is to be created must be the same as `PARS['📂']['equation_blocks']`.
+The folder that you specify in QuickAdd wherein your equation note/block is to be created must be the same as `PARS['📂']['equation_blocks']` (in the `get_parameters.py`).
 
 #### Formatting rules of the equation note
 
