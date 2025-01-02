@@ -18,7 +18,8 @@ Please cite the following if you use it for publishable work (i.e., if you write
 # Quicker readthrough
 - Skip the first section if you want to skip the "sales pitch"
 - Start by doing: clone the repo, open Obsidian. In Obsidian, select "open folder as vault", and select the `example_vault` in the repo
-	- Unzip the `obsidian.zip` file and rename the folder `.obsidian` (github doesn't allow folders that start with `.`)
+	- Unzip the `obsidian.zip` file and rename the folder `.obsidian` (github doesn't allow folders that start with `.`). This action is needed, because the `.obsidian` folder I provided includes the community plugins that you need to use (mainly the QuickAdd plugin)
+ - Make sure community plugins are activated in your vault
  - Open the `example_writing` note in Obsidian and check out the functionalities
  - Convert the note using the `👨‍💻convert_to_latex` note
 
