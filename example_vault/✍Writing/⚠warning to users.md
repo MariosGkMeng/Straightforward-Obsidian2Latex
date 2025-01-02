@@ -1,0 +1,2 @@
+1. Equations, tables, and figures should be written only inside the equation-block style (`README.md`)
+2. Any syntactic violation that happens inside the obsidian note will be passed into LateX. So far, I have not included any diagnostic routine. 
