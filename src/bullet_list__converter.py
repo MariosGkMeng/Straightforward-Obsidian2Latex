@@ -117,3 +117,41 @@ def close_list(INDENTATION):
             INDENTATION[i] = 'closed'
 
     return s, INDENTATION
+
+
+import re
+
+def is_part_of_list(line):
+    """
+    Checks if the input string is part of a list (bullet or enumerated),
+    including nested lists with varying indentation.
+
+    Args:
+        line (str): The input string to check.
+
+    Returns:
+        bool: True if the line is part of a list, False otherwise.
+    
+    # Example usage
+    lines = [
+        "- Top-level bullet",
+        "   - Nested bullet with spaces",
+        "1. Top-level enumerated",
+        "   1.1 Nested enumerated",
+        "a. Top-level enumerated with letters",
+        "   a.1 Nested enumerated with letters and spaces",
+        "       - Deeply nested bullet",
+        "       1. Deeply nested enumerated",
+        "Just regular text here",
+        "+ Another bullet style"
+    ]
+
+    for line in lines:
+        print(f"'{line}' -> {is_part_of_list(line)}")
+    """
+    
+    # Pattern to match bullets or enumerated lists
+    list_pattern = r'^\s*([-*+]\s+|\d+\.\d*|[a-zA-Z]\.|[ivxIVX]+\.)\s*.*$'
+    
+    return bool(re.match(list_pattern, line))
+
