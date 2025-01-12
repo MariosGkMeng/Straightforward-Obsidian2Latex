@@ -145,7 +145,8 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                     section_i = Ii_sb_i[1]
                     
                     idx = [j for j in range(len(sections_blocks[iS])) if char_replacement_sections(sections_blocks[iS][j][1]) == section_i] # index of the section in the section list
-                    if len(idx)>0: 
+                    found_section = len(idx)>0
+                    if found_section: 
                         
                         # Found match between existing sections and blocks of the file and the referenced section. 
                         # If there are many sections with the same name, the second (third, and so on) will just be ignored
@@ -181,12 +182,13 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                                 hyperref += f": \\autoref{{{label_latex_format}}}"
                         elif cnd__use_hyperhyperlink:
                             # for blocks, better write "hyperlink"
-                            hyperref = f'\hyperlink{{{label_latex_format}}}' + hyperref_text 
+                            hyperref = f'\hyperlink{{{label_latex_format}}}{hyperref_text}'
                         else:
-                            raise Exception("Nothing coded here!")
+                            raise NotImplementedError
                         
                         obsidian_hyperref = write_link_in_obsidian_format(Ii_sb_i, type_ref[iS])
                         S[line_number] = S[line_number].replace(obsidian_hyperref, hyperref)
+                        
                     else:
                         # did not find anything, therefore leaving the name only
 
@@ -541,7 +543,7 @@ def extract_section_from_file(obsidian_file, section):
 
                 line_number_start = section_i[0]+1
         else:
-            if section_i[1] == level:
+            if section_i[1] <= level:
                 have_found_the_end_of_section = True
                 line_number_end = section_i[0]
                 break
