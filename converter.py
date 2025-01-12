@@ -256,6 +256,7 @@ def simple_stylistic_replacements(S, type=None):
 def images_converter(images, PARAMETERS):
 
     '''
+    DEPRECIATED
     Converts Images given the path of the image file
     '''
 
@@ -299,6 +300,8 @@ PATHS = PARS['📁']
 markdown_file = get_fields_from_Obsidian_note(PATHS['command_note'], ['convert_note:: '])[0][0]
 PARS = get_parameters(version=markdown_file)
 
+
+
 has_2_cols = (PARS['⚙']['document_class']['class'] in doc_classes__2_cols) or False
 
 PARS['num_columns'] = int(has_2_cols*2 + (not has_2_cols)*1)
@@ -314,11 +317,12 @@ with open(PATHS['markdown-file'], 'r', encoding='utf8') as f:
 
 content = remove_markdown_comments(content)
 
-[content, md_notes_embedded] = unfold_all_embedded_notes(content, PARS)
-
 # Convert bullet and numbered lists
 content = bullet_list_converter(content)
 
+[content, md_notes_embedded] = unfold_all_embedded_notes(content, PARS)
+
+content = bullet_list_converter(content)
 
 # Look for Appendix (in reverse order)
 for i_l, line in enumerate(reversed(content)):
@@ -474,8 +478,9 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     #     for idx_table in IDX__TABLES:
     #         LATEX_TABLES.append(convert__tables(content[idx_table[0]:idx_table[1]]))
         
-
-    content = convert_inline_commands_with_choice(content, PARS)
+    cnd_choice_cmd_found = True
+    while cnd_choice_cmd_found:
+        content, cnd_choice_cmd_found = convert_inline_commands_with_choice(content, PARS)
 
 
     if PARS['⚙']['EMBEDDED REFERENCES']['convert_non_embedded_references']:        
@@ -548,20 +553,28 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     PREAMBLE = [f"\\documentclass{doc_class_fontsize}{{{document_class['class']}}}"] +\
             [is_ifac*'\\newcounter{part} % fix the issue in the class'] +\
             [is_ifac*'\counterwithin*{section}{part}'] +\
+            ['% Loading packages that were defined in `src\get_parameters.py`'] +\
             package_loader() +\
             ['\n'] + ['\sethlcolor{yellow}'] + ['\n'] + ['\n'*2] +\
             ['\setcounter{secnumdepth}{4}'] +\
             ['\setlength{\parskip}{7pt} % paragraph spacing'] +\
             ['\let\oldmarginpar\marginpar'] +\
             ['\\renewcommand\marginpar[1]{\oldmarginpar{\\tiny #1}} % Change "small" to your desired font size]'] + ['\n'*2] +\
-            ['\\begin{document}']+\
+            ['\\newcommand{\ignore}[1]{}']+\
+            ['\n'*3] + ['\\begin{document}']+\
+            ['\\allowdisplaybreaks' if paragraph['allowdisplaybreaks'] else '']+\
             ['\date{}'*PARS['⚙']['use_date']]+\
             [f"\\author{{{PARS['⚙']['author']}}}"*(len(PARS['⚙']['author'])>0)]+\
             [f'\\title{title}\n\maketitle'*(len(title)>0)]+\
             [text_before_first_section]+\
             ['\\tableofcontents \n \\newpage'*paragraph['add_table_of_contents']]
 
-    LATEX = PREAMBLE + LATEX + ['\\newpage \n '*paragraph['add_new_page_before_bibliography'] + '\\bibliographystyle{apacite}']+\
+    # LATEX = symbol_replacement(LATEX, [['_', '\_', 0]])
+    LATEX1 = []
+    for line in LATEX:
+        LATEX1.append(escape_underscores_in_texttt(line))
+
+    LATEX = PREAMBLE + LATEX1 + ['\\newpage \n '*paragraph['add_new_page_before_bibliography'] + '\n'*5 + '\\bibliographystyle{apacite}']+\
         ['\\bibliography{' + PATHS['bibtex_file_name'] + '}'] + ['\end{document}']
 
     if '[[✍⌛writing--FaultDiag--Drillstring--MAIN]]' in markdown_file:
@@ -585,6 +598,9 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     MESSAGES_TO_PRINT = [print__what_was_converted]
 
     [print(msg) for msg in MESSAGES_TO_PRINT]
+    clickable_files = f'[📁tex file](<file:///{PARS["📁"]["tex-file"]}>), [📁.pdf file](<file:///{PARS["📁"]["tex-file"].replace(".tex", "")}.pdf>)'
+    replace_fields_in_Obsidian_note(PATHS['command_note'], ['files:: '], [clickable_files])
+
         
     # # Run the bash script (somehow it is not working from python for now 🤔)
     # try:
