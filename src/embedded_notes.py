@@ -9,6 +9,8 @@ from list_of_separate_lines import *
 from equations import *
 from path_searching import *
 from special_characters import *
+from bullet_list__converter import *
+
 special_cases = ['eq__block', 'figure__block', 'table__block']
 
 def write_link_in_obsidian_format(s, link_type, is_embedded = False):
@@ -89,6 +91,8 @@ def unfold_all_embedded_notes(S, PARS):
         md__files_embedded_prev = md__files_embedded_prev0.copy()
 
         [S, md__files_embedded_new] = lambda__unfold_embedded_notes(S, md__files_embedded_prev)
+        # Convert bullet and numbered lists
+        # S = bullet_list_converter(S)
 
         CND__LIST_OF_EMBEDDED_NOTES_IS_CHANGING = md__files_embedded_prev0 != md__files_embedded_new
 
@@ -385,6 +389,13 @@ def formatting_rule__notes_with_tags(note_path, initial_text, formatting_paramet
 
     return initial_text
 
+def content_filter_2_name_latex_command(s, x, mref):
+    if not is_part_of_list(s):
+        return ['\n% Start obsidian ref:\n\t%' + mref.replace("![[", "").replace("]]", "").replace("#", "\##")] + ['\n'] + x + ['\n% End obsidian ref\n']
+    else:
+        return x
+
+
 def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 
     '''
@@ -440,9 +451,9 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
         content_filter_1 = lambda x, Lines, lNum: (x)
 
     if PARS_EMBEDDED_REFS['write_obsidian_ref_name_on_latex_comment']:    
-        content_filter_2 = lambda x, mref: ['\n% Start obsidian ref:\n\t%' + mref.replace("![[", "").replace("]]", "").replace("#", "\##")] + ['\n'] + x + ['\n% End obsidian ref\n']
+        content_filter_2 = lambda s, x, mref: content_filter_2_name_latex_command(s, x, mref)
     else:
-        content_filter_2 = lambda x, mref: (x)
+        content_filter_2 = lambda s, x, mref: (x)
 
     line_numbers_unfolded_notes = [ln[0] for ln in all_embedded_refs]
 
@@ -504,7 +515,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                         raise NotImplementedError
                 
                 if len(content__unfold) > 0: 
-                    content__unfold = content_filter_2(content__unfold, markdown_ref)
+                    content__unfold = content_filter_2(S[line_number], content__unfold, markdown_ref)
 
                 S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
 
