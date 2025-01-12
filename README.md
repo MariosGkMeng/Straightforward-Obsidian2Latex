@@ -1,6 +1,6 @@
 # To be added soon
 - More videos on the conversion
-- General video showcasing all the functionalities
+- General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
 
 # Citing this work
 Please cite the following if you use it for publishable work (i.e., if you write your paper in Obsidian, and use this code to print to Latex)
