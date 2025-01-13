@@ -1,3 +1,7 @@
+# 📽 General Video (under development)
+General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video I've rendered so far [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
+
+
 # To be added soon
 - More videos on the conversion
 - General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
@@ -22,9 +26,6 @@ Please cite the following if you use it for publishable work (i.e., if you write
  - Make sure community plugins are activated in your vault
  - Open the `example_writing` note in Obsidian and check out the functionalities
  - Convert the note using the `👨‍💻convert_to_latex` note
-
-# General Video (under development)
-General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video I've rendered so far [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
 
 # Straightforward-Obsidian2Latex
 
