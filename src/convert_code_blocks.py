@@ -4,6 +4,8 @@ from remove_markdown_comment import *
 from path_searching import *
 from embedded_notes import non_embedded_references_recognizer
 from equations import get_fields_from_Obsidian_note
+from symbol_replacements import *
+
 
 def convert_inline_code_of_line(text):
     # Regular expression to find inline code enclosed in backticks
@@ -26,7 +28,7 @@ def convert_inline_commands_with_choice(S, PARS):
     pattern2 = r"\]\]\.[a-zA-Z0-9_.-]+"
 
     pp=[(i, l) for i, l in enumerate(S) if 'choice(' in l]
-
+    
     for p_i in pp:
         p = p_i[1]
         mm = re.findall(pattern, p)
@@ -36,14 +38,26 @@ def convert_inline_commands_with_choice(S, PARS):
             filePath = get_embedded_reference_path(f'{ee[0][1][0][0]}', PARS, search_in = 'vault')
             fields_res = get_fields_from_Obsidian_note(filePath, [field])[0]
             if fields_res[0] == 'true':
-                replace_with = fields_res[1]
+                try:
+                    replace_with = fields_res[1]
+                except:
+                    arg2 = f'{ee[0][1][1][0]}'
+                    if arg2.startswith('💭ltx--'):
+                        # is latex comment
+                        with open(get_embedded_reference_path(arg2, PARS, search_in = 'vault'), 'r', encoding='utf8') as file: 
+                            tmp1 = '.'.join(file.readlines())
+                            tmp1 = tmp1.replace('\n', '')
+                            tmp1 = f'\\textcolor{{red}}{{{tmp1}}}'
+                            replace_with = f"\ignore{{{tmp1}}} "
+                        
+                    
                 if replace_with.startswith(2*' '): replace_with = replace_with[1:]
             else:
                 replace_with = ''
                 
             S[p_i[0]] = S[p_i[0]].replace(m, replace_with)
             
-    return S
+    return S, len(pp)>0
 
 def code_block_converter(S, PARS):
 
@@ -71,6 +85,8 @@ def code_block_converter(S, PARS):
                         language_additive = ''
                         begin_text = ''
                         end_text = ''
+                    elif language=='dataview':
+                        None # do nothing, it is handled elsewhere
                     else:
                         
                         IS_ADMONITION_BLOCK = language.startswith('ad-')
@@ -107,7 +123,7 @@ def code_block_converter(S, PARS):
                             # Check for observation block
                             if kind_of_block == 'attention':
                                 t_type = 'Observation'
-                                j = i+1
+                                j=i+1
                                 while True:
                                     if S[j]:
                                         if not t_type in S[j]:
@@ -118,6 +134,8 @@ def code_block_converter(S, PARS):
                                             title = ' '
                                             color = 'cyan'
                                             break
+                                        
+                                    j += 1
                             
                             begin_text =\
                                 '\\begin{'+\
