@@ -3,6 +3,7 @@ General video showcasing all the functionalities (will be uploaded on YouTube. F
 
 
 # To be added soon
+- Guide on how the dataview tables are converted (also, include the example in the `example_vault`)
 - More videos on the conversion
 - General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
 
@@ -60,6 +61,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
   - Long tables (tables that can expand to more than 1 pages)
   - Non-long tables
   - Special formatting for each table (different package, coloring of rows)
+  - (NEW) Dataview table conversion!
 - [X] Internal links (sections and blocks)
 - [X] External links
 - [X] Sections and subsections
@@ -104,7 +106,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 ## Niche/rarely encountered functionalities
 - [X] Discard text inside comments **after** start of a (sub)section
 - [ ] Properly convert results from querying commands in Obsidian. This will probably never be achieved with this converter, since it requires to have access to the obsidian dataview and dataviewjs outputs.
-- [ ] **VERY DIFFICULT**: Convert anything that has to do with dataview, dataviewjs and inline queries.
+- [ ] **VERY DIFFICULT**: Convert anything that has to do with dataviewjs and inline queries. Dataview tables have been converted
 	- This would be very useful, since dataview(js) is quite a powerful tool for organization of numerous things. An idea would be to convert it to .pdf, and merge it to the LateX file. Otherwise, a lot of programming is required!
 - [ ] Automatic table size manipulation (not even LateX does that itself)
 - [ ] Regarding Internal links: add page number next to the cross-reference, in case the document is printed
