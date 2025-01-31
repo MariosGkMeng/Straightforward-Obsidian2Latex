@@ -1,6 +1,8 @@
 import re
 import os
 import numpy as np
+from dataview_parser import write_Obsidian_table_from_dataview_query
+from get_fields_from_Obsidian_note import get_fields_from_Obsidian_note
 
 # For recognizing file names, section names, block names
 SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
@@ -364,26 +366,6 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
     return content__unfold
 
 
-def get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields):
-    
-    fields = ['' for _ in look_for_fields]
-    
-    with open(path_embedded_reference, 'r', encoding='utf8') as file:
-        lines = file.readlines()
-
-    for i, field in enum(look_for_fields):
-        fields[i] = []
-        found_field = False
-        for line in lines:
-            if line.startswith(field):
-                fields[i].append(line.replace(field, '').replace('\n', '').strip())
-                found_field = True
-                # break
-        if not found_field:
-            fields[i] = ''                
-    return fields
-
-
 def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, new_values):
     """
     Replace the values of specified fields in an Obsidian note with new values.
@@ -475,6 +457,8 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
     label = embedded_ref.replace('figure__block_', '')
     image_paths = [get_embedded_reference_path(x, PARS) for x in embedded_images]
     PARS['⚙']['figures']['num_columns'] = PARS['num_columns']
+    if len(image_paths) == 0:
+        raise Exception("Could not find any images in your figure")
     converted = images_converter(image_paths, PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
 
     return converted
@@ -581,6 +565,11 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     return y
 
 
+def is_dataview_table(S):
+    pattern = r'^\s*```[\s]*dataview\s*$'
+    return np.any([bool(re.match(pattern, s)) for s in S])
+
+
 def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, PARS):
     '''
     Converts tables depending on the user's preferences    
@@ -590,7 +579,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         txt_textwith = f"{{{1/PARS['num_columns']}\\textwidth}}"
         # PARS['num_columns'] {\\textwidth}
     else:
-        txt_textwith = '1'
+        txt_textwith = ''
         
     
     latex_table_prefix = '#Latex/Table/'
@@ -611,6 +600,21 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         else:
             raise NotImplementedError
         
+    # Check if it is a dataview table
+    if is_dataview_table(S):
+        indexes_start_finish = [i for i, s in enumerate(S) if re.match(r'^\s*```', s)]
+        i0 = indexes_start_finish[0]
+        i1 = indexes_start_finish[1]
+
+        if len(indexes_start_finish) != 2:
+            raise Exception("something is wrong with the syntax of your dataview table block!")
+        
+        table = write_Obsidian_table_from_dataview_query(''.join(S[i0+1:i1]), PARS['📁'])
+        # concatenate the before and after text with the table
+        
+        S = S[:i0] + table + S[i1+1:]
+        
+
     # Mask internal links that have aliases, otherwise the converter gets confused
     mask_alias = "--alias--"
     for i, s in enum(S):
@@ -694,7 +698,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
                     raise Exception("You probably have written the syntax of latex table row color formatting wrong!")
 
                 text_to_replace = latex_table_prefix_row_format_color+color
-                replacement_text = '\\rowcolor{' + color + '}'
+                replacement_text = f'\\rowcolor{{{color}}}'
                 cell_with_the_command = cell_with_the_command.replace(text_to_replace, replacement_text)
                 # Adding the replacement text in front, because it is inside commands (cheap patch for now ➕)
                 c[i_c] = (replacement_text + ' ')*0 + cell_with_the_command
@@ -748,7 +752,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
             '%\\begin{center}',
             '\\begin{table}[ht]',
             '\centering',
-            '\caption{' + caption + '}',
+            f'\caption{{{caption}}}',
             '\label{tab:' + label + '}',
             '\\begin' + PCKG_NAME + txt_textwith + '{' + table_width + '}',
             '   \hline'
@@ -813,7 +817,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         latex_before_table=[
         	'%\\begin{center}',
 		    '\\begin{longtable}{' + table_width + '}',            
-            '\caption{' + caption + '}',
+            f'\caption{{{caption}}}',
             '\label{tab:' + label + '}\\\\',
 			'\hline',
 			''+latex_table[0],
@@ -865,3 +869,33 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     #
     
     return LATEX
+
+
+def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, new_values):
+	"""
+	Replace the values of specified fields in an Obsidian note with new values.
+
+	:param path_embedded_reference: Path to the Obsidian note file.
+	:param look_for_fields: A list of field names to search for.
+	:param new_values: A list of new values to replace the field values with.
+	"""
+	
+	# Ensure we have the same number of fields and values to replace
+	if len(look_for_fields) != len(new_values):
+		raise ValueError("The number of fields and new values must be the same.")
+	
+	# Read the content of the file
+	with open(path_embedded_reference, 'r', encoding='utf8') as file:
+		lines = file.readlines()
+
+	# Modify the lines where the fields are found
+	for i, field in enumerate(look_for_fields):
+		for j, line in enumerate(lines):
+			if line.startswith(field):
+				# Replace the field value with the new one
+				lines[j] = f"{field} {new_values[i]}\n"
+				break
+
+	# Write the updated content back to the file
+	with open(path_embedded_reference, 'w', encoding='utf8') as file:
+		file.writelines(lines)
