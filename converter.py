@@ -300,8 +300,6 @@ PATHS = PARS['📁']
 markdown_file = get_fields_from_Obsidian_note(PATHS['command_note'], ['convert_note:: '])[0][0]
 PARS = get_parameters(version=markdown_file)
 
-
-
 has_2_cols = (PARS['⚙']['document_class']['class'] in doc_classes__2_cols) or False
 
 PARS['num_columns'] = int(has_2_cols*2 + (not has_2_cols)*1)
@@ -322,6 +320,7 @@ content = bullet_list_converter(content)
 
 [content, md_notes_embedded] = unfold_all_embedded_notes(content, PARS)
 
+# Convert bullet and numbered lists again, since we have unfolded a bunch of embedded notes
 content = bullet_list_converter(content)
 
 # Look for Appendix (in reverse order)
@@ -561,6 +560,9 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
             ['\let\oldmarginpar\marginpar'] +\
             ['\\renewcommand\marginpar[1]{\oldmarginpar{\\tiny #1}} % Change "small" to your desired font size]'] + ['\n'*2] +\
             ['\\newcommand{\ignore}[1]{}']+\
+            ['% CUSTOM FUNCTIONS'] +\
+            [line for line in open(PATHS['custom_latex_functions'])]+\
+            ['% ======================================='] +\
             ['\n'*3] + ['\\begin{document}']+\
             ['\\allowdisplaybreaks' if paragraph['allowdisplaybreaks'] else '']+\
             ['\date{}'*PARS['⚙']['use_date']]+\
@@ -577,12 +579,12 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     LATEX = PREAMBLE + LATEX1 + ['\\newpage \n '*paragraph['add_new_page_before_bibliography'] + '\n'*5 + '\\bibliographystyle{apacite}']+\
         ['\\bibliography{' + PATHS['bibtex_file_name'] + '}'] + ['\end{document}']
 
-    if '[[✍⌛writing--FaultDiag--Drillstring--MAIN]]' in markdown_file:
-        LATEX_1 = []
-        for l in LATEX:
-            LATEX_1.append(l.replace('C:/Users/mariosg/OneDrive - NTNU/FILES/workTips/Analyses/PINNs+MTL/FaultDiag/FaultDiag/simulation results/plots/', ''))
+    # if '[[✍⌛writing--FaultDiag--Drillstring--MAIN]]' in markdown_file:
+    #     LATEX_1 = []
+    #     for l in LATEX:
+    #         LATEX_1.append(l.replace('C:/Users/mariosg/OneDrive - NTNU/FILES/workTips/Analyses/PINNs+MTL/FaultDiag/FaultDiag/simulation results/plots/', ''))
             
-        LATEX = LATEX_1
+    #     LATEX = LATEX_1
         
 
 
