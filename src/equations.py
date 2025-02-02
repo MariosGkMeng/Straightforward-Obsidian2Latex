@@ -37,6 +37,34 @@ CMD__TABLE__TABULARX__CENTERING = '\\newcolumntype{Y}{>{\\centering\\arraybacksl
 aligned_or_split = ['aligned', 'align', 'split']
 # def regex_patterns_for_equations():
     
+    
+def escape_underscore(text):
+    escaped = []
+    inside_special = False  # Track whether we're inside a special segment
+    delimiter = None  # Store the current active delimiter
+    
+    i = 0
+    while i < len(text):
+        char = text[i]
+        
+        # Toggle inside_special state when encountering special characters
+        if char in {"$", "`"}:
+            if inside_special and char == delimiter:
+                inside_special = False  # Closing the special segment
+                delimiter = None
+            elif not inside_special:
+                inside_special = True  # Opening a special segment
+                delimiter = char
+        
+        # Escape underscores only when NOT inside special characters
+        if char == "_" and not inside_special:
+            escaped.append(r"\_")
+        else:
+            escaped.append(char)
+        
+        i += 1
+
+    return "".join(escaped)
 
 def get_start_and_end_indexes(strings, S):
     indexes_start = []
@@ -398,7 +426,7 @@ def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, ne
 
 def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PARS):
     
-    fields_to_fetch = ['caption:: ', 'package:: ', 'widths:: ', 'use_hlines:: ', 'use_vlines:: ']
+    fields_to_fetch = ['caption:: ', 'package:: ', 'widths:: ', 'use_hlines:: ', 'use_vlines:: ', 'datav__file_column_name:: ']
     fields_note = get_fields_from_Obsidian_note(path_embedded_reference, fields_to_fetch)
     caption = fields_note[0] if len(fields_note[0])==0 else fields_note[0][0]
     package = fields_note[1] if len(fields_note[1])==0 else fields_note[1][0]
@@ -408,8 +436,9 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
         widths = [f.strip() for f in fields_note[2].split(',')]
     use_hlines = fields_note[3] if len(fields_note[3])==0 else fields_note[3][0]
     use_vlines = fields_note[4] if len(fields_note[4])==0 else fields_note[4][0]
+    datav__file_column_name = fields_note[5]
     label = embedded_ref.replace('table__block_', '')
-    embedded_tables_text = convert__tables(content__unfold, caption, package, label, widths, use_hlines, use_vlines, PARS)
+    embedded_tables_text = convert__tables(content__unfold, caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, PARS)
     
     embedded_tables_text_1 = []
     for line in embedded_tables_text:
@@ -484,7 +513,8 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
                 latex_figure_field[iF] = f[0]
 
     figure_width, caption_short, caption_long, subfigure_widths, subfigure_abs_or_rel, cover_all_columns, caption_sub = latex_figure_field
-
+    caption_long = escape_underscore(caption_long)
+    
     TO_PRINT = []
     subfigure_text_width = 1/len(images)
     if cover_all_columns:
@@ -570,7 +600,7 @@ def is_dataview_table(S):
     return np.any([bool(re.match(pattern, s)) for s in S])
 
 
-def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, PARS):
+def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, PARS):
     '''
     Converts tables depending on the user's preferences    
     '''
@@ -581,7 +611,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     else:
         txt_textwith = ''
         
-    
+    caption = escape_underscore(caption)
     latex_table_prefix = '#Latex/Table/'
     latex_table_prefix_row_format_color = latex_table_prefix + 'Format/rowcolor/'
     TABLE_SETTINGS = PARS['⚙']['TABLES']
@@ -609,7 +639,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         if len(indexes_start_finish) != 2:
             raise Exception("something is wrong with the syntax of your dataview table block!")
         
-        table = write_Obsidian_table_from_dataview_query(''.join(S[i0+1:i1]), PARS['📁'])
+        table = write_Obsidian_table_from_dataview_query(''.join(S[i0+1:i1]), PARS['📁'], datav__file_column_name=datav__file_column_name[0])
         # concatenate the before and after text with the table
         
         S = S[:i0] + table + S[i1+1:]
@@ -679,7 +709,8 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     for s in S[iS_table_start+2:]:
         c = s.split('|')
         c = [x.lstrip().rstrip() for x in c if len(x.lstrip().rstrip())>0 and x!='\n']
-        
+        c = ['\\newline'.join(ci.split('<br>')) for ci in c]
+        c = [escape_underscore(ci) for ci in c]
         # check for table commands
         latex_command_in_row = np.any([latex_table_prefix in ci for ci in c])
         if latex_command_in_row:
@@ -899,3 +930,10 @@ def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, ne
 	# Write the updated content back to the file
 	with open(path_embedded_reference, 'w', encoding='utf8') as file:
 		file.writelines(lines)
+
+
+
+# # Example usage:
+# text = r"normal_text $math_mode_1$ more_text `code_snippet_1` final_text_2"
+# escaped_text = escape_underscore(text)
+# print(escaped_text)
