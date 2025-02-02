@@ -5,11 +5,11 @@ import copy
 # SPECIAL_CHARACTERS =  = get_special_characters()
                      
 from remove_markdown_comment import *
-from list_of_separate_lines import *
 from equations import *
 from path_searching import *
 from special_characters import *
 from bullet_list__converter import *
+from helper_functions import *
 
 special_cases = ['eq__block', 'figure__block', 'table__block']
 
