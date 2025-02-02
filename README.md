@@ -50,6 +50,10 @@ It is the most complete that I have seen among existing ones, since it offers mo
 - Unfolding content of embedded notes (other packages I have seen just keep the "![[embedded_note]]" in the final text, when in reality the content of that note should appear in the LateX file)
 - NEW: Conditional Formatting Rules
 
+
+## Why not use the already existing plugins for conversion?
+
+
 **Yes**, plugins for Obsidian to Latex already exist, but they have [limitations](#comparisons-to-other-converters) that do not allow the user to write in Obsidian freely. **Yes**, I'd have loved to contribute to those projects, but I don't know Javascript and Typescript.
 
 I consider LateX a very archaeic tool (Overleaf has come a long way and is quite comfortable to use), not suited for the intense knowledge-work of 2024. It is clunky, and forces the researcher to write code, when they just want to write about their work 😩
