@@ -371,13 +371,14 @@ https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/9
 # Comparisons to other converters
  (➕under construction)
 
-|  | This repo | Pandoc Plugin | Copy as Latex | Enhancing Export |
-| ---- | ---- | ---- | ---- | ---- |
-| Embedded notes | ✔ | ❌ | ❌ | not running for me |
-| Equations | ✔ | ❌❓ --> maybe not, was not able to do it so far | ✔ | not running for me |
-| Equation referencing | ✔ | ❌ (seems to not be working) | ❌ | not running for me |
-| Is fast | ✔ (but only when most of the embedded references are listed in `PARS['📂']['list_paths_notes']`) | ✔✔ | ✔✔ | not running for me |
-| Ignores comments | ✔ | ✔ | ✔ | not running for me |
+|                      | This repo                                                                                        | Pandoc Plugin                                    | Copy as Latex | Enhancing Export   |
+| -------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------ | ------------- | ------------------ |
+| Embedded notes       | ✔                                                                                                | ❌                                               | ❌            | not running for me |
+| Equations            | ✔                                                                                                | ❌❓ --> maybe not, was not able to do it so far | ✔             | not running for me |
+| Equation referencing | ✔                                                                                                | ❌ (seems to not be working)                     | ❌            | not running for me |
+| Is fast              | ✔ (but only when most of the embedded references are listed in `PARS['📂']['list_paths_notes']`) | ✔✔                                               | ✔✔            | not running for me |
+| Ignores comments     | ✔                                                                                                | ✔                                                | ✔             | not running for me | 
+| Dataview Table conversion     | ✔                                                                                                | ❌                                                | ❌             | not running for me | 
 
 
 # 💀 Potential errors
