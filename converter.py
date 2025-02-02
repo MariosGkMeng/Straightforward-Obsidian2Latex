@@ -19,7 +19,7 @@ from symbol_replacements import *
 from embedded_notes import *
 from bullet_list__converter import *
 from convert_code_blocks import *
-from list_of_separate_lines import *
+from helper_functions import *
 from equations import *
 from path_searching import *
 from get_parameters import *
