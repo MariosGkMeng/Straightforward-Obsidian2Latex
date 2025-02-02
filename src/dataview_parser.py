@@ -68,7 +68,7 @@ def extract_fields_from_query_0(query: str):
     query = re.sub(r'"[^"]*"', '', query)
     
     # Extract words that start with a letter and do not contain math symbols, whitespace, parentheses, brackets, '/', '\', or emojis
-    word_pattern = re.compile(r'\b[a-zA-Z][^\s\d\W\[\]\(\)\/\\\U0001F300-\U0001FAD6]*')
+    word_pattern = re.compile(r'\b[a-zA-Z][^\s\W\[\]\(\)\/\\\U0001F300-\U0001FAD6]*\d*')
     words = word_pattern.findall(query)
     
     # Define reserved words (commands in the query language)
@@ -310,7 +310,19 @@ def evaluate_expression(expression, fields, file_path):
     field_values = get_fields_from_Obsidian_note(file_path, look_for_fields)
     
     # Create a dictionary of field names and their corresponding values
-    fields_dict = {field_name: value[0] if value else '' for field_name, value in zip(field_names, field_values)}
+    # fields_dict = {field_name: '- '*(len(value)>0) + '<br>- '.join(value) if value else '' for field_name, value in zip(field_names, field_values)}
+    fields_dict = dict()
+    for field_name, value in zip(field_names, field_values):
+        if value:
+            if len(value) > 1:
+                fields_dict[field_name] = '- ' + '<br>- '.join(value)
+            else:
+                fields_dict[field_name] = value[0]
+        else:
+            fields_dict[field_name] = ''
+        
+    
+    
     
     # Apply `replace` transformations first
     expression, expressions_to_carry = apply_replace(expression)
@@ -506,7 +518,7 @@ def sort_evaluated_fields(all_evaluated_fields, files, parsed_query):
     return sorted_fields, files
 
 
-def write_Obsidian_table_from_dataview_query(query_text, PATHS):
+def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_column_name='File Name'):
     
     query = query_text
     parsed_query = parse_dataview_query(query)
@@ -514,7 +526,6 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS):
     vault_folder = PATHS['vault']
     parsed_query['folder'] = parsed_query['folder'].replace('/', '\\')
     files = get_all_files_in_folder(vault_folder, parsed_query['folder'])
-
 
     filtered_files = filter_files_with_logic(parsed_query, files)
 
@@ -532,7 +543,7 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS):
 
     # Create the first row (column names) based on the aliases of the fields
     table_data[0] = {}
-    table_data[0][1] = "File Path"  # Add the "File Path" column
+    table_data[0][1] = datav__file_column_name  # Add the "File Path" column
     for i, field in enumerate(parsed_query['fields']):
         table_data[0][i + 2] = field['alias']  # Start from column 2 for the fields
 
@@ -582,26 +593,9 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS):
 
 # query = query_2
 
-# markdown_table = write_Obsidian_table_from_dataview(query, PATHS)
+# PATHS = {'vault': 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\'}
 
+# markdown_table = write_Obsidian_table_from_dataview_query(query, PATHS)
 
-# query_fields = extract_fields_from_query(query)
-# print(query_fields)
-
-# # Print or return the result
-# # print(''.join(markdown_table))
-# with open(vault_folder + "dummy_1.md", 'w', encoding='utf-8') as file:
+# with open(PATHS['vault'] + "dummy_1.md", 'w', encoding='utf-8') as file:
 #     file.writelines(markdown_table)
-
-
-# Unit testing tasks
-# - Check whether the filtered files are correct based on the query
-
-
-# # Split the input string using commas outside parentheses
-# input_string = 'table year+"-" + title as title, number_references as n_cit, replace(replace(topic, "#Topic/Machine-Learning/Multitask-Learning", "MTL"), "#Topic/", "") as topic, comm as 💭'
-# expressions_and_aliases = get_expressions_and_aliases(split_outside_parentheses(input_string))
-
-
-# print(split_result)
-
