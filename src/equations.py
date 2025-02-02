@@ -2,12 +2,12 @@ import re
 import os
 import numpy as np
 from dataview_parser import write_Obsidian_table_from_dataview_query
-from get_fields_from_Obsidian_note import get_fields_from_Obsidian_note
+from helper_functions import *
+
 
 # For recognizing file names, section names, block names
 SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
 from remove_markdown_comment import *
-from list_of_separate_lines import *
 from path_searching import *
 
 
@@ -37,52 +37,6 @@ CMD__TABLE__TABULARX__CENTERING = '\\newcolumntype{Y}{>{\\centering\\arraybacksl
 aligned_or_split = ['aligned', 'align', 'split']
 # def regex_patterns_for_equations():
     
-    
-def escape_underscore(text):
-    escaped = []
-    inside_special = False  # Track whether we're inside a special segment
-    delimiter = None  # Store the current active delimiter
-    
-    i = 0
-    while i < len(text):
-        char = text[i]
-        
-        # Toggle inside_special state when encountering special characters
-        if char in {"$", "`"}:
-            if inside_special and char == delimiter:
-                inside_special = False  # Closing the special segment
-                delimiter = None
-            elif not inside_special:
-                inside_special = True  # Opening a special segment
-                delimiter = char
-        
-        # Escape underscores only when NOT inside special characters
-        if char == "_" and not inside_special:
-            escaped.append(r"\_")
-        else:
-            escaped.append(char)
-        
-        i += 1
-
-    return "".join(escaped)
-
-def get_start_and_end_indexes(strings, S):
-    indexes_start = []
-    indexes_end = []
-    for i, line in enum(S):
-        if strings[0] in line:
-            indexes_start.append(i)
-        elif strings[1] in line:
-            indexes_end.append(i)
-        elif strings[0] in line and strings[1] in line:
-            indexes_start.append(i)
-            indexes_end.append(i)
-            
-    if len(indexes_start) != len(indexes_end):
-        raise Exception('Some Latex code line is missing!')
-
-    return indexes_start, indexes_end
-
 
 def find_label_in_equation(input_string):
     label_pattern = re.compile(r'\\label\s*{\s*(?:eq__block_)([^}]+)\s*}')
@@ -902,34 +856,6 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     return LATEX
 
 
-def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, new_values):
-	"""
-	Replace the values of specified fields in an Obsidian note with new values.
-
-	:param path_embedded_reference: Path to the Obsidian note file.
-	:param look_for_fields: A list of field names to search for.
-	:param new_values: A list of new values to replace the field values with.
-	"""
-	
-	# Ensure we have the same number of fields and values to replace
-	if len(look_for_fields) != len(new_values):
-		raise ValueError("The number of fields and new values must be the same.")
-	
-	# Read the content of the file
-	with open(path_embedded_reference, 'r', encoding='utf8') as file:
-		lines = file.readlines()
-
-	# Modify the lines where the fields are found
-	for i, field in enumerate(look_for_fields):
-		for j, line in enumerate(lines):
-			if line.startswith(field):
-				# Replace the field value with the new one
-				lines[j] = f"{field} {new_values[i]}\n"
-				break
-
-	# Write the updated content back to the file
-	with open(path_embedded_reference, 'w', encoding='utf8') as file:
-		file.writelines(lines)
 
 
 
