@@ -1,4 +1,5 @@
 import os
+import numpy as np
 
 def escape_underscore(text):
     escaped = []
