@@ -28,6 +28,20 @@ Please cite the following if you use it for publishable work (i.e., if you write
  - Open the `example_writing` note in Obsidian and check out the functionalities
  - Convert the note using the `👨‍💻convert_to_latex` note
 
+
+# Comparisons to other converters
+ (➕under construction)
+
+|                      | This repo                                                                                        | Pandoc Plugin                                    | Copy as Latex | Enhancing Export   |
+| -------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------ | ------------- | ------------------ |
+| Embedded notes       | ✔                                                                                                | ❌                                               | ❌            | not running for me |
+| Equations            | ✔                                                                                                | ❌❓ --> maybe not, was not able to do it so far | ✔             | not running for me |
+| Equation referencing | ✔                                                                                                | ❌ (seems to not be working)                     | ❌            | not running for me |
+| Is fast              | ✔ (but only when most of the embedded references are listed in `PARS['📂']['list_paths_notes']`) | ✔✔                                               | ✔✔            | not running for me |
+| Ignores comments     | ✔                                                                                                | ✔                                                | ✔             | not running for me | 
+| Dataview Table conversion     | ✔                                                                                                | ❌                                                | ❌             | not running for me | 
+
+
 # Straightforward-Obsidian2Latex
 
 - Do you want to
@@ -368,21 +382,6 @@ You can write **your own** snippets (see video below, wherein I show a few of my
 
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/95295ca1-3fce-457d-b18d-591ecd2796cb
 
-
-
-
-	
-# Comparisons to other converters
- (➕under construction)
-
-|                      | This repo                                                                                        | Pandoc Plugin                                    | Copy as Latex | Enhancing Export   |
-| -------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------ | ------------- | ------------------ |
-| Embedded notes       | ✔                                                                                                | ❌                                               | ❌            | not running for me |
-| Equations            | ✔                                                                                                | ❌❓ --> maybe not, was not able to do it so far | ✔             | not running for me |
-| Equation referencing | ✔                                                                                                | ❌ (seems to not be working)                     | ❌            | not running for me |
-| Is fast              | ✔ (but only when most of the embedded references are listed in `PARS['📂']['list_paths_notes']`) | ✔✔                                               | ✔✔            | not running for me |
-| Ignores comments     | ✔                                                                                                | ✔                                                | ✔             | not running for me | 
-| Dataview Table conversion     | ✔                                                                                                | ❌                                                | ❌             | not running for me | 
 
 
 # 💀 Potential errors
