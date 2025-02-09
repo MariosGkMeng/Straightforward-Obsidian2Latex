@@ -1,29 +1,15 @@
 import re
 import os
 import numpy as np
-from get_fields_from_Obsidian_note import get_fields_from_Obsidian_note
+from helper_functions import *
 import copy
 
-def get_all_files_in_folder(vault_folder, target_folder):
-    # Combine the base folder and target folder
-    full_path = os.path.join(vault_folder, target_folder)
-    
-    # List to hold all files
-    all_files = []
-    
-    # Walk through the directory and its subdirectories
-    for root, dirs, files in os.walk(full_path):
-        for file in files:
-            # Add the full path of each file
-            all_files.append(os.path.join(root, file))
-    
-    return all_files
 
 def parse_dataview_query_0(query: str):
     result = {}
     
     # Step 1: Check if it's a Dataview table query
-    if not query.strip().startswith("table"):
+    if not query.strip().startswith("table") and not not query.strip().startswith("Table"):
         return {"error": "Not a Dataview table query"}
     result["query_type"] = "table"
     
@@ -92,28 +78,6 @@ def extract_fields_from_query_0(query: str):
     return list(np.unique(filtered_words))
 
 
-
-def split_outside_parentheses(input_str):
-    result = []
-    start = 0
-    paren_level = 0
-    for i, char in enumerate(input_str):
-        # Track parentheses
-        if char == '(':
-            paren_level += 1
-        elif char == ')':
-            paren_level -= 1
-        
-        # If we're not inside parentheses and find a comma, split
-        if paren_level == 0 and char == ',':
-            result.append(input_str[start:i].strip())
-            start = i + 1
-    
-    # Append the last segment
-    result.append(input_str[start:].strip())
-    
-    return result
-
 def get_expressions_and_aliases(input_str):
     expressions = []
     aliases = []
@@ -123,11 +87,10 @@ def get_expressions_and_aliases(input_str):
         aliases.append(parts[1].strip() if len(parts) > 1 else parts[0].strip())
     return expressions, aliases
 
-
-
 def extract_fields_from_query(query: str):
     # Remove lines starting with 'from "'
-    query = re.sub(r'\n\s*from\s+".*"', '', query)
+    # query = re.sub(r'\n\s*from\s+".*"', '', query)
+    query = re.sub(r'\n\s*from\s+("[^"]*"|\[\[[^\]]+\]\]|\S+)(\s+(AND|OR)\s+("[^"]*"|\[\[[^\]]+\]\]|\S+))*', '', query, flags=re.IGNORECASE)
     
     # (no need) Remove words enclosed in double quotes
     # query = re.sub(r'"[^"]*"', '', query)
@@ -157,6 +120,9 @@ def extract_fields_from_query(query: str):
     
     return fields
 
+def is_path(element):
+    return bool(re.match(r'^[\w\-./]+$', element.strip('"')))  # Matches typical paths
+
 def parse_dataview_query(query: str):
     result = {}
     
@@ -169,10 +135,29 @@ def parse_dataview_query(query: str):
     result["fields"] = extract_fields_from_query(query)
     
     # Step 3: Extract folder name (after 'from')
-    from_match = re.search(r'from\s+"([^"]+)"', query)
-    if from_match:
-        result["folder"] = from_match.group(1)
-    
+    code_version = 1
+    if code_version == 0:
+        from_match = re.search(r'from\s+"([^"]+)"', query)
+        if from_match:
+            result["folder"] = from_match.group(1)
+    elif code_version == 1:        
+        match = re.search(r'from\s+(.+?)(\s+sort|\s+where|\s*$)', query, re.IGNORECASE)
+        if match:
+            content = match.group(1).strip()  # Extract FROM clause content
+
+            # Split while keeping AND/OR and preserving quotes & [[brackets]]
+            parts = re.split(r'\s+(AND|OR)\s+', content)
+            
+            if is_path(parts[0]): result["folder"] = parts[0].replace('"', '')  # Extract the folder name
+            
+            if len([p for p in parts[0::2] if is_path(p)]) > 1:
+                raise ValueError("Multiple paths detected in FROM clause. Haven't included this case yet.")
+            
+            other_from_filters = parts[2::2]
+            result["other__from__filters"] = other_from_filters
+    else:
+        raise notImplementedError("Code version not implemented")
+        
     # Step 4: Extract sorting (sort + field + order)
     sort_match = re.search(r'sort\s+([^\s]+)\s+(asc|desc)', query)#re.search(r'sort\s+(\w+)\s+(asc|desc)', query)
     if sort_match:
@@ -212,7 +197,7 @@ def parse_dataview_query(query: str):
     return result
 
 
-def apply_filter_logic(filters, fields):
+def apply_filter_logic(filters, fields, file_content, other_from_filters):
     # We will evaluate the filter logic in sequence, respecting the logic operators (AND, OR)
     result = True  # Default result for AND logic
     for i, filter in enumerate(filters):
@@ -235,6 +220,12 @@ def apply_filter_logic(filters, fields):
         if not result and filter['logic'] == 'AND':
             break
 
+    # New: Check "other_from_filters" in file_content (All must be present)
+    for filter_value in other_from_filters:
+        if filter_value not in file_content:
+            return False  # If any filter is missing, return False
+
+
     return result
 
 def filter_files_with_logic(parsed_query, files):
@@ -244,9 +235,14 @@ def filter_files_with_logic(parsed_query, files):
     for file in files:
         # Extract the fields from the file
         fields = get_fields_from_Obsidian_note(file, [filter['field'] for filter in parsed_query['filters']])
-
+        try:
+            with open(file, 'r', encoding='utf-8') as f:
+                file_content = f.read()  # Read the entire file content as a string
+        except Exception as e:
+            print(f"Error reading file {file}: {e}")
+            continue  # Skip this file if there's an error
         # Check if the file matches all the filters based on their logic
-        if apply_filter_logic(parsed_query['filters'], fields):
+        if apply_filter_logic(parsed_query['filters'], fields, file_content, parsed_query['other__from__filters']):
             filtered_files.append(file)
 
     return filtered_files
@@ -425,52 +421,6 @@ def evaluate_fields(parsed_query, file_path):
     return evaluated_fields
 
 
-def write_Obsidian_table(table, return_lines = True):
-	'''
-	# Example
-	table = {
-		0: {1: 'col_1_title',
-			2: 'col_2_title',
-			3: 'col_3_title',
-			4: 'col_4_title'
-		},
-		1: {1: 'r1c1',
-			2: 'r1c2',
-			3: 'r1c3'
-		},
-		2: {1: 'r2c1',
-			2: 'r2c2',
-			3: 'r3c2',
-			4: 'r4c2'}
-	}
-	write_Obsidian_table(table)
-	'''
-	
-	if not isinstance(table, dict):
-		raise Exception('`table` input must be a dict!')
-	
-	cols = np.max([len(list(table[i].keys())) for i in list(table.keys())])
-	rows = len(table.keys())
-	lines = []
-	keys = list(table.keys())
-	if 0 in keys:
-		# has column titles
-		lines.append('| '+' | '.join([f'**{table[0][key]}**' for key in table[0].keys()]) + ' |')
-	else:
-		lines.append(''.join('| '*cols) + '|')
-
-	lines.append(''.join('| --- '*cols) + '|')
-	
-	for i in keys:
-		if i!=0:
-			lines.append('| '+' | '.join([table[i][key] for key in table[i].keys()]) + ' |')
-			lines[-1] += ' |'*(cols-len(table[i].keys()))
-	
-	if return_lines: 
-		return [l + '\n' for l in lines]
-	return '\n'.join(lines)
-
-
 def sort_evaluated_fields(all_evaluated_fields, files, parsed_query):
     """
     Sorts the evaluated fields based on parsed_query['sort'].
@@ -526,8 +476,13 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_colu
     vault_folder = PATHS['vault']
     parsed_query['folder'] = parsed_query['folder'].replace('/', '\\')
     files = get_all_files_in_folder(vault_folder, parsed_query['folder'])
+    files = [f for f in files if f.endswith('.md')]
 
-    filtered_files = filter_files_with_logic(parsed_query, files)
+    if 'filters' in parsed_query.keys():
+        # Filter the files based on the 'contains' filters
+        filtered_files = filter_files_with_logic(parsed_query, files)
+    else:
+        filtered_files = files
 
     # Evaluate the fields
     all_evaluated_fields = []
@@ -550,7 +505,7 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_colu
     # Populate the table rows with evaluated field values for each file
     for row_index, (file_path, file_fields) in enumerate(zip(filtered_files, all_evaluated_fields), start=1):
         table_data[row_index] = {}
-        dum1 = file_path.replace(vault_folder + parsed_query['folder'] + "\\", "")
+        dum1 = file_path.replace(vault_folder + parsed_query['folder'] + "\\", "").split('\\')[-1]
         dum1 = f'[[{dum1.replace(".md", "")}]]'
         table_data[row_index][1] = dum1
         
@@ -599,3 +554,6 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_colu
 
 # with open(PATHS['vault'] + "dummy_1.md", 'w', encoding='utf-8') as file:
 #     file.writelines(markdown_table)
+
+
+
