@@ -8,6 +8,7 @@ import subprocess
 # For time profiling
 from cProfile import Profile
 from pstats import SortKey, Stats
+import copy
 #
 
 # Add the src directory to the Python pathf
@@ -312,6 +313,18 @@ PATHS['tex-file'] = '\\'.join(split_path[:-1])+'\\'+split_path[-1].replace('.md'
 PARS['📁']['tex-file'] = PATHS['tex-file']
 with open(PATHS['markdown-file'], 'r', encoding='utf8') as f:
     content = f.readlines()
+    
+tmp1 = '#Latex/Command/Invoke_note'
+cnd_1 = True
+while cnd_1:
+    for i, s in enumerate(content):
+        if s.startswith(tmp1):
+            embedded_ref=s.replace(tmp1, '').strip() 
+            unfolded_content = get_unfolded_and_converted_embedded_content(embedded_ref, 'vault', True, False, PARS)
+            content = content[:i] + ['% START'+s] + unfolded_content + ['\n'*2] + ['% END'+s] + content[i+1:] + ['\n'*2]
+            break
+    if i == len(content)-1:
+        cnd_1 = False
 
 content = remove_markdown_comments(content)
 
@@ -498,10 +511,12 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
             LATEX += LATEX_TABLES[i_tables]
             i_tables += 1
         
-        i0 = i
-
-
+        i0 = i    
+    
+    
     LATEX = symbol_replacement(LATEX, PARS['par']['symbols-to-replace'])
+    # LATEX = [replace_outside_brackets(s, [s[0] for s in PARS['par']['symbols-to-replace']], [s[1] for s in PARS['par']['symbols-to-replace']]) for s in LATEX]
+    
     styles_replacement = [ID__STYLE__BOLD, ID__STYLE__HIGHLIGHTER, ID__STYLE__ITALIC]#, ID__STYLE__STRIKEOUT]
     
     for style in styles_replacement:
@@ -538,8 +553,15 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     # LATEX = symbol_replacement(LATEX, [['_', '\_', 1]]) # DON'T UNCOMMENT!
     # title = PARS['⚙']['title'] if PARS['⚙']['title'] else symbol_replacement(path_file.split('\\')[-1].replace('_', '\_'), PARS['par']['symbols-to-replace'])[0]
     title = PARS['⚙']['title'] if PARS['⚙']['title'] else ''
-    LATEX = symbol_replacement(LATEX, [[paragraph['insert_new_line_symbol'] , '\\clearpage', 1]])
-
+    
+    # Replace the 
+    tmp1 = paragraph['insert_new_line_symbol']
+    LATEX_1 = []
+    for l in LATEX:
+        if l.startswith(tmp1): l = l.replace(tmp1, '\\clearpage')
+        LATEX_1.append(l)
+        
+    LATEX = copy.copy(LATEX_1)
     LATEX = convert_inline_code(LATEX)
     
     document_class = PARS['⚙']['document_class']
