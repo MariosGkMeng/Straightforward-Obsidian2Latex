@@ -23,6 +23,7 @@ General video showcasing all the functionalities (will be uploaded on YouTube. F
 - Guide on how the dataview tables are converted (also, include the example in the `example_vault`)
 - More videos on the conversion
 - General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
+- Relative path to the `converter.py` from `👨‍💻convert_to_latex.md`.
 
 # Citing this work
 Please cite the following if you use it for publishable work (i.e., if you write your paper in Obsidian, and use this code to print to Latex)
@@ -208,7 +209,8 @@ If you want to jump to some videos, here's the list:
 
 ## Usage
 
-Clone the git.
+1. Clone the git
+2. In `👨‍💻convert_to_latex.md`, you will need to change the path that links to the `converter.py`, since it is dependent on where you place it (will make the path relative in the future). 
 
 In the note `👨‍💻convert_to_latex.md` you can specify which note you wish to convert, and then trigger the `converter.py` script to perform the conversion.
 
