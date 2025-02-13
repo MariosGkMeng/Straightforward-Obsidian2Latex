@@ -1,3 +1,5 @@
+import os
+
 def get_parameters(version = 'default'):
     
     '''
@@ -51,11 +53,17 @@ def get_parameters(version = 'default'):
     CMD__TABLE__TABULARX__CENTERING = '\\newcolumntype{Y}{>{\\centering\\arraybackslash}X}'
     #
 
+
     # USER PARAMETERS
-    path_vault          = 'C:\\Users\\mariosg\OneDrive - NTNU\FILES\\workTips\\'
+    path_vault          = 'G:\\My Drive\\MARIOS_LOG\\'
     path_equation_blocks = path_vault + '✍Writing\\equation blocks'
     path_list_note_paths = path_vault + 'DO_NOT_DELETE__note_paths.txt'
     path_BIBTEX          = path_vault + '✍Writing\\BIBTEX'
+    
+    if not os.path.exists(path_list_note_paths):
+        with open(path_list_note_paths, 'w', encoding='utf-8') as file:
+            file.write('')
+    
 
     hyperlinkSetup="""
     \hypersetup{
