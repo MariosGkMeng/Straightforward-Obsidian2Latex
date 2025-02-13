@@ -9,7 +9,7 @@ from equations import *
 from path_searching import *
 from special_characters import *
 from bullet_list__converter import *
-from helper_functions import *
+# from
 
 special_cases = ['eq__block', 'figure__block', 'table__block']
 
@@ -516,6 +516,8 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 
                 if len(content__unfold) > 0: 
                     content__unfold = content_filter_2(S[line_number], content__unfold, markdown_ref)
+                    
+                # S[line_number] = get_unfolded_and_converted_embedded_content(embedded_ref, where_to_search_for_embedded_notes, line_number, is_in_normal_case, cnd__mode_is__equation_blocks_only, content_filter_2, PARS)
 
                 S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
 
@@ -536,6 +538,46 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 
             S = S2
     return S, md__files_embedded
+
+def get_unfolded_and_converted_embedded_content(embedded_ref, where_to_search_for_embedded_notes, is_in_normal_case, cnd__mode_is__equation_blocks_only, PARS):
+    
+    embedded_ref = embedded_ref.replace('[[', '').replace(']]', '')
+    
+    try:
+        path_embedded_reference = get_embedded_reference_path(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
+    except:
+        raise Exception("Error")
+
+    if len(path_embedded_reference) == 0: raise Exception(f'File: {embedded_ref} cannot be found in {PARS["📁"][where_to_search_for_embedded_notes]}')
+
+    section = ''
+    content_filter_1 = lambda x, Lines, lNum: (x)
+    content_filter_2 = lambda s, x, mref: (x)
+    section_name = section.lstrip('#')
+    content__unfold = extract_section_from_file(path_embedded_reference, section_name)
+    content__unfold = content_filter_1(content__unfold, '', '')
+        
+    if is_in_normal_case:
+        # since we don't expect to have comments in the single block (code optimization)
+        content__unfold = remove_markdown_comments(content__unfold)
+    else:
+        if cnd__mode_is__equation_blocks_only:                  
+            # ➕ there is an unclear method here: 
+            # for now I am using the `cnd__mode_is__equation_blocks_only` for anything that is a specific block (equations, figures, tables)
+            # will correct in the future                       
+            if embedded_ref.startswith('eq__block'):
+                content__unfold = EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embedded_ref)
+            elif embedded_ref.startswith('figure__block'):
+                content__unfold = FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, PARS)
+            elif embedded_ref.startswith('table__block'):
+                content__unfold = TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PARS)
+            else:
+                content__unfold = ''
+        else:
+            raise NotImplementedError
+
+    return content__unfold
+
 
 def extract_section_from_file(obsidian_file, section):
 
