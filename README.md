@@ -23,7 +23,9 @@ General video showcasing all the functionalities (will be uploaded on YouTube. F
 - Guide on how the dataview tables are converted (also, include the example in the `example_vault`)
 - More videos on the conversion
 - General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
-- Relative path to the `converter.py` from `👨‍💻convert_to_latex.md`.
+- Relative path to the `converter.py` from `👨‍💻convert_to_latex.md`
+- Make proper installer so that the user doesn't have to do manual work
+	- QuickAdd commmads: make function that appends to the `QuickAdd/data.json`. Install automatically if needed
 
 # Citing this work
 Please cite the following if you use it for publishable work (i.e., if you write your paper in Obsidian, and use this code to print to Latex)
