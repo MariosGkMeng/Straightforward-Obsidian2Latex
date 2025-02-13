@@ -56,15 +56,20 @@ def get_parameters(version = 'default'):
 
     # USER PARAMETERS
     path_vault          = 'G:\\My Drive\\MARIOS_LOG\\'
-    path_equation_blocks = path_vault + '✍Writing\\equation blocks'
+    path_writing        = path_vault + '✍Writing\\'
+    path_equation_blocks = path_writing + 'equation blocks'
+    path_table_blocks   = path_writing + 'table blocks'
     path_list_note_paths = path_vault + 'DO_NOT_DELETE__note_paths.txt'
-    path_BIBTEX          = path_vault + '✍Writing\\BIBTEX'
+    path_BIBTEX          = path_writing + 'BIBTEX'
     
     if not os.path.exists(path_list_note_paths):
         with open(path_list_note_paths, 'w', encoding='utf-8') as file:
             file.write('')
     
-
+    for path in [path_writing, path_equation_blocks, path_table_blocks]:
+        if not os.path.exists(path):
+            os.makedirs(path)
+        
     hyperlinkSetup="""
     \hypersetup{
     colorlinks   = true,    % Colours links instead of ugly boxes
