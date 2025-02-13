@@ -127,7 +127,8 @@ def get_parameters(version = 'default'):
                         'if_text_before_first_section___place_before_table_of_contents': '🔴',
                         'insert_new_line_symbol':                                        '---',
                         'add_table_of_contents':                                        '🔴',
-                        'add_new_page_before_bibliography':                             '🔴' 
+                        'add_new_page_before_bibliography':                             '🔴',
+                        'allowdisplaybreaks':                                           '🔴',
             }, 
             'author': V__author,
             'title': '',
