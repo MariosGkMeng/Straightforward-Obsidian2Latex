@@ -1,3 +1,17 @@
+# Comparisons to other converters
+ (➕under construction)
+
+|                      | This repo                                                                                        | Pandoc Plugin                                    | Copy as Latex | Enhancing Export   |
+| -------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------ | ------------- | ------------------ |
+| Embedded notes       | ✔                                                                                                | ❌                                               | ❌            | not running for me |
+| Equations            | ✔                                                                                                | ❌❓ --> maybe not, was not able to do it so far | ✔             | not running for me |
+| Equation referencing | ✔                                                                                                | ❌ (seems to not be working)                     | ❌            | not running for me |
+| Is fast              | ✔ (but only when most of the embedded references are listed in `PARS['📂']['list_paths_notes']`) | ✔✔                                               | ✔✔            | not running for me |
+| Ignores comments     | ✔                                                                                                | ✔                                                | ✔             | not running for me | 
+| Dataview Table conversion     | ✔                                                                                                | ❌                                                | ❌             | not running for me | 
+
+
+
 # 📽 General Video (under development)
 General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video I've rendered so far [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
 
@@ -28,18 +42,6 @@ Please cite the following if you use it for publishable work (i.e., if you write
  - Open the `example_writing` note in Obsidian and check out the functionalities
  - Convert the note using the `👨‍💻convert_to_latex` note
 
-
-# Comparisons to other converters
- (➕under construction)
-
-|                      | This repo                                                                                        | Pandoc Plugin                                    | Copy as Latex | Enhancing Export   |
-| -------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------ | ------------- | ------------------ |
-| Embedded notes       | ✔                                                                                                | ❌                                               | ❌            | not running for me |
-| Equations            | ✔                                                                                                | ❌❓ --> maybe not, was not able to do it so far | ✔             | not running for me |
-| Equation referencing | ✔                                                                                                | ❌ (seems to not be working)                     | ❌            | not running for me |
-| Is fast              | ✔ (but only when most of the embedded references are listed in `PARS['📂']['list_paths_notes']`) | ✔✔                                               | ✔✔            | not running for me |
-| Ignores comments     | ✔                                                                                                | ✔                                                | ✔             | not running for me | 
-| Dataview Table conversion     | ✔                                                                                                | ❌                                                | ❌             | not running for me | 
 
 
 # Straightforward-Obsidian2Latex
