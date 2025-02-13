@@ -1,17 +1,37 @@
 import os
 import numpy as np
+import re
+
+def replace_outside_brackets(s, replace_list, replacement_list):
+    replace_map = dict(zip(replace_list, replacement_list))
+    
+    def replacer(match):
+        if match.group(1):  # Text inside [[ ]], return as is
+            return match.group(1)
+        else:  # Text outside [[ ]], replace characters
+            return ''.join(replace_map.get(c, c) for c in match.group(2))
+    
+    pattern = r'(\[\[.*?\]\])|([^\[\]]+)'
+    return re.sub(pattern, replacer, s)
 
 def escape_underscore(text):
     escaped = []
     inside_special = False  # Track whether we're inside a special segment
+    inside_brackets = False  # Track whether we're inside [[ ]]
     delimiter = None  # Store the current active delimiter
     
     i = 0
     while i < len(text):
         char = text[i]
         
+        # Track [[ ]] sections
+        if text[i:i+2] == "[[":
+            inside_brackets = True
+        elif text[i:i+2] == "]]":
+            inside_brackets = False
+        
         # Toggle inside_special state when encountering special characters
-        if char in {"$", "`"}:
+        if char in {"$", "`"} and not inside_brackets:
             if inside_special and char == delimiter:
                 inside_special = False  # Closing the special segment
                 delimiter = None
@@ -19,8 +39,8 @@ def escape_underscore(text):
                 inside_special = True  # Opening a special segment
                 delimiter = char
         
-        # Escape underscores only when NOT inside special characters
-        if char == "_" and not inside_special:
+        # Escape underscores only when NOT inside special characters or brackets
+        if char == "_" and not inside_special and not inside_brackets:
             escaped.append(r"\_")
         else:
             escaped.append(char)
@@ -32,7 +52,7 @@ def escape_underscore(text):
 def get_start_and_end_indexes(strings, S):
     indexes_start = []
     indexes_end = []
-    for i, line in enum(S):
+    for i, line in enumerate(S):
         if strings[0] in line:
             indexes_start.append(i)
         elif strings[1] in line:
@@ -176,3 +196,30 @@ def write_Obsidian_table(table, return_lines = True):
 	if return_lines: 
 		return [l + '\n' for l in lines]
 	return '\n'.join(lines)
+
+
+
+def get_list_of_separate_string_lines(S):
+
+    result_list = []
+
+    for string in S:
+        # Check if the string contains line breaks
+        if "\n" in string:
+            # Split the string into separate lines
+            lines = string.split("\n")
+            # Extend the result list with the separated lines
+            result_list.extend(lines)
+        else:
+            # If no line break, add the string as it is
+            result_list.append(string)
+
+    return result_list
+
+
+
+# # Example usage:
+# s = "Hello [[keep this ☺]] world! ☺😀"
+# replace_list = ["☺", "😀"]
+# replacement = "X"
+# print(replace_outside_brackets(s, replace_list, replacement))
