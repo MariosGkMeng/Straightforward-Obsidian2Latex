@@ -213,6 +213,8 @@ def get_parameters(version = 'default'):
            									['⛏',				 '\\twemoji{pick}',        1],
 											['⏳',				 '\\twemoji{hourglass}',   1],
                                             ['🧪',                  '\\twoemoji{test tube}',           1],
+                                            ['⭐',                  '\\twoemoji{star}',           1],
+                                            ['💡',                  '\\twoemoji{light bulb}',           1],
                                             ]
             },
             #                                        ['\\text',          '\\textnormal',          1],
