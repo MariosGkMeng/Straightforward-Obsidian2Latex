@@ -189,7 +189,8 @@ def get_parameters(version = 'default'):
                                     ['natbib',      None,                                     "Such that we avoid the error (`Illegal parameter number in definition of \\reserved@a`) of not being able to add citations in captions"],
                                     ['pdfcomment',  None,                                     'for popup comments in the .pdf'],
                                     ['booktabs',    None,                                      'so that the toprule command works'],
-                                    ['soul',        None,                                      'to strikeout text using \\st{}']
+                                    ['soul',        None,                                      'to strikeout text using \\st{}'],
+									['twemojis',	None,										'for twoemojis']									
                                     ],
             'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
 											['✔',              '\\checkmark',            1],
