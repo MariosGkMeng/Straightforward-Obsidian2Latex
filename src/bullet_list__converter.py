@@ -1,5 +1,5 @@
 import re
-from list_of_separate_lines import *
+from helper_functions import *
 from remove_markdown_comment import *
 
 begin_type = ["\n\\begin{itemize}\n", "\n\\begin{enumerate}\n", "\n\\begin{todolist}\n"]
