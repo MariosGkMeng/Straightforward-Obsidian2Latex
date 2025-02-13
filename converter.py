@@ -571,6 +571,11 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
 
     is_ifac = document_class['class'] == 'ifacconf'
     
+    try:
+        custom_latex = [line for line in open(PATHS['custom_latex_functions'])]
+    except:
+        custom_latex = []
+    
     PREAMBLE = [f"\\documentclass{doc_class_fontsize}{{{document_class['class']}}}"] +\
             [is_ifac*'\\newcounter{part} % fix the issue in the class'] +\
             [is_ifac*'\counterwithin*{section}{part}'] +\
@@ -583,7 +588,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
             ['\\renewcommand\marginpar[1]{\oldmarginpar{\\tiny #1}} % Change "small" to your desired font size]'] + ['\n'*2] +\
             ['\\newcommand{\ignore}[1]{}']+\
             ['% CUSTOM FUNCTIONS'] +\
-            [line for line in open(PATHS['custom_latex_functions'])]+\
+            custom_latex+\
             ['% ======================================='] +\
             ['\n'*3] + ['\\begin{document}']+\
             ['\\allowdisplaybreaks' if paragraph['allowdisplaybreaks'] else '']+\
