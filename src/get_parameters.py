@@ -57,6 +57,10 @@ def get_parameters(version = 'default'):
     # USER PARAMETERS
     path_vault          = 'G:\\My Drive\\MARIOS_LOG\\'
     path_writing        = path_vault + '✍Writing\\'
+    path_templates        = path_vault + '👨‍💻Automations\\'
+    path_table_block_template = path_templates + 'table_block.md'
+    path_equation_block_template = path_templates + 'equation_block_single.md'
+
     path_equation_blocks = path_writing + 'equation blocks'
     path_table_blocks   = path_writing + 'table blocks'
     path_list_note_paths = path_vault + 'DO_NOT_DELETE__note_paths.txt'
@@ -66,10 +70,26 @@ def get_parameters(version = 'default'):
         with open(path_list_note_paths, 'w', encoding='utf-8') as file:
             file.write('')
     
-    for path in [path_writing, path_equation_blocks, path_table_blocks]:
+    for path in [path_writing, path_equation_blocks, path_table_blocks, path_templates]:
         if not os.path.exists(path):
             os.makedirs(path)
+            
+    if not os.path.exists(path_table_block_template):
+        with open(path_table_block_template, 'w', encoding='utf-8') as file:
+            file.write(table_block_text())
         
+    if not os.path.exists(path_equation_block_template):
+        with open(path_equation_block_template, 'w', encoding='utf-8') as file:
+            file.write(equation_block_text())
+            
+    path_plugins = path_vault + '.obsidian\\plugins\\'
+    path_quick_add = path_plugins+'quickadd\\'
+
+    if not os.path.exists(path_quick_add):
+        shutil.copytree('\\'.join(os.path.abspath(__file__).split('\\')[0:-2]) + '\\obsidian\\.obsidian\\plugins\\quickadd', path_plugins)
+    else:
+        raise Exception('Not implemented yet.')
+                
     hyperlinkSetup="""
     \hypersetup{
     colorlinks   = true,    % Colours links instead of ugly boxes
@@ -221,6 +241,7 @@ def get_parameters(version = 'default'):
                                             ['🧪',                  '\\twoemoji{test tube}',           1],
                                             ['⭐',                  '\\twoemoji{star}',           1],
                                             ['💡',                  '\\twoemoji{light bulb}',           1],
+											['📅',                  '\\twoemoji{date}',           1],
                                             ]
             },
             #                                        ['\\text',          '\\textnormal',          1],
@@ -231,3 +252,70 @@ def get_parameters(version = 'default'):
        
 
     return PARS
+
+
+
+def equation_block_text():
+    text = """
+# %%expr%%
+    """
+    return text
+
+def table_block_text():
+    text = """
+%%
+caption:: 
+widths:: 
+package:: #Latex/Table/package/  
+use_hlines:: 
+use_vlines:: 
+
+If the table is a dataview table:
+datav__file_column_name:: 
+
+%%
+# %%table%%
+📣*`=this.caption`*
+    """
+    
+    return text
+    
+    
+def quick_add_table_block_text():
+    templatePath = "👨‍💻Automations/table_block"
+    destinationPath = "✍Writing/table_blocks"
+    
+    text = f"""
+    {{
+      "id": "d8dcaf45-4e62-4860-ba69-42671bac884c",
+      "name": "table_block",
+      "type": "Template",
+      "command": true,
+      "templatePath": "{templatePath}",   # ✅ Add quotes
+      "fileNameFormat": {{
+        "enabled": true,
+        "format": "table__block_"
+      }},
+      "folder": {{
+        "enabled": true,
+        "folders": [
+          "{destinationPath}"   # ✅ Add quotes
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      }},
+      "appendLink": true,
+      "openFileInNewTab": {{
+        "enabled": true,
+        "direction": "vertical",
+        "focus": true
+      }},
+      "openFile": true,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": true
+    }}
+    """  
+
+    return text
