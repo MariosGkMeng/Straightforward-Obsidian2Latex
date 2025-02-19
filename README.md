@@ -12,7 +12,7 @@
 | Dataview Table conversion                                                                                | ✔                                                                                                | ❌                                              | ❌             | not running for me |
 | Can add custom latex code for specific things                                                            | ✔                                                                                                | ❓                                              | ❓             | not running for me |
 | Can control the sizes and latex class types for figures and tables from Obsidian                         | ✔                                                                                                | ❓                                              | ❓             | not running for me |
-| [Can treat cases wherein the note to be converted is too complicated, resulting in severe RAM consumption](#For-when-the-note-to-be-converted-is-too-large-and-contains-many-embedded-notes,-resulting-in-severe RAM-consumption) | ✔                                                                                                | ❌                                              | ❌             | not running for me |
+| [Can treat cases wherein the note to be converted is too complicated, resulting in severe RAM consumption](#For-when-the-note-to-be-converted-is-too-large-and-contains-many-embedded-notes-resulting-in-severe RAM-consumption) | ✔                                                                                                | ❌                                              | ❌             | not running for me |
 
 
 
