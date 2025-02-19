@@ -187,6 +187,7 @@ In this section, I will be writing what actions will cause errors in this versio
 
 ## Where Overleaf thrives
 - Can write comments in a Google-docs-like manner
+- (Latex property) Consumes much less RAM. Obsidian consumes a lot of RAM when the note is very large and contains objects that require rendering (e.g., embedded notes). There is a workaround in this tool for such cases.
 - More distraction-free, since one can't obsess over plugins and workflows, which is the BIG TRAP of using Obsidian (https://www.youtube.com/watch?v=baKCC2uTbRc). Helps with avoiding procrastination
 - Can track changes (though Obsidian with github can work better)
 - Can define custom functions
@@ -360,6 +361,17 @@ Examples:
 	
 \end{frontmatter}
 ```
+
+### For when the note to be converted is too large and contains many embedded notes, resulting in severe RAM consumption
+It can happen that for large notes, Obsidian starts to consume significant RAM resulting in very slow performance.
+
+A workaround developed for this tool is the usage of the following command:
+
+```
+#Latex/Command/Invoke_note  [[note name]]
+```
+
+This way, the note `[[note name]]` will be unfolded in the converted version, while remaining "hidden" in the Obsidian editor, in order not to make the note to be converted very "heavy" for your computer.
 
 
 # 🟢 Good Practices in Obsidian
