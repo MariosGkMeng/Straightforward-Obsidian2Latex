@@ -412,6 +412,11 @@ https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/9
 # 💀 Potential errors
 Some errors are linked to specific LateX editors. Since Obsidian is a local program, it makes sense that you might chose to use a local latex editor. Those can be sometimes finnicky and overly strict with compilation errors. A workaround is to use Overleaf, in which case you would need to copy the `.tex` file content to Overleaf, and make sure that your figures are all uploaded. So far, you should put the figures in the same path as the latex file, and set the parameter: `use_overleaf_all_in_the_same_folder` to `🟢` or `True`.
 
+## Syntax that the user needs to follow
+
+- For equations, the user should never leave any whitespace between the equation and the "$$" prefix
+
+
 ## Package problems
 I am encountering package problems when I try to run the package in a different computer (therefore with different miktex package installations). For example, the `minted` package cannot be loaded, causing issues with the compilation (everything is fine when I remove the package loading command for `minted`).
 
