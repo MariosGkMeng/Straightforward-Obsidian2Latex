@@ -415,6 +415,7 @@ Some errors are linked to specific LateX editors. Since Obsidian is a local prog
 ## Syntax that the user needs to follow
 
 - For equations, the user should never leave any whitespace between the equation and the "$$" prefix
+- If the first line of the note is a section, that section's title will be ignored
 
 
 ## Package problems
