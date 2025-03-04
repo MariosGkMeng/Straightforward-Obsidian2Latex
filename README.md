@@ -365,7 +365,7 @@ Examples:
 ### For when the note to be converted is too large and contains many embedded notes, resulting in severe RAM consumption
 It can happen that for large notes, Obsidian starts to consume significant RAM resulting in very slow performance.
 
-A workaround developed for this tool is the usage of the following command:
+A workaround developed for this tool is the usage of the following command that avoids embedding a note in Obsidian, but having the same effect when converted to LateX:
 
 ```
 #Latex/Command/Invoke_note  [[note name]]
