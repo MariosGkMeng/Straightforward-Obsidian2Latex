@@ -284,17 +284,14 @@ https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/1
 https://github.com/MariosGkMeng/Straightforward-Obsidian2Latex/assets/61937432/a6948f18-9cbe-4b13-a4ec-a1736828ad8e
 
 ### Adding citations
-So far, I am using my own system for citations in my Obsidian notes.
-Specifically, each time I download a .pdf file that contains an article/book, I name it "62. TitleOfPaperOrBook, YYYY.pdf", where YYYY is the year in the YYYY format, and "62" is the sequence number (i.e., the 62nd article/book I have in that folder). 
-Then, I use a note: `[[p62]]` to represent that paper. And now, the conversion works as follows:
 
-Obsidian Text: "In [[p62]], the authors mention that ..."
-Latex Text:    "In \cite{p62}, the authors mention that ..."
+Citations are added as internal links with the syntax: "[[pItemNumber]]". For example, `[[p62]]` is the note that represents the 62nd literature file (be it an article, a book, etc)
+Obsidian Text: "In [[p63]], the authors mention that ..."
+Converted Latex Text:    "In \cite{p63}, the authors mention that ..."
 
-BUT: as a user, you have to add the BibTex citation manually in your designated BibTex file, and use the "p62" as a name. That Bibtex file should be located in **the same path as `PARS['📁']['tex-file']`**!
+BUT: as a user, you have to add the BibTex citation manually in your designated BibTex file, and use the "p63" as a name. That Bibtex file should be located in **the same path as `PARS['📁']['tex-file']`**!
 
-I will "relax"/parameterize this rule soon.
-
+I will add different rules upon user request.
 
 ### (NEW) Converting inline (dataview) code
 For when you want to parameterize your document, here's a handy trick. You might have some fields in a note that contain text that you programmatically insert into your document. 
