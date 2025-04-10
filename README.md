@@ -18,7 +18,7 @@
 | Can convert [admonition blocks](https://notes.nicolevanderhoeven.com/Obsidian+Admonition)                                                                                                                                        | ✔         | ❓                                              | ❓             | not running for me |
 
 
-\*(but only when most of the embedded references are listed in `PARS['📂']['list_paths_notes']`) 
+\*(but only when most of the embedded references are listed in `PARS['📂']['list_paths_notes']`). If they are not listed, this means that the converter has to search through the vault and append their paths on the list, which can take some time for large vaults. However, once the paths are on the list, it is much faster to extract them from there.
 
 # 📽 General Video (under development)
 General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video I've rendered so far [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
@@ -31,6 +31,7 @@ General video showcasing all the functionalities (will be uploaded on YouTube. F
 - Relative path to the `converter.py` from `👨‍💻convert_to_latex.md`
 - Make proper installer so that the user doesn't have to do manual work
 	- QuickAdd commmads: make function that appends to the `QuickAdd/data.json`. Install automatically if needed
+ - Occasional cleanup of `PARS['📂']['list_paths_notes']`
 
 # Citing this work
 Please cite the following if you use it for publishable work (i.e., if you write your paper in Obsidian, and use this code to print to Latex)
