@@ -55,7 +55,7 @@ def get_parameters(version = 'default'):
 
 
     # USER PARAMETERS
-    path_vault          = 'G:\\My Drive\\MARIOS_LOG\\'
+    path_vault          = 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\'
     path_writing        = path_vault + '✍Writing\\'
     path_templates        = path_vault + '👨‍💻Automations\\'
     path_table_block_template = path_templates + 'table_block.md'
@@ -85,10 +85,10 @@ def get_parameters(version = 'default'):
     path_plugins = path_vault + '.obsidian\\plugins\\'
     path_quick_add = path_plugins+'quickadd\\'
 
-    if not os.path.exists(path_quick_add):
-        shutil.copytree('\\'.join(os.path.abspath(__file__).split('\\')[0:-2]) + '\\obsidian\\.obsidian\\plugins\\quickadd', path_plugins)
-    else:
-        raise Exception('Not implemented yet.')
+    # if not os.path.exists(path_quick_add):
+    #     shutil.copytree('\\'.join(os.path.abspath(__file__).split('\\')[0:-2]) + '\\obsidian\\.obsidian\\plugins\\quickadd', path_plugins)
+    # else:
+    #     raise Exception('Not implemented yet.')
                 
     hyperlinkSetup="""
     \hypersetup{
@@ -115,7 +115,9 @@ def get_parameters(version = 'default'):
         V__document_class = {'class': ID__DOCUMENT_CLASS__CONFERENCE__IFAC, 'fontsize': ''}
         V__author = ''
          
-    
+    # elif version =='[✍⌛writing--THESIS--high-level-structure]]':
+        
+    #     #\documentclass[a4paper, 12pt, openany]{book}
     PARS = conv_dict({
         '⚙': # SETTINGS 
             {'SEARCH_IN_FILE': {'condition':'🔴', 'text_to_seach': 'w_{E_{2}}','replace_with': '\\beta_{2}'},
@@ -128,7 +130,7 @@ def get_parameters(version = 'default'):
                                             ID__TABLES__alignment__middle],
                             'rel-width': 1.2,
                     },
-            'margin': '',
+            'margin': '0.9in',
             'use_date': '🔴',
             'EXCEPTIONS': 
                         {'raise_exception__when__embedded_reference_not_found': '🔴'},
@@ -145,14 +147,14 @@ def get_parameters(version = 'default'):
                             {'reduce spacing between figures': '🔴',
                                       'put_figure_below_text': '🟢',
                                                'include_path': '🟢', # not including the path works only if all the figures are in the same folder (appropriate for Overleaf projects)
-                        'use_overleaf_all_in_the_same_folder': '🟢'}, 
+                        'use_overleaf_all_in_the_same_folder': '🔴'}, 
                                                         
             'paragraph':{
                         'indent_length_of_first_line': 0,    # 0 if no indent is desired. Recommended 20 for usual indent
                         'if_text_before_first_section___place_before_table_of_contents': '🔴',
                         'insert_new_line_symbol':                                        '---',
                         'add_table_of_contents':                                        '🔴',
-                        'add_new_page_before_bibliography':                             '🔴',
+                        'add_new_page_before_bibliography':                             '🟢',
                         'allowdisplaybreaks':                                           '🔴',
             }, 
             'author': V__author,
@@ -182,7 +184,8 @@ def get_parameters(version = 'default'):
                  'equation_blocks': path_equation_blocks,
                 'list_paths_notes': path_list_note_paths, # saves time from searching of the note's path
                      'bash_script': path_vault + '✍Writing\\compile_and_open.sh',
-                'bibtex_file_name': 'BIBTEX'           # your bibtex file name 
+                'bibtex_file_name': 'BIBTEX',           # your bibtex file name 
+            'custom_latex_commands': path_vault + '✍Writing\\custom_latex_functions.tex',
                 },
         'par':
             {
@@ -215,13 +218,14 @@ def get_parameters(version = 'default'):
                                     ['pdfcomment',  None,                                     'for popup comments in the .pdf'],
                                     ['booktabs',    None,                                      'so that the toprule command works'],
                                     ['soul',        None,                                      'to strikeout text using \\st{}'],
-									['twemojis',	None,										'for twoemojis']									
+									['twemojis',	None,										'for twemojis'],			
+                                    ['rotating',    None,                                       'for rotating text on tables']						
                                     ],
             'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
 											['✔',              '\\checkmark',            1],
 											['🟢',              '$\\\\blacklozenge$',    2],
 											['🔴',              '\\\maltese',            2],
-											['➕',              '\\twemoji{plus}',            2],    # Alternatives: ['$\\\\boxplus$']
+											['➕',              '\\twemoji{plus}',            1],    # Alternatives: ['$\\\\boxplus$']
 											['🔗',              'LINK',                  1],
 											['\implies',        '\Rightarrow',            1],
 											['❓❓',              '?',                     1],
@@ -233,15 +237,17 @@ def get_parameters(version = 'default'):
 											['📜',              '\\twemoji{page with curl}',                      1],
 											['⌛',               '\\twemoji{hourglass}',                     1],
 											['🔭',              '\\twemoji{telescope}',                     1],
-											['👆',              '',                      1],
+											['👆',              '\\twemoji{index pointing up}',                      1],
 											['💭',              '\\twemoji{thought balloon}',                      1],
 											['🔧',              '\\twemoji{screwdriver}', 1],
            									['⛏',				 '\\twemoji{pick}',        1],
 											['⏳',				 '\\twemoji{hourglass}',   1],
-                                            ['🧪',                  '\\twoemoji{test tube}',           1],
-                                            ['⭐',                  '\\twoemoji{star}',           1],
-                                            ['💡',                  '\\twoemoji{light bulb}',           1],
-											['📅',                  '\\twoemoji{date}',           1],
+                                            ['🧪',                  '\\twemoji{test tube}',           1],
+                                            ['⭐',                  '\\twemoji{star}',           1],
+                                            ['💡',                  '\\twemoji{light bulb}',           1],
+											['📅',                  '\\twemoji{date}',           1],
+                                            ['📍',                '\\twemoji{round pushpin}',           1],
+                                            ['📜',                  '\\twemoji{scroll}',          1] ,
                                             ]
             },
             #                                        ['\\text',          '\\textnormal',          1],
