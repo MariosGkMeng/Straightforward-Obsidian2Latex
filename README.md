@@ -292,6 +292,8 @@ BUT: as a user, you have to add the BibTex citation manually in your designated 
 I will add different rules upon user request.
 
 ### (NEW) Converting inline (dataview) code
+[back to comparisons to other converters](#comparisons-to-other-converters)
+
 For when you want to parameterize your document, here's a handy trick. You might have some fields in a note that contain text that you programmatically insert into your document. 
 
 For example, assume that you have a note titled `fields_for_report`. In that note, you might have the field:
@@ -309,6 +311,8 @@ We used method_1. `=choice([[fields_for_report]].argument_1[0], [[fields_for_rep
 ```
 
 ### (NEW) Parameterizing whether parts in the document will appear in the pdf file
+[back to comparisons to other converters](#comparisons-to-other-converters)
+
 In case you want to be able to parameterize the appearance of larger parts in the document, you can use the following syntax:
 
 ```
@@ -325,6 +329,8 @@ Regretably, LateX suffers from one more flaw; that of needing to be concious of 
 This is controlled in `get_parameters.py`, in the `PARS['par']['packages-to-load']` list. The first entry of this list contains the package, the second contains the document class for which this package should **not** be loaded (e.g., the package `cleveref` should not be loaded when using the `ifacconf` document class).
 
 ### For things that are not converted yet
+[back to comparisons to other converters](#comparisons-to-other-converters)
+
 Despite the fact that there are still a few features that have not yet been fully developed, it is possible to fully compose a document completely via Obsidian. 
 This is possible through the recognition of **LateX command snippets**. A command snippet is something that looks like:
 
