@@ -16,12 +16,26 @@ def convert_inline_code_of_line(text):
     
     return latex_text
 
-
 def convert_inline_code(S):
     S1 = []
     for s in S: S1.append(convert_inline_code_of_line(s))
     return S1
-        
+
+def convert_inline_field_placement_command(S, PARS):
+    pattern = re.compile(r'=\[\[(.*?)\]\]\.([a-zA-Z_][a-zA-Z0-9_-]*)')
+
+    S1 = []
+    for line in S:
+        matches = pattern.findall(line)
+        for match in matches:
+            obsidian_note = f'[[{match[0]}]]'
+            replacement_text = get_fields_from_Obsidian_note(get_embedded_reference_path(match[0], PARS), [match[1]+":: "])[0][0]
+            line = line.replace(f'`={obsidian_note}.{match[1]}`', replacement_text)
+            
+        S1.append(line)
+    return S1
+
+
 def convert_inline_commands_with_choice(S, PARS):
     
     pattern = r"`= *choice\(.*?`"
@@ -41,15 +55,19 @@ def convert_inline_commands_with_choice(S, PARS):
                 try:
                     replace_with = fields_res[1]
                 except:
-                    arg2 = f'{ee[0][1][1][0]}'
-                    if arg2.startswith('💭ltx--'):
-                        # is latex comment
-                        with open(get_embedded_reference_path(arg2, PARS, search_in = 'vault'), 'r', encoding='utf8') as file: 
-                            tmp1 = '.'.join(file.readlines())
-                            tmp1 = tmp1.replace('\n', '')
-                            tmp1 = f'\\textcolor{{red}}{{{tmp1}}}'
-                            replace_with = f"\ignore{{{tmp1}}} "
-                        
+                    try:
+                        arg2 = f'{ee[0][1][1][0]}'
+                        if arg2.startswith('💭ltx--'):
+                            # is latex comment
+                            with open(get_embedded_reference_path(arg2, PARS, search_in = 'vault'), 'r', encoding='utf8') as file: 
+                                tmp1 = '.'.join(file.readlines())
+                                tmp1 = tmp1.replace('\n', '')
+                                tmp1 = f'\\textcolor{{red}}{{{tmp1}}}'
+                                replace_with = f"\ignore{{{tmp1}}} "
+                    except:
+                        replace_with = ''
+                                
+                            
                     
                 if replace_with.startswith(2*' '): replace_with = replace_with[1:]
             else:
@@ -129,7 +147,7 @@ def code_block_converter(S, PARS):
                                         if not t_type in S[j]:
                                             break
                                         else:
-                                            S[j] = '{\Large \\textbf{' + t_type + '}}\n\n\\newline'
+                                            S[j] = '{\Large \\textbf{' + t_type + '}}\n\n'
                                             S[j+1] = ''
                                             title = ' '
                                             color = 'cyan'
