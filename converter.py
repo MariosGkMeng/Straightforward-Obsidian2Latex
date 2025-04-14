@@ -183,7 +183,7 @@ def identify__tables(S):
 
     return table_indexes
 
-
+RAISE_EXCEPTION_IN_STYLISTIC_USER_ERRORS = False
 
 def simple_stylistic_replacements(S, type=None):
 
@@ -246,7 +246,8 @@ def simple_stylistic_replacements(S, type=None):
             for R in replacements:
                 s = s.replace(R[0], R[1])
         else:
-            raise Exception("You have added an odd number of the '" + style_char + "' character in the string: '" + s + "'")
+            if RAISE_EXCEPTION_IN_STYLISTIC_USER_ERRORS:
+                raise Exception("You have added an odd number of the '" + style_char + "' character in the string: '" + s + "'")
         
         S1.append(s)
     
@@ -296,6 +297,51 @@ def get_reference_blocks(S):
     return blocks
 
 
+def evaluate_obsidian_expression(expr, markdown_file, PARS):
+
+    if expr.startswith("`") and expr.endswith("`"):
+        expr = expr.replace("`", "")
+        parts = expr.split(".")
+        
+        assert parts[0][0] == "=", "Invalid expression format"
+        assert " " not in parts[0], "Invalid expression format"
+        assert " " not in parts[1], "Invalid expression format"   
+             
+        note_name = parts[0][1:]
+        if note_name == 'this':
+            note_name = markdown_file
+        
+        return get_fields_from_Obsidian_note(get_embedded_reference_path(note_name,PARS), [parts[1]+":: "])[0][0]    
+    else:
+        return expr.lower()
+
+def check_for_skipped_content(content, markdown_file, PARS):
+    
+    idxs = [i for i, s in enumerate(content) if s.startswith("#Latex/Command/Use_section")]    
+    assert len(idxs) % 2 ==0, "You have to define the start and end of the section in the command note!"
+
+    idx_skip = []
+    for i in range(int(len(idxs)/2)):
+        start = idxs[2*i]
+        end = idxs[2*i+1]
+        value = content[start].replace("#Latex/Command/Use_section/Start","").strip().replace("(","").replace(")","")
+        
+        if evaluate_obsidian_expression(value, markdown_file, PARS) == "false":
+            idx_skip.append([start, end])
+
+    # Flatten out the skip ranges into a set of indices to skip (including start and end)
+    skip_indices = set()
+    for start, end in idx_skip:
+        skip_indices.update(range(start, end + 1))  # notice the +1 to include 'end'
+
+    # Build content_1 without the skipped entries
+    content_1 = [item for i, item in enumerate(content) if i not in skip_indices]
+
+    content = copy.copy(content_1)
+    
+    return content
+
+
 PATHS = PARS['📁']
 
 markdown_file = get_fields_from_Obsidian_note(PATHS['command_note'], ['convert_note:: '])[0][0]
@@ -314,24 +360,30 @@ PARS['📁']['tex-file'] = PATHS['tex-file']
 with open(PATHS['markdown-file'], 'r', encoding='utf8') as f:
     content = f.readlines()
     
+content = check_for_skipped_content(content, markdown_file, PARS)
+    
 tmp1 = '#Latex/Command/Invoke_note'
-cnd_1 = True
-while cnd_1:
-    for i, s in enumerate(content):
-        if s.startswith(tmp1):
-            embedded_ref=s.replace(tmp1, '').strip() 
-            unfolded_content = get_unfolded_and_converted_embedded_content(embedded_ref, 'vault', True, False, PARS)
-            content = content[:i] + ['% START'+s] + unfolded_content + ['\n'*2] + ['% END'+s] + content[i+1:] + ['\n'*2]
-            break
-    if i == len(content)-1:
-        cnd_1 = False
 
+content_1 = []
+
+for i, s in enumerate(content):
+    if s.startswith(tmp1):
+        # embedded_ref=s.replace(tmp1, '').strip() 
+        # unfolded_content = get_unfolded_and_converted_embedded_content(embedded_ref, 'vault', True, False, PARS)
+        # content = content[:i] + ['% START'+s] + unfolded_content + ['\n'*2] + ['% END'+s] + content[i+1:] + ['\n'*2]
+        s = s.replace(tmp1, '').replace('[[', '![[')
+        # break
+    content_1.append(s)
+
+content = copy.copy(content_1)
 content = remove_markdown_comments(content)
 
 # Convert bullet and numbered lists
 content = bullet_list_converter(content)
 
 [content, md_notes_embedded] = unfold_all_embedded_notes(content, PARS)
+
+content = check_for_skipped_content(content, markdown_file, PARS)
 
 # Convert bullet and numbered lists again, since we have unfolded a bunch of embedded notes
 content = bullet_list_converter(content)
@@ -490,16 +542,22 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     #     for idx_table in IDX__TABLES:
     #         LATEX_TABLES.append(convert__tables(content[idx_table[0]:idx_table[1]]))
         
+    
+
+    content = convert_inline_field_placement_command(content, PARS)
+        
     cnd_choice_cmd_found = True
     while cnd_choice_cmd_found:
         content, cnd_choice_cmd_found = convert_inline_commands_with_choice(content, PARS)
+        
+    
 
 
     if PARS['⚙']['EMBEDDED REFERENCES']['convert_non_embedded_references']:        
         content = non_embedded_references_converter(content, PARS) 
 
     # Replace "#" with "" (temporary patch ➕)
-    content = [x.replace("#", "") for x in content]
+    content = [x.replace("#", "\#") for x in content]
 
     LATEX = []
     i0 = IDX__TABLES[0]
@@ -572,7 +630,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     is_ifac = document_class['class'] == 'ifacconf'
     
     try:
-        custom_latex = [line for line in open(PATHS['custom_latex_functions'])]
+        custom_latex = [line for line in open(PATHS['custom_latex_commands'])]
     except:
         custom_latex = []
     
@@ -603,7 +661,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     for line in LATEX:
         LATEX1.append(escape_underscores_in_texttt(line))
 
-    LATEX = PREAMBLE + LATEX1 + ['\\newpage \n '*paragraph['add_new_page_before_bibliography'] + '\n'*5 + '\\bibliographystyle{apacite}']+\
+    LATEX = PREAMBLE + LATEX1 + [('\\newpage \n '*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5 + '\\bibliographystyle{apacite}']+\
         ['\\bibliography{' + PATHS['bibtex_file_name'] + '}'] + ['\end{document}']
 
     # if '[[✍⌛writing--FaultDiag--Drillstring--MAIN]]' in markdown_file:
