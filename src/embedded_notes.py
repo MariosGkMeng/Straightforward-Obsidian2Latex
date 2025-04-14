@@ -183,7 +183,7 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                         if cnd__use_hyperref:
                             hyperref = f'\hyperref[{label_latex_format}]{hyperref_text}'
                             if options['add_section_number_after_referencing']:
-                                hyperref += f": \\autoref{{{label_latex_format}}}"
+                                hyperref += f" (\\autoref{{{label_latex_format}}})"
                         elif cnd__use_hyperhyperlink:
                             # for blocks, better write "hyperlink"
                             hyperref = f'\hyperlink{{{label_latex_format}}}{hyperref_text}'
@@ -395,9 +395,16 @@ def content_filter_2_name_latex_command(s, x, mref):
     else:
         return x
 
+def content_filter_inline_code_snippets(S, note_path):
+    S1 = []
+    for s in S:
+        if '`=this.file.cday' in s:
+            s = s.replace('`=this.file.cday`', get_file_cday(note_path))
+        S1.append(s)
+    return S1
 
 def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
-
+    
     '''
     Unfolds the content of embedded notes in the given list of notes.
 
@@ -492,6 +499,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 section_name = section.lstrip('#')
                 content__unfold = extract_section_from_file(path_embedded_reference, section_name)
                 content__unfold = content_filter_1(content__unfold, S, line_number)
+                content__unfold = content_filter_inline_code_snippets(content__unfold, path_embedded_reference)
                     
                 if is_in_normal_case:
                     # since we don't expect to have comments in the single block (code optimization)
@@ -656,6 +664,7 @@ def change_section_hierarchy(content__unfold, S, line_number):
     for c in content__unfold:
         has_section = extract_section_from_line(c)
         if has_section:
+            has_section[0] = has_section[0].strip()
             previous_level = len(has_section[0])
             c1 = has_section[0] + level*'#' + ' ' + c[previous_level:].lstrip()
         else:
@@ -666,4 +675,4 @@ def change_section_hierarchy(content__unfold, S, line_number):
     return content__unfold_modified
 
 def extract_section_from_line(line):
-    return re.findall(r'^#+', line)
+    return re.findall(r'^#+\s+', line)
