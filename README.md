@@ -2,7 +2,6 @@
  (➕under construction)
 
 
-
 |                                                                                                                                                                                                                                  | This repo | Pandoc Plugin                                  | Copy as Latex | Enhancing Export   |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ---------------------------------------------- | ------------- | ------------------ |
 | Embedded notes                                                                                                                                                                                                                   | ✔         | ❌                                              | ❌             | not running for me |
@@ -16,9 +15,7 @@
 | Can control the sizes and latex class types for figures and tables from Obsidian                                                                                                                                                 | ✔         | ❓                                              | ❓             | not running for me |
 | [Can treat cases wherein the note to be converted is too complicated, resulting in severe RAM consumption](#for-when-the-note-to-be-converted-is-too-large-and-contains-many-embedded-notes-resulting-in-severe-ram-consumption) | ✔         | ❌                                              | ❌             | not running for me |
 | Can convert [admonition blocks](https://notes.nicolevanderhoeven.com/Obsidian+Admonition)                                                                                                                                        | ✔         | ❓                                              | ❓             | not running for me |
-
-
-\*(but only when most of the embedded references are listed in `PARS['📂']['list_paths_notes']`). If they are not listed, this means that the converter has to search through the vault and append their paths on the list, which can take some time for large vaults. However, once the paths are on the list, it is much faster to extract them from there.
+| [Parameterization code that hides parts of the note programmatically](#new-parameterizing-whether-parts-in-the-document-will-appear-in-the-pdf-file)                                                                                                                                                                               | ✔         | ❓                                              | ❓             | not running for me |
 
 # 📽 General Video (under development)
 General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video I've rendered so far [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
@@ -311,7 +308,17 @@ And then, in the `main` note (the one you want to convert to latex), you can wri
 We used method_1. `=choice([[fields_for_report]].argument_1[0], [[fields_for_report]].argument_1[1], "")`
 ```
 
+### (NEW) Parameterizing whether parts in the document will appear in the pdf file
+In case you want to be able to parameterize the appearance of larger parts in the document, you can use the following syntax:
 
+```
+#Latex/Command/Use_section/Start (expression)
+
+Your content here
+
+#Latex/Command/Use_section/End
+```
+where `expression` can be either inline code that produces a boolean value (e.g., `=this.use_part_A`) or `true`/`false`. 
 
 ### Mapping packages that should not be combined
 Regretably, LateX suffers from one more flaw; that of needing to be concious of packages that should not be loaded together. 
