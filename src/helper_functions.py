@@ -1,6 +1,25 @@
 import os
 import numpy as np
 import re
+import datetime
+
+def get_file_cday(file_path):
+    """
+    Returns the creation date of the given file as a formatted string (YYYY-MM-DD).
+    """
+    if not os.path.exists(file_path):
+        return "Unknown"
+
+    # On Windows, use creation time
+    if os.name == 'nt':
+        ctime = os.path.getctime(file_path)
+    else:
+        # On Unix-like systems, use birth time if available; otherwise, fallback to modification time
+        stat = os.stat(file_path)
+        ctime = getattr(stat, 'st_birthtime', stat.st_mtime)
+
+    return datetime.datetime.fromtimestamp(ctime).strftime('%Y/%m/%d')
+
 
 def replace_outside_brackets(s, replace_list, replacement_list):
     replace_map = dict(zip(replace_list, replacement_list))
