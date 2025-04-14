@@ -3,9 +3,11 @@ import os
 import numpy as np
 from helper_functions import *
 import copy
+from special_characters import get_special_characters
 
+allowed_chars = get_special_characters()
 
-def parse_dataview_query_0(query: str):
+def parse_dataview_query_0(query: str, vault_folder: str):
     result = {}
     
     # Step 1: Check if it's a Dataview table query
@@ -121,9 +123,9 @@ def extract_fields_from_query(query: str):
     return fields
 
 def is_path(element):
-    return bool(re.match(r'^[\w\-./]+$', element.strip('"')))  # Matches typical paths
+    return bool(re.match(fr'^[{allowed_chars}]+$', element.strip('"'), re.UNICODE))
 
-def parse_dataview_query(query: str):
+def parse_dataview_query(query: str, vault_folder: str):
     result = {}
     
     # Step 1: Check if it's a Dataview table query
@@ -137,7 +139,7 @@ def parse_dataview_query(query: str):
     # Step 3: Extract folder name (after 'from')
     code_version = 1
     if code_version == 0:
-        from_match = re.search(r'from\s+"([^"]+)"', query)
+        from_match = re.search(r'(?i)from\s+"([^"]+)"', query)
         if from_match:
             result["folder"] = from_match.group(1)
     elif code_version == 1:        
@@ -148,7 +150,9 @@ def parse_dataview_query(query: str):
             # Split while keeping AND/OR and preserving quotes & [[brackets]]
             parts = re.split(r'\s+(AND|OR)\s+', content)
             
-            if is_path(parts[0]): result["folder"] = parts[0].replace('"', '')  # Extract the folder name
+            # if is_path(parts[0]): result["folder"] = parts[0].replace('"', '')  # Extract the folder name
+            rel_path = parts[0].replace('"', '').replace("'", "").replace("/", "\\")
+            if os.path.exists(vault_folder+rel_path): result["folder"] = parts[0].replace('"', '')  # Extract the folder name
             
             if len([p for p in parts[0::2] if is_path(p)]) > 1:
                 raise ValueError("Multiple paths detected in FROM clause. Haven't included this case yet.")
@@ -170,29 +174,50 @@ def parse_dataview_query(query: str):
         
         # We now want to handle both "AND" and "OR" within the where clause
         # Split by "AND" and "OR", and also capture the operator
-        filter_pattern = r'(\w+\([^\)]+\s*,\s*"[^"]*"\))\s*(AND|OR)?'
+        filter_pattern = r'(\w+\([^\)]+\s*,\s*"[^"]*"\)|\w+)|\s+(AND|OR)'
+
+        matches = list(re.finditer(filter_pattern, where_clause))
         filters = []
-        
-        for match in re.finditer(filter_pattern, where_clause):
-            filter_expr = match.group(1)
-            logic = match.group(2) if match.group(2) else 'AND'  # Default logic is 'AND'
-            
-            # Extract field and value from the contains function
-            contains_pattern = r'(\w+)\(([^,]+),\s*"([^"]+)"\)'
-            contains_match = re.match(contains_pattern, filter_expr)
-            
-            if contains_match:
-                field = contains_match.group(2).strip()
-                value = contains_match.group(3).strip()
+
+        prev_filter = None  # To track previous expression
+
+        for match in matches:
+            filter_expr = match.group(1)  # Condition (function or standalone word)
+            logic = match.group(2)  # Logical operator (AND/OR)
+
+            if filter_expr:
+                # This is a condition (function or standalone field)
+                if prev_filter:
+                    filters.append(prev_filter)  # Save the previous filter before moving on
+                prev_filter = {
+                    "type": "function" if "(" in filter_expr else "standalone",
+                    "field": filter_expr,
+                    "logic": "AND"  # Default logic, will be updated if followed by AND/OR
+                }
+            elif logic and prev_filter:
+                # This is an AND/OR operator, update the last saved filter
+                prev_filter["logic"] = logic
+
+        # Add the last saved filter
+        if prev_filter:
+            filters.append(prev_filter)
+
+        # Post-process to extract function details
+        filters_1 = []
+        for filter_entry in filters:
+            if filter_entry["type"] == "function":
+                contains_pattern = r'(\w+)\(([^,]+),\s*"([^"]+)"\)'
+                contains_match = re.match(contains_pattern, filter_entry["field"])
+                if contains_match:
+                    filter_entry.update({
+                        "function": contains_match.group(1),
+                        "field": contains_match.group(2).strip(),
+                        "value": contains_match.group(3).strip()
+                    })
+                    
+            filters_1.append(filter_entry)
                 
-                filters.append({
-                    "function": "contains",
-                    "field": field,
-                    "value": value,
-                    "logic": logic
-                })
-        
-        result["filters"] = filters
+        result["filters"] = filters_1
     
     return result
 
@@ -205,8 +230,17 @@ def apply_filter_logic(filters, fields, file_content, other_from_filters):
         filter_pass = False
 
         # Check if the filter function is contains (as an example)
-        if filter['function'] == 'contains':
-            filter_pass = any(filter['value'] in value for value in field_value)
+        if filter['type'] == 'function':
+            if filter['function'] == 'contains':
+                filter_pass = any(filter['value'] in value for value in field_value)
+            else:
+                raise NotImplementedError(f"Filter function '{filter['function']}' not implemented")
+        elif filter['type'] == 'standalone':
+            # raise NotImplementedError(f"Filter type 'standalone' not implemented")
+            if field_value:
+                if field_value[0].strip().replace(":: ", "")=='true':
+                    filter_pass = True
+            
 
         # Add more conditional functions here as needed, like startswith, etc.
 
@@ -235,6 +269,14 @@ def filter_files_with_logic(parsed_query, files):
     for file in files:
         # Extract the fields from the file
         fields = get_fields_from_Obsidian_note(file, [filter['field'] for filter in parsed_query['filters']])
+        # fields_1 = []
+
+        
+        # for f in fields:
+        #     for f_i  in f:
+        #         fields_1.append(f_i.replace(":: ", ""))
+        # fields = fields_1
+        
         try:
             with open(file, 'r', encoding='utf-8') as f:
                 file_content = f.read()  # Read the entire file content as a string
@@ -434,7 +476,7 @@ def sort_evaluated_fields(all_evaluated_fields, files, parsed_query):
     """
     sort_instructions = parsed_query.get('sort', [])  # List of sorting conditions
     if not sort_instructions:
-        return all_evaluated_fields  # No sorting needed
+        return all_evaluated_fields, files  # No sorting needed
 
     # Apply sorting with ascending/descending order
     reverse_order = sort_instructions['order']=='desc'
@@ -471,9 +513,9 @@ def sort_evaluated_fields(all_evaluated_fields, files, parsed_query):
 def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_column_name='File Name'):
     
     query = query_text
-    parsed_query = parse_dataview_query(query)
-
     vault_folder = PATHS['vault']
+    parsed_query = parse_dataview_query(query, vault_folder)
+    
     parsed_query['folder'] = parsed_query['folder'].replace('/', '\\')
     files = get_all_files_in_folder(vault_folder, parsed_query['folder'])
     files = [f for f in files if f.endswith('.md')]
