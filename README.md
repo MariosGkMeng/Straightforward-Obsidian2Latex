@@ -6,7 +6,7 @@
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ---------------------------------------------- | ------------- | ------------------ |
 | Embedded notes                                                                                                                                                                                                                   | ✔         | ❌                                              | ❌             | not running for me |
 | Equations                                                                                                                                                                                                                        | ✔         | ❌❓ --> maybe not, was not able to do it so far | ✔             | not running for me |
-| Equation referencing                                                                                                                                                                                                             | ✔         | ❌ (seems to not be working)                    | ❌             | not running for me |
+| [Equation referencing](#adding-equations)                                                                                                                                                                                                             | ✔         | ❌ (seems to not be working)                    | ❌             | not running for me |
 | Is fast                                                                                                                                                                                                                          | ✔ \*      | ✔✔                                             | ✔✔            | not running for me |
 | Ignores comments                                                                                                                                                                                                                 | ✔         | ✔                                              | ✔             | not running for me |
 | [Converting inline dataview code](#new-converting-inline-dataview-code)                                                                                                                                                          | ✔         | ❌                                              | ❌             | not running for me |
@@ -244,10 +244,12 @@ In `👨‍💻convert_to_latex.md`, click on the links next to the `code_run:: 
 Make sure you first set the correct path to the `converter.py` file that runs the code. This basically opens the python file, which executes it. Make sure that the default app for opening the python file is python, not some editor (otherwise, you need to trigger a .bat file that triggers the .py file).
 
 ### Adding equations
+[back to comparisons to other converters](#comparisons-to-other-converters)
+
 This uses what we can call "**==note-block logic==**". I.e., writing the equation in a single note, but without writing anything else in that note (hence the "block" part of the name). We will use the same logic for Tables and Figures, so that their referencing becomes easier, and automatic upon name changes.
 
 
-Due to the inherent difficulty of equation numbering in Obsidian (read this [thread](https://forum.obsidian.md/t/automatic-equation-numbering-latex-math/1325) for details), there is no direct way to number and refer to the equations in Obsidian.
+Due to the inherent difficulty of equation numbering and referencing in Obsidian (read this [thread](https://forum.obsidian.md/t/automatic-equation-numbering-latex-math/1325) for details), there is no direct way to number and refer to the equations in Obsidian.
 
 The workaround that I have used requires creation of a separate note wherein only the equation is to be added. The note has to obey a few formatting rules, which can be automated with **QuickAdd**. To learn how to use it, please refer to the plugin guide. It is quite easy. 
 
