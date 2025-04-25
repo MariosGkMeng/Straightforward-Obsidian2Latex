@@ -1,0 +1,22 @@
+\usepackage{tikz}
+\usepackage{xcolor}
+
+% Command to insert vertical lines and new pages
+\newcommand{\DrawVerticalLines}[1]{%
+	\ifnum#1>0
+	\begin{tikzpicture}[remember picture, overlay]
+		\draw[thick] (1cm, 0cm) -- (1cm, -\textheight); % Vertical line
+	\end{tikzpicture}
+	\newpage
+	\DrawVerticalLines{\numexpr#1-1\relax} % Recursive call
+	\fi
+}
+
+% Define a new counter for observations
+\newcounter{observation}
+
+% Define the Observation environment
+\newenvironment{observation}[1][]{%
+	\refstepcounter{observation} % Increase counter and make it referenceable
+	\par\noindent\textbf{Observation \theobservation.} % Bold heading with number
+}{\par}
