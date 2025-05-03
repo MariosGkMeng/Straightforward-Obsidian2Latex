@@ -6,8 +6,10 @@ import numpy as np
 from os.path import exists
 import subprocess
 # For time profiling
-from cProfile import Profile
-from pstats import SortKey, Stats
+import time
+import cProfile
+import pstats
+import io
 import copy
 #
 
@@ -341,6 +343,19 @@ def check_for_skipped_content(content, markdown_file, PARS):
     
     return content
 
+def convert_any_tags(S):
+    
+    lines_content = [(i, s) for i, s in enumerate(S) if "#" in s]
+    pattern = r'#\S+'
+    for i, s in lines_content:
+        matches = re.findall(pattern, s)
+        for match in matches:
+            tag = match.replace('#', '')
+            s = s.replace(match, '\\texttt{' + tag + '}')
+            S[i] = s
+            
+    return S
+
 
 PATHS = PARS['📁']
 
@@ -486,6 +501,9 @@ content = convert_referencing(content, 'figures', cleveref_allowed = cleveref_al
 content = EQUATIONS__check_and_correct_aligned_equations(content)
 content = convert_referencing(content, 'tables', cleveref_allowed = cleveref_allowed)
 
+content = convert_any_tags(content)
+
+
 # Find sections and blocks again, since the content lines have been re-arranged
 i0 = 0
 for iS, sec in enumerate(sections):
@@ -550,11 +568,24 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     while cnd_choice_cmd_found:
         content, cnd_choice_cmd_found = convert_inline_commands_with_choice(content, PARS)
         
-    
-
-
+        
     if PARS['⚙']['EMBEDDED REFERENCES']['convert_non_embedded_references']:        
+        
+        # Create and run profiler
+        pr = cProfile.Profile()
+        pr.enable()
+
         content = non_embedded_references_converter(content, PARS) 
+        pr.disable()
+        s = io.StringIO()
+        ps = pstats.Stats(pr, stream=s).sort_stats('cumulative')
+        ps.print_stats()
+
+        # Save to text file
+        with open("profile_output.txt", "w") as f:
+            f.write(s.getvalue())
+
+    
 
     # Replace "#" with "" (temporary patch ➕)
     content = [x.replace("#", "\#") for x in content]
@@ -660,8 +691,13 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     LATEX1 = []
     for line in LATEX:
         LATEX1.append(escape_underscores_in_texttt(line))
+         
+    LATEX2 = []
+    for line in LATEX1:
+        LATEX2.append(escape_underscores_in_sections(line))
 
-    LATEX = PREAMBLE + LATEX1 + [('\\newpage \n '*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5 + '\\bibliographystyle{apacite}']+\
+
+    LATEX = PREAMBLE + LATEX2 + [('\\newpage \n '*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5 + '\\bibliographystyle{apacite}']+\
         ['\\bibliography{' + PATHS['bibtex_file_name'] + '}'] + ['\end{document}']
 
     # if '[[✍⌛writing--FaultDiag--Drillstring--MAIN]]' in markdown_file:
@@ -685,7 +721,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     MESSAGES_TO_PRINT = [print__what_was_converted]
 
     [print(msg) for msg in MESSAGES_TO_PRINT]
-    clickable_files = f'[📁tex file](<file:///{PARS["📁"]["tex-file"]}>), [📁.pdf file](<file:///{PARS["📁"]["tex-file"].replace(".tex", "")}.pdf>)'
+    clickable_files = f'[📁tex file](<file:///{PATHS["tex-file"]}>), [📁.pdf file](<file:///{PATHS["tex-file"].replace(".tex", "")}.pdf>)'
     replace_fields_in_Obsidian_note(PATHS['command_note'], ['files:: '], [clickable_files])
 
         
