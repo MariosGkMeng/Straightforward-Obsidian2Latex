@@ -52,8 +52,9 @@ def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
         lines = file.readlines()
     
     # Search for the fileName in the lines and retrieve associated paths
+    fileName = fileName.strip().replace('[[', '').replace(']]', '')
     fileName = fileName.strip().replace('.md', '')
-    matching_paths = [line.strip() for line in lines if line.startswith(fileName+":")]
+    matching_paths = [line.strip() for line in lines if line.startswith(fileName+":") or ("\\"+fileName+":" in line)]
 
 
     found_extension_that_is_not_md = False
@@ -87,12 +88,12 @@ def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
                 return path
 
     else:
-        fileName = fileName.replace('/', '\\').strip()
+        fileName = fileNameWithExtension.replace('/', '\\').strip()
         is_entire_path = '\\' in fileName
         if not is_entire_path:
             path_found = search_embedded_reference_in_vault(fileNameWithExtension, PARS, search_in='vault')
             if path_found: 
-                update_list_of_embedded_note_paths(fileName, path_found, path_list_of_notes)
+                update_list_of_embedded_note_paths(fileName.replace('.md', ''), path_found, path_list_of_notes)
                 return path_found
             else:
                 raise Exception(f"No information found for '{fileName}' in the provided text file and unable to find an alternative path.")
