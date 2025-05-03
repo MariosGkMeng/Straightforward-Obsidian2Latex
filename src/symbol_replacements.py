@@ -1,5 +1,32 @@
 import re
 
+
+def escape_underscores_in_sections(text):
+    """
+    Escapes underscores in section-related LaTeX commands such as \section, \subsection, etc.
+    
+    Parameters:
+        text (str): A single line of LaTeX code.
+    
+    Returns:
+        str: The line with underscores escaped if it's a section-related command.
+    """
+    # List of LaTeX sectioning commands to check
+    section_commands = ['section', 'subsection', 'subsubsection', 'paragraph', 'subparagraph']
+    
+    for command in section_commands:
+        # Match lines like \section{Some_text_here}
+        pattern = rf'(\\{command}\*?\s*\{{)([^}}]*)(\}})'
+        match = re.search(pattern, text)
+        if match:
+            before, content, after = match.groups()
+            # Escape underscores in the content part
+            escaped_content = content.replace('_', r'\_')
+            return f"{before}{escaped_content}{after}"
+    
+    return text
+    
+
 def symbol_replacement(S, SYMBOLS_TO_REPLACE):
     
     S_1 = []
