@@ -223,9 +223,9 @@ def get_parameters(version = 'default'):
                                     ],
             'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
 											['✔',              '\\checkmark',            1],
-											['🟢',              '$\\\\blacklozenge$',    2],
+											['🟢',              '$\\blacklozenge$',    2],
 											['🔴',              '\\maltese',            2],
-											['➕',              '\\twemoji{plus}',            1],    # Alternatives: ['$\\\\boxplus$']
+											['➕',              '\\twemoji{plus}',            1],    # Alternatives: ['$\\boxplus$']
 											['🔗',              'LINK',                  1],
 											['\\implies',        '\\Rightarrow',            1],
 											['❓❓',              '?',                     1],

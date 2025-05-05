@@ -552,7 +552,7 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_colu
         table_data[row_index][1] = dum1
         
         for col_index, field in enumerate(file_fields):
-            table_data[row_index][col_index + 2] = field['expression'].replace('|', '\|')  # Start from column 2 for the fields
+            table_data[row_index][col_index + 2] = field['expression'].replace('|', '\\|')  # Start from column 2 for the fields
 
     # Generate the markdown table
     markdown_table = write_Obsidian_table(table_data)

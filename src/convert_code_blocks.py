@@ -82,8 +82,8 @@ def code_block_converter(S, PARS):
     if not isinstance(S, list):
         raise Exception('The input needs to be a list!')
     
-    begin_text_0 = '\\begin{minted}'
-    end_text_0 = '\end{minted}'
+    begin_text_0 = r'\begin{minted}'
+    end_text_0 = r'\end{minted}'
 
     counter = 0
     S1 = []
@@ -136,7 +136,7 @@ def code_block_converter(S, PARS):
                             colupper = settings__admonition_block[1]
                             title = kind_of_block
 
-                            end_text = '\end{'+'tcolorbox'+'}'
+                            end_text = r'\end{'+r'tcolorbox'+'}'
 
                             # Check for observation block
                             if kind_of_block == 'attention':
@@ -156,12 +156,12 @@ def code_block_converter(S, PARS):
                                     j += 1
                             
                             begin_text =\
-                                '\\begin{'+\
-                                'tcolorbox'+\
-                                '}[width=' + str(1/PARS['num_columns']) + '\\textwidth,colback={' +\
+                                r'\begin{'+\
+                                r'tcolorbox'+\
+                                r'}[width=' + str(1/PARS['num_columns']) + r'\textwidth,colback={' +\
                                 color +\
-                                '},title={' +\
-                                title + '},outer arc=0mm,colupper='+colupper+']'
+                                r'},title={' +\
+                                title + r'},outer arc=0mm,colupper='+colupper+']'
 
                 else:
                     language_additive = ''

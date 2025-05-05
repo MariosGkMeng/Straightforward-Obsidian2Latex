@@ -2,8 +2,8 @@ import re
 from helper_functions import *
 from remove_markdown_comment import *
 
-begin_type = ["\n\\begin{itemize}\n", "\n\\begin{enumerate}\n", "\n\\begin{todolist}\n"]
-end_type = ["\\end{itemize}\n", "\\end{enumerate}\n", "\\end{todolist}\n"]
+begin_type = [r"\n\begin{itemize}\n", r"\n\begin{enumerate}\n", r"\n\begin{todolist}\n"]
+end_type = [r"\end{itemize}\n", r"\end{enumerate}\n", r"\end{todolist}\n"]
 
 start_string = ['- ', '', '- [ ]']
 

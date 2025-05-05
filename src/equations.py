@@ -6,7 +6,7 @@ from helper_functions import *
 
 
 # For recognizing file names, section names, block names
-SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
+SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\\(\\)\\(\\)\\.\\-\\s"
 from remove_markdown_comment import *
 from path_searching import *
 
@@ -181,7 +181,7 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
 
             equation_content = equation_match.group(1)
             equation_content = equation_content.split('\\\\')
-            equation_content = ('\\\\' + '\n' + '\t'*1).join(equation_content)
+            equation_content = ('\\\\' + '\\n' + '\\t'*1).join(equation_content)
 
             label_match = equation_match.group(2)
 
@@ -190,13 +190,13 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
                 label_name = re.search(r'\\label\{(eq__block_([^}]+))\}', label_match).group(1)
                 label_name = label_name.replace("eq__block_", "")
 
-            label_statement = rf"\label{{eq:{label_name}}}" if label_name else "%no_label_statement"
+            label_statement = rf"\\label{{eq:{label_name}}}" if label_name else "%no_label_statement"
 
             if aligned_or_split[j] == 'align':
                 begin_end_eq = ['', '']
                 label_statement_alternative = label_statement
             else:
-                begin_end_eq = [f'\\begin{{equation}}{label_statement}', f'\end{{equation}}']
+                begin_end_eq = [f'\\begin{{equation}}{label_statement}', f'\\end{{equation}}']
                 label_statement_alternative = ''
                 
             new_equation = rf"""
@@ -207,7 +207,7 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
             {begin_end_eq[1]}
             """
 
-            new_equation = new_equation.split('\n')
+            new_equation = new_equation.split('\\n')
             new_equation = new_equation[1:-1]
             return new_equation
 
@@ -339,11 +339,11 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
     add_new_line_after_label = True
 
     if add_new_line_after_label:
-        tmp1 = '\n'
+        tmp1 = '\\n'
     else:
         tmp1 = ''
 
-    content__unfold[-1] += f'\label{{{equation_label}}}{anything_after_equation_that_can_be_removed_by_rstrip}{tmp1}'
+    content__unfold[-1] += f'\\label{{{equation_label}}}{anything_after_equation_that_can_be_removed_by_rstrip}{tmp1}'
 
     return content__unfold
 
@@ -370,7 +370,7 @@ def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, ne
         for j, line in enumerate(lines):
             if line.startswith(field):
                 # Replace the field value with the new one
-                lines[j] = f"{field} {new_values[i]}\n"
+                lines[j] = f"{field} {new_values[i]}\\n"
                 break
 
     # Write the updated content back to the file
@@ -396,8 +396,8 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
     
     embedded_tables_text_1 = []
     for line in embedded_tables_text:
-        if not line.endswith('\n'):
-            line += '\n'
+        if not line.endswith('\\n'):
+            line += '\\n'
         embedded_tables_text_1.append(line)
     return embedded_tables_text_1
 
@@ -480,9 +480,9 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     cnd__include_subfigures = len(images) > 1
     cnd__no_subfigures = (not cnd__include_subfigures)
     begin_figure = f'\\begin{{{str_figure}}}'*cnd__no_subfigures + '\\begin{subfigure}'*cnd__include_subfigures
-    end_figure = f'\end{{{str_figure}}}'*cnd__no_subfigures + '\end{subfigure}'*cnd__include_subfigures 
+    end_figure = f'\\end{{{str_figure}}}'*cnd__no_subfigures + '\\end{subfigure}'*cnd__include_subfigures 
     
-    fig_label = '\label{fig:'+label+'}'
+    fig_label = '\\label{fig:'+label+'}'
     
     if cnd__include_subfigures:
         if len(caption_sub)==0:
@@ -507,42 +507,42 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
             begin_figure = [begin_figure + f'[b]{{{widths[i]}\\textwidth}}' for i in range(len(images))]
 
     for i_img, IM in enumerate(images):
-        path_img0 = IM.replace('\\', '/')
+        path_img0 = IM.replace('\\\\', '/')
 
         img_directory = '/'.join(path_img0.split('/')[:-1])
         cndTmp1 = 0
         path_img = '"'*cndTmp1 + path_img0 + '"'*cndTmp1
 
         # check if image is in the same folder as the latex file (in which case, no need to have the absolute path)
-        if (img_directory == '/'.join(latex_file_path.replace('\\', '/').split('/')[:-1])) or (not PARAMETERS['include_path']) or PARAMETERS['use_overleaf_all_in_the_same_folder']:
+        if (img_directory == '/'.join(latex_file_path.replace('\\\\', '/').split('/')[:-1])) or (not PARAMETERS['include_path']) or PARAMETERS['use_overleaf_all_in_the_same_folder']:
             path_img = path_img.replace(img_directory+'/', '')
 
         # label_img = IM.split('\\')[-1]
         caption_long_img = caption_sub[i_img]
-        TO_PRINT.append(' \n'.join([
+        TO_PRINT.append(' \\n'.join([
         begin_figure[i_img],
-        '	\centering',
-        f'	\includegraphics[width={str(figure_width)*cnd__no_subfigures}\linewidth]' + '{"'+path_img+'"}',
-        '	\caption['+caption_short+']'+('{'+caption_long_img+'}')*(len(caption_long)>0),
-        '   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
+        r'	\centering',
+        f'	\\includegraphics[width={str(figure_width)*cnd__no_subfigures}\linewidth]' + '{"'+path_img+'"}',
+        r'	\caption['+caption_short+']'+('{'+caption_long_img+'}')*(len(caption_long)>0),
+        r'   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
         '   '+fig_label*cnd__no_subfigures,
         end_figure]))
 
     y = []
     if cnd__include_subfigures:
         if PARAMETERS['put_figure_below_text']:
-            begin_fig_global = f'\\begin{{{str_figure}}}[htb]\n' # '\\begin{figure}[H]\n'
+            begin_fig_global = f'\\begin{{{str_figure}}}[htb]\\n' # '\\begin{figure}[H]\n'
         else:
-            begin_fig_global = f'\\begin{{{str_figure}}}\n'
+            begin_fig_global = f'\\begin{{{str_figure}}}\\n'
         y.append(begin_fig_global)
-        y.append('\centering\n')
+        y.append('\\centering\\n')
         for fig_lines in TO_PRINT:
             y.append(fig_lines)
-            y.append('\hfill\n')
+            y.append('\\hfill\\n')
 
-        y.append(f'\caption{{{caption_long}}}\n')
-        y.append(fig_label+'\n')
-        y.append(f'\end{{{str_figure}}}\n')
+        y.append(f'\\caption{{{caption_long}}}\\n')
+        y.append(fig_label+'\\n')
+        y.append(f'\\end{{{str_figure}}}\\n')
     else:
         y = TO_PRINT
 
@@ -602,7 +602,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     # Mask internal links that have aliases, otherwise the converter gets confused
     mask_alias = "--alias--"
     for i, s in enum(S):
-        S[i] = s.replace("\\|", mask_alias)
+        S[i] = s.replace("\\\\|", mask_alias)
     #     
         
     add_txt = ''
@@ -654,7 +654,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     if iS_table_start==-1:
         raise Exception("Did not find any tables!")
     
-    cols = [[x.lstrip().rstrip() for x in cols if len(x)>0 and x!='\n']]
+    cols = [[x.lstrip().rstrip() for x in cols if len(x)>0 and x!='\\n']]
 
     if format_column_names_with_bold:
         cols = [[f'**{x}**' for x in sublist] for sublist in cols]
@@ -662,7 +662,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     data = []
     for s in S[iS_table_start+2:]:
         c = s.split('|')
-        c = [x.lstrip().rstrip() for x in c if len(x.lstrip().rstrip())>0 and x!='\n']
+        c = [x.lstrip().rstrip() for x in c if len(x.lstrip().rstrip())>0 and x!='\\n']
         c = ['\\newline'.join(ci.split('<br>')) for ci in c]
         c = [escape_underscore(ci) for ci in c]
         # check for table commands
@@ -704,12 +704,12 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         c1 = [add_txt + x for x in c]
         if i==0: 
             if TABLE_SETTINGS['any-hlines-at-all']:
-                addText = ' \hline' if use_hlines else ''
+                addText = r' \hline' if use_hlines else ''
         else:
             if TABLE_SETTINGS['hlines-to-all-rows']:
-                addText = ' \hline' if use_hlines else ''
+                addText = r' \hline' if use_hlines else ''
                 
-        latex_table.append('    ' + " & ".join(c1) + ' \\\\' + addText)
+        latex_table.append('    ' + " & ".join(c1) + r' \\' + addText)
 
     lbefore = []
 
@@ -736,15 +736,15 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         latex_before_table = lbefore + [
             '%\\begin{center}',
             '\\begin{table}[ht]',
-            '\centering',
+            r'\centering',
             f'\caption{{{caption}}}',
             '\label{tab:' + label + '}',
             '\\begin' + PCKG_NAME + txt_textwith + '{' + table_width + '}',
-            '   \hline'
+            r'   \hline'
         ] 
 
         latex_after_table = [
-            '   \hline',
+            r'   \hline',
             '\end'+PCKG_NAME,
             '\end{table}'
         ]
@@ -766,15 +766,15 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         latex_before_table = [
             '%\\begin{center}',
             '\\begin{table}[ht]',
-            '\centering',
-            '\caption{' + caption + '}',
-            '\label{tab:' + label + '}',
+            r'\centering',
+            r'\caption{' + caption + '}',
+            r'\label{tab:' + label + '}',
             '\\begin' + PCKG_NAME + '[',
-            '\caption = {' + caption + '},',
+            r'\caption = {' + caption + '},',
             'entry = {},',
             'note{a} = {},',
-            'note{$\dag$} = {}]',
-            '   {colspec = {'+ table_width +'}, width = ' + str(TABLE_SETTINGS['rel-width']) + '\linewidth, hlines, rowhead = 2, rowfoot = 1}'
+            r'note{$\dag$} = {}]',
+            r'   {colspec = {'+ table_width +'}, width = ' + str(TABLE_SETTINGS['rel-width']) + r'\linewidth, hlines, rowhead = 2, rowfoot = 1}'
             ]  
 
         latex_after_table = [
@@ -784,7 +784,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
 
         add_hline_at_end = False # to be moved to user settings
         if add_hline_at_end:
-            latex_after_table = '   \hline' + latex_after_table
+            latex_after_table = r'   \hline' + latex_after_table
 
 
         LATEX = latex_before_table + latex_table + latex_after_table
@@ -829,20 +829,20 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         latex_before_table = lbefore + [
             '%\\begin{center}',
             '\\begin{table}[ht]',
-            '\centering',
-            '\caption{' + caption + '}',
-            '\label{tab:' + label + '}',
+            r'\centering',
+            r'\caption{' + caption + '}',
+            r'\label{tab:' + label + '}',
             f'\\begin{PCKG_NAME}{{{table_width}}}',
-            '   \\bottomrule',
+            r'   \bottomrule',
         ] 
 
         latex_after_table = [
-            '   \hline',
+            r'   \hline',
             '\end'+PCKG_NAME,
             '\end{table}'
         ]
 
-        latex_table[0] += '\midrule'
+        latex_table[0] += r'\midrule'
         LATEX = latex_before_table + latex_table + latex_after_table
         
     else:
@@ -860,6 +860,4 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
 
 
 # # Example usage:
-# text = r"normal_text $math_mode_1$ more_text `code_snippet_1` final_text_2"
-# escaped_text = escape_underscore(text)
-# print(escaped_text)
+# text = r"normal_text $math_mode_1$ more_text `
