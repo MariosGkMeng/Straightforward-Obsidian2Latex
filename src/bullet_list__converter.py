@@ -73,7 +73,7 @@ def bullet_list_converter(S):
                 inside_list_env = True
             
             # Add the item
-            latex_lines.append(tab_1 * (indentation + 1) + '\item ' + main_string)
+            latex_lines.append(tab_1 * (indentation + 1) + '\\item ' + main_string)
             
         else:
             # --- Not a list item line ---

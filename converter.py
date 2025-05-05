@@ -274,7 +274,7 @@ def images_converter(images, PARAMETERS):
         caption_short = 'Caption short'
         caption_long = 'Caption long'
         figure_width = 0.7
-        TO_PRINT.append(' \\n'.join([
+        TO_PRINT.append(' \n'.join([
         r'\begin{figure}',
         r'	\centering',
         f'	\\includegraphics[width={figure_width}\\linewidth]'+

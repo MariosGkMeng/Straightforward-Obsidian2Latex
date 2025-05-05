@@ -181,7 +181,7 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
 
             equation_content = equation_match.group(1)
             equation_content = equation_content.split('\\\\')
-            equation_content = ('\\\\' + '\\n' + '\\t'*1).join(equation_content)
+            equation_content = ('\\\\' + '\n' + '\\t'*1).join(equation_content) # DV$$$
 
             label_match = equation_match.group(2)
 
@@ -339,7 +339,7 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
     add_new_line_after_label = True
 
     if add_new_line_after_label:
-        tmp1 = '\\n'
+        tmp1 = '\n' # DV$$$
     else:
         tmp1 = ''
 
@@ -396,8 +396,8 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
     
     embedded_tables_text_1 = []
     for line in embedded_tables_text:
-        if not line.endswith('\\n'):
-            line += '\\n'
+        if not line.endswith('\n'):
+            line += '\n'
         embedded_tables_text_1.append(line)
     return embedded_tables_text_1
 
