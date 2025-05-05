@@ -15,9 +15,8 @@ def search_embedded_reference_in_vault(u, PARS, search_in = 'vault'):
     Finds the paths of embedded references in the vault (by far the most time-consuming process)
     '''
     # global has_come_here_at_least_once
-    files = []
     vault_path = PARS['📁'][search_in]
-    os.chdir(vault_path)    
+    # os.chdir(vault_path) # <-- Removed this line as it's safer not to change CWD
     
     if search_embedded_reference_in_vault.calls == 1: 
         search_embedded_reference_in_vault.calls = 0 # gotta reset the decorator count, cause jupyter notebook keeps the count from the previous run
@@ -26,13 +25,11 @@ def search_embedded_reference_in_vault(u, PARS, search_in = 'vault'):
         print('-'*len(msg1))
     
     print('\t' + u + '. ')
-    # for root, dirs, files in os.walk(vault_path):
-    #     if u in files: return os.path.join(root,u)
     u_lower = u.lower()
-    for root, dirs, files in os.walk(vault_path):
-        for file in files:
+    for root, dirs, files_in_dir in os.walk(vault_path): # Use explicit vault_path
+        for file in files_in_dir:
             if u_lower == file.lower():
-                return os.path.join(root, file)
+                return os.path.join(root, file) # Use explicit root from os.walk
 
     
     return ''

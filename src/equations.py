@@ -48,7 +48,7 @@ def EQUATIONS__convert_non_numbered_to_numbered(S0):
         
     """
     Converts equations from the format "$$equation_here$$\\label{label}" to:
-    "\begin{equation} \\label{label} \n \t equation_here \n \end{equation}"
+    "\begin{equation} \\label{label} \n \t equation_here \n \\end{equation}"
     """
 
     S = S0
@@ -219,7 +219,7 @@ def EQUATIONS__check_and_correct_aligned_equations(S0):
     indexes_start = []
     indexes_end = []
     for cmdl in aligned_or_split:
-        indexes_start_add, indexes_end_add = get_start_and_end_indexes([f'\\begin{{{cmdl}}}', f'\end{{{cmdl}}}'], S0)
+        indexes_start_add, indexes_end_add = get_start_and_end_indexes([f'\\begin{{{cmdl}}}', f'\\end{{{cmdl}}}'], S0)
         indexes_start += indexes_start_add
         indexes_end += indexes_end_add
     
@@ -522,7 +522,7 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
         TO_PRINT.append(' \\n'.join([
         begin_figure[i_img],
         r'	\centering',
-        f'	\\includegraphics[width={str(figure_width)*cnd__no_subfigures}\linewidth]' + '{"'+path_img+'"}',
+        f'	\\includegraphics[width={str(figure_width)*cnd__no_subfigures}\\linewidth]' + '{"'+path_img+'"}',
         r'	\caption['+caption_short+']'+('{'+caption_long_img+'}')*(len(caption_long)>0),
         r'   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
         '   '+fig_label*cnd__no_subfigures,
@@ -582,7 +582,9 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         elif latex_table_package_prefix+'tabular' in package:
             package = ID__TABLES__PACKAGE__tabular
         else:
-            raise NotImplementedError
+            # If no specific package is recognized in the string, use the default from PARS
+            package = TABLE_SETTINGS['package'] 
+            # raise NotImplementedError
         
     # Check if it is a dataview table
     if is_dataview_table(S):
@@ -608,7 +610,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     add_txt = ''
     if (ID__TABLES__alignment__center in TABLE_SETTINGS['alignment']) \
         and package == ID__TABLES__PACKAGE__longtblr:
-        add_txt = '\centering '
+        add_txt = '\\centering '
 
     has_custom_widths = False
     if len(widths[0])>0:
@@ -737,16 +739,16 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
             '%\\begin{center}',
             '\\begin{table}[ht]',
             r'\centering',
-            f'\caption{{{caption}}}',
-            '\label{tab:' + label + '}',
+            f'\\caption{{{caption}}}',
+            '\\label{tab:' + label + '}',
             '\\begin' + PCKG_NAME + txt_textwith + '{' + table_width + '}',
             r'   \hline'
         ] 
 
         latex_after_table = [
             r'   \hline',
-            '\end'+PCKG_NAME,
-            '\end{table}'
+            '\\end'+PCKG_NAME,
+            '\\end{table}'
         ]
 
         LATEX = latex_before_table + latex_table + latex_after_table
@@ -778,8 +780,8 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
             ]  
 
         latex_after_table = [
-            '\end' + PCKG_NAME,
-            '\end{table}'
+            '\\end' + PCKG_NAME,
+            '\\end{table}'
         ]
 
         add_hline_at_end = False # to be moved to user settings
@@ -802,18 +804,18 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         latex_before_table=[
         	'%\\begin{center}',
 		    '\\begin{longtable}{' + table_width + '}',            
-            f'\caption{{{caption}}}',
-            '\label{tab:' + label + '}\\\\',
-			'\hline',
+            f'\\caption{{{caption}}}',
+            '\\label{tab:' + label + '}\\\\',
+			'\\hline',
 			''+latex_table[0],
-			'\hline',
-			'\endfirsthead % Use \endfirsthead for the line after the first header',
-			'\hline',
-			'\endfoot',
+			'\\hline',
+			'\\endfirsthead % Use \\endfirsthead for the line after the first header',
+			'\\hline',
+			'\\endfoot',
             ]
 
         latex_after_table = [
-            '\end' + PCKG_NAME,
+            '\\end' + PCKG_NAME,
         ]
 
         LATEX = latex_before_table + ['    '+x for x in latex_table[1:]] + latex_after_table
@@ -838,8 +840,8 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
 
         latex_after_table = [
             r'   \hline',
-            '\end'+PCKG_NAME,
-            '\end{table}'
+            '\\end'+PCKG_NAME,
+            '\\end{table}'
         ]
 
         latex_table[0] += r'\midrule'
