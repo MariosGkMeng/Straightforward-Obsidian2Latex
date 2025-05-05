@@ -63,7 +63,7 @@ def convert_inline_commands_with_choice(S, PARS):
                                 tmp1 = '.'.join(file.readlines())
                                 tmp1 = tmp1.replace('\n', '')
                                 tmp1 = f'\\textcolor{{red}}{{{tmp1}}}'
-                                replace_with = f"\ignore{{{tmp1}}} "
+                                replace_with = f"\\ignore{{{tmp1}}} "
                     except:
                         replace_with = ''
                                 
@@ -147,7 +147,7 @@ def code_block_converter(S, PARS):
                                         if not t_type in S[j]:
                                             break
                                         else:
-                                            S[j] = '{\Large \\textbf{' + t_type + '}}\n\n'
+                                            S[j] = '{\\Large \\textbf{' + t_type + '}}\n\n'
                                             S[j+1] = ''
                                             title = ' '
                                             color = 'cyan'

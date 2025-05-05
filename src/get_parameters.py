@@ -55,7 +55,7 @@ def get_parameters(version = 'default'):
 
 
     # USER PARAMETERS
-    path_vault          = 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\'
+    path_vault          = 'C:\\Users\\dvrch\\Desktop\\Straightforward-Obsidian2Latex\\Straightforward-Obsidian2Latex\\example_vault\\'
     path_writing        = path_vault + '✍Writing\\'
     path_templates        = path_vault + '👨‍💻Automations\\'
     path_table_block_template = path_templates + 'table_block.md'
@@ -91,7 +91,7 @@ def get_parameters(version = 'default'):
     #     raise Exception('Not implemented yet.')
                 
     hyperlinkSetup="""
-    \hypersetup{
+    \\hypersetup{
     colorlinks   = true,    % Colours links instead of ugly boxes
     urlcolor     = blue,    % Colour for external hyperlinks
     linkcolor    = blue,    % Colour of internal links
@@ -224,10 +224,10 @@ def get_parameters(version = 'default'):
             'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
 											['✔',              '\\checkmark',            1],
 											['🟢',              '$\\\\blacklozenge$',    2],
-											['🔴',              '\\\maltese',            2],
+											['🔴',              '\\maltese',            2],
 											['➕',              '\\twemoji{plus}',            1],    # Alternatives: ['$\\\\boxplus$']
 											['🔗',              'LINK',                  1],
-											['\implies',        '\Rightarrow',            1],
+											['\\implies',        '\\Rightarrow',            1],
 											['❓❓',              '?',                     1],
 											['❓',              '?',                      1],
 											['❌',              'NO',                    1],
