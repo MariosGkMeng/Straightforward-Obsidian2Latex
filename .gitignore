@@ -1,0 +1,9 @@
+# *
+# !*.py
+# !*.pyc
+# !*.md
+# !*.tex
+# !*.txt
+.obsidian
+.vscode
+__pycache__

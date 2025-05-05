@@ -2,7 +2,7 @@
 # This file compiles the latex file to .pdf
 
 # Set base path and file name
-BASE_PATH=C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing
+BASE_PATH= "C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian2Latex/example_vault/✍Writing"
 FILE_NAME="example_writing.md"
 TEXFILE="$BASE_PATH/$FILE_NAME.tex"
 PDFFILE="$BASE_PATH/$FILE_NAME.pdf"

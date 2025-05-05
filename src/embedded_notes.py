@@ -390,10 +390,12 @@ def formatting_rule__notes_with_tags(note_path, initial_text, formatting_paramet
     return initial_text
 
 def content_filter_2_name_latex_command(s, x, mref):
-    if not is_part_of_list(s):
-        return ['\n% Start obsidian ref:\n\t%' + mref.replace("![[", "").replace("]]", "").replace("#", "\##")] + ['\n'] + x + ['\n% End obsidian ref\n']
-    else:
-        return x
+    # Simple comments without extra newlines
+    start_comment = '% Start obsidian ref: ' + mref.replace("![[", "").replace("]]", "").replace("#", "\\#\\#") 
+    end_comment = '% End obsidian ref'
+    # Insert comments as separate lines in the list x
+    # We assume x is a list of strings (lines)
+    return [start_comment] + x + [end_comment]
 
 def content_filter_inline_code_snippets(S, note_path):
     S1 = []
@@ -525,9 +527,10 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 if len(content__unfold) > 0: 
                     content__unfold = content_filter_2(S[line_number], content__unfold, markdown_ref)
                     
-                # S[line_number] = get_unfolded_and_converted_embedded_content(embedded_ref, where_to_search_for_embedded_notes, line_number, is_in_normal_case, cnd__mode_is__equation_blocks_only, content_filter_2, PARS)
-
-                S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
+                # Join the unfolded content with single newlines, ensuring each line ends with one.
+                # Then replace the markdown_ref with this processed text.
+                processed_content = '\n'.join(line.rstrip('\n') for line in content__unfold) + ('\n' if content__unfold else '')
+                S[line_number] = S[line_number].replace(markdown_ref, processed_content)
 
     if not cnd__mode_is__normal:
         S = get_list_of_separate_string_lines(S)
