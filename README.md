@@ -162,6 +162,7 @@ In this section, I will be writing what actions will cause errors in this versio
 	c. "\=\="
 5. Finishing a section with "{" in Obsidian
 6. Embedding a note that doesn't exist will trigger an error from `path_finder`
+7. Having an equation in the section's name might cause an error
 
 
 
