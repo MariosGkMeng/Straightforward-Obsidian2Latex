@@ -519,7 +519,7 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
 
         # label_img = IM.split('\\')[-1]
         caption_long_img = caption_sub[i_img]
-        TO_PRINT.append(' \\n'.join([
+        TO_PRINT.append(' \n'.join([
         begin_figure[i_img],
         r'	\centering',
         f'	\\includegraphics[width={str(figure_width)*cnd__no_subfigures}\\linewidth]' + '{"'+path_img+'"}',
@@ -531,18 +531,18 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     y = []
     if cnd__include_subfigures:
         if PARAMETERS['put_figure_below_text']:
-            begin_fig_global = f'\\begin{{{str_figure}}}[htb]\\n' # '\\begin{figure}[H]\n'
+            begin_fig_global = f'\\begin{{{str_figure}}}[htb]\n' # '\\begin{figure}[H]\n'
         else:
-            begin_fig_global = f'\\begin{{{str_figure}}}\\n'
+            begin_fig_global = f'\\begin{{{str_figure}}}\n'
         y.append(begin_fig_global)
-        y.append('\\centering\\n')
+        y.append('\\centering\n')
         for fig_lines in TO_PRINT:
             y.append(fig_lines)
-            y.append('\\hfill\\n')
+            y.append('\\hfill\n')
 
-        y.append(f'\\caption{{{caption_long}}}\\n')
+        y.append(f'\\caption{{{caption_long}}}\n')
         y.append(fig_label+'\\n')
-        y.append(f'\\end{{{str_figure}}}\\n')
+        y.append(f'\\end{{{str_figure}}}\n')
     else:
         y = TO_PRINT
 

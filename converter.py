@@ -641,7 +641,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
 
     # LATEX = symbol_replacement(LATEX, [['_', '\\_', 0]]) # DON'T UNCOMMENT!
     # title = PARS['⚙']['title'] if PARS['⚙']['title'] else symbol_replacement(path_file.split('\\')[-1].replace('_', '\\_'), PARS['par']['symbols-to-replace'])[0]
-    title = PARS['⚙']['title'] if PARS['⚙']['title'] else ''
+    title = PARS['⚙']['title'] if PARS['⚙']['title'] else 'Titre doc'
     
     # Replace the 
     tmp1 = paragraph['insert_new_line_symbol']
@@ -665,28 +665,54 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     except:
         custom_latex = []
     
-    PREAMBLE = [f"\\documentclass{doc_class_fontsize}{{{document_class['class']}}}"] +\
-            [is_ifac*r'\newcounter{part} % fix the issue in the class'] +\
-            [is_ifac*r'\counterwithin*{section}{part}'] +\
-            [r'% Loading packages that were defined in `src\get_parameters.py`'] +\
-            package_loader() +\
-            ['\n'] + [r'\sethlcolor{yellow}'] + ['\n'] + ['\n'*2] +\
-            [r'\setcounter{secnumdepth}{4}'] +\
-            [r'\setlength{\parskip}{7pt} % paragraph spacing'] +\
-            [r'\let\oldmarginpar\marginpar'] +\
-            [r'\renewcommand\marginpar[1]{\oldmarginpar{\tiny #1}} % Change "small" to your desired font size]'] + ['\n'*2] +\
-            [r'\newcommand{\ignore}[1]{}']+\
-            [r'% CUSTOM FUNCTIONS'] +\
-            custom_latex+\
-            [r'% ======================================='] +\
-            ['\n'*3] + [r'\begin{document}']+\
-            [r'\allowdisplaybreaks' if paragraph['allowdisplaybreaks'] else '']+\
-            [r'\date{}'*PARS['⚙']['use_date']]+\
-            [f"\\author{{{PARS['⚙']['author']}}}"*(len(PARS['⚙']['author'])>0)]+\
-            [f'\\title{{{title}}}\n\\maketitle'*(len(title)>0)]+\
-            [text_before_first_section]+\
-            [r'\tableofcontents \n \newpage'*paragraph['add_table_of_contents']]
+    PREAMBLE = [f"\\documentclass{doc_class_fontsize}{{{document_class['class']}}}"]
+    if is_ifac:
+        PREAMBLE.extend([
+            r'\newcounter{part} % fix the issue in the class',
+            r'\counterwithin*{section}{part}'
+        ])
+    PREAMBLE.extend([
+        r'% Loading packages that were defined in `src\get_parameters.py`',
+        *package_loader(),
+        '\n',
+        r'\sethlcolor{yellow}',
+        '\n\n',
+        r'\setcounter{secnumdepth}{4}',
+        r'\setlength{\parskip}{7pt} % paragraph spacing',
+        r'\let\oldmarginpar\marginpar',
+        r'\renewcommand\marginpar[1]{\oldmarginpar{\tiny #1}} % Change "small" to your desired font size',
+        '\n\n',
+        r'\newcommand{\ignore}[1]{}',
+        r'% CUSTOM FUNCTIONS',
+        *custom_latex,
+        r'% =======================================',
+        '\n\n\n',
+        r'\begin{document}'
+    ])
 
+    if paragraph['allowdisplaybreaks']:
+        PREAMBLE.append(r'\allowdisplaybreaks')
+        
+    if PARS['⚙']['use_date']:
+        PREAMBLE.append(r'\date{}')
+        
+    if len(PARS['⚙']['author']) > 0:
+        PREAMBLE.append(f"\\author{{{PARS['⚙']['author']}}}")
+        
+    if len(title) > 0:
+        PREAMBLE.extend([
+            f"\\title{{{title}}}",
+            "\\maketitle"
+        ])
+
+    if text_before_first_section:
+        PREAMBLE.append(text_before_first_section)
+        
+    if paragraph['add_table_of_contents']:
+        PREAMBLE.extend([
+            "\\tableofcontents",
+            "\\newpage"
+        ])
     # LATEX = symbol_replacement(LATEX, [['_', '\\_', 0]])
     LATEX1 = []
     for line in LATEX:
@@ -697,7 +723,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
         LATEX2.append(escape_underscores_in_sections(line))
 
 
-    LATEX = PREAMBLE + LATEX2 + [(r'\newpage \n '*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5 + r'\bibliographystyle{apacite}']+\
+    LATEX = PREAMBLE + LATEX2 + [('\newpage \n '*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5 + r'\bibliographystyle{apacite}']+\
         [r'\bibliography{' + PATHS['bibtex_file_name'] + r'}'] + [r'\end{document}']
 
     # if '[[✍⌛writing--FaultDiag--Drillstring--MAIN]]' in markdown_file:

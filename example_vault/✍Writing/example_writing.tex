@@ -1,6 +1,4 @@
 \documentclass{extarticle}
-
-
 % Loading packages that were defined in `src\get_parameters.py`
 \usepackage[table]{xcolor}
 \usepackage{hyperref}
@@ -51,11 +49,10 @@
 \sethlcolor{yellow}
 
 
-
 \setcounter{secnumdepth}{4}
 \setlength{\parskip}{7pt} % paragraph spacing
 \let\oldmarginpar\marginpar
-\renewcommand\marginpar[1]{\oldmarginpar{\tiny #1}} % Change "small" to your desired font size]
+\renewcommand\marginpar[1]{\oldmarginpar{\tiny #1}} % Change "small" to your desired font size
 
 
 \newcommand{\ignore}[1]{}
@@ -65,12 +62,9 @@
 
 
 \begin{document}
-
-
 \author{Marios Gkionis}
-
-
-
+\title{Titre doc}
+\maketitle
 
 % Start obsidian ref: \twemoji\{warning\} warning to users
 
@@ -278,7 +272,7 @@ Steps:
 % Start obsidian ref: eq__block_Einstein\\texttt{\expr}
 \begin{equation} \label{eq:Einstein}
 	E=mc^{2}
-\end{equation}\n
+\end{equation}
 % End obsidian ref
 
 
@@ -289,7 +283,6 @@ It supports the aligned equations, as seen in \Cref{eq:1}.
 
 
 % Start obsidian ref: eq__block_1\\texttt{\expr}
-\t&[
 abla_{w} \gamma V(s')-
 % End obsidian ref
 
@@ -443,102 +436,102 @@ See \Cref{tab:1}, \Cref{tab:2}, and \Cref{tab:long}.
 
 
 % Start obsidian ref: table__block_1\\texttt{\table}
-%\begin{center}\n
-\begin{table}[ht]\n
-\centering\n
-\caption{Caption of table written in Obsidian}\n
-\label{tab:1}\n
-\begin{tabular}{p{3cm}p{3cm}p{3cm}p{3cm}p{3cm}}\n
-\bottomrule\n
-\textbf{Col1} & \textbf{Col2} & \textbf{Col3} & \textbf{Col4} & \textbf{} \\\midrule\n
-a11 & a12 & Some more text & even more text \\\n
-a21 & Equation: $E=mc^{2}$ & Some more textSome more textSome more textSome more textSome more textSome more text & even more text even more text even more text even more text even more text \\\n
-Reference \Cref{eq:1} & 1 & 1 & 1 \\\n
-\hline\n
-\end{tabular}\n
-\end{table}\n
+%\begin{center}
+\begin{table}[ht]
+\centering
+\caption{Caption of table written in Obsidian}
+\label{tab:1}
+\begin{tabular}{p{3cm}p{3cm}p{3cm}p{3cm}p{3cm}}
+\bottomrule
+\textbf{Col1} & \textbf{Col2} & \textbf{Col3} & \textbf{Col4} & \textbf{} \\\midrule
+a11 & a12 & Some more text & even more text \\
+a21 & Equation: $E=mc^{2}$ & Some more textSome more textSome more textSome more textSome more textSome more text & even more text even more text even more text even more text even more text \\
+Reference \Cref{eq:1} & 1 & 1 & 1 \\
+\hline
+\end{tabular}
+\end{table}
 % End obsidian ref
 
 
 
 
 % Start obsidian ref: table__block_2\\texttt{\table}
-\newcolumntype{Y}{>{\centering\arraybackslash}X}\n
-%\begin{center}\n
-\begin{table}[ht]\n
-\centering\n
-\caption{Table with customized widths and row color formatting}\n
-\label{tab:2}\n
-\begin{tabularx}{p{1cm}p{1cm}p{5cm}p{3cm}}\n
-\hline\n
-\textbf{Col1} & \textbf{Col2} & \textbf{Col3} & \textbf{Col4} & \textbf{} \\\n
-\rowcolor{lightgray}  a11 & a12 & Some more text & even more text \\\n
-\rowcolor{yellow} a21 & Equation: $E=mc^{2}$ & Some more textSome more textSome more textSome more textSome more textSome more text & even more text even more text even more text even more text even more text \\\n
-Reference \Cref{eq:1} & 1 & 1 & 1 \\\n
-\hline\n
-\end{tabularx}\n
-\end{table}\n
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+%\begin{center}
+\begin{table}[ht]
+\centering
+\caption{Table with customized widths and row color formatting}
+\label{tab:2}
+\begin{tabularx}{p{1cm}p{1cm}p{5cm}p{3cm}}
+\hline
+\textbf{Col1} & \textbf{Col2} & \textbf{Col3} & \textbf{Col4} & \textbf{} \\
+\rowcolor{lightgray}  a11 & a12 & Some more text & even more text \\
+\rowcolor{yellow} a21 & Equation: $E=mc^{2}$ & Some more textSome more textSome more textSome more textSome more textSome more text & even more text even more text even more text even more text even more text \\
+Reference \Cref{eq:1} & 1 & 1 & 1 \\
+\hline
+\end{tabularx}
+\end{table}
 % End obsidian ref
 
 
 
 
 % Start obsidian ref: table__block_long\\texttt{\table}
-%\begin{center}\n
-\begin{longtable}{p{3cm}p{3cm}p{3cm}p{3cm}p{3cm}}\n
-\caption{A long table. Changed the package in the table file properties}\n
-\label{tab:long}\\\n
-\hline\n
-\textbf{Col1} & \textbf{Col2} & \textbf{Col3} & \textbf{Col4} & \textbf{} \\\n
-\hline\n
-\endfirsthead % Use \endfirsthead for the line after the first header\n
-\hline\n
-\endfoot\n
-a11 & a12 & Some more text & even more text \\\n
-a21 & Equation: $E=mc^{2}$ & Some more textSome more textSome more textSome more textSome more textSome more text & even more text even more text even more text even more text even more text \\\n
-Reference \Cref{eq:1} & 1 & 1 & 1 \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\\n
-\end{longtable}\n
+%\begin{center}
+\begin{longtable}{p{3cm}p{3cm}p{3cm}p{3cm}p{3cm}}
+\caption{A long table. Changed the package in the table file properties}
+\label{tab:long}\\
+\hline
+\textbf{Col1} & \textbf{Col2} & \textbf{Col3} & \textbf{Col4} & \textbf{} \\
+\hline
+\endfirsthead % Use \endfirsthead for the line after the first header
+\hline
+\endfoot
+a11 & a12 & Some more text & even more text \\
+a21 & Equation: $E=mc^{2}$ & Some more textSome more textSome more textSome more textSome more textSome more text & even more text even more text even more text even more text even more text \\
+Reference \Cref{eq:1} & 1 & 1 & 1 \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+\end{longtable}
 % End obsidian ref
 
 
@@ -573,7 +566,11 @@ We used method_1. We use this method, because it's awesome.
 
 
 
-\newpage \n \newpage \n 
+
+ewpage 
+ 
+ewpage 
+ 
 
 
 
