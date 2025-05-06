@@ -180,8 +180,8 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
         if equation_match:
 
             equation_content = equation_match.group(1)
-            equation_content = equation_content.split('\\\\')
-            equation_content = ('\\\\' + '\n' + '\\t'*1).join(equation_content) # DV$$$
+            equation_content = equation_content.split('\\')
+            equation_content = ('\\' + '\n' + '\t').join(equation_content) # DV$$$
 
             label_match = equation_match.group(2)
 
