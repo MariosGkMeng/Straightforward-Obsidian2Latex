@@ -207,7 +207,7 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
             {begin_end_eq[1]}
             """
 
-            new_equation = new_equation.split('\\n')
+            new_equation = new_equation.split('\n')
             new_equation = new_equation[1:-1]
             return new_equation
 
@@ -370,7 +370,7 @@ def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, ne
         for j, line in enumerate(lines):
             if line.startswith(field):
                 # Replace the field value with the new one
-                lines[j] = f"{field} {new_values[i]}\\n"
+                lines[j] = f"{field} {new_values[i]}\n"
                 break
 
     # Write the updated content back to the file
@@ -538,10 +538,10 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
         y.append('\\centering\n')
         for fig_lines in TO_PRINT:
             y.append(fig_lines)
-            y.append('\\hfill\n')
+            y.append('\\hfill\n') #DV$$$
 
         y.append(f'\\caption{{{caption_long}}}\n')
-        y.append(fig_label+'\\n')
+        y.append(fig_label) # +'\n'  DV$$$
         y.append(f'\\end{{{str_figure}}}\n')
     else:
         y = TO_PRINT
@@ -656,7 +656,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     if iS_table_start==-1:
         raise Exception("Did not find any tables!")
     
-    cols = [[x.lstrip().rstrip() for x in cols if len(x)>0 and x!='\\n']]
+    cols = [[x.lstrip().rstrip() for x in cols if len(x)>0 and x!='\n']]
 
     if format_column_names_with_bold:
         cols = [[f'**{x}**' for x in sublist] for sublist in cols]
@@ -664,7 +664,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     data = []
     for s in S[iS_table_start+2:]:
         c = s.split('|')
-        c = [x.lstrip().rstrip() for x in c if len(x.lstrip().rstrip())>0 and x!='\\n']
+        c = [x.lstrip().rstrip() for x in c if len(x.lstrip().rstrip())>0 and x!='\n']
         c = ['\\newline'.join(ci.split('<br>')) for ci in c]
         c = [escape_underscore(ci) for ci in c]
         # check for table commands

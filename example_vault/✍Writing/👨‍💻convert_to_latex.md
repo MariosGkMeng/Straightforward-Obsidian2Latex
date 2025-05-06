@@ -28,4 +28,4 @@ code_run:: [1. 👨‍💻🖱convert](<file:///C:\Users\mariosg\OneDrive - NTNU
 ---
 
 
-files::  [📁tex file](<file:///C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\example_writing.tex>), [📁.pdf file](<file:///C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\example_writing.pdf>)\n
+files::  [📁tex file](<file:///C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\example_writing.tex>), [📁.pdf file](<file:///C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\example_writing.pdf>)
