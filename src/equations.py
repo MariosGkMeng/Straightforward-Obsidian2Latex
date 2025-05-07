@@ -39,7 +39,7 @@ aligned_or_split = ['aligned', 'align', 'split']
     
 
 def find_label_in_equation(input_string):
-    label_pattern = re.compile(r'\\label\s*{\s*(?:eq__block_)([^}]+)\s*}')
+    label_pattern = re.compile(r'\label\s*{\s*(?:eq__block_)([^}]+)\s*}')
     label_match = label_pattern.search(input_string)
     return label_match
 
@@ -54,7 +54,7 @@ def EQUATIONS__convert_non_numbered_to_numbered(S0):
     S = S0
 
     # with the following pattern, the equation label will only be identified if it starts with "eq__block_"
-    pattern = re.compile(r'\$\$\s*(.*?)\s*\$\$(?:\s*\\label\{(eq__block_)([^}]+)\})?')
+    pattern = re.compile(r'\$\$\s*(.*?)\s*\$\$(?:\s*\label\{(eq__block_)([^}]+)\})?')
     
     for i, s in enumerate(S):
         matches = pattern.findall(s)
@@ -87,13 +87,13 @@ def EQUATIONS__convert_non_numbered_to_numbered(S0):
                 text = text.replace(f'${match[0]}$', modified_equation)
 
                 # Remove the extra label after the end{equation}
-                text = re.sub(r'\$\s*\\label\{eq__block_[^\}]+\}', '', text)
+                text = re.sub(r'\$\s*\label\{eq__block_[^\}]+\}', '', text)
 
         S[i] = text.strip()
 
 
     # Sometimes we still have unwanted "$" symbol before "\\begin{equation}", therefore need to remove it
-    pattern_remove_unwanted_previous_dollar = r'\$\s*(\\begin{equation})'
+    pattern_remove_unwanted_previous_dollar = r'\$\s*(\begin{equation})'
     S = [re.sub(pattern_remove_unwanted_previous_dollar, r'\1', s) for s in S]
 
     return S
@@ -187,10 +187,10 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
 
             label_name = ""
             if label_match:
-                label_name = re.search(r'\\label\{(eq__block_([^}]+))\}', label_match).group(1)
+                label_name = re.search(r'\label\{(eq__block_([^}]+))\}', label_match).group(1)
                 label_name = label_name.replace("eq__block_", "")
 
-            label_statement = rf"\\label{{eq:{label_name}}}" if label_name else "%no_label_statement"
+            label_statement = rf"\label{{eq:{label_name}}}" if label_name else "%no_label_statement"
 
             if aligned_or_split[j] == 'align':
                 begin_end_eq = ['', '']
