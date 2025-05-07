@@ -180,8 +180,8 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
         if equation_match:
 
             equation_content = equation_match.group(1)
-            equation_content = equation_content.split('\\')
-            equation_content = ('\\' + '\n' + '\t').join(equation_content) # DV$$$
+            equation_content = equation_content.split('\\\\')
+            equation_content = ('\\\\' + '\n' + '\t'*1).join(equation_content) # DV$$$
 
             label_match = equation_match.group(2)
 
@@ -411,39 +411,49 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
         'subfigure_abs_or_rel:: ',
         'cover_all_columns:: ',
         'caption_sub:: '
-        ]
+    ]
     
     fields = get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields)
-    extensions = ['.png', '.jpg', '.pdf']
-
+    
+    # Find the line with the image references
     i = None
-    for i, c in enum(content__unfold):
+    for i, c in enumerate(content__unfold):
         if '![[' in c:
             break
     
-    if not i is None:
-        embedded_images_text = content__unfold[i]
-    else:
+    if i is None:
         raise Exception("Did not find an image in your figure block note, or you did not place it in the beginning of a new line!")
+    
+    embedded_images_text = content__unfold[i]
     
     try:
         embedded_images = [x.replace(']]', '') for x in embedded_images_text.split("![[")[1:]]
     except:
         raise Exception("Probably could not find any images in your figure note file!")
     
+    # Clean up image references 
     embedded_images_1 = []
     for image in embedded_images:
-        if "|" in image: image = image[:image.find("|")+1].replace("|", "")
+        if "|" in image:
+            image = image[:image.find("|")].strip()
         embedded_images_1.append(image)
     
     embedded_images = embedded_images_1
     label = embedded_ref.replace('figure__block_', '')
-    image_paths = [get_embedded_reference_path(x, PARS) for x in embedded_images]
+    
+    # Get absolute paths and normalize them
+    image_paths = []
+    for img in embedded_images:
+        path = get_embedded_reference_path(img, PARS)
+        path = path.replace('\\', '/') # Normalize path separators
+        image_paths.append(path)
+        
     PARS['⚙']['figures']['num_columns'] = PARS['num_columns']
+    
     if len(image_paths) == 0:
         raise Exception("Could not find any images in your figure")
+        
     converted = images_converter(image_paths, PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
-
     return converted
 
 
@@ -507,26 +517,23 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
             begin_figure = [begin_figure + f'[b]{{{widths[i]}\\textwidth}}' for i in range(len(images))]
 
     for i_img, IM in enumerate(images):
-        path_img0 = IM.replace('\\\\', '/')
-
+        path_img0 = IM.replace('\\', '/')
         img_directory = '/'.join(path_img0.split('/')[:-1])
-        cndTmp1 = 0
-        path_img = '"'*cndTmp1 + path_img0 + '"'*cndTmp1
-
-        # check if image is in the same folder as the latex file (in which case, no need to have the absolute path)
-        if (img_directory == '/'.join(latex_file_path.replace('\\\\', '/').split('/')[:-1])) or (not PARAMETERS['include_path']) or PARAMETERS['use_overleaf_all_in_the_same_folder']:
+        path_img = path_img0
+        # check if image is in the same folder as the latex file
+        if (img_directory == '/'.join(latex_file_path.replace('\\', '/').split('/')[:-1])) or (not PARAMETERS['include_path']) or PARAMETERS['use_overleaf_all_in_the_same_folder']:
             path_img = path_img.replace(img_directory+'/', '')
-
-        # label_img = IM.split('\\')[-1]
+            
         caption_long_img = caption_sub[i_img]
         TO_PRINT.append(' \n'.join([
-        begin_figure[i_img],
-        r'	\centering',
-        f'	\\includegraphics[width={str(figure_width)*cnd__no_subfigures}\\linewidth]' + '{"'+path_img+'"}',
-        r'	\caption['+caption_short+']'+('{'+caption_long_img+'}')*(len(caption_long)>0),
-        r'   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
-        '   '+fig_label*cnd__no_subfigures,
-        end_figure]))
+            begin_figure[i_img],
+            r'    \centering',
+            f'    \\includegraphics[width={str(figure_width)*cnd__no_subfigures}\\linewidth]{{{path_img}}}',
+            r'    \caption['+caption_short+']'+('{'+caption_long_img+'}')*(len(caption_long)>0),
+            r'    \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
+            r'    '+fig_label*cnd__no_subfigures,
+            end_figure
+        ]))
 
     y = []
     if cnd__include_subfigures:
@@ -706,12 +713,20 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         c1 = [add_txt + x for x in c]
         if i==0: 
             if TABLE_SETTINGS['any-hlines-at-all']:
-                addText = r' \hline' if use_hlines else ''
+                addText = r'\hline' if use_hlines else ''
+            else:
+                addText = ''
         else:
             if TABLE_SETTINGS['hlines-to-all-rows']:
-                addText = r' \hline' if use_hlines else ''
-                
-        latex_table.append('    ' + " & ".join(c1) + r' \\' + addText)
+                addText = r'\hline' if use_hlines else ''
+            else:
+                addText = ''
+        # Ajout correct : sépare la fin de ligne et la commande de style
+        latex_table.append('    ' + " & ".join(c1) + r' \\')
+        if addText:
+            latex_table.append(addText)
+    # Nettoyage des tabulations accidentelles
+    latex_table = [x.replace('\t', '    ') for x in latex_table]
 
     lbefore = []
 
@@ -802,16 +817,16 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
 
 
         latex_before_table=[
-        	'%\\begin{center}',
-		    '\\begin{longtable}{' + table_width + '}',            
+            '%\\begin{center}',
+            '\\begin{longtable}{' + table_width + '}',            
             f'\\caption{{{caption}}}',
             '\\label{tab:' + label + '}\\\\',
-			'\\hline',
-			''+latex_table[0],
-			'\\hline',
-			'\\endfirsthead % Use \\endfirsthead for the line after the first header',
-			'\\hline',
-			'\\endfoot',
+            '\\hline',
+            ''+latex_table[0],
+            '\\hline',
+            '\\endfirsthead % Use \\endfirsthead for the line after the first header',
+            '\\hline',
+            '\\endfoot',
             ]
 
         latex_after_table = [

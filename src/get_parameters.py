@@ -131,7 +131,7 @@ def get_parameters(version = 'default'):
                             'rel-width': 1.2,
                     },
             'margin': '0.9in',
-            'use_date': '🔴',
+            'use_date': '🟢',
             'EXCEPTIONS': 
                         {'raise_exception__when__embedded_reference_not_found': '🔴'},
             'INTERNAL_LINKS': 
@@ -151,11 +151,11 @@ def get_parameters(version = 'default'):
                                                         
             'paragraph':{
                         'indent_length_of_first_line': 0,    # 0 if no indent is desired. Recommended 20 for usual indent
-                        'if_text_before_first_section___place_before_table_of_contents': '🔴',
+                        'if_text_before_first_section___place_before_table_of_contents': '🟢',
                         'insert_new_line_symbol':                                        '---',
-                        'add_table_of_contents':                                        '🔴',
+                        'add_table_of_contents':                                        '🟢',
                         'add_new_page_before_bibliography':                             '🟢',
-                        'allowdisplaybreaks':                                           '🔴',
+                        'allowdisplaybreaks':                                           '🟢',
             }, 
             'author': V__author,
             'title': '',

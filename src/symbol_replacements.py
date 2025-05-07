@@ -77,3 +77,4 @@ def escape_underscores_in_texttt(text):
     replaced_text = re.sub(pattern, replace_underscores, text)
     
     return replaced_text
+

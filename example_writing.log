@@ -1,0 +1,6273 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3 Portable) (preloaded format=pdflatex 2025.4.5)  7 MAY 2025 06:38
+entering extended mode
+ \write18 enabled.
+ %&-line parsing enabled.
+**c:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidia
+n2Latex/example_vault/✍Writing/example_writing.tex
+
+(c:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian
+2Latex/example_vault/✍Writing/example_writing.tex
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/extsizes\extarticle.cls
+Document Class: extarticle 1996/10/08 v1.0 Non Standard LaTeX document class
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/base\size10.clo
+File: size10.clo 2024/06/29 v1.4n Standard LaTeX file (size option)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/base\exscale.sty
+Package: exscale 2018/09/24 v2.1i Standard LaTeX package exscale
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 57.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/cmex/m/n on input line 57.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/cmex/m/n on input line 57.
+\big@size=\dimen141
+)
+\c@part=\count196
+\c@section=\count197
+\c@subsection=\count198
+\c@subsubsection=\count199
+\c@paragraph=\count266
+\c@subparagraph=\count267
+\c@figure=\count268
+\c@table=\count269
+\abovecaptionskip=\skip49
+\belowcaptionskip=\skip50
+\bibindent=\dimen142
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/xcolor\xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/graphics-cfg\color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/graphics-def\pdftex.def
+File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/graphics\mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/colortbl\colortbl.sty
+Package: colortbl 2024/07/06 v1.0i Color table columns (DPC)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/tools\array.sty
+Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
+\col@sep=\dimen143
+\ar@mcellbox=\box52
+\extrarowheight=\dimen144
+\NC@list=\toks17
+\extratabsurround=\skip51
+\backup@length=\skip52
+\ar@cellbox=\box53
+)
+\everycr=\toks18
+\minrowclearance=\skip53
+\rownum=\count270
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/hyperref\hyperref.sty
+Package: hyperref 2024-11-05 v7.01l Hypertext links for LaTeX
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/iftex\iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/graphics\keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/kvsetkeys\kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/kvdefinekeys\kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pdfescape\pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pdftexcmds\pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/infwarerr\infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/hycolor\hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/hyperref\nameref.sty
+Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/refcount\refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/gettitlestring\gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/kvoptions\kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+))
+\c@section@level=\count271
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count272
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/stringenc\stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+)
+\@linkdim=\dimen145
+\Hy@linkcounter=\count273
+\Hy@pagecounter=\count274
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2024-11-05 v7.01l Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/intcalc\intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count275
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/hyperref\puenc.def
+File: puenc.def 2024-11-05 v7.01l Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Hyper figures OFF on input line 4157.
+Package hyperref Info: Link nesting OFF on input line 4162.
+Package hyperref Info: Hyper index ON on input line 4165.
+Package hyperref Info: Plain pages OFF on input line 4172.
+Package hyperref Info: Backreferencing OFF on input line 4177.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4424.
+\c@Hy@tempcnt=\count276
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/url\url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4763.
+\XeTeXLinkMargin=\dimen146
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/bitset\bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/bigintcalc\bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count277
+\Field@Width=\dimen147
+\Fld@charsize=\dimen148
+Package hyperref Info: Hyper figures OFF on input line 6042.
+Package hyperref Info: Link nesting OFF on input line 6047.
+Package hyperref Info: Hyper index ON on input line 6050.
+Package hyperref Info: backreferencing OFF on input line 6057.
+Package hyperref Info: Link coloring OFF on input line 6062.
+Package hyperref Info: Link coloring with OCG OFF on input line 6067.
+Package hyperref Info: PDF/A mode OFF on input line 6072.
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/base\atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count278
+\c@Item=\count279
+\c@Hfootnote=\count280
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/hyperref\hpdftex.def
+File: hpdftex.def 2024-11-05 v7.01l Hyperref driver for pdfTeX
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/base\atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
+with kernel methods
+)
+\Fld@listcount=\count281
+\c@bookmark@seq@number=\count282
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/rerunfilecheck\rerunfilecheck.sty
+Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/uniquecounter\uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+85.
+)
+\Hy@SectionHShift=\skip54
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/graphics\graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/graphics\graphics.sty
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/graphics\trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/graphics-cfg\graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 106.
+)
+\Gin@req@height=\dimen149
+\Gin@req@width=\dimen150
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/caption\subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/caption\caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/caption\caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen151
+\captionmargin=\dimen152
+\caption@leftmargin=\dimen153
+\caption@rightmargin=\dimen154
+\caption@width=\dimen155
+\caption@indent=\dimen156
+\caption@parindent=\dimen157
+\caption@hangindent=\dimen158
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count283
+\c@continuedfloat=\count284
+Package caption Info: hyperref package is loaded.
+)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count285
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count286
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/amsfonts\amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/amsfonts\amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks20
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/titlesec\titlesec.sty
+Package: titlesec 2025/01/04 v2.17 Sectioning titles
+\ttl@box=\box54
+\beforetitleunit=\skip55
+\aftertitleunit=\skip56
+\ttl@plus=\dimen159
+\ttl@minus=\dimen160
+\ttl@toksa=\toks21
+\titlewidth=\dimen161
+\titlewidthlast=\dimen162
+\titlewidthfirst=\dimen163
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/soul\soul.sty
+Package: soul 2023-06-14 v3.1 Permit use of UTF-8 characters in soul (HO)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/soul\soul-ori.sty
+Package: soul-ori 2023-06-14 v3.1 letterspacing/underlining (mf)
+\SOUL@word=\toks22
+\SOUL@lasttoken=\toks23
+\SOUL@syllable=\toks24
+\SOUL@cmds=\toks25
+\SOUL@buffer=\toks26
+\SOUL@token=\toks27
+\SOUL@syllgoal=\dimen164
+\SOUL@syllwidth=\dimen165
+\SOUL@charkern=\dimen166
+\SOUL@hyphkern=\dimen167
+\SOUL@dimen=\dimen168
+\SOUL@dimeni=\dimen169
+\SOUL@minus=\count287
+\SOUL@comma=\count288
+\SOUL@apo=\count289
+\SOUL@grave=\count290
+\SOUL@spaceskip=\skip57
+\SOUL@ttwidth=\dimen170
+\SOUL@uldp=\dimen171
+\SOUL@ulht=\dimen172
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/etexcmds\etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/amsmath\amsmath.sty
+Package: amsmath 2024/11/05 v2.17t AMS math features
+\@mathmargin=\skip58
+
+For additional information on amsmath, use the `?' option.
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/amsmath\amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/amsmath\amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks28
+\ex@=\dimen173
+))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/amsmath\amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen174
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/amsmath\amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count291
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count292
+\leftroot@=\count293
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count294
+\DOTSCASE@=\count295
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box55
+\strutbox@=\box56
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen175
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count296
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count297
+\dotsspace@=\muskip18
+\c@parentequation=\count298
+\dspbrk@lvl=\count299
+\tag@help=\toks29
+\row@=\count300
+\column@=\count301
+\maxfields@=\count302
+\andhelp@=\toks30
+\eqnshift@=\dimen176
+\alignsep@=\dimen177
+\tagshift@=\dimen178
+\tagwidth@=\dimen179
+\totwidth@=\dimen180
+\lineht@=\dimen181
+\@envbody=\toks31
+\multlinegap=\skip59
+\multlinetaggap=\skip60
+\mathdisplay@stack=\toks32
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/cancel\cancel.sty
+Package: cancel 2013/04/12 v2.2 Cancel math terms
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/minted\minted.sty
+Package: minted 2025/03/06 v3.6.0 Yet another Pygments shim for LaTeX
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/catchfile\catchfile.sty
+Package: catchfile 2019/12/09 v1.8 Catch the contents of a file (HO)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/fvextra\fvextra.sty
+Package: fvextra 2025/03/04 v1.12.0 fvextra - extensions and patches for fancyv
+rb
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/fancyvrb\fancyvrb.sty
+Package: fancyvrb 2024/01/20 4.5c verbatim text (tvz,hv)
+\FV@CodeLineNo=\count303
+\FV@InFile=\read2
+\FV@TabBox=\box57
+\c@FancyVerbLine=\count304
+\FV@StepNumber=\count305
+\FV@OutFile=\write3
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/upquote\upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
+tim
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/lineno\lineno.sty
+Package: lineno 2025/01/29 line numbers on paragraphs v5.4
+\linenopenalty=\count306
+\output=\toks33
+\linenoprevgraf=\count307
+\linenumbersep=\dimen182
+\linenumberwidth=\dimen183
+\c@linenumber=\count308
+\c@pagewiselinenumber=\count309
+\c@LN@truepage=\count310
+\c@internallinenumber=\count311
+\c@internallinenumbers=\count312
+\quotelinenumbersep=\dimen184
+\bframerule=\dimen185
+\bframesep=\dimen186
+\bframebox=\box58
+\@LN@amsmath@ams@eqpen=\count313
+LaTeX Info: Redefining \\ on input line 3187.
+)
+\c@FancyVerbWriteLine=\count314
+\c@FancyVerbBufferLine=\count315
+\c@FV@TrueTabGroupLevel=\count316
+\c@FV@TrueTabCounter=\count317
+\FV@TabBox@Group=\box59
+\FV@bgcolorstructbox=\box60
+\FV@TmpLength=\skip61
+\c@FV@HighlightLinesStart=\count318
+\c@FV@HighlightLinesStop=\count319
+\FV@LoopCount=\count320
+\FV@NCharsBox=\box61
+\FV@BreakIndent=\dimen187
+\FV@BreakIndentNChars=\count321
+\FV@BreakSymbolSepLeft=\dimen188
+\FV@BreakSymbolSepLeftNChars=\count322
+\FV@BreakSymbolSepRight=\dimen189
+\FV@BreakSymbolSepRightNChars=\count323
+\FV@BreakSymbolIndentLeft=\dimen190
+\FV@BreakSymbolIndentLeftNChars=\count324
+\FV@BreakSymbolIndentRight=\dimen191
+\FV@BreakSymbolIndentRightNChars=\count325
+\c@FancyVerbLineBreakLast=\count326
+\FV@LineBox=\box62
+\FV@LineIndentBox=\box63
+\c@FV@BreakBufferDepth=\count327
+\FV@LineWidth=\dimen192
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/latex2pydata\latex2pydata.sty
+Package: latex2pydata 2025/03/26 v0.6.0 latex2pydata - write data to file in Py
+thon literal format
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pgf/utilities\pgfkeys.sty
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/utilities\pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks34
+\pgfkeys@temptoks=\toks35
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/utilities\pgfkeyslibraryfiltered.code.tex
+\pgfkeys@tmptoks=\toks36
+)))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pgfopts\pgfopts.sty
+Package: pgfopts 2014/07/10 v2.1a LaTeX package options with pgfkeys
+\pgfopts@list@add@a@toks=\toks37
+\pgfopts@list@add@b@toks=\toks38
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/tools\shellesc.sty
+Package: shellesc 2023/07/08 v1.0d unified shell escape interface for LaTeX
+Package shellesc Info: Unrestricted shell escape enabled on input line 75.
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count328
+\float@exts=\toks39
+\float@box=\box64
+\@float@everytoks=\toks40
+\@floatcapt=\box65
+)
+\c@minted@FancyVerbLineTemp=\count329
+\@float@every@listing=\toks41
+\c@listing=\count330
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/apacite\apacite.sty
+Package: apacite 2013/07/21 v6.03 APA citation
+\c@BibCnt=\count331
+\bibleftmargin=\skip62
+\bibindent=\skip63
+\bibparsep=\skip64
+\bibitemsep=\skip65
+\biblabelsep=\skip66
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/cleveref\cleveref.sty
+Package: cleveref 2018/03/27 v0.21.4 Intelligent cross-referencing
+Package cleveref Info: `hyperref' support loaded on input line 2370.
+LaTeX Info: Redefining \cref on input line 2370.
+LaTeX Info: Redefining \Cref on input line 2370.
+LaTeX Info: Redefining \crefrange on input line 2370.
+LaTeX Info: Redefining \Crefrange on input line 2370.
+LaTeX Info: Redefining \cpageref on input line 2370.
+LaTeX Info: Redefining \Cpageref on input line 2370.
+LaTeX Info: Redefining \cpagerefrange on input line 2370.
+LaTeX Info: Redefining \Cpagerefrange on input line 2370.
+LaTeX Info: Redefining \labelcref on input line 2370.
+LaTeX Info: Redefining \labelcpageref on input line 2370.
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/tcolorbox\tcolorbox.sty
+Package: tcolorbox 2024/10/22 version 6.4.1 text color boxes
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pgf/frontendlayer\tikz.sty
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pgf/basiclayer\pgf.sty
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pgf/utilities\pgfrcs.sty
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/utilities\pgfutil-common.tex
+\pgfutil@everybye=\toks42
+\pgfutil@tempdima=\dimen193
+\pgfutil@tempdimb=\dimen194
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/utilities\pgfutil-latex.def
+\pgfutil@abb=\box66
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/utilities\pgfrcs.code.tex
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf\pgf.revision.tex)
+Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
+))
+Package: pgf 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pgf/basiclayer\pgfcore.sty
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pgf/systemlayer\pgfsys.sty
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/systemlayer\pgfsys.code.tex
+Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
+\pgf@x=\dimen195
+\pgf@y=\dimen196
+\pgf@xa=\dimen197
+\pgf@ya=\dimen198
+\pgf@xb=\dimen199
+\pgf@yb=\dimen256
+\pgf@xc=\dimen257
+\pgf@yc=\dimen258
+\pgf@xd=\dimen259
+\pgf@yd=\dimen260
+\w@pgf@writea=\write4
+\r@pgf@reada=\read3
+\c@pgf@counta=\count332
+\c@pgf@countb=\count333
+\c@pgf@countc=\count334
+\c@pgf@countd=\count335
+\t@pgf@toka=\toks43
+\t@pgf@tokb=\toks44
+\t@pgf@tokc=\toks45
+\pgf@sys@id@count=\count336
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/systemlayer\pgf.cfg
+File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/systemlayer\pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/systemlayer\pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
+)))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/systemlayer\pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfsyssoftpath@smallbuffer@items=\count337
+\pgfsyssoftpath@bigbuffer@items=\count338
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/systemlayer\pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcore.code.tex
+Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmath.code.tex
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathutil.code.tex)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathparser.code.tex
+\pgfmath@dimen=\dimen261
+\pgfmath@count=\count339
+\pgfmath@box=\box67
+\pgfmath@toks=\toks46
+\pgfmath@stack@operand=\toks47
+\pgfmath@stack@operation=\toks48
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathfunctions.code.tex)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathfunctions.basic.code.tex)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathfunctions.trigonometric.code.tex)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathfunctions.random.code.tex)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathfunctions.comparison.code.tex)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathfunctions.base.code.tex)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathfunctions.round.code.tex)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathfunctions.misc.code.tex)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathfunctions.integerarithmetics.code.tex)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathcalc.code.tex)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count340
+))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfint.code.tex)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@picminx=\dimen262
+\pgf@picmaxx=\dimen263
+\pgf@picminy=\dimen264
+\pgf@picmaxy=\dimen265
+\pgf@pathminx=\dimen266
+\pgf@pathmaxx=\dimen267
+\pgf@pathminy=\dimen268
+\pgf@pathmaxy=\dimen269
+\pgf@xx=\dimen270
+\pgf@xy=\dimen271
+\pgf@yx=\dimen272
+\pgf@yy=\dimen273
+\pgf@zx=\dimen274
+\pgf@zy=\dimen275
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@path@lastx=\dimen276
+\pgf@path@lasty=\dimen277
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@shorten@end@additional=\dimen278
+\pgf@shorten@start@additional=\dimen279
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfpic=\box68
+\pgf@hbox=\box69
+\pgf@layerbox@main=\box70
+\pgf@picture@serial@count=\count341
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgflinewidth=\dimen280
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcoretransformations.code.tex
+File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@pt@x=\dimen281
+\pgf@pt@y=\dimen282
+\pgf@pt@temp=\dimen283
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcorepathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowsep=\dimen284
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@max=\dimen285
+\pgf@sys@shading@range@num=\count342
+\pgf@shadingcount=\count343
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfexternal@startupbox=\box71
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/basiclayer\pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/modules\pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfnodeparttextbox=\box72
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/modules\pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pgf/compatibility\pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
+\pgf@nodesepstart=\dimen286
+\pgf@nodesepend=\dimen287
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pgf/compatibility\pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
+))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pgf/utilities\pgffor.sty
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pgf/math\pgfmath.sty
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/math\pgfmath.code.tex))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/utilities\pgffor.code.tex
+Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
+\pgffor@iter=\dimen288
+\pgffor@skip=\dimen289
+\pgffor@stack=\toks49
+\pgffor@toks=\toks50
+))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/frontendlayer/tikz\tikz.code.tex
+Package: tikz 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/libraries\pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@plot@mark@count=\count344
+\pgfplotmarksize=\dimen290
+)
+\tikz@lastx=\dimen291
+\tikz@lasty=\dimen292
+\tikz@lastxsaved=\dimen293
+\tikz@lastysaved=\dimen294
+\tikz@lastmovetox=\dimen295
+\tikz@lastmovetoy=\dimen296
+\tikzleveldistance=\dimen297
+\tikzsiblingdistance=\dimen298
+\tikz@figbox=\box73
+\tikz@figbox@bg=\box74
+\tikz@tempbox=\box75
+\tikz@tempbox@bg=\box76
+\tikztreelevel=\count345
+\tikznumberofchildren=\count346
+\tikznumberofcurrentchild=\count347
+\tikz@fig@count=\count348
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/modules\pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfmatrixcurrentrow=\count349
+\pgfmatrixcurrentcolumn=\count350
+\pgf@matrix@numberofcolumns=\count351
+)
+\tikz@expandcount=\count352
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/tools\verbatim.sty
+Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks51
+\verbatim@line=\toks52
+\verbatim@in@stream=\read4
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/environ\environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/trimspaces\trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\tcb@titlebox=\box77
+\tcb@upperbox=\box78
+\tcb@lowerbox=\box79
+\tcb@phantombox=\box80
+\c@tcbbreakpart=\count353
+\c@tcblayer=\count354
+\c@tcolorbox@number=\count355
+\l__tcobox_tmpa_box=\box81
+\l__tcobox_tmpa_dim=\dimen299
+\tcb@temp=\box82
+\tcb@temp=\box83
+\tcb@temp=\box84
+\tcb@temp=\box85
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pdfpages\pdfpages.sty
+Package: pdfpages 2025/03/12 v0.6f Insert pages of external PDF documents (AM)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/base\ifthen.sty
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/tools\calc.sty
+Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count356
+\calc@Bcount=\count357
+\calc@Adimen=\dimen300
+\calc@Bdimen=\dimen301
+\calc@Askip=\skip67
+\calc@Bskip=\skip68
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count358
+\calc@Cskip=\skip69
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/eso-pic\eso-pic.sty
+Package: eso-pic 2023/05/03 v3.0c eso-pic (RN)
+\ESO@tempdima=\dimen302
+\ESO@tempdimb=\dimen303
+)
+\AM@pagewidth=\dimen304
+\AM@pageheight=\dimen305
+\AM@fboxrule=\dimen306
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pdfpages\pppdftex.def
+File: pppdftex.def 2025/03/12 v0.6f Pdfpages driver for pdfTeX (AM)
+)
+\pdfpages@includegraphics@status=\count359
+\AM@pagebox=\box86
+\AM@global@opts=\toks53
+\AM@pagecnt=\count360
+\AM@toc@title=\toks54
+\AM@lof@heading=\toks55
+\c@AM@survey=\count361
+\AM@templatesizebox=\box87
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/totcount\totcount.sty
+Package: totcount 2011/01/25 v1.2 package for gettingthe total value of LaTeX c
+ounters
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/lipsum\lipsum.sty
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/l3packages/l3keys2e\l3keys2e.sty
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/l3kernel\expl3.sty
+Package: expl3 2025-01-18 L3 programming layer (loader) 
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/l3backend\l3backend-pdftex.def
+File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count362
+\l__pdf_internal_box=\box88
+))
+Package: l3keys2e 2024-08-16 LaTeX2e option processing using LaTeX3 keys
+)
+Package: lipsum 2021-09-20 v2.7 150 paragraphs of Lorem Ipsum dummy text
+\g__lipsum_par_int=\count363
+\l__lipsum_a_int=\count364
+\l__lipsum_b_int=\count365
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/lipsum\lipsum.ltd.tex))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/ragged2e\ragged2e.sty
+Package: ragged2e 2023/06/22 v3.6 ragged2e Package
+\CenteringLeftskip=\skip70
+\RaggedLeftLeftskip=\skip71
+\RaggedRightLeftskip=\skip72
+\CenteringRightskip=\skip73
+\RaggedLeftRightskip=\skip74
+\RaggedRightRightskip=\skip75
+\CenteringParfillskip=\skip76
+\RaggedLeftParfillskip=\skip77
+\RaggedRightParfillskip=\skip78
+\JustifyingParfillskip=\skip79
+\CenteringParindent=\skip80
+\RaggedLeftParindent=\skip81
+\RaggedRightParindent=\skip82
+\JustifyingParindent=\skip83
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/natbib\natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip84
+\bibsep=\skip85
+LaTeX Info: Redefining \cite on input line 694.
+LaTeX Info: Redefining \citeauthor on input line 712.
+LaTeX Info: Redefining \citeyear on input line 735.
+\c@NAT@ctr=\count366
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pdfcomment\pdfcomment.sty
+Package: pdfcomment 2018/11/01 pdfcomment.sty v2.4a - Josef Kleber (C) 2008-201
+2, 2015-2016, 2018
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/xkeyval\xkeyval.sty
+Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/xkeyval\xkeyval.tex
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/xkeyval\xkvutils.tex
+\XKV@toks=\toks56
+\XKV@tempa@toks=\toks57
+)
+\XKV@depth=\count367
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+\c@pc@count@i=\count368
+\c@pc@count@ii=\count369
+\c@pc@count@iii=\count370
+\c@pc@count@iv=\count371
+\pc@mathannot@box=\box89
+\pc@nullbox=\box90
+\pc@dima=\skip86
+\pc@dimb=\skip87
+\pc@Sposx=\skip88
+\pc@Sposy=\skip89
+\pc@Eposx=\skip90
+\pc@Eposy=\skip91
+\pc@column=\skip92
+\pc@box@width=\skip93
+\pc@box@height=\skip94
+\pc@box@depth=\skip95
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/datetime2\datetime2.sty
+Package: datetime2 2021/03/21 v1.5.7 (NLCT) date and time formats
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/tracklang\tracklang.sty
+Package: tracklang 2025/03/11 v1.6.6 (NLCT) Track Languages
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/tracklang\tracklang.tex)))
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/zref\zref-savepos.sty
+Package: zref-savepos 2023-09-14 v2.35 Module savepos for zref (HO)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/zref\zref-base.sty
+Package: zref-base 2023-09-14 v2.35 Module base for zref (HO)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/auxhook\auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+Package zref Info: New property list: main on input line 767.
+Package zref Info: New property: default on input line 768.
+Package zref Info: New property: page on input line 769.
+)
+Package zref Info: New property list: savepos on input line 79.
+Package zref Info: New property: posx on input line 81.
+Package zref Info: New property: posy on input line 82.
+)
+\c@zref@unique=\count372
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/marginnote\marginnote.sty
+Package: marginnote 2018/08/09 1.4b non floating margin notes for LaTeX
+\c@mn@abspage=\count373
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/iftex\ifpdf.sty
+Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/iftex\ifluatex.sty
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/soulpos\soulpos.sty
+Package: soulpos 2021/10/15 v1.2 Fancy underlining
+\ulp@subcnt=\count374
+\ulp@cnt=\count375
+\ulp@out=\write5
+\ulp@in=\read5
+\ulwidth=\dimen307
+)
+
+Package hyperref Warning: Option `pdftex' has already been used,
+(hyperref)                setting the option has no effect on input line 1369.
+
+Package zref Info: New property list: pdfcomment on input line 2735.
+Package zref Info: New property: PCPDFOBJID on input line 2736.
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/booktabs\booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen308
+\lightrulewidth=\dimen309
+\cmidrulewidth=\dimen310
+\belowrulesep=\dimen311
+\belowbottomsep=\dimen312
+\aboverulesep=\dimen313
+\abovetopsep=\dimen314
+\cmidrulesep=\dimen315
+\cmidrulekern=\dimen316
+\defaultaddspace=\dimen317
+\@cmidla=\count376
+\@cmidlb=\count377
+\@aboverulesep=\dimen318
+\@belowrulesep=\dimen319
+\@thisruleclass=\count378
+\@lastruleclass=\count379
+\@thisrulewidth=\dimen320
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/twemojis\twemojis.sty
+Package: twemojis 2022/03/30 v1.3.1 LaTeX twemojis (twemoji v14.0.1)
+\twemojiDefaultHeight=\skip96
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/graphics\rotating.sty
+Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
+\c@r@tfl@t=\count380
+\rotFPtop=\skip97
+\rotFPbot=\skip98
+\rot@float@box=\box91
+\rot@mess@toks=\toks58
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/tools\tabularx.sty
+Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
+\TX@col@width=\dimen321
+\TX@old@table=\dimen322
+\TX@old@col=\dimen323
+\TX@target=\dimen324
+\TX@delta=\dimen325
+\TX@cols=\count381
+\TX@ftn=\toks59
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/tools\longtable.sty
+Package: longtable 2024-10-27 v4.22 Multi-page Table package (DPC)
+\LTleft=\skip99
+\LTright=\skip100
+\LTpre=\skip101
+\LTpost=\skip102
+\LTchunksize=\count382
+\LTcapwidth=\dimen326
+\LT@head=\box92
+\LT@firsthead=\box93
+\LT@foot=\box94
+\LT@lastfoot=\box95
+\LT@gbox=\box96
+\LT@cols=\count383
+\LT@rows=\count384
+\c@LT@tables=\count385
+\c@LT@chunks=\count386
+\LT@p@ftn=\toks60
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/tabularray\tabularray.sty
+Package: tabularray 2025-03-11 v2025A Typeset tabulars and arrays with LaTeX3
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/ninecolors\ninecolors.sty
+Package: ninecolors 2022-02-13 v2022D Select colors with proper color contrast
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/l3packages/xparse\xparse.sty
+Package: xparse 2024-08-16 L3 Experimental document command parser
+))
+\l__tblr_a_int=\count387
+\l__tblr_c_int=\count388
+\l__tblr_r_int=\count389
+\l__tblr_d_dim=\dimen327
+\l__tblr_h_dim=\dimen328
+\l__tblr_o_dim=\dimen329
+\l__tblr_p_dim=\dimen330
+\l__tblr_q_dim=\dimen331
+\l__tblr_r_dim=\dimen332
+\l__tblr_s_dim=\dimen333
+\l__tblr_t_dim=\dimen334
+\l__tblr_v_dim=\dimen335
+\l__tblr_w_dim=\dimen336
+\l__tblr_a_box=\box97
+\l__tblr_b_box=\box98
+\l__tblr_c_box=\box99
+\l__tblr_d_box=\box100
+\c@tblrcount=\count390
+\c@colnum=\count391
+\c@rowcount=\count392
+\c@colcount=\count393
+\abovesep=\dimen337
+\belowsep=\dimen338
+\leftsep=\dimen339
+\rightsep=\dimen340
+\gTblrLevelInt=\count394
+\g__tblr_data_row_key_count_int=\count395
+\g__tblr_data_column_key_count_int=\count396
+\g__tblr_data_cell_key_count_int=\count397
+\g__tblr_array_int=\count398
+\l__tblr_key_count_int=\count399
+\l__tblr_key_quotient_int=\count400
+\l__tblr_key_quotient_two_int=\count401
+\l__tblr_key_remainder_int=\count402
+\g__tblr_data_str_value_count_int=\count403
+\lTblrChildTotalInt=\count404
+\lTblrChildHtotalInt=\count405
+\lTblrChildVtotalInt=\count406
+\l__child_diff_h_int=\count407
+\l__child_diff_v_int=\count408
+\l__child_sign_h_int=\count409
+\l__child_sign_v_int=\count410
+\l__child_step_int=\count411
+\lTblrDefaultHruleWidthDim=\dimen341
+\lTblrDefaultVruleWidthDim=\dimen342
+\l__tblr_split_balance_int=\count412
+\l__tblr_strut_dp_dim=\dimen343
+\l__tblr_strut_ht_dim=\dimen344
+\g__tblr_cell_wd_dim=\dimen345
+\g__tblr_cell_ht_dim=\dimen346
+\g__tblr_cell_head_dim=\dimen347
+\g__tblr_cell_foot_dim=\dimen348
+\l__tblr_measured_cell_box=\box101
+\g__tblr_last_box=\box102
+\l__tblr_temp_box=\box103
+\l__tblr_column_target_dim=\dimen349
+\l__tblr_hfuzz_dim=\dimen350
+\l__tblr_caption_box=\box104
+\l__tblr_caption_left_box=\box105
+\lTblrRowHeadInt=\count413
+\lTblrRowFootInt=\count414
+\l__tblr_row_head_box=\box106
+\l__tblr_row_foot_box=\box107
+\l__tblr_row_head_foot_dim=\dimen351
+\lTblrTableWidthDim=\dimen352
+\l__tblr_table_firsthead_box=\box108
+\l__tblr_table_middlehead_box=\box109
+\l__tblr_table_lasthead_box=\box110
+\l__tblr_table_firstfoot_box=\box111
+\l__tblr_table_middlefoot_box=\box112
+\l__tblr_table_lastfoot_box=\box113
+\l__tblr_remain_height_dim=\dimen353
+\l__tblr_long_from_int=\count415
+\l__tblr_long_to_int=\count416
+\l__tblr_curr_i_int=\count417
+\l__tblr_prev_i_int=\count418
+\lTblrTablePageInt=\count419
+\l__tblr_table_head_box=\box114
+\l__tblr_table_foot_box=\box115
+\l__tblr_table_head_foot_dim=\dimen354
+\l__tblr_table_head_body_foot_dim=\dimen355
+\l__tblr_table_box=\box116
+\lTblrRowFirstInt=\count420
+\lTblrRowLastInt=\count421
+\l__tblr_table_hlines_box=\box117
+\l__tblr_hline_box=\box118
+\l__tblr_row_box=\box119
+\l__tblr_col_o_wd_dim=\dimen356
+\l__tblr_col_b_wd_dim=\dimen357
+\l__tblr_hline_leftskip_dim=\dimen358
+\l__tblr_hline_rightskip_dim=\dimen359
+\l__tblr_row_ht_dim=\dimen360
+\l__tblr_row_dp_dim=\dimen361
+\l__tblr_row_abovesep_dim=\dimen362
+\l__tblr_row_belowsep_dim=\dimen363
+\l__tblr_row_vlines_box=\box120
+\l__tblr_vline_box=\box121
+\l__tblr_cell_box=\box122
+\l__tblr_row_upper_dim=\dimen364
+\l__tblr_row_lower_dim=\dimen365
+\l__tblr_row_vpace_dim=\dimen366
+\l__tblr_vline_aboveskip_dim=\dimen367
+\l__tblr_vline_belowskip_dim=\dimen368
+\lTblrCellRowSpanInt=\count422
+\lTblrCellColSpanInt=\count423
+\l__tblr_cell_wd_dim=\dimen369
+\l__tblr_cell_ht_dim=\dimen370
+\lTblrCellAboveBorderWidthDim=\dimen371
+\lTblrCellBelowBorderWidthDim=\dimen372
+\lTblrCellLeftBorderWidthDim=\dimen373
+\lTblrCellRightBorderWidthDim=\dimen374
+\l__tblr_diag_box=\box123
+\l__tblr_cell_inner_wd_dim=\dimen375
+\l__tblr_cell_inner_dp_dim=\dimen376
+\l__tblr_cell_hanchor_dim=\dimen377
+\l__tblr_last_cell_table_ht_dim=\dimen378
+\l__tblr_last_cell_table_dp_dim=\dimen379
+\l__tblr_last_vline_wd_dim=\dimen380
+\l__tblr_tikz_node_box=\box124
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/enumitem\enumitem.sty
+Package: enumitem 2025/02/06 v3.11 Customized lists
+\labelindent=\skip103
+\enit@outerparindent=\dimen381
+\enit@toks=\toks61
+\enit@inbox=\box125
+\enit@count@id=\count424
+\enitdp@description=\count425
+)
+\enitdp@todolist=\count426
+\c@citnum=\count427
+\c@citnum@totc=\count428
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/geometry\geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/generic/iftex\ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count429
+\Gm@cntv=\count430
+\c@Gm@tempcnt=\count431
+\Gm@bindingoffset=\dimen382
+\Gm@wd@mp=\dimen383
+\Gm@odd@mp=\dimen384
+\Gm@even@mp=\dimen385
+\Gm@layoutwidth=\dimen386
+\Gm@layoutheight=\dimen387
+\Gm@layouthoffset=\dimen388
+\Gm@layoutvoffset=\dimen389
+\Gm@dimlist=\toks62
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/geometry\geometry.cfg))
+Package hyperref Info: Option `colorlinks' set `true' on input line 46.
+ (example_writing.aux)
+\openout1 = `example_writing.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count432
+\scratchdimen=\dimen390
+\scratchbox=\box126
+\nofMPsegments=\count433
+\nofMParguments=\count434
+\everyMPshowfont=\toks63
+\MPscratchCnt=\count435
+\MPscratchDim=\dimen391
+\MPnumerator=\count436
+\makeMPintoPDFobject=\count437
+\everyMPtoPDFconversion=\toks64
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/epstopdf-pkg\epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/00miktex\epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+Package hyperref Info: Link coloring ON on input line 64.
+ (example_writing.out)
+(example_writing.out)
+\@outlinefile=\write6
+\openout6 = `example_writing.out'.
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: longtable package is loaded.
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/caption\ltcaption.sty
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
+)
+Package caption Info: rotating package is loaded.
+Package caption Info: End \AtBeginDocument code.
+\c@maskedRefs=\count438
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/apacite\english.apc
+File: english.apc 2013/07/21 v6.03 apacite language file
+LaTeX Info: Redefining \BPBI on input line 129.
+LaTeX Info: Redefining \BHBI on input line 130.
+)
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pdflscape\pdflscape.sty
+Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/pdflscape\pdflscape-nometadata.sty
+Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PD
+F (HO)
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/graphics\lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+))
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(65.04256pt, 484.20988pt, 65.04256pt)
+* v-part:(T,H,B)=(65.04256pt, 664.88487pt, 65.04256pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=484.20988pt
+* \textheight=664.88487pt
+* \oddsidemargin=-7.22743pt
+* \evensidemargin=-7.22743pt
+* \topmargin=-44.22743pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+LaTeX Font Info:    Trying to load font information for U+msa on input line 68.
+
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 68.
+
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+
+[1
+
+\openout5 = `example_writing.upa'.
+
+{C:/Users/dvrch/Desktop/Memoire_2024/miltex.app/miktex-portable/texmfs/data/fon
+ts/map/pdftex/pdftex.map}]
+
+Package natbib Warning: Citation `p1' on page 2 undefined on input line 242.
+
+
+
+[2]
+
+LaTeX Warning: Reference `eq:1' on page 1 undefined on input line 281.
+
+<C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian
+2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012140.png, 
+id=107, 2044.63875pt x 1318.9275pt>
+File: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obs
+idian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012140.
+png Graphic file (type png)
+<use C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsi
+dian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012140.p
+ng>
+Package pdftex.def Info: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/
+Straightforward-Obsidian2Latex/example_vault/✍Writing/figure blocks/Pasted im
+age 20240609012140.png  used on input line 308.
+(pdftex.def)             Requested size: 193.68098pt x 124.93715pt.
+! Missing \endcsname inserted.
+<to be read again> 
+                   \global 
+l.328 \item \twemoji\{
+                      plus\}  Allow user to create more complex configurations
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 3
+28.
+
+(C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
+tex/latex/base\omscmr.fd
+File: omscmr.fd 2024/11/19 v2.5n Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 328.
+
+! Extra \endcsname.
+\\twemoji [#1]#2->\csname twemoji #2\endcsname 
+                                               {#1}
+l.328 \item \twemoji\{
+                      plus\}  Allow user to create more complex configurations
+I'm ignoring this, since I wasn't doing a \csname.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.328 \item \twemoji\{
+                      plus\}  Allow user to create more complex configurations
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   }
+l.328 \item \twemoji\{
+                      plus\}  Allow user to create more complex configurations
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+<C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian
+2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012221.png, 
+id=110, 2044.63875pt x 1318.9275pt>
+File: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obs
+idian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012221.
+png Graphic file (type png)
+<use C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsi
+dian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012221.p
+ng>
+Package pdftex.def Info: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/
+Straightforward-Obsidian2Latex/example_vault/✍Writing/figure blocks/Pasted im
+age 20240609012221.png  used on input line 337.
+(pdftex.def)             Requested size: 242.10493pt x 156.17145pt.
+<C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian
+2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012251.png, 
+id=111, 1454.43375pt x 1022.82124pt>
+File: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obs
+idian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012251.
+png Graphic file (type png)
+<use C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsi
+dian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012251.p
+ng>
+Package pdftex.def Info: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/
+Straightforward-Obsidian2Latex/example_vault/✍Writing/figure blocks/Pasted im
+age 20240609012251.png  used on input line 345.
+(pdftex.def)             Requested size: 242.10493pt x 170.25648pt.
+
+
+[3 <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsid
+ian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012140.pn
+g>]
+\pydata@fh@0=\write7
+\openout7 = `_5B0D16F4602BF00788FAA3BCB9263A15.data.minted'.
+
+runsystem(latexminted config  --timestamp 20250507063802 5B0D16F4602BF00788FAA3
+BCB9263A15)...executed.
+
+
+
+! Package minted Error: minted v3+ executable is not installed or is not added 
+to PATH; or MiKTeX is being used with -aux-directory or -output-directory witho
+ut setting a TEXMF_OUTPUT_DIRECTORY environment variable.
+
+See the minted package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.401 \end{minted}
+                  
+This error message was generated by an \errmessage
+command, so I can't give any explicit help.
+Pretend that you're Hercule Poirot: Examine all clues,
+and deduce the truth by order and method.
+
+
+! Package minted Error: Missing definition for highlighting style "default" (mi
+nted executable is unavailable or disabled); attempting to substitute fallback 
+style.
+
+See the minted package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.401 \end{minted}
+                  
+(That was another \errmessage.)
+
+
+! Package minted Error: Cannot highlight code (minted executable is unavailable
+ or disabled); attempting to typeset without highlighting.
+
+See the minted package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.401 \end{minted}
+                  
+(That was another \errmessage.)
+
+
+
+[4 <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsid
+ian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012221.pn
+g> <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsid
+ian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012251.pn
+g>]
+
+LaTeX Warning: Hyper reference `sec:Adding-citations' on page 5 undefined on in
+put line 407.
+
+
+LaTeX Warning: Reference `sec:Adding-citations' on page 5 undefined on input li
+ne 407.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 413.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\mathsurround' on input line 413.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\z@' on input line 413.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\mathchar' on input line 413.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 413.
+
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 433.
+
+
+LaTeX Warning: Reference `tab:1' on page 1 undefined on input line 457.
+
+
+LaTeX Warning: Reference `tab:2' on page 1 undefined on input line 457.
+
+
+LaTeX Warning: Reference `tab:long' on page 1 undefined on input line 457.
+
+
+Underfull \hbox (badness 3375) in paragraph at lines 471--471
+[]|\OT1/cmr/m/n/10 Equation: $\OML/cmm/m/it/10 E \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 471--471
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 471--471
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 471--471
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 471--471
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 471--471
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 471--472
+[]|\OT1/cmr/m/n/10 even more text
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 471--472
+\OT1/cmr/m/n/10 even more text
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 471--472
+\OT1/cmr/m/n/10 even more text
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 471--472
+\OT1/cmr/m/n/10 even more text
+ []
+
+
+LaTeX Warning: Reference `eq:1' on page 1 undefined on input line 472.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   p
+l.488 \begin{tabularx}{p{1cm}p{1cm}p{5cm}p{3cm}}
+                                                
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   p
+l.488 \begin{tabularx}{p{1cm}p{1cm}p{5cm}p{3cm}}
+                                                
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+
+! Package calc Error: `p' invalid at this point.
+
+See the calc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.488 \begin{tabularx}{p{1cm}p{1cm}p{5cm}p{3cm}}
+                                                
+I expected to see one of: + - * / )
+
+! Package array Error:  Illegal pream-token (\hline): `c' used.
+
+See the array package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.495 \end{tabularx}
+                    
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+
+Package tabularx Warning: X Columns too narrow (table too wide)
+(tabularx)                 on input line 495.
+
+
+! Package array Error:  Illegal pream-token (\hline): `c' used.
+
+See the array package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.495 \end{tabularx}
+                    
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+
+LaTeX Warning: Reference `eq:1' on page 1 undefined on input line 495.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.495 \end{tabularx}
+                    
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+
+Overfull \hbox (417.26472pt too wide) in alignment at lines 495--495
+[] 
+ []
+
+! Extra }, or forgotten \endgroup.
+\TX@endtabularx ... }\the \TX@ftn \ifnum 0=`{\fi }
+                                                  \expandafter \expandafter ...
+l.495 \end{tabularx}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+Underfull \hbox (badness 3375) in paragraph at lines 514--514
+[]|\OT1/cmr/m/n/10 Equation: $\OML/cmm/m/it/10 E \OT1/cmr/m/n/10 =
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 514--514
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 514--514
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 514--514
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 514--514
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 514--514
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 514--515
+[]|\OT1/cmr/m/n/10 even more text
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 514--515
+\OT1/cmr/m/n/10 even more text
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 514--515
+\OT1/cmr/m/n/10 even more text
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 514--515
+\OT1/cmr/m/n/10 even more text
+ []
+
+
+LaTeX Warning: Reference `eq:1' on page 1 undefined on input line 515.
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--516
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--517
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 516--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--517
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--518
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 517--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--518
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--519
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 518--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--519
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--520
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 519--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--520
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--521
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 520--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--521
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--522
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 521--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--522
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--523
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 522--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--523
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--524
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 523--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--524
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--525
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 524--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--525
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--526
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 525--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--526
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--527
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 526--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--527
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--528
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 527--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--528
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--529
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 528--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--529
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--530
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 529--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--530
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--531
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 530--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--531
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--532
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 531--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--532
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--533
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 532--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--533
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--534
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 533--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--534
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--535
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 534--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--535
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--536
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 535--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--536
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--537
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 536--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--537
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--538
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 537--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--538
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--539
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 538--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--539
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--540
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 539--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--540
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--541
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 540--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--541
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--542
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 541--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--542
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--543
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 542--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--543
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--544
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 543--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--544
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--545
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 544--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--545
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--546
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 545--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--546
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--547
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 546--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--547
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--548
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 547--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--548
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--549
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 548--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--549
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--550
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 549--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--550
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--551
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 550--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--551
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--552
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 551--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--552
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--553
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 552--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--553
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--554
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 553--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--554
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--555
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 554--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--555
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--556
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 555--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--556
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--557
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--557
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--557
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--557
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 556--557
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.581 We used method_
+                     1. We use this method, because it's awesome.
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.582 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+No file example_writing.bbl.
+
+Package natbib Warning: There were undefined citations.
+
+
+! LaTeX Error: \begin{table} on input line 484 ended by \end{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.603 \end{document}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+(example_writing.aux)
+ ***********
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+ ***********
+
+
+LaTeX Warning: There were undefined references.
+
+Package rerunfilecheck Info: File `example_writing.out' has not changed.
+(rerunfilecheck)             Checksum: C4D7CF419D6A88D8CC5D001BC79CD1C8;2120.
+! You can't use `\end' in internal vertical mode.
+\enddocument ...cument/end}\deadcycles \z@ \@@end 
+                                                  
+l.603 \end{document}
+                    
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+! LaTeX Error: \begin{table} on input line 484 ended by \end{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.603 \end{document}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.603 \end{document}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+)
+! Emergency stop.
+<*> ...xample_vault/✍Writing/example_writing.tex
+                                                  
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 48672 strings out of 473523
+ 1096092 string characters out of 5698605
+ 1816469 words of memory out of 5000000
+ 71282 multiletter control sequences out of 15000+600000
+ 569408 words of font info for 77 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 95i,13n,101p,720b,841s stack positions out of 10000i,1000n,20000p,200000b,200000s
+!  ==> Fatal error occurred, no output PDF file produced!
