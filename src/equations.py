@@ -343,7 +343,8 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
     else:
         tmp1 = ''
 
-    content__unfold[-1] += f'\\label{{{equation_label}}}{anything_after_equation_that_can_be_removed_by_rstrip}{tmp1}'
+    # Ajouter un label correct
+    content__unfold[-1] += f'\\label{{eq:{equation_label}}}{anything_after_equation_that_can_be_removed_by_rstrip}{tmp1}'
 
     return content__unfold
 

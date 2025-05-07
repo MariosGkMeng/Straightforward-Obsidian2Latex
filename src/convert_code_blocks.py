@@ -14,6 +14,9 @@ def convert_inline_code_of_line(text):
     # Replace the inline code with \texttt{} format
     latex_text = re.sub(pattern, r'\\texttt{\1}', text)
     
+    # Corriger \twemoji
+    latex_text = re.sub(r'\\twemoji\\\{(.*?)\\\}', r'\\twemoji{\1}', latex_text)
+    
     return latex_text
 
 def convert_inline_code(S):

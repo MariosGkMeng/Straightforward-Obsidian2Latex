@@ -64,7 +64,7 @@ def get_parameters(version = 'default'):
     path_equation_blocks = path_writing + 'equation blocks'
     path_table_blocks   = path_writing + 'table blocks'
     path_list_note_paths = path_vault + 'DO_NOT_DELETE__note_paths.txt'
-    path_BIBTEX          = path_writing + 'BIBTEX'
+    path_BIBTEX          = path_writing + 'BIBTEX.bib'
     
     if not os.path.exists(path_list_note_paths):
         with open(path_list_note_paths, 'w', encoding='utf-8') as file:
