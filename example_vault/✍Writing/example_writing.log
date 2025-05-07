@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3 Portable) (preloaded format=pdflatex 2025.4.5)  7 MAY 2025 14:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3 Portable) (preloaded format=pdflatex 2025.4.5)  7 MAY 2025 17:17
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1559,26 +1559,12 @@ ts/map/pdftex/pdftex.map}])
 
 Package natbib Warning: Citation `p1' on page 4 undefined on input line 259.
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.294 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-LaTeX Warning: Reference `eq:1' on page 1 undefined on input line 298.
-
-
-LaTeX Warning: Reference `eq:Einstein' on page 1 undefined on input line 314.
-
 
 
 [4]
 <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian
 2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012140.png, 
-id=184, 2044.63875pt x 1318.9275pt>
+id=186, 2044.63875pt x 1318.9275pt>
 File: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obs
 idian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012140.
 png Graphic file (type png)
@@ -1589,14 +1575,14 @@ Package pdftex.def Info: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/
 Straightforward-Obsidian2Latex/example_vault/✍Writing/figure blocks/Pasted im
 age 20240609012140.png  used on input line 325.
 (pdftex.def)             Requested size: 193.68098pt x 124.93715pt.
-<all-twemojis.pdf, id=187, page=3657, 27.10126pt x 27.10126pt>
+<all-twemojis.pdf, id=189, page=3657, 27.10126pt x 27.10126pt>
 File: all-twemojis.pdf Graphic file (type pdf)
 <use all-twemojis.pdf, page 3657>
 Package pdftex.def Info: all-twemojis.pdf , page3657 used on input line 345.
 (pdftex.def)             Requested size: 6.83318pt x 6.83331pt.
 <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian
 2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012221.png, 
-id=188, 2044.63875pt x 1318.9275pt>
+id=190, 2044.63875pt x 1318.9275pt>
 File: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obs
 idian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012221.
 png Graphic file (type png)
@@ -1609,7 +1595,7 @@ age 20240609012221.png  used on input line 354.
 (pdftex.def)             Requested size: 242.10493pt x 156.17145pt.
 <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian
 2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012251.png, 
-id=189, 1454.43375pt x 1022.82124pt>
+id=191, 1454.43375pt x 1022.82124pt>
 File: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obs
 idian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012251.
 png Graphic file (type png)
@@ -1623,7 +1609,7 @@ age 20240609012251.png  used on input line 362.
 \pydata@fh@0=\write8
 \openout8 = `_5B0D16F4602BF00788FAA3BCB9263A15.data.minted'.
 
-runsystem(latexminted config  --timestamp 20250507145445 5B0D16F4602BF00788FAA3
+runsystem(latexminted config  --timestamp 20250507171737 5B0D16F4602BF00788FAA3
 BCB9263A15)...executed.
 
 
@@ -1764,7 +1750,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 488--489
  []
 
 
-LaTeX Warning: Reference `eq:1' on page 1 undefined on input line 489.
+Underfull \hbox (badness 10000) in paragraph at lines 489--489
+[]|\OT1/cmr/m/n/10 Reference Equa-
+ []
 
 
 Overfull \hbox (14.18626pt too wide) in paragraph at lines 512--512
@@ -1797,11 +1785,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 512--512
  []
 
 
-LaTeX Warning: Reference `eq:1' on page 1 undefined on input line 512.
-
-
 Overfull \hbox (13.6584pt too wide) in paragraph at lines 512--512
 []|\OT1/cmr/m/n/10 Reference
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 512--512
+\OT1/cmr/m/n/10 Equa-
+ []
+
+
+Overfull \hbox (3.76956pt too wide) in paragraph at lines 512--512
+\OT1/cmr/m/n/10 tion ([][]2[][])| 
  []
 
 
@@ -1860,7 +1855,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 531--532
  []
 
 
-LaTeX Warning: Reference `eq:1' on page 1 undefined on input line 532.
+Underfull \hbox (badness 10000) in paragraph at lines 532--532
+[]|\OT1/cmr/m/n/10 Reference Equa-
+ []
 
 
 Underfull \hbox (badness 5696) in paragraph at lines 533--533
@@ -5961,6 +5958,8 @@ Underfull \hbox (badness 5696) in paragraph at lines 573--574
 Underfull \hbox (badness 5696) in paragraph at lines 573--574
 \OT1/cmr/m/n/10 Some more text-
  []
+
+
 
 [7] [8] [9] [10] [11]
 
@@ -6005,7 +6004,7 @@ Package rerunfilecheck Info: File `example_writing.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  48700 strings out of 473523
- 1096580 string characters out of 5698605
+ 1096548 string characters out of 5698605
  1817470 words of memory out of 5000000
  71286 multiletter control sequences out of 15000+600000
  569408 words of font info for 77 fonts, out of 8000000 for 9000
@@ -6038,9 +6037,9 @@ rs/dvrch/Desktop/Memoire_2024/miltex.app/miktex-portable/texmfs/install/fonts/t
 ype1/public/amsfonts/cm/cmtt10.pfb><C:/Users/dvrch/Desktop/Memoire_2024/miltex.
 app/miktex-portable/texmfs/install/fonts/type1/public/amsfonts/symbols/msam10.p
 fb>
-Output written on example_writing.pdf (13 pages, 1678399 bytes).
+Output written on example_writing.pdf (13 pages, 1679404 bytes).
 PDF statistics:
- 330 PDF objects out of 1000 (max. 8388607)
+ 336 PDF objects out of 1000 (max. 8388607)
  65 named destinations out of 1000 (max. 500000)
  233 words of extra memory for PDF output out of 10000 (max. 10000000)
 

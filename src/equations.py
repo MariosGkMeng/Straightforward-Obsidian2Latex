@@ -6,7 +6,7 @@ from helper_functions import *
 
 
 # For recognizing file names, section names, block names
-SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\\(\\)\\(\\)\\.\\-\\s"
+SPECIAL_CHARACTERS = " ,'%💬⚠💼🟢➕❓❌🔴✔🧑☺📁⚙🔒🤔🟡🔲💊💡🤷‍♂️▶📧🔗🎾👨‍💻📞💭📖ℹ🤖🏢🧠🕒👇📚👉0-9\(\)\(\)\.\-\s"
 from remove_markdown_comment import *
 from path_searching import *
 
@@ -48,7 +48,7 @@ def EQUATIONS__convert_non_numbered_to_numbered(S0):
         
     """
     Converts equations from the format "$$equation_here$$\\label{label}" to:
-    "\begin{equation} \\label{label} \n \t equation_here \n \\end{equation}"
+    "\begin{equation} \\label{label} \n \t equation_here \n \end{equation}"
     """
 
     S = S0
@@ -168,7 +168,7 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
 
     complete_equation = ''.join(latex_equations)
 
-    
+
     patterns = [fr'\$\$\s*\\begin\{{{s}\}}\s*(.*?)\s*\\end\{{{s}\}}(\s*\$\$\\label\{{(eq__block_[^}}]+)\}})?' for s in aligned_or_split]
     # with the above pattern, the algorithm expects to find the label after the equation
     
@@ -181,7 +181,7 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
 
             equation_content = equation_match.group(1)
             equation_content = equation_content.split('\\\\')
-            equation_content = ('\\\\' + '\n' + '\t'*1).join(equation_content) # DV$$$
+            equation_content = ('\\\\' + '\n' + '\t'*1).join(equation_content)
 
             label_match = equation_match.group(2)
 
@@ -196,7 +196,7 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
                 begin_end_eq = ['', '']
                 label_statement_alternative = label_statement
             else:
-                begin_end_eq = [f'\\begin{{equation}}{label_statement}', f'\\end{{equation}}']
+                begin_end_eq = [f'\\begin{{equation}}{label_statement}', f'\end{{equation}}']
                 label_statement_alternative = ''
                 
             new_equation = rf"""
@@ -219,7 +219,7 @@ def EQUATIONS__check_and_correct_aligned_equations(S0):
     indexes_start = []
     indexes_end = []
     for cmdl in aligned_or_split:
-        indexes_start_add, indexes_end_add = get_start_and_end_indexes([f'\\begin{{{cmdl}}}', f'\\end{{{cmdl}}}'], S0)
+        indexes_start_add, indexes_end_add = get_start_and_end_indexes([f'\\begin{{{cmdl}}}', f'\end{{{cmdl}}}'], S0)
         indexes_start += indexes_start_add
         indexes_end += indexes_end_add
     
@@ -339,12 +339,11 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
     add_new_line_after_label = True
 
     if add_new_line_after_label:
-        tmp1 = '\n' # DV$$$
+        tmp1 = '\n'
     else:
         tmp1 = ''
 
-    # Ajouter un label correct
-    content__unfold[-1] += f'\\label{{eq:{equation_label}}}{anything_after_equation_that_can_be_removed_by_rstrip}{tmp1}'
+    content__unfold[-1] += f'\label{{{equation_label}}}{anything_after_equation_that_can_be_removed_by_rstrip}{tmp1}'
 
     return content__unfold
 

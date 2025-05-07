@@ -287,9 +287,9 @@ Steps:
 
 
 % Start obsidian ref: eq__block_Einstein\\texttt{\expr}
-\begin{equation}
+\begin{equation} \label{eq:Einstein}
 	E=mc^{2}
-\end{equation}$\label{eq:eq__block_Einstein}
+\end{equation}
 % End obsidian ref
 
 
@@ -300,7 +300,7 @@ It supports the aligned equations, as seen in \Cref{eq:1}.
 
 
 % Start obsidian ref: eq__block_1\\texttt{\expr}
-\begin{equation}%no_label_statement
+\begin{equation}\label{eq:1}
 \begin{aligned}
 \Delta W_{rg} = -\alpha \sum_{s}&[R+\gamma V(s')-V(s)]  \\
 &[\nabla_{w} \gamma V(s')-\nabla_{w}V(s)]
@@ -502,7 +502,7 @@ Reference \Cref{eq:1} & 1 & 1 & 1 \\
 \centering
 \caption{Table with customized widths and row color formatting}
 \label{tab:2}
-\begin{tabularx}{p{1cm}p{1cm}p{5cm}p{3cm}}
+\begin{tabularx}{1.0\textwidth}{p{1cm}p{1cm}p{5cm}p{3cm}}
 \hline
 \textbf{Col1} & \textbf{Col2} & \textbf{Col3} & \textbf{Col4} \\
 \rowcolor{lightgray}  a11 & a12 & Some more text & even more text \\
