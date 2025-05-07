@@ -83,7 +83,7 @@
 \tableofcontents
 \newpage
 
-% Start obsidian ref: \twemoji\{warning\} warning to users
+% Start obsidian ref: \twemoji{warning} warning to users
 
 \begin{enumerate}
 
@@ -287,9 +287,9 @@ Steps:
 
 
 % Start obsidian ref: eq__block_Einstein\\texttt{\expr}
-\begin{equation} \label{eq:Einstein}
+\begin{equation}
 	E=mc^{2}
-\end{equation}
+\end{equation}$\label{eq:eq__block_Einstein}
 % End obsidian ref
 
 
@@ -300,7 +300,7 @@ It supports the aligned equations, as seen in \Cref{eq:1}.
 
 
 % Start obsidian ref: eq__block_1\\texttt{\expr}
-\begin{equation}\\label{eq:1}
+\begin{equation}%no_label_statement
 \begin{aligned}
 \Delta W_{rg} = -\alpha \sum_{s}&[R+\gamma V(s')-V(s)]  \\
 &[\nabla_{w} \gamma V(s')-\nabla_{w}V(s)]
@@ -342,7 +342,7 @@ See \Cref{fig:1}.
 
 \begin{itemize}
 
-\item \twemoji\{plus\}  Allow user to create more complex configurations
+\item \twemoji{plus}  Allow user to create more complex configurations
 
 \end{itemize}
 
@@ -502,7 +502,7 @@ Reference \Cref{eq:1} & 1 & 1 & 1 \\
 \centering
 \caption{Table with customized widths and row color formatting}
 \label{tab:2}
-\begin{tabularx}{1.0\textwidth}{p{1cm}p{1cm}p{5cm}p{3cm}}
+\begin{tabularx}{p{1cm}p{1cm}p{5cm}p{3cm}}
 \hline
 \textbf{Col1} & \textbf{Col2} & \textbf{Col3} & \textbf{Col4} \\
 \rowcolor{lightgray}  a11 & a12 & Some more text & even more text \\
@@ -606,8 +606,8 @@ We used method_1. We use this method, because it's awesome.
 
 
 
-\newpage
-\newpage
+\newpage 
+\newpage 
 
 
 

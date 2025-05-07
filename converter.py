@@ -723,7 +723,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
         LATEX2.append(escape_underscores_in_sections(line))
 
 
-    LATEX = PREAMBLE + LATEX2 + [('\\newpage \n '*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5 + r'\bibliographystyle{apacite}']+\
+    LATEX = PREAMBLE + LATEX2 + [('\\newpage \n'*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5 + r'\bibliographystyle{apacite}']+\
         [r'\bibliography{' + PATHS['bibtex_file_name'] + r'}'] + [r'\end{document}']
 
     # if '[[✍⌛writing--FaultDiag--Drillstring--MAIN]]' in markdown_file:

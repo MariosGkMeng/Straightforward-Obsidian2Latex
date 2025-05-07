@@ -78,3 +78,13 @@ def escape_underscores_in_texttt(text):
     
     return replaced_text
 
+
+def escape_special_characters(text):
+    """
+    Escapes special characters like underscores, dollar signs, and braces in LaTeX.
+    """
+    special_chars = {'_': r'\_', '$': r'\$', '{': r'\{', '}': r'\}'}
+    for char, escaped in special_chars.items():
+        text = text.replace(char, escaped)
+    return text
+

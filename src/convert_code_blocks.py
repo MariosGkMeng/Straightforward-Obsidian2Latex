@@ -181,3 +181,18 @@ def code_block_converter(S, PARS):
         S1.append(s1)
 
     return S1
+
+def handle_minted_fallback(S):
+    """
+    Replace minted blocks with verbatim blocks if minted is unavailable.
+    """
+    fallback_start = '\\begin{verbatim}'
+    fallback_end = '\\end{verbatim}'
+    S1 = []
+    for line in S:
+        if '\\begin{minted}' in line:
+            line = line.replace('\\begin{minted}', fallback_start)
+        elif '\\end{minted}' in line:
+            line = line.replace('\\end{minted}', fallback_end)
+        S1.append(line)
+    return S1
