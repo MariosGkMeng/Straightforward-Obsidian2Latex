@@ -38,6 +38,10 @@
 \setlength{\parindent}{0pt}
 \usepackage[margin=0.9in]{geometry}
 
+% Configure bibliography
+\bibliographystyle{apacite}
+\setcitestyle{round}
+
     \hypersetup{
     colorlinks   = true,    % Colours links instead of ugly boxes
     urlcolor     = blue,    % Colour for external hyperlinks
@@ -54,7 +58,7 @@
 \let\oldmarginpar\marginpar
 \renewcommand\marginpar[1]{\oldmarginpar{\tiny #1}} % Change "small" to your desired font size
 
- 
+
 \newcommand{\ignore}[1]{}
 % CUSTOM FUNCTIONS
 % =======================================
@@ -62,24 +66,12 @@
 
 
 \begin{document}
-\allowdisplaybreaks
+\allowdisplaybreaks 
 \date{}
 \author{Marios Gkionis}
 \title{Titre doc}
 \maketitle
-% Start obsidian ref:
 
-%⚠warning to users
-
-\begin{enumerate}
-
-\item Equations, tables, and figures should be written only inside the equation-block style (`README.md`)
-
-\item Any syntactic violation that happens inside the obsidian note will be passed into LateX. So far, I have not included any diagnostic routine.
-
-\item When you have many embedded notes and linked notes in the note you want to convert, the algorithm searches within the vault to find them and save their paths in the `DO_NOT_DELETE__note_paths.txt` file. This searching process will take a few seconds (if you have many notes in your vault, and many linked mentions and embedded notes in your note), however, since the paths are now saved into this text file, any conversions you perform afterwards will be very fast.
-
-\end{enumerate}
 
 % End obsidian ref
 \tableofcontents
@@ -89,7 +81,7 @@
 
 % Start obsidian ref:
 
-%\twemoji{warning} warning to users
+\twemoji{warning} warning to users
 
 \begin{enumerate}
 
@@ -111,7 +103,7 @@
 
 
 
-\section{Development Tasks}
+\section{Development Tasks} 
 
 
 
@@ -271,14 +263,19 @@
 
 \end{todolist}
 
-\section{Adding citations}
+% \section{Adding citations}
+% Command: just mention that link that pertains to the literature file. I use the "p"+"number" naming convention. For example, "p1" would be the first literature file in my vault.
+
+
+
+% Example: In \cite{p1}, we see that...  \hypertarget{ad3b86}{}
+
+\section{Adding citations} \label{sec:Adding-citations}
 Command: just mention that link that pertains to the literature file. I use the "p"+"number" naming convention. For example, "p1" would be the first literature file in my vault.
 
 
 
-Example: In \cite{p1}, we see that...  \hypertarget{ad3b86}{}
-
-
+Example: In \Citep{p1}, we see that...  \hypertarget{ad3b86}{} \label{ead3b86}
 
 \section{Equations}
 
@@ -453,9 +450,14 @@ Check \hyperref[sec:Adding-citations]{this section} (\autoref{sec:Adding-citatio
 
 
 
+Check \hyperref[sec:Adding-citations]{this section}: \autoref{sec:Adding-citations} about adding citations.
+
+
+
 
 
 \section{\maltese Cross-reference of block}
+
 
 example
 
@@ -611,6 +613,15 @@ Some more textSome more textSome more textSome more textSome more textSome more 
 Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
 Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
 Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
+Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text & Some more textSome more textSome more textSome more textSome more textSome more text \\
 \end{longtable}
 
 % End obsidian ref
@@ -654,6 +665,6 @@ We used method_1. We use this method, because it's awesome.
 
 
 
-\bibliographystyle{apacite}
+\bibliographystyle{plainnat}
 \bibliography{BIBTEX}
 \end{document}

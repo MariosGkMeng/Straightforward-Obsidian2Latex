@@ -28,28 +28,36 @@ cd "$BASE_PATH"
 # Replace \begin{tabularx} with \begin{tabularx}{1.0\textwidth}
 sed -i "s/\\\\begin{tabularx}{p/\\\\begin{tabularx}{1.0\\\\textwidth}{p/g" "$TEXFILE"
 
+# Clean auxiliary files
+rm -f "$FILE_NAME.aux" "$FILE_NAME.log" "$FILE_NAME.bbl" "$FILE_NAME.blg" "$FILE_NAME.toc" 2>/dev/null
 
-# # Clean auxiliary files
-rm -f "$FILE_NAME.aux" "$FILE_NAME.log" "$FILE_NAME.bbl" "$FILE_NAME.blg" "$FILE_NAME.toc"
+# First compilation
+pdflatex -interaction=nonstopmode -shell-escape "$TEXFILE"
+if [ $? -ne 0 ]; then
+    echo "First pdflatex compilation failed."
+    exit 1
+fi
 
-# # Compile the bibliography
-bibtex "$FILE_NAME.aux"
+# Compile the bibliography
+bibtex "$FILE_NAME"
 if [ $? -ne 0 ]; then
     echo "bibtex compilation failed. pdf OK, mais pas de bibliographie."
     exit 1
 fi
 
-# Compile the LaTeX file
-# pdflatex -interaction=nonstopmode -shell-escape "$TEXFILE"
+# Second compilation for bibliography
+pdflatex -interaction=nonstopmode -shell-escape "$TEXFILE"
 if [ $? -ne 0 ]; then
-    echo "pdflatex compilation failed."
+    echo "Second pdflatex compilation failed."
     exit 1
 fi
-#
 
-# # Compile the LaTeX file again for references
+# Final compilation for references
 pdflatex -interaction=nonstopmode -shell-escape "$TEXFILE"
-pdflatex -interaction=nonstopmode -shell-escape "$TEXFILE"
+if [ $? -ne 0 ]; then
+    echo "Final pdflatex compilation failed."
+    exit 1
+fi
 
 # Open the resulting PDF file
 # Use 'start' on Windows (Git Bash) and 'xdg-open' on Linux/macOS
