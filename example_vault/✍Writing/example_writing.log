@@ -1,12 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3 Portable) (preloaded format=pdflatex 2025.4.5)  9 MAY 2025 18:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3 Portable) (preloaded format=pdflatex 2025.4.5)  9 MAY 2025 22:39
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
-**c:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidia
-n2Latex/example_vault/✍Writing/example_writing.tex
-
-(c:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian
-2Latex/example_vault/✍Writing/example_writing.tex
+**./example_writing.tex
+(example_writing.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 
@@ -1340,28 +1337,28 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 
 (C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
 tex/latex/geometry\geometry.cfg))
-Package hyperref Info: Option `colorlinks' set `true' on input line 50.
+Package hyperref Info: Option `colorlinks' set `true' on input line 46.
  (example_writing.aux)
 \openout1 = `example_writing.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
 
 (C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
 tex/context/base/mkii\supp-pdf.mkii
@@ -1388,7 +1385,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring ON on input line 68.
+Package hyperref Info: Link coloring ON on input line 64.
  (example_writing.out)
 (example_writing.out)
 \@outlinefile=\write6
@@ -1461,95 +1458,40 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 75.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 71.
 
 
 (C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
 tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 75.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 71.
 
 
 (C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs\install\
 tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-! Missing $ inserted.
-<inserted text> 
-                $
-l.84 ...eir paths in the `DO\_NOT\_DELETE\_\_note_
-                                                  paths.txt` file. This sear...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.85 
-     
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.85 
-     
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-Overfull \hbox (1077.21043pt too wide) in paragraph at lines 84--85
-\OT1/cmr/m/n/10 searches within the vault to find them and save their paths in 
-the `DO[]NOT[]DELETE[][]note$[]\OML/cmm/m/it/10 aths:txt\OT1/cmr/m/n/10 `\OML/c
-mm/m/it/10 file:Thissearchingprocesswilltakeafewseconds\OT1/cmr/m/n/10 (\OML/cm
-m/m/it/10 ifyouhavemanynotesinyourvault; andmanylinkedmentionsandembeddednotesi
-nyournote\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; however; sincethepathsarenowsavedi
-ntothistextfile; anyconversionsyouperformafterwardswillbeveryfast:[]$ 
- []
-
-! Extra }, or forgotten \endgroup.
-\par ...m \@noitemerr {\@@par }\fi \else {\@@par }
-                                                  \fi 
-l.85 
-     
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-No file example_writing.toc.
-\tf@toc=\write7
-\openout7 = `example_writing.toc'.
-
-
+) (example_writing.toc
 
 [1
 
 \openout5 = `example_writing.upa'.
 
 {C:/Users/dvrch/Desktop/Memoire_2024/miltex.app/miktex-portable/texmfs/data/fon
-ts/map/pdftex/pdftex.map}]
+ts/map/pdftex/pdftex.map}])
+\tf@toc=\write7
+\openout7 = `example_writing.toc'.
+
+
 
 [2]
 
-Package natbib Warning: Citation `p1' on page 3 undefined on input line 290.
-
-
-Package natbib Warning: Citation `keylist' on page 3 undefined on input line 29
-2.
-
-
-
 [3]
+
+[4]
 <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian
 2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012140.png, 
-id=153, 2044.63875pt x 1318.9275pt>
+id=185, 2044.63875pt x 1318.9275pt>
 File: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obs
 idian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012140.
 png Graphic file (type png)
@@ -1558,16 +1500,16 @@ dian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012140.p
 ng>
 Package pdftex.def Info: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/
 Straightforward-Obsidian2Latex/example_vault/✍Writing/figure blocks/Pasted im
-age 20240609012140.png  used on input line 363.
+age 20240609012140.png  used on input line 341.
 (pdftex.def)             Requested size: 193.68098pt x 124.93715pt.
-<all-twemojis.pdf, id=156, page=3657, 27.10126pt x 27.10126pt>
+<all-twemojis.pdf, id=188, page=3657, 27.10126pt x 27.10126pt>
 File: all-twemojis.pdf Graphic file (type pdf)
 <use all-twemojis.pdf, page 3657>
-Package pdftex.def Info: all-twemojis.pdf , page3657 used on input line 383.
+Package pdftex.def Info: all-twemojis.pdf , page3657 used on input line 361.
 (pdftex.def)             Requested size: 6.83318pt x 6.83331pt.
 <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian
 2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012221.png, 
-id=157, 2044.63875pt x 1318.9275pt>
+id=189, 2044.63875pt x 1318.9275pt>
 File: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obs
 idian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012221.
 png Graphic file (type png)
@@ -1576,11 +1518,11 @@ dian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012221.p
 ng>
 Package pdftex.def Info: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/
 Straightforward-Obsidian2Latex/example_vault/✍Writing/figure blocks/Pasted im
-age 20240609012221.png  used on input line 394.
+age 20240609012221.png  used on input line 372.
 (pdftex.def)             Requested size: 242.10493pt x 156.17145pt.
 <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian
 2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012251.png, 
-id=158, 1454.43375pt x 1022.82124pt>
+id=190, 1454.43375pt x 1022.82124pt>
 File: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obs
 idian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012251.
 png Graphic file (type png)
@@ -1589,18 +1531,22 @@ dian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012251.p
 ng>
 Package pdftex.def Info: C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/
 Straightforward-Obsidian2Latex/example_vault/✍Writing/figure blocks/Pasted im
-age 20240609012251.png  used on input line 401.
+age 20240609012251.png  used on input line 379.
 (pdftex.def)             Requested size: 242.10493pt x 170.25648pt.
 
 
-[4 <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsid
+[5 <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsid
 ian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012140.pn
 g> <C:/Users/dvrch/Desktop/Memoire_2024/miltex.app/miktex-portable/texmfs/insta
-ll/tex/latex/twemojis/all-twemojis.pdf>]
+ll/tex/latex/twemojis/all-twemojis.pdf> <C:/Users/dvrch/Desktop/Straightforward
+-Obsidian2Latex/Straightforward-Obsidian2Latex/example_vault/✍Writing/figure 
+blocks/Pasted image 20240609012221.png> <C:/Users/dvrch/Desktop/Straightforward
+-Obsidian2Latex/Straightforward-Obsidian2Latex/example_vault/✍Writing/figure 
+blocks/Pasted image 20240609012251.png>]
 \pydata@fh@0=\write8
 \openout8 = `_5B0D16F4602BF00788FAA3BCB9263A15.data.minted'.
 
-runsystem(latexminted config  --timestamp 20250509184050 5B0D16F4602BF00788FAA3
+runsystem(latexminted config  --timestamp 20250509223900 5B0D16F4602BF00788FAA3
 BCB9263A15)...executed.
 
 
@@ -1613,7 +1559,7 @@ See the minted package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.456 \end{minted}
+l.434 \end{minted}
                   
 This error message was generated by an \errmessage
 command, so I can't give any explicit help.
@@ -1629,7 +1575,7 @@ See the minted package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.456 \end{minted}
+l.434 \end{minted}
                   
 (That was another \errmessage.)
 
@@ -1641,202 +1587,2905 @@ See the minted package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.456 \end{minted}
+l.434 \end{minted}
                   
 (That was another \errmessage.)
 
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 472.
+LaTeX Warning: Hyper reference `sec:Adding-citations' on page 6 undefined on in
+put line 440.
+
+
+LaTeX Warning: Reference `sec:Adding-citations' on page 6 undefined on input li
+ne 440.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 472.
+(hyperref)                removing `math shift' on input line 446.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 472.
+(hyperref)                removing `\mathsurround' on input line 446.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathchar' on input line 472.
+(hyperref)                removing `\z@' on input line 446.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 472.
+(hyperref)                removing `\mathchar' on input line 446.
 
 
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 446.
 
-[5 <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsid
-ian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012221.pn
-g> <C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsid
-ian2Latex/example_vault/✍Writing/figure blocks/Pasted image 20240609012251.pn
-g>]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 497.
+(hyperref)                than one, level fixed on input line 470.
 
 
-Underfull \hbox (badness 3375) in paragraph at lines 537--537
+
+[6]
+Underfull \hbox (badness 3375) in paragraph at lines 510--510
 []|\OT1/cmr/m/n/10 Equation: $\OML/cmm/m/it/10 E \OT1/cmr/m/n/10 =
  []
 
 
-Underfull \hbox (badness 5696) in paragraph at lines 537--537
+Underfull \hbox (badness 5696) in paragraph at lines 510--510
 []|\OT1/cmr/m/n/10 Some more text-
  []
 
 
-Underfull \hbox (badness 5696) in paragraph at lines 537--537
+Underfull \hbox (badness 5696) in paragraph at lines 510--510
 \OT1/cmr/m/n/10 Some more text-
  []
 
 
-Underfull \hbox (badness 5696) in paragraph at lines 537--537
+Underfull \hbox (badness 5696) in paragraph at lines 510--510
 \OT1/cmr/m/n/10 Some more text-
  []
 
 
-Underfull \hbox (badness 5696) in paragraph at lines 537--537
+Underfull \hbox (badness 5696) in paragraph at lines 510--510
 \OT1/cmr/m/n/10 Some more text-
  []
 
 
-Underfull \hbox (badness 5696) in paragraph at lines 537--537
+Underfull \hbox (badness 5696) in paragraph at lines 510--510
 \OT1/cmr/m/n/10 Some more text-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 537--538
+Underfull \hbox (badness 10000) in paragraph at lines 510--511
 []|\OT1/cmr/m/n/10 even more text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 537--538
+Underfull \hbox (badness 10000) in paragraph at lines 510--511
 \OT1/cmr/m/n/10 even more text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 537--538
+Underfull \hbox (badness 10000) in paragraph at lines 510--511
 \OT1/cmr/m/n/10 even more text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 537--538
+Underfull \hbox (badness 10000) in paragraph at lines 510--511
 \OT1/cmr/m/n/10 even more text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 538--538
+Underfull \hbox (badness 10000) in paragraph at lines 511--511
 []|\OT1/cmr/m/n/10 Reference Equa-
  []
 
 
-Overfull \hbox (14.18626pt too wide) in paragraph at lines 564--564
+Overfull \hbox (14.18626pt too wide) in paragraph at lines 537--537
 []|\OT1/cmr/m/n/10 Equation:
  []
 
 
-Underfull \hbox (badness 4569) in paragraph at lines 564--564
+Underfull \hbox (badness 4569) in paragraph at lines 537--537
 \OML/cmm/m/it/10 E \OT1/cmr/m/n/10 =
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 564--564
+Underfull \hbox (badness 10000) in paragraph at lines 537--537
 []|\OT1/cmr/m/n/10 even more text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 564--564
+Underfull \hbox (badness 10000) in paragraph at lines 537--537
 \OT1/cmr/m/n/10 even more text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 564--564
+Underfull \hbox (badness 10000) in paragraph at lines 537--537
 \OT1/cmr/m/n/10 even more text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 564--564
+Underfull \hbox (badness 10000) in paragraph at lines 537--537
 \OT1/cmr/m/n/10 even more text
  []
 
 
-Overfull \hbox (13.6584pt too wide) in paragraph at lines 564--564
+Overfull \hbox (13.6584pt too wide) in paragraph at lines 537--537
 []|\OT1/cmr/m/n/10 Reference
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 564--564
+Underfull \hbox (badness 10000) in paragraph at lines 537--537
 \OT1/cmr/m/n/10 Equa-
  []
 
 
-Overfull \hbox (3.76956pt too wide) in paragraph at lines 564--564
+Overfull \hbox (3.76956pt too wide) in paragraph at lines 537--537
 \OT1/cmr/m/n/10 tion ([][]2[][])| 
  []
 
 
-Underfull \hbox (badness 10000) in alignment at lines 564--564
+Underfull \hbox (badness 10000) in alignment at lines 537--537
 [][][][] 
  []
 
 
-Underfull \hbox (badness 3375) in paragraph at lines 586--586
+Underfull \hbox (badness 3375) in paragraph at lines 559--559
 []|\OT1/cmr/m/n/10 Equation: $\OML/cmm/m/it/10 E \OT1/cmr/m/n/10 =
  []
 
 
-Underfull \hbox (badness 5696) in paragraph at lines 586--586
+Underfull \hbox (badness 5696) in paragraph at lines 559--559
 []|\OT1/cmr/m/n/10 Some more text-
  []
 
 
-Underfull \hbox (badness 5696) in paragraph at lines 586--586
+Underfull \hbox (badness 5696) in paragraph at lines 559--559
 \OT1/cmr/m/n/10 Some more text-
  []
 
 
-Underfull \hbox (badness 5696) in paragraph at lines 586--586
+Underfull \hbox (badness 5696) in paragraph at lines 559--559
 \OT1/cmr/m/n/10 Some more text-
  []
 
 
-Underfull \hbox (badness 5696) in paragraph at lines 586--586
+Underfull \hbox (badness 5696) in paragraph at lines 559--559
 \OT1/cmr/m/n/10 Some more text-
  []
 
 
-Underfull \hbox (badness 5696) in paragraph at lines 586--586
+Underfull \hbox (badness 5696) in paragraph at lines 559--559
 \OT1/cmr/m/n/10 Some more text-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 586--587
+Underfull \hbox (badness 10000) in paragraph at lines 559--560
 []|\OT1/cmr/m/n/10 even more text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 586--587
+Underfull \hbox (badness 10000) in paragraph at lines 559--560
 \OT1/cmr/m/n/10 even more text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 586--587
+Underfull \hbox (badness 10000) in paragraph at lines 559--560
 \OT1/cmr/m/n/10 even more text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 586--587
+Underfull \hbox (badness 10000) in paragraph at lines 559--560
 \OT1/cmr/m/n/10 even more text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 587--587
+Underfull \hbox (badness 10000) in paragraph at lines 560--560
 []|\OT1/cmr/m/n/10 Reference Equa-
  []
 
 
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--561
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--562
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 561--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--562
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--563
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 562--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--563
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--564
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 563--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--564
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--565
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 564--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--565
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--566
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 565--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--566
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--567
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 566--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--567
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--568
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 567--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--568
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--569
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 568--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--569
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--570
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 569--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--570
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--571
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 570--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--571
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--572
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 571--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--572
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--573
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 572--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--573
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--574
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 573--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--574
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--575
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 574--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--575
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--576
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 575--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--576
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--577
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 576--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--577
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--578
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 577--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--578
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--579
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 578--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--579
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--580
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 579--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--580
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--581
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 580--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--581
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--582
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 581--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--582
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--583
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 582--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--583
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--584
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 583--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--584
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--585
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 584--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--585
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--586
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 585--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--586
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--587
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 586--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--587
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--588
+[]|\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--588
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--588
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--588
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 587--588
+\OT1/cmr/m/n/10 Some more text-
+ []
+
+
 Underfull \hbox (badness 5696) in paragraph at lines 588--588
 []|\OT1/cmr/m/n/10 Some more text-
  []
@@ -3236,3613 +5885,13 @@ Underfull \hbox (badness 5696) in paragraph at lines 601--602
 \OT1/cmr/m/n/10 Some more text-
  []
 
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--602
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--603
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 602--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--603
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--604
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 603--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--604
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--605
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 604--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--605
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--606
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 605--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--606
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--607
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 606--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--607
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--608
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 607--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--608
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--609
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 608--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--609
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--610
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 609--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--610
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--611
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 610--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--611
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--612
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 611--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--612
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--613
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 612--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--613
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--614
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 613--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--614
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--615
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 614--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--615
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--616
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 615--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--616
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--617
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 616--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--617
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--618
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 617--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--618
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--619
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 618--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--619
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--620
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 619--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--620
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--621
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 620--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--621
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--622
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 621--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--622
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--623
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 622--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--623
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--624
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 623--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--624
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--625
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 624--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--625
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--626
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 625--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--626
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--627
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 626--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--627
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--628
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 627--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--628
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--629
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 628--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--629
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--630
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 629--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--630
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--631
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 630--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--631
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--632
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 631--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--632
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--633
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 632--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--633
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--634
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 633--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--634
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--635
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 634--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--635
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--636
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 635--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--636
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--637
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 636--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--637
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--638
-[]|\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--638
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--638
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--638
-\OT1/cmr/m/n/10 Some more text-
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 637--638
-\OT1/cmr/m/n/10 Some more text-
- []
-
-[6] [7] [8] [9] [10] [11]
+[7] [8] [9] [10] [11]
 
 [12]
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.663 We used method_
+l.627 We used method_
                      1. We use this method, because it's awesome.
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -6850,34 +5899,39 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.664 
+l.628 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
 
-[13]
-No file example_writing.bbl.
+[13] (example_writing.bbl)
 
-Package natbib Warning: There were undefined citations.
+[14] (example_writing.aux
+* soulpos - computing points - it may take a few seconds *
+\openout5 = `example_writing.upb'.
 
-(example_writing.aux)
+ (example_writing.upa))
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `example_writing.out' has not changed.
 (rerunfilecheck)             Checksum: D154DD45647F524A03E4CAF0ED79C86A;3381.
  ) 
 Here is how much of TeX's memory you used:
- 48699 strings out of 473523
- 1096402 string characters out of 5698605
- 1836954 words of memory out of 5000000
- 71287 multiletter control sequences out of 15000+600000
+ 48715 strings out of 473523
+ 1096865 string characters out of 5698605
+ 1815470 words of memory out of 5000000
+ 71299 multiletter control sequences out of 15000+600000
  569408 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 95i,13n,101p,720b,705s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 95i,13n,101p,612b,705s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\dvrch\Desktop\Memoire_2024\miltex.app\miktex-portable\texmfs/data\
 fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/dvrch/Desktop/Memoire_
 2024/miltex.app/miktex-portable/texmfs/install/fonts/type1/public/amsfonts/cm/c
@@ -6903,9 +5957,9 @@ vrch/Desktop/Memoire_2024/miltex.app/miktex-portable/texmfs/install/fonts/type1
 miktex-portable/texmfs/install/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Us
 ers/dvrch/Desktop/Memoire_2024/miltex.app/miktex-portable/texmfs/install/fonts/
 type1/public/amsfonts/symbols/msam10.pfb>
-Output written on example_writing.pdf (13 pages, 1659118 bytes).
+Output written on example_writing.pdf (14 pages, 1664111 bytes).
 PDF statistics:
- 310 PDF objects out of 1000 (max. 8388607)
- 65 named destinations out of 1000 (max. 500000)
+ 337 PDF objects out of 1000 (max. 8388607)
+ 64 named destinations out of 1000 (max. 500000)
  233 words of extra memory for PDF output out of 10000 (max. 10000000)
 
