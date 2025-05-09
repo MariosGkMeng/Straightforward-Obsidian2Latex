@@ -64,10 +64,22 @@
 \begin{document}
 \allowdisplaybreaks
 \date{}
-\author{ DV}
+\author{Marios Gkionis}
 \title{Titre doc}
 \maketitle
 % Start obsidian ref:
+
+%⚠warning to users
+
+\begin{enumerate}
+
+\item Equations, tables, and figures should be written only inside the equation-block style (`README.md`)
+
+\item Any syntactic violation that happens inside the obsidian note will be passed into LateX. So far, I have not included any diagnostic routine.
+
+\item When you have many embedded notes and linked notes in the note you want to convert, the algorithm searches within the vault to find them and save their paths in the `DO_NOT_DELETE__note_paths.txt` file. This searching process will take a few seconds (if you have many notes in your vault, and many linked mentions and embedded notes in your note), however, since the paths are now saved into this text file, any conversions you perform afterwards will be very fast.
+
+\end{enumerate}
 
 % End obsidian ref
 \tableofcontents
@@ -498,7 +510,7 @@ See \Cref{tab:1}, \Cref{tab:2}, and \Cref{tab:long}.
 
 % Start obsidian ref:
 %table__block_1\\texttt{table}
-%\begin{center}
+\begin{center}
 \begin{table}[ht]
 \centering
 \caption{Caption of table written in Obsidian}
@@ -527,7 +539,7 @@ Reference \Cref{eq:1} & 1 & 1 & 1 \\
 \centering
 \caption{Table with customized widths and row color formatting}
 \label{tab:2}
-\begin{tabularx}{1.0\textwidth}{p{1cm}p{1cm}p{5cm}p{3cm}}
+\begin{tabularx}{textwidth}{p{1cm}p{1cm}p{5cm}p{3cm}}
 \hline
 \textbf{Col1} & \textbf{Col2} & \textbf{Col3} & \textbf{Col4} \\
 \rowcolor{lightgray}  a11 & a12 & Some more text & even more text \\
