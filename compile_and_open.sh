@@ -2,8 +2,8 @@
 # This file compiles the latex file to .pdf
 
 # Set base path and file name
-BASE_PATH="C:/Users/mariosg/OneDrive - NTNU/FILES/workTips/✍Writing"
-FILE_NAME="file_to_be_converted.md"
+BASE_PATH= "C:/Users/dvrch/Desktop/Straightforward-Obsidian2Latex/Straightforward-Obsidian2Latex/example_vault/✍Writing"
+FILE_NAME="example_writing.md"
 TEXFILE="$BASE_PATH/$FILE_NAME.tex"
 PDFFILE="$BASE_PATH/$FILE_NAME.pdf"
 

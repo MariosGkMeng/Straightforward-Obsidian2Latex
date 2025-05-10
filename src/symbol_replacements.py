@@ -3,7 +3,7 @@ import re
 
 def escape_underscores_in_sections(text):
     """
-    Escapes underscores in section-related LaTeX commands such as \section, \subsection, etc.
+    Escapes underscores in section-related LaTeX commands such as \\section, \\subsection, etc.
     
     Parameters:
         text (str): A single line of LaTeX code.
@@ -33,13 +33,20 @@ def symbol_replacement(S, SYMBOLS_TO_REPLACE):
     for s in S:
         s1 = s
         for symbol in SYMBOLS_TO_REPLACE:
-            s2 = symbol[2]
-            if s2 == 0:
-                s1 = s1.replace(symbol[0], symbol[1])
-            elif s2 == 1:
-                s1 = s1.replace(symbol[0], symbol[1] + ' ')
-            elif s2 == 2:
-                s1 = re.sub(symbol[0], symbol[1] + ' ', s1)
+            obsidian_symbol, latex_replacement, replacement_type = symbol
+            # Escape the replacement string for re.sub
+            escaped_latex_replacement = re.escape(latex_replacement)
+            
+            if replacement_type == 0:
+                # Simple string replacement, re.sub not strictly needed but used for consistency
+                s1 = re.sub(re.escape(obsidian_symbol), escaped_latex_replacement, s1)
+            elif replacement_type == 1:
+                # Use re.sub with escaped replacement + space
+                s1 = re.sub(re.escape(obsidian_symbol), escaped_latex_replacement + ' ', s1)
+            elif replacement_type == 2:
+                # Use re.sub with regex pattern for obsidian_symbol and escaped replacement + space
+                # Note: This assumes obsidian_symbol is a valid regex pattern if type is 2
+                s1 = re.sub(obsidian_symbol, escaped_latex_replacement + ' ', s1)
             else:
                 raise Exception("Nothing coded for this case!")
         
@@ -50,7 +57,7 @@ def symbol_replacement(S, SYMBOLS_TO_REPLACE):
 
 def escape_underscores_in_texttt(text):
     """
-    Replaces underscores with \_ inside the brackets of \texttt{}.
+    Replaces underscores with \\_ inside the brackets of \texttt{}.
 
     Args:
         text (str): The input LaTeX string.
@@ -70,3 +77,14 @@ def escape_underscores_in_texttt(text):
     replaced_text = re.sub(pattern, replace_underscores, text)
     
     return replaced_text
+
+
+def escape_special_characters(text):
+    """
+    Escapes special characters like underscores, dollar signs, and braces in LaTeX.
+    """
+    special_chars = {'_': r'\_', '$': r'\$', '{': r'\{', '}': r'\}'}
+    for char, escaped in special_chars.items():
+        text = text.replace(char, escaped)
+    return text
+

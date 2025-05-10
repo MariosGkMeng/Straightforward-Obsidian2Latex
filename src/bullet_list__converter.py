@@ -2,121 +2,124 @@ import re
 from helper_functions import *
 from remove_markdown_comment import *
 
-begin_type = ["\n\\begin{itemize}\n", "\n\\begin{enumerate}\n", "\n\\begin{todolist}\n"]
-end_type = ["\\end{itemize}\n", "\\end{enumerate}\n", "\\end{todolist}\n"]
+# Remove leading/trailing newlines from environment commands
+begin_type = [r"\begin{itemize}", r"\begin{enumerate}", r"\begin{todolist}"]
+end_type = [r"\end{itemize}", r"\end{enumerate}", r"\end{todolist}"]
 
 start_string = ['- ', '', '- [ ]']
 
 def bullet_list_converter(S):
 
     # S = ''.join(S)
-    cnd__do_not_add_new_line_if_it_already_exists = False
+    cnd__do_not_add_new_line_if_it_already_exists = False # Kept for potential future use, but logic below aims for single newlines
 
-    latex = ""
-    lines = S#.split("\n")
+    latex_lines = [] # Store processed lines
+    lines = S # Assume S is already a list of lines
     tab_1 = "\t"
 
     INDENTATION = dict()
+    inside_list_env = False # Track if we are inside any list environment
 
-    for line in lines:
+    for idx, line in enumerate(lines):
+        original_line = line # Keep original for non-list lines
+        line = line.rstrip() # Work with lines without trailing whitespace/newlines
 
         match_numbered_list = re.match(r'^(\t*)\d+\.\s(.*)$', line)
         match_checkbox_list = re.match(r'^([\t ]*-\s\[\s\]\s*)(.*)$', line)
         match_bullet_list = re.match(r'^([\t ]*-\s*)(.*)$', line)
 
         match = False
+        type_list = -1
 
+        # Determine list type if applicable
         if not line.startswith('---'): 
             if match_bullet_list and not match_checkbox_list:
                 type_list = 0
                 match = match_bullet_list
-
             elif match_numbered_list:
                 type_list = 1
                 match = match_numbered_list
-
             elif match_checkbox_list:
                 type_list = 2
                 match = match_checkbox_list
 
         if match:
-            indentations = list(INDENTATION.keys())
-            indentation = len(match.group(1)) - len(start_string[type_list])
+            # --- Start or continue a list item ---
+            current_indentations = list(INDENTATION.keys())
+            indentation_str = str(len(match.group(1)) - len(start_string[type_list]))
             main_string = match.group(2)
-            main_string_latex = tab_1 * (indentation+1) +  '\\item ' + main_string + '\n'
-            if not cnd__do_not_add_new_line_if_it_already_exists:
-                if main_string_latex.rstrip().endswith('\n'): 
-                    main_string_latex += '\n'
-                    
-            if not str(indentation) in indentations:
+            indentation = int(indentation_str)
 
-                
-                # FIX the problem when sometimes the next indentation jumps deeper than one level
-                if len(indentations):
-                    indentation_ceiling = int(max(indentations))+1
-                    if indentation > indentation_ceiling:
-                        indentation = indentation_ceiling
-                #
-
-                INDENTATION[str(indentation)] = 'open-' + str(type_list)
-
-                pre_text = tab_1 * indentation + begin_type[type_list].replace('\n', '') + '\n'                       
-
-            else:
-                pre_text = ''
-
-                next_indentations = [x for x in indentations if x>str(indentation)]
-                next_indentations.sort(reverse=True)
-
-                for i in next_indentations:
-                    if INDENTATION[i].startswith('open'):
-                        type_list_i = int(INDENTATION[i][-1])
-                        pre_text += tab_1 * int(i) + end_type[type_list_i].replace('\n', '') + '\n' 
-                        INDENTATION[i] = 'closed'
-                        INDENTATION.pop(i)
-
-            latex += pre_text + main_string_latex
-
+            # Ensure correct indentation level (max 1 deeper than previous)
+            if len(current_indentations):
+                indentation_ceiling = int(max(current_indentations)) + 1
+                if indentation > indentation_ceiling:
+                    indentation = indentation_ceiling
+                    indentation_str = str(indentation)
+            
+            # Close deeper levels if necessary
+            levels_to_close = sorted([int(i) for i in current_indentations if int(i) > indentation], reverse=True)
+            for level in levels_to_close:
+                level_str = str(level)
+                if INDENTATION[level_str].startswith('open'):
+                    closed_type_list = int(INDENTATION[level_str][-1])
+                    latex_lines.append(tab_1 * level + end_type[closed_type_list])
+                    INDENTATION.pop(level_str)
+            
+            # Open new level if necessary
+            if indentation_str not in INDENTATION:
+                latex_lines.append(tab_1 * indentation + begin_type[type_list])
+                INDENTATION[indentation_str] = 'open-' + str(type_list)
+                inside_list_env = True
+            
+            # Add the item
+            latex_lines.append(tab_1 * (indentation + 1) + '\\item ' + main_string)
+            
         else:
+            # --- Not a list item line ---
+            # Close any open list environments
+            if inside_list_env:
+                levels_to_close = sorted([int(i) for i in INDENTATION.keys()], reverse=True)
+                for level in levels_to_close:
+                     level_str = str(level)
+                     if INDENTATION[level_str].startswith('open'):
+                        closed_type_list = int(INDENTATION[level_str][-1])
+                        latex_lines.append(tab_1 * level + end_type[closed_type_list])
+                INDENTATION = dict() # Reset indentation tracking
+                inside_list_env = False
+            
+            # Add the original non-list line (preserving its original ending)
+            latex_lines.append(original_line.rstrip('\n')) 
 
-            # close any unclosed lists
-            s, INDENTATION = close_list(INDENTATION)
-            latex += s
+    # Final check: Close any remaining open lists at the end of the input
+    if inside_list_env:
+        levels_to_close = sorted([int(i) for i in INDENTATION.keys()], reverse=True)
+        for level in levels_to_close:
+            level_str = str(level)
+            if INDENTATION[level_str].startswith('open'):
+                closed_type_list = int(INDENTATION[level_str][-1])
+                latex_lines.append(tab_1 * level + end_type[closed_type_list])
+        INDENTATION = dict()
 
-            # restart the indentation
-            INDENTATION = dict()
-
-            add_line = line
-            if not cnd__do_not_add_new_line_if_it_already_exists:
-                # if add_line.rstrip().endswith('\n'): 
-                if not is_in_table_line(line):
-                    add_line += '\n'
-
-            latex += add_line
+    # Ensure each line ends with exactly one newline for writing
+    return [line + '\n' for line in latex_lines]
 
 
-    s, INDENTATION = close_list(INDENTATION)
-    latex += s
-
-    LATEX = latex.split("\n")
-    return get_list_of_separate_string_lines(LATEX)
-    # return latex.split("\n")
-
-
-def close_list(INDENTATION):
-
+def close_list(INDENTATION): # This function might be redundant now with the new logic
+    # Keeping it just in case, but it should not be called if the main loop is correct
     indentations = list(INDENTATION.keys())
     indentations.sort(reverse=True)
 
     s = ''
+    lines_to_add = []
 
     for i in indentations:
         if INDENTATION[i].startswith('open'):
             type_list_i = int(INDENTATION[i][-1])
-            s += "\t" * int(i) + end_type[type_list_i]
+            lines_to_add.append("\t" * int(i) + end_type[type_list_i])
             INDENTATION[i] = 'closed'
 
-    return s, INDENTATION
+    return lines_to_add, INDENTATION # Return lines instead of a single string
 
 
 import re

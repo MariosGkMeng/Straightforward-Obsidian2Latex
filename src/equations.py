@@ -168,7 +168,7 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
 
     complete_equation = ''.join(latex_equations)
 
-    
+
     patterns = [fr'\$\$\s*\\begin\{{{s}\}}\s*(.*?)\s*\\end\{{{s}\}}(\s*\$\$\\label\{{(eq__block_[^}}]+)\}})?' for s in aligned_or_split]
     # with the above pattern, the algorithm expects to find the label after the equation
     
@@ -411,39 +411,49 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
         'subfigure_abs_or_rel:: ',
         'cover_all_columns:: ',
         'caption_sub:: '
-        ]
+    ]
     
     fields = get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields)
-    extensions = ['.png', '.jpg', '.pdf']
-
+    
+    # Find the line with the image references
     i = None
-    for i, c in enum(content__unfold):
+    for i, c in enumerate(content__unfold):
         if '![[' in c:
             break
     
-    if not i is None:
-        embedded_images_text = content__unfold[i]
-    else:
+    if i is None:
         raise Exception("Did not find an image in your figure block note, or you did not place it in the beginning of a new line!")
+    
+    embedded_images_text = content__unfold[i]
     
     try:
         embedded_images = [x.replace(']]', '') for x in embedded_images_text.split("![[")[1:]]
     except:
         raise Exception("Probably could not find any images in your figure note file!")
     
+    # Clean up image references 
     embedded_images_1 = []
     for image in embedded_images:
-        if "|" in image: image = image[:image.find("|")+1].replace("|", "")
+        if "|" in image:
+            image = image[:image.find("|")].strip()
         embedded_images_1.append(image)
     
     embedded_images = embedded_images_1
     label = embedded_ref.replace('figure__block_', '')
-    image_paths = [get_embedded_reference_path(x, PARS) for x in embedded_images]
+    
+    # Get absolute paths and normalize them
+    image_paths = []
+    for img in embedded_images:
+        path = get_embedded_reference_path(img, PARS)
+        path = path.replace('\\', '/') # Normalize path separators
+        image_paths.append(path)
+        
     PARS['⚙']['figures']['num_columns'] = PARS['num_columns']
+    
     if len(image_paths) == 0:
         raise Exception("Could not find any images in your figure")
+        
     converted = images_converter(image_paths, PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
-
     return converted
 
 
@@ -480,9 +490,9 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     cnd__include_subfigures = len(images) > 1
     cnd__no_subfigures = (not cnd__include_subfigures)
     begin_figure = f'\\begin{{{str_figure}}}'*cnd__no_subfigures + '\\begin{subfigure}'*cnd__include_subfigures
-    end_figure = f'\end{{{str_figure}}}'*cnd__no_subfigures + '\end{subfigure}'*cnd__include_subfigures 
+    end_figure = f'\\end{{{str_figure}}}'*cnd__no_subfigures + '\\end{subfigure}'*cnd__include_subfigures 
     
-    fig_label = '\label{fig:'+label+'}'
+    fig_label = '\\label{fig:'+label+'}'
     
     if cnd__include_subfigures:
         if len(caption_sub)==0:
@@ -508,25 +518,22 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
 
     for i_img, IM in enumerate(images):
         path_img0 = IM.replace('\\', '/')
-
         img_directory = '/'.join(path_img0.split('/')[:-1])
-        cndTmp1 = 0
-        path_img = '"'*cndTmp1 + path_img0 + '"'*cndTmp1
-
-        # check if image is in the same folder as the latex file (in which case, no need to have the absolute path)
+        path_img = path_img0
+        # check if image is in the same folder as the latex file
         if (img_directory == '/'.join(latex_file_path.replace('\\', '/').split('/')[:-1])) or (not PARAMETERS['include_path']) or PARAMETERS['use_overleaf_all_in_the_same_folder']:
             path_img = path_img.replace(img_directory+'/', '')
-
-        # label_img = IM.split('\\')[-1]
+            
         caption_long_img = caption_sub[i_img]
         TO_PRINT.append(' \n'.join([
-        begin_figure[i_img],
-        '	\centering',
-        f'	\includegraphics[width={str(figure_width)*cnd__no_subfigures}\linewidth]' + '{"'+path_img+'"}',
-        '	\caption['+caption_short+']'+('{'+caption_long_img+'}')*(len(caption_long)>0),
-        '   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
-        '   '+fig_label*cnd__no_subfigures,
-        end_figure]))
+            begin_figure[i_img],
+            r'    \centering',
+            f'    \\includegraphics[width={str(figure_width)*cnd__no_subfigures}\\linewidth]{{{path_img}}}',
+            r'    \caption['+caption_short+']'+('{'+caption_long_img+'}')*(len(caption_long)>0),
+            r'    \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
+            r'    '+fig_label*cnd__no_subfigures,
+            end_figure
+        ]))
 
     y = []
     if cnd__include_subfigures:
@@ -535,14 +542,14 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
         else:
             begin_fig_global = f'\\begin{{{str_figure}}}\n'
         y.append(begin_fig_global)
-        y.append('\centering\n')
+        y.append('\\centering\n')
         for fig_lines in TO_PRINT:
             y.append(fig_lines)
-            y.append('\hfill\n')
+            y.append('\\hfill\n') #DV$$$
 
-        y.append(f'\caption{{{caption_long}}}\n')
-        y.append(fig_label+'\n')
-        y.append(f'\end{{{str_figure}}}\n')
+        y.append(f'\\caption{{{caption_long}}}\n')
+        y.append(fig_label) # +'\n'  DV$$$
+        y.append(f'\\end{{{str_figure}}}\n')
     else:
         y = TO_PRINT
 
@@ -582,7 +589,9 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         elif latex_table_package_prefix+'tabular' in package:
             package = ID__TABLES__PACKAGE__tabular
         else:
-            raise NotImplementedError
+            # If no specific package is recognized in the string, use the default from PARS
+            package = TABLE_SETTINGS['package'] 
+            # raise NotImplementedError
         
     # Check if it is a dataview table
     if is_dataview_table(S):
@@ -602,13 +611,13 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     # Mask internal links that have aliases, otherwise the converter gets confused
     mask_alias = "--alias--"
     for i, s in enum(S):
-        S[i] = s.replace("\\|", mask_alias)
+        S[i] = s.replace("\\\\|", mask_alias)
     #     
         
     add_txt = ''
     if (ID__TABLES__alignment__center in TABLE_SETTINGS['alignment']) \
         and package == ID__TABLES__PACKAGE__longtblr:
-        add_txt = '\centering '
+        add_txt = '\\centering '
 
     has_custom_widths = False
     if len(widths[0])>0:
@@ -638,7 +647,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     vl = '|' if use_vlines else ''
     if has_custom_widths:        
         table_width_custom_0 = ''.join([f"{vl}p{{{w}}}" for w in widths]) + vl
-
+        table_width_custom_0 = r'1.0\textwidth}{'+table_width_custom_0
     # After having found the table
     ## We expect that the 1st line defines the columns
 
@@ -704,12 +713,20 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         c1 = [add_txt + x for x in c]
         if i==0: 
             if TABLE_SETTINGS['any-hlines-at-all']:
-                addText = ' \hline' if use_hlines else ''
+                addText = r'\hline' if use_hlines else ''
+            else:
+                addText = ''
         else:
             if TABLE_SETTINGS['hlines-to-all-rows']:
-                addText = ' \hline' if use_hlines else ''
-                
-        latex_table.append('    ' + " & ".join(c1) + ' \\\\' + addText)
+                addText = r'\hline' if use_hlines else ''
+            else:
+                addText = ''
+        # Ajout correct : sépare la fin de ligne et la commande de style
+        latex_table.append('    ' + " & ".join(c1) + r' \\')
+        if addText:
+            latex_table.append(addText)
+    # Nettoyage des tabulations accidentelles
+    latex_table = [x.replace('\t', '    ') for x in latex_table]
 
     lbefore = []
 
@@ -736,17 +753,17 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         latex_before_table = lbefore + [
             '%\\begin{center}',
             '\\begin{table}[ht]',
-            '\centering',
-            f'\caption{{{caption}}}',
-            '\label{tab:' + label + '}',
+            r'\centering',
+            f'\\caption{{{caption}}}',
+            '\\label{tab:' + label + '}',
             '\\begin' + PCKG_NAME + txt_textwith + '{' + table_width + '}',
-            '   \hline'
+            r'   \hline'
         ] 
 
         latex_after_table = [
-            '   \hline',
-            '\end'+PCKG_NAME,
-            '\end{table}'
+            r'   \hline',
+            '\\end'+PCKG_NAME,
+            '\\end{table}'
         ]
 
         LATEX = latex_before_table + latex_table + latex_after_table
@@ -766,25 +783,25 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         latex_before_table = [
             '%\\begin{center}',
             '\\begin{table}[ht]',
-            '\centering',
-            '\caption{' + caption + '}',
-            '\label{tab:' + label + '}',
+            r'\centering',
+            r'\caption{' + caption + '}',
+            r'\label{tab:' + label + '}',
             '\\begin' + PCKG_NAME + '[',
-            '\caption = {' + caption + '},',
+            r'\caption = {' + caption + '},',
             'entry = {},',
             'note{a} = {},',
-            'note{$\dag$} = {}]',
-            '   {colspec = {'+ table_width +'}, width = ' + str(TABLE_SETTINGS['rel-width']) + '\linewidth, hlines, rowhead = 2, rowfoot = 1}'
+            r'note{$\dag$} = {}]',
+            r'   {colspec = {'+ table_width +'}, width = ' + str(TABLE_SETTINGS['rel-width']) + r'\linewidth, hlines, rowhead = 2, rowfoot = 1}'
             ]  
 
         latex_after_table = [
-            '\end' + PCKG_NAME,
-            '\end{table}'
+            '\\end' + PCKG_NAME,
+            '\\end{table}'
         ]
 
         add_hline_at_end = False # to be moved to user settings
         if add_hline_at_end:
-            latex_after_table = '   \hline' + latex_after_table
+            latex_after_table = r'   \hline' + latex_after_table
 
 
         LATEX = latex_before_table + latex_table + latex_after_table
@@ -800,20 +817,20 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
 
 
         latex_before_table=[
-        	'%\\begin{center}',
-		    '\\begin{longtable}{' + table_width + '}',            
-            f'\caption{{{caption}}}',
-            '\label{tab:' + label + '}\\\\',
-			'\hline',
-			''+latex_table[0],
-			'\hline',
-			'\endfirsthead % Use \endfirsthead for the line after the first header',
-			'\hline',
-			'\endfoot',
+            '%\\begin{center}',
+            '\\begin{longtable}{' + table_width + '}',            
+            f'\\caption{{{caption}}}',
+            '\\label{tab:' + label + '}\\\\',
+            '\\hline',
+            ''+latex_table[0],
+            '\\hline',
+            '\\endfirsthead % Use \\endfirsthead for the line after the first header',
+            '\\hline',
+            '\\endfoot',
             ]
 
         latex_after_table = [
-            '\end' + PCKG_NAME,
+            '\\end' + PCKG_NAME,
         ]
 
         LATEX = latex_before_table + ['    '+x for x in latex_table[1:]] + latex_after_table
@@ -827,22 +844,22 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
             table_width = table_width_custom_0
 
         latex_before_table = lbefore + [
-            '%\\begin{center}',
+            '\\begin{center}',
             '\\begin{table}[ht]',
-            '\centering',
-            '\caption{' + caption + '}',
-            '\label{tab:' + label + '}',
+            r'\centering',
+            r'\caption{' + caption + '}',
+            r'\label{tab:' + label + '}',
             f'\\begin{PCKG_NAME}{{{table_width}}}',
-            '   \\bottomrule',
+            r'   \bottomrule',
         ] 
 
         latex_after_table = [
-            '   \hline',
-            '\end'+PCKG_NAME,
-            '\end{table}'
+            r'   \hline',
+            '\\end'+PCKG_NAME,
+            '\\end{table}'
         ]
 
-        latex_table[0] += '\midrule'
+        latex_table[0] += r'\midrule'
         LATEX = latex_before_table + latex_table + latex_after_table
         
     else:
@@ -860,6 +877,20 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
 
 
 # # Example usage:
-# text = r"normal_text $math_mode_1$ more_text `code_snippet_1` final_text_2"
-# escaped_text = escape_underscore(text)
-# print(escaped_text)
+# text = r"normal_text $math_mode_1$ more_text `
+def ensure_unique_labels(S):
+    """
+    Ensures that all equations, figures, and tables have unique labels.
+    """
+    seen_labels = set()
+    for i, line in enumerate(S):
+        if '\\label{' in line:
+            label_start = line.find('\\label{') + len('\\label{')
+            label_end = line.find('}', label_start)
+            label = line[label_start:label_end]
+            if label in seen_labels:
+                new_label = f"{label}_dup{i}"
+                line = line.replace(label, new_label)
+            seen_labels.add(label)
+        S[i] = line
+    return S

@@ -55,7 +55,7 @@ def get_parameters(version = 'default'):
 
 
     # USER PARAMETERS
-    path_vault          = 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\'
+    path_vault          = 'C:\\Users\\dvrch\\Desktop\\Straightforward-Obsidian2Latex\\Straightforward-Obsidian2Latex\\example_vault\\'
     path_writing        = path_vault + '✍Writing\\'
     path_templates        = path_vault + '👨‍💻Automations\\'
     path_table_block_template = path_templates + 'table_block.md'
@@ -64,7 +64,7 @@ def get_parameters(version = 'default'):
     path_equation_blocks = path_writing + 'equation blocks'
     path_table_blocks   = path_writing + 'table blocks'
     path_list_note_paths = path_vault + 'DO_NOT_DELETE__note_paths.txt'
-    path_BIBTEX          = path_writing + 'BIBTEX'
+    path_BIBTEX          = path_writing + 'BIBTEX.bib'
     
     if not os.path.exists(path_list_note_paths):
         with open(path_list_note_paths, 'w', encoding='utf-8') as file:
@@ -91,7 +91,7 @@ def get_parameters(version = 'default'):
     #     raise Exception('Not implemented yet.')
                 
     hyperlinkSetup="""
-    \hypersetup{
+    \\hypersetup{
     colorlinks   = true,    % Colours links instead of ugly boxes
     urlcolor     = blue,    % Colour for external hyperlinks
     linkcolor    = blue,    % Colour of internal links
@@ -131,7 +131,7 @@ def get_parameters(version = 'default'):
                             'rel-width': 1.2,
                     },
             'margin': '0.9in',
-            'use_date': '🔴',
+            'use_date': '🟢',
             'EXCEPTIONS': 
                         {'raise_exception__when__embedded_reference_not_found': '🔴'},
             'INTERNAL_LINKS': 
@@ -151,11 +151,11 @@ def get_parameters(version = 'default'):
                                                         
             'paragraph':{
                         'indent_length_of_first_line': 0,    # 0 if no indent is desired. Recommended 20 for usual indent
-                        'if_text_before_first_section___place_before_table_of_contents': '🔴',
+                        'if_text_before_first_section___place_before_table_of_contents': '🟢',
                         'insert_new_line_symbol':                                        '---',
-                        'add_table_of_contents':                                        '🔴',
+                        'add_table_of_contents':                                        '🟢',
                         'add_new_page_before_bibliography':                             '🟢',
-                        'allowdisplaybreaks':                                           '🔴',
+                        'allowdisplaybreaks':                                           '🟢',
             }, 
             'author': V__author,
             'title': '',
@@ -223,11 +223,11 @@ def get_parameters(version = 'default'):
                                     ],
             'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
 											['✔',              '\\checkmark',            1],
-											['🟢',              '$\\\\blacklozenge$',    2],
-											['🔴',              '\\\maltese',            2],
-											['➕',              '\\twemoji{plus}',            1],    # Alternatives: ['$\\\\boxplus$']
+											['🟢',              '$\\blacklozenge$',    2],
+											['🔴',              '\\maltese',            2],
+											['➕',              '\\twemoji{plus}',            1],    # Alternatives: ['$\\boxplus$']
 											['🔗',              'LINK',                  1],
-											['\implies',        '\Rightarrow',            1],
+											['\\implies',        '\\Rightarrow',            1],
 											['❓❓',              '?',                     1],
 											['❓',              '?',                      1],
 											['❌',              'NO',                    1],

@@ -1,1 +1,19 @@
 
+example_writing: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\example_writing.md
+⚠warning to users: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\⚠warning to users.md
+dev-tasks: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\dev-tasks.md
+formatting: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\formatting.md
+embedded with sections: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\embedded with sections.md
+example_writing--Appendix: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\example_writing--Appendix.md
+eq__block_Einstein: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\equation blocks\eq__block_Einstein.md
+eq__block_1: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\equation blocks\eq__block_1.md
+figure__block_gradient_steps: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\figure blocks\figure__block_gradient_steps.md
+Pasted image 20240609012140.png: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\figure blocks\Pasted image 20240609012140.png
+figure__block_1: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\figure blocks\figure__block_1.md
+Pasted image 20240609012221.png: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\figure blocks\Pasted image 20240609012221.png
+Pasted image 20240609012251.png: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\figure blocks\Pasted image 20240609012251.png
+table__block_1: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\table_blocks\table__block_1.md
+table__block_2: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\table_blocks\table__block_2.md
+table__block_long: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\table_blocks\table__block_long.md
+fields_for_report: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\✍Writing\fields_for_report.md
+p1: C:\Users\dvrch\Desktop\Straightforward-Obsidian2Latex\Straightforward-Obsidian2Latex\example_vault\📚Literature\p1.md
