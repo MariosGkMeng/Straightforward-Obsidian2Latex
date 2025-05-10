@@ -647,7 +647,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     vl = '|' if use_vlines else ''
     if has_custom_widths:        
         table_width_custom_0 = ''.join([f"{vl}p{{{w}}}" for w in widths]) + vl
-        table_width_custom_0 = r'textwidth}{'+table_width_custom_0.strip(r'{')
+        table_width_custom_0 = r'1.0\textwidth}{'+table_width_custom_0
     # After having found the table
     ## We expect that the 1st line defines the columns
 
