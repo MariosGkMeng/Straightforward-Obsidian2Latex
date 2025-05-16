@@ -328,6 +328,9 @@ def check_for_skipped_content(content, markdown_file, PARS):
         end = idxs[2*i+1]
         value = content[start].replace("#Latex/Command/Use_section/Start","").strip().replace("(","").replace(")","")
         
+        idx_skip.append([start, start])
+        idx_skip.append([end, end])
+        
         if evaluate_obsidian_expression(value, markdown_file, PARS) == "false":
             idx_skip.append([start, end])
 
@@ -343,18 +346,28 @@ def check_for_skipped_content(content, markdown_file, PARS):
     
     return content
 
+import re
+
 def convert_any_tags(S):
-    
-    lines_content = [(i, s) for i, s in enumerate(S) if "#" in s]
     pattern = r'#\S+'
-    for i, s in lines_content:
-        matches = re.findall(pattern, s)
-        for match in matches:
-            tag = match.replace('#', '')
-            s = s.replace(match, '\\texttt{' + tag + '}')
-            S[i] = s
-            
+    for i, s in enumerate(S):
+        # Find all [[...]] spans
+        skip_ranges = [m.span() for m in re.finditer(r'\[\[.*?\]\]', s)]
+
+        def is_inside_skip_ranges(start):
+            return any(start >= r[0] and start < r[1] for r in skip_ranges)
+
+        # Replace tags not inside [[...]]
+        def replace_tag(match):
+            if is_inside_skip_ranges(match.start()):
+                return match.group(0)
+            tag = match.group(0).replace('#', '')
+            return '\\texttt{' + tag + '}'
+
+        S[i] = re.sub(pattern, replace_tag, s)
+
     return S
+
 
 
 PATHS = PARS['📁']
@@ -380,6 +393,8 @@ content = check_for_skipped_content(content, markdown_file, PARS)
 tmp1 = '#Latex/Command/Invoke_note'
 
 content_1 = []
+
+
 
 for i, s in enumerate(content):
     if s.startswith(tmp1):
@@ -652,9 +667,8 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
         
     LATEX = copy.copy(LATEX_1)
     LATEX = convert_inline_code(LATEX)
-    
+        
     document_class = PARS['⚙']['document_class']
-
 
     doc_class_fontsize = f'[{document_class["fontsize"]}]' if len(document_class['fontsize'])>0 else ''
 
@@ -680,6 +694,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
             custom_latex+\
             ['% ======================================='] +\
             ['\n'*3] + ['\\begin{document}']+\
+            ['\\newcolumntype{P}[1]{>{\centering\\arraybackslash}m{#1}}']+\
             ['\\allowdisplaybreaks' if paragraph['allowdisplaybreaks'] else '']+\
             ['\date{}'*PARS['⚙']['use_date']]+\
             [f"\\author{{{PARS['⚙']['author']}}}"*(len(PARS['⚙']['author'])>0)]+\
@@ -695,18 +710,13 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     LATEX2 = []
     for line in LATEX1:
         LATEX2.append(escape_underscores_in_sections(line))
-
-
-    LATEX = PREAMBLE + LATEX2 + [('\\newpage \n '*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5 + '\\bibliographystyle{apacite}']+\
+    
+    LATEX_3 = []
+    for l in LATEX2:
+        LATEX_3.append(l.replace("\\\\_", "\\_"))
+    
+    LATEX = PREAMBLE + LATEX_3 + [('\\newpage \n '*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5 + '\\bibliographystyle{apacite}']+\
         ['\\bibliography{' + PATHS['bibtex_file_name'] + '}'] + ['\end{document}']
-
-    # if '[[✍⌛writing--FaultDiag--Drillstring--MAIN]]' in markdown_file:
-    #     LATEX_1 = []
-    #     for l in LATEX:
-    #         LATEX_1.append(l.replace('C:/Users/mariosg/OneDrive - NTNU/FILES/workTips/Analyses/PINNs+MTL/FaultDiag/FaultDiag/simulation results/plots/', ''))
-            
-    #     LATEX = LATEX_1
-        
 
 
     with open(PATHS['tex-file'], 'w', encoding='utf8') as f:
