@@ -22,8 +22,8 @@
 # 📽 General Video (under development)
 General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video I've rendered so far [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
 
-
-# To be added soon
+# ➕TODOS
+## To be added soon
 - Guide on how the dataview tables are converted (also, include the example in the `example_vault`)
 - More videos on the conversion
 - General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
@@ -31,6 +31,10 @@ General video showcasing all the functionalities (will be uploaded on YouTube. F
 - Make proper installer so that the user doesn't have to do manual work
 	- QuickAdd commmads: make function that appends to the `QuickAdd/data.json`. Install automatically if needed
  - Occasional cleanup of `PARS['📂']['list_paths_notes']`
+
+
+## Ideas to work on
+- Print to .pdf immediately from the note without interacting with LateX
 
 # Citing this work
 Please cite the following if you use it for publishable work (i.e., if you write your paper in Obsidian, and use this code to print to Latex)
