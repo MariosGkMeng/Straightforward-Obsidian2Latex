@@ -4,6 +4,8 @@ import numpy as np
 from helper_functions import *
 import copy
 from special_characters import get_special_characters
+from path_searching import *
+from remove_markdown_comment import *
 
 allowed_chars = get_special_characters()
 
@@ -11,8 +13,10 @@ def parse_dataview_query_0(query: str, vault_folder: str):
     result = {}
     
     # Step 1: Check if it's a Dataview table query
-    if not query.strip().startswith("table") and not not query.strip().startswith("Table"):
+    if not query.strip().lower().startswith("table") and not not query.strip().startswith("Table"):
+        raise Exception('Could not identify a dataview table!')
         return {"error": "Not a Dataview table query"}
+        
     result["query_type"] = "table"
     
     # Step 2: Extract fields (handling 'replace' and 'as' aliases)
@@ -117,19 +121,16 @@ def extract_fields_from_query(query: str):
     
     for expression, alias in zip(expressions, aliases):
         # If the expression is not a reserved word, add it to the fields list
-        if expression not in reserved_words:
+        if expression not in reserved_words and len(expression) > 0:
             fields.append({"expression": expression, "alias": alias})
     
     return fields
 
-def is_path(element):
-    return bool(re.match(fr'^[{allowed_chars}]+$', element.strip('"'), re.UNICODE))
-
-def parse_dataview_query(query: str, vault_folder: str):
+def parse_dataview_query(query: str, PATHS: dict):
     result = {}
-    
+    vault_folder = PATHS['vault']
     # Step 1: Check if it's a Dataview table query
-    if not query.strip().startswith("table"):
+    if not query.strip().lower().startswith("table"):
         return {"error": "Not a Dataview table query"}
     result["query_type"] = "table"
     
@@ -148,16 +149,22 @@ def parse_dataview_query(query: str, vault_folder: str):
             content = match.group(1).strip()  # Extract FROM clause content
 
             # Split while keeping AND/OR and preserving quotes & [[brackets]]
-            parts = re.split(r'\s+(AND|OR)\s+', content)
+            parts = re.split(r'\s+(AND|OR)\s+', content, flags=re.IGNORECASE)
             
             # if is_path(parts[0]): result["folder"] = parts[0].replace('"', '')  # Extract the folder name
             rel_path = parts[0].replace('"', '').replace("'", "").replace("/", "\\")
-            if os.path.exists(vault_folder+rel_path): result["folder"] = parts[0].replace('"', '')  # Extract the folder name
+            
+            if os.path.exists(vault_folder+rel_path): 
+                result["folder"] = parts[0].replace('"', '')  # Extract the folder name
             
             if len([p for p in parts[0::2] if is_path(p)]) > 1:
                 raise ValueError("Multiple paths detected in FROM clause. Haven't included this case yet.")
             
-            other_from_filters = parts[2::2]
+            if len(parts)>0:
+                result["folder"] = [part for part in parts[0::2] if is_path(part)][0]
+                # for part in parts[0::2]:
+            
+            other_from_filters = parts[0::2]
             result["other__from__filters"] = other_from_filters
     else:
         raise notImplementedError("Code version not implemented")
@@ -254,10 +261,10 @@ def apply_filter_logic(filters, fields, file_content, other_from_filters):
         if not result and filter['logic'] == 'AND':
             break
 
-    # New: Check "other_from_filters" in file_content (All must be present)
-    for filter_value in other_from_filters:
-        if filter_value not in file_content:
-            return False  # If any filter is missing, return False
+    # # New: Check "other_from_filters" in file_content (All must be present)
+    # for filter_value in other_from_filters:
+    #     if filter_value not in file_content:
+    #         return False  # If any filter is missing, return False
 
 
     return result
@@ -454,7 +461,7 @@ def evaluate_fields(parsed_query, file_path):
         
         # Evaluate the expression
         evaluated_value = evaluate_expression(expression, {}, file_path)
-        
+        evaluated_value = remove_markdown_comments(evaluated_value)
         evaluated_fields.append({
             'expression': evaluated_value,
             'alias': alias
@@ -510,13 +517,13 @@ def sort_evaluated_fields(all_evaluated_fields, files, parsed_query):
     return sorted_fields, files
 
 
-def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_column_name='File Name'):
+def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_column_name='File Name', exclude_columns=[]):
     
     query = query_text
     vault_folder = PATHS['vault']
-    parsed_query = parse_dataview_query(query, vault_folder)
-    
-    parsed_query['folder'] = parsed_query['folder'].replace('/', '\\')
+    parsed_query = parse_dataview_query(query, PATHS)
+        
+    parsed_query['folder'] = parsed_query['folder'].replace('/', '\\').strip('"')
     files = get_all_files_in_folder(vault_folder, parsed_query['folder'])
     files = [f for f in files if f.endswith('.md')]
 
@@ -544,6 +551,16 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_colu
     for i, field in enumerate(parsed_query['fields']):
         table_data[0][i + 2] = field['alias']  # Start from column 2 for the fields
 
+    col_idx_excl = []
+    if exclude_columns:
+        for col in exclude_columns:
+            col_idx_excl.append([item for item in table_data[0].items() if item[1]==col][0][0])
+
+    # remove columns that the user wishes to hide
+    for idx in col_idx_excl:
+        table_data[0].pop(idx)
+
+
     # Populate the table rows with evaluated field values for each file
     for row_index, (file_path, file_fields) in enumerate(zip(filtered_files, all_evaluated_fields), start=1):
         table_data[row_index] = {}
@@ -552,7 +569,11 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_colu
         table_data[row_index][1] = dum1
         
         for col_index, field in enumerate(file_fields):
-            table_data[row_index][col_index + 2] = field['expression'].replace('|', '\|')  # Start from column 2 for the fields
+            if not col_index + 2 in col_idx_excl:
+                table_data[row_index][col_index + 2] = field['expression'].replace('|', '\|')  # Start from column 2 for the fields
+
+            
+            
 
     # Generate the markdown table
     markdown_table = write_Obsidian_table(table_data)
