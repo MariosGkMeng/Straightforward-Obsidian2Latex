@@ -51,50 +51,140 @@ def EQUATIONS__convert_non_numbered_to_numbered(S0):
     "\begin{equation} \\label{label} \n \t equation_here \n \end{equation}"
     """
 
-    S = S0
+    convert_pseudocode_as_well = True
+    if not convert_pseudocode_as_well:
 
-    # with the following pattern, the equation label will only be identified if it starts with "eq__block_"
-    pattern = re.compile(r'\$\$\s*(.*?)\s*\$\$(?:\s*\\label\{(eq__block_)([^}]+)\})?')
-    
-    for i, s in enumerate(S):
-        matches = pattern.findall(s)
-        text = s
+        S = S0
 
-        if matches:
+        # with the following pattern, the equation label will only be identified if it starts with "eq__block_"
+        pattern = re.compile(r'\$\$\s*(.*?)\s*\$\$(?:\s*\\label\{(eq__block_)([^}]+)\})?')
+        
+        for i, s in enumerate(S):
+            matches = pattern.findall(s)
+            text = s
 
-            # put a new line between any text before the equation and the equation
-            i_eq = text.find("$$")
-            if i_eq > 0:
-                text = text[:i_eq] + "\n" + text[i_eq+1:]
-            #
+            if matches:
 
-            for match in matches:
-                
-                equation = match[0].strip()
-                label_prefix = match[1] if match[1] else ""
-                label_name = match[2] if match[2] else ""
-
-                # Create the modified equation with the label if present
-                modified_equation = f'\\begin{{equation}}' + (f' \\label{{eq:{label_name}}}' if label_name else '') + f'\n\t{equation}\n\\end{{equation}}'
-
-                # Bad programming patch (due to not being able to fix it with Regex)
-                # Doing this because the equation will not be corrected when there's any between the equation body and the |"$" symbol
-                for k in range(4):
-                    text = text.replace(' '*k+'$', '$').replace('$'+' '*k, '$')
+                # put a new line between any text before the equation and the equation
+                i_eq = text.find("$$")
+                if i_eq > 0:
+                    text = text[:i_eq] + "\n" + text[i_eq+1:]
                 #
 
-                # Replace the original equation with the modified one
-                text = text.replace(f'${match[0]}$', modified_equation)
+                for match in matches:
+                    
+                    equation = match[0].strip()
+                    label_prefix = match[1] if match[1] else ""
+                    label_name = match[2] if match[2] else ""
 
-                # Remove the extra label after the end{equation}
-                text = re.sub(r'\$\s*\\label\{eq__block_[^\}]+\}', '', text)
+                    # Create the modified equation with the label if present
+                    modified_equation = f'\\begin{{equation}}' + (f' \\label{{eq:{label_name}}}' if label_name else '') + f'\n\t{equation}\n\\end{{equation}}'
 
-        S[i] = text.strip()
+                    # Bad programming patch (due to not being able to fix it with Regex)
+                    # Doing this because the equation will not be corrected when there's any between the equation body and the |"$" symbol
+                    for k in range(4):
+                        text = text.replace(' '*k+'$', '$').replace('$'+' '*k, '$')
+                    #
+
+                    # Replace the original equation with the modified one
+                    text = text.replace(f'${match[0]}$', modified_equation)
+
+                    # Remove the extra label after the end{equation}
+                    text = re.sub(r'\$\s*\\label\{eq__block_[^\}]+\}', '', text)
+
+            S[i] = text.strip()
 
 
-    # Sometimes we still have unwanted "$" symbol before "\\begin{equation}", therefore need to remove it
-    pattern_remove_unwanted_previous_dollar = r'\$\s*(\\begin{equation})'
-    S = [re.sub(pattern_remove_unwanted_previous_dollar, r'\1', s) for s in S]
+        # Sometimes we still have unwanted "$" symbol before "\\begin{equation}", therefore need to remove it
+        pattern_remove_unwanted_previous_dollar = r'\$\s*(\\begin{equation})'
+        S = [re.sub(pattern_remove_unwanted_previous_dollar, r'\1', s) for s in S]
+        
+        
+    else:
+        
+        S = S0
+        new_S = []
+        in_pseudo_block = False
+        pseudo_block_lines = []
+        pseudo_label = ""
+
+        # Compile reusable patterns
+        eq_pattern = re.compile(r'\$\$\s*(.*?)\s*\$\$(?:\s*\\label\{(eq__block_)([^}]+)\})?')
+        label_pattern = re.compile(r'<!--\s*label\s*:\s*(eq__block_[\w\-]+)\s*-->')
+        label_pattern = re.compile(
+            r'(?:<!--\s*label\s*:\s*(alg__block_[\w\-]+)\s*-->)|(?:```\\label\{(eq__block__[\w\-]+)\})'
+        )
+
+                
+        unwanted_dollar_pattern = re.compile(r'\$\s*(\\begin{equation})')
+
+        for line in S:
+            # Start of pseudocode block
+            if line.strip().startswith("```pseudo"):
+                in_pseudo_block = True
+                pseudo_block_lines = []
+                pseudo_label = ""
+                continue
+
+            # End of pseudocode block
+            elif line.strip().startswith("```") and in_pseudo_block:
+                # Pseudocode label line (outside the block)
+                label_match = label_pattern.search(line)
+                if label_match:
+                    # Check which group matched
+                    pseudo_label = label_match.group(1) or label_match.group(2)
+                    pseudo_label = pseudo_label.replace('```', '')
+
+                in_pseudo_block = False
+                algorithm_body = '\n'.join(f'\t{l}' for l in pseudo_block_lines)
+                label_string = f'\\label{{alg:{pseudo_label}}}' if pseudo_label else ''
+                latex_block = (
+                    f'{label_string}\n'
+                    f'{algorithm_body}\n'
+                )
+                new_S.append(latex_block)
+                continue
+
+            # Inside pseudocode block
+            if in_pseudo_block:
+                pseudo_block_lines.append(line)
+                continue
+
+            # Otherwise, process equations in this line
+            matches = eq_pattern.findall(line)
+            text = line
+
+            if matches:
+                i_eq = text.find("$$")
+                if i_eq > 0:
+                    text = text[:i_eq] + "\n" + text[i_eq+1:]
+
+                for match in matches:
+                    equation = match[0].strip()
+                    label_prefix = match[1] if match[1] else ""
+                    label_name = match[2] if match[2] else ""
+
+                    modified_equation = (
+                        f'\\begin{{equation}}' +
+                        (f' \\label{{eq:{label_name}}}' if label_name else '') +
+                        f'\n\t{equation}\n\\end{{equation}}'
+                    )
+
+                    for k in range(4):
+                        text = text.replace(' ' * k + '$', '$').replace('$' + ' ' * k, '$')
+
+                    text = text.replace(f'${match[0]}$', modified_equation)
+                    text = re.sub(r'\$\s*\\label\{eq__block_[^\}]+\}', '', text)
+
+            new_S.append(text.strip())
+
+        # Post-process to remove any dangling dollar before equations
+        new_S = [re.sub(unwanted_dollar_pattern, r'\1', s) for s in new_S]
+
+        S = new_S
+
+
+
 
     return S
 
@@ -329,7 +419,7 @@ def EQUATIONS__prepare_label_in_initial_Obsidian_equation(content__unfold, embed
     # clean the equation from characters after the equation itself, because they mess the conversion
     Lc = len(content__unfold)-1
     for z in range(Lc+1):
-        if '$$' in content__unfold[Lc-z]: 
+        if '$$' in content__unfold[Lc-z] or content__unfold[Lc-z].strip().startswith('```'): 
             break
     content__unfold = content__unfold[:Lc-z+1]
     #
@@ -380,7 +470,7 @@ def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, ne
 
 def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PARS):
     
-    fields_to_fetch = ['caption:: ', 'package:: ', 'widths:: ', 'use_hlines:: ', 'use_vlines:: ', 'datav__file_column_name:: ']
+    fields_to_fetch = ['caption:: ', 'package:: ', 'widths:: ', 'use_hlines:: ', 'use_vlines:: ', 'datav__file_column_name:: ', 'datav__exclude_columns:: ']
     fields_note = get_fields_from_Obsidian_note(path_embedded_reference, fields_to_fetch)
     caption = fields_note[0] if len(fields_note[0])==0 else fields_note[0][0]
     package = fields_note[1] if len(fields_note[1])==0 else fields_note[1][0]
@@ -391,8 +481,13 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
     use_hlines = fields_note[3] if len(fields_note[3])==0 else fields_note[3][0]
     use_vlines = fields_note[4] if len(fields_note[4])==0 else fields_note[4][0]
     datav__file_column_name = fields_note[5]
+    datav__file_exclude_columns = fields_note[6]
     label = embedded_ref.replace('table__block_', '')
-    embedded_tables_text = convert__tables(content__unfold, caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, PARS)
+    
+    table_fields = (caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, datav__file_exclude_columns)
+
+    
+    embedded_tables_text = convert__tables(content__unfold, table_fields, PARS)
     
     embedded_tables_text_1 = []
     for line in embedded_tables_text:
@@ -492,7 +587,7 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
         
     if PARAMETERS['put_figure_below_text']: 
         if cnd__no_subfigures:
-            begin_figure = [begin_figure + '[htb]'] #'[H]'
+            begin_figure = [begin_figure + '[H]'] #'[H]'
         else:
             try:
                 widths = subfigure_widths.split(',')
@@ -554,7 +649,7 @@ def is_dataview_table(S):
     return np.any([bool(re.match(pattern, s)) for s in S])
 
 
-def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, PARS):
+def convert__tables(S, table_fields, PARS):
     '''
     Converts tables depending on the user's preferences    
     '''
@@ -564,6 +659,10 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         # PARS['num_columns'] {\\textwidth}
     else:
         txt_textwith = ''
+        
+        
+    caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, datav__file_exclude_columns = table_fields
+
         
     caption = escape_underscore(caption)
     latex_table_prefix = '#Latex/Table/'
@@ -582,7 +681,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         elif latex_table_package_prefix+'tabular' in package:
             package = ID__TABLES__PACKAGE__tabular
         else:
-            raise NotImplementedError
+            raise Exception(f"You need to speficy a table package for table__block_{label}!")
         
     # Check if it is a dataview table
     if is_dataview_table(S):
@@ -593,7 +692,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
         if len(indexes_start_finish) != 2:
             raise Exception("something is wrong with the syntax of your dataview table block!")
         
-        table = write_Obsidian_table_from_dataview_query(''.join(S[i0+1:i1]), PARS['📁'], datav__file_column_name=datav__file_column_name[0])
+        table = write_Obsidian_table_from_dataview_query(''.join(S[i0+1:i1]), PARS['📁'], datav__file_column_name=datav__file_column_name[0], exclude_columns=datav__file_exclude_columns)
         # concatenate the before and after text with the table
         
         S = S[:i0] + table + S[i1+1:]
@@ -637,7 +736,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
 
     vl = '|' if use_vlines else ''
     if has_custom_widths:        
-        table_width_custom_0 = ''.join([f"{vl}p{{{w}}}" for w in widths]) + vl
+        table_width_custom_0 = ''.join([f"{vl}P{{{w}}}" for w in widths]) + vl
 
     # After having found the table
     ## We expect that the 1st line defines the columns
@@ -663,7 +762,7 @@ def convert__tables(S, caption, package, label, widths, use_hlines, use_vlines, 
     for s in S[iS_table_start+2:]:
         c = s.split('|')
         c = [x.lstrip().rstrip() for x in c if len(x.lstrip().rstrip())>0 and x!='\n']
-        c = ['\\newline'.join(ci.split('<br>')) for ci in c]
+        c = ['\\newline '.join(ci.split('<br>')) for ci in c]
         c = [escape_underscore(ci) for ci in c]
         # check for table commands
         latex_command_in_row = np.any([latex_table_prefix in ci for ci in c])
