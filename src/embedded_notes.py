@@ -9,6 +9,7 @@ from equations import *
 from path_searching import *
 from special_characters import *
 from bullet_list__converter import *
+from helper_functions import *
 # from
 
 special_cases = ['eq__block', 'figure__block', 'table__block']
@@ -221,12 +222,13 @@ def embedded_references_recognizer(S, options, mode):
         return np.nan
 
     pattern_embedded_with_section_0 = '!\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
+    pattern_embedded_with_section_path = r'!\[\[([\/\.' + all_chars + ']+)(\#[' + all_chars + ']+)?(\|[' + all_chars + ']+)?\]\]'
 
     # Pattern recognizing text starting with "[[eq__block"
     pattern_eq_block = r'\[\[eq__block.*'
 
     discard_special_cases = (cnd__mode_is__normal) and options['treat_equation_blocks_separately']
-    pattern_embedded_with_section = pattern_embedded_with_section_0
+    pattern_embedded_with_section = pattern_embedded_with_section_path
     
 
     # The following commented if clause was commented because both me and ChatGPT can't find a proper regex expression
@@ -336,8 +338,7 @@ def non_embedded_references_converter(S, PARS):
 
     links = non_embedded_references_recognizer(S)
     options = PARS['⚙']['EMBEDDED REFERENCES']
-    formatting_rules = PARS['⚙']['formatting_rules']['non_embedded_references']
-    
+    formatting_rules = PARS['⚙']['formatting_rules']['non_embedded_references']    
 
     if options['treat_citations']:
         # change citations, like: "[[p110]]" to "\cite{p110}"
@@ -360,11 +361,12 @@ def non_embedded_references_converter(S, PARS):
                 text_to_replace = f'[[{note_name+tmp1[2]}]]'
                 replacement_text = tmp1[2][1:]
 
-            f = formatting_rules_to_check[0]
-            if f in formatting_rules_keys:
-                note_path = get_embedded_reference_path(note_name, PARS, search_in = 'vault')
-                formatting_notes = formatting_rules[f]
-                replacement_text = formatting_rule__notes_with_tags(note_path, replacement_text, formatting_notes)
+            if formatting_rules['use']:
+                f = formatting_rules_to_check[0]
+                if f in formatting_rules_keys:
+                    note_path = get_embedded_reference_path(note_name, PARS, search_in = 'vault')
+                    formatting_notes = formatting_rules[f]
+                    replacement_text = formatting_rule__notes_with_tags(note_path, replacement_text, formatting_notes)
                         
             S[line] = S[line].replace(text_to_replace, replacement_text)
 
@@ -402,6 +404,39 @@ def content_filter_inline_code_snippets(S, note_path):
             s = s.replace('`=this.file.cday`', get_file_cday(note_path))
         S1.append(s)
     return S1
+
+
+def treat_dataviewjs_inlink_cases_protocol_1(content__unfold, embedded_ref, PARS):
+    
+    try:
+        paths_inlinks = get_fields_from_Obsidian_note(get_embedded_reference_path(embedded_ref, PARS), ['inlinks_manual:: '])[0][0].split("|")
+    except:
+        raise Exception(f"You need to fill in the field `inlinks_manual` in the note `{embedded_ref}`")
+    
+    paths_inlinks = [f"![[{p.replace('.md', '')}]]" for p in paths_inlinks]
+    content__unfold = '\n'.join(paths_inlinks)
+    
+    return content__unfold
+
+def treat_dataviewjs_inlink_cases(content__unfold, embedded_ref, PARS):
+    # check if ```dataviewjs` is in the content
+    # check if options['protocol_names'] entry is the content
+    code_detected, language = detect_code_snippet(content__unfold)
+    if language is None:
+        return content__unfold
+    
+    language = language.strip().lower()
+    if code_detected and language == 'dataviewjs':
+        for protocol in PARS['⚙']['EMBEDDED REFERENCES']['special_cases']['inlink_dataviewjs']['protocol_names']:
+            idx=[i for i,c in enumerate(content__unfold) if '```' in c and language in c][0]
+            if len([True for c in content__unfold[idx:idx+4] if protocol in c]) > 0:
+                return treat_dataviewjs_inlink_cases_protocol_1(content__unfold, embedded_ref, PARS)
+            else:   
+                return content__unfold
+    else:
+        return content__unfold
+        # if yes, then we need to change the embedded_ref
+        # for now, I am just removing the 'dataviewjs' part
 
 def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
     
@@ -461,6 +496,11 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
         content_filter_2 = lambda s, x, mref: content_filter_2_name_latex_command(s, x, mref)
     else:
         content_filter_2 = lambda s, x, mref: (x)
+        
+    if PARS_EMBEDDED_REFS['special_cases']['inlink_dataviewjs']['condition']:
+        content_filter_3 = lambda x, embedded_ref: treat_dataviewjs_inlink_cases(x, embedded_ref, PARS)
+    else:
+        content_filter_3 = lambda x, embedded_ref: (x)
 
     line_numbers_unfolded_notes = [ln[0] for ln in all_embedded_refs]
 
@@ -486,18 +526,20 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
             CONDITION_2 = True
             if CONDITION_2:
                 # Unfold this note ONLY when it hasn't already been unfolded
-                
-                md__files_embedded.append(embedded_ref)
 
                 try:
                     path_embedded_reference = get_embedded_reference_path(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
                 except:
-                    raise Exception("Error")
-
+                    continue
+                md__files_embedded.append(embedded_ref)
                 if len(path_embedded_reference) == 0: raise Exception(f'File: {embedded_ref} cannot be found in {PARS["📁"][where_to_search_for_embedded_notes]}')
 
                 section_name = section.lstrip('#')
-                content__unfold = extract_section_from_file(path_embedded_reference, section_name)
+                try:
+                    content__unfold = extract_section_from_file(path_embedded_reference, section_name)
+                except:
+                    path_embedded_reference = get_embedded_reference_path(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
+                
                 content__unfold = content_filter_1(content__unfold, S, line_number)
                 content__unfold = content_filter_inline_code_snippets(content__unfold, path_embedded_reference)
                     
@@ -524,6 +566,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 
                 if len(content__unfold) > 0: 
                     content__unfold = content_filter_2(S[line_number], content__unfold, markdown_ref)
+                    content__unfold = content_filter_3(content__unfold, embedded_ref)
                     
                 # S[line_number] = get_unfolded_and_converted_embedded_content(embedded_ref, where_to_search_for_embedded_notes, line_number, is_in_normal_case, cnd__mode_is__equation_blocks_only, content_filter_2, PARS)
 
