@@ -55,7 +55,9 @@ def get_parameters(version = 'default'):
 
 
     # USER PARAMETERS
-    path_vault          = 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\'
+    path_vault          = 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\' 
+    #'G:\\My Drive\\MARIOS_LOG\\', 
+    # 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\'
     path_writing        = path_vault + '✍Writing\\'
     path_templates        = path_vault + '👨‍💻Automations\\'
     path_table_block_template = path_templates + 'table_block.md'
@@ -142,7 +144,14 @@ def get_parameters(version = 'default'):
                             'treat_equation_blocks_separately': '🟢', # if True, then the equation blocks are treated separately, in order to increase speed
                                              'treat_citations': '🟢',
                                      'adapt_section_hierarchy': '🟢', # if True, then whenever there are sections in an embedded reference, their hierarchy will change, based on whether the embedded note was already in sections (so we don't break the hierarchy)
-                    'write_obsidian_ref_name_on_latex_comment': '🟢'}, 
+                    'write_obsidian_ref_name_on_latex_comment': '🟢',
+                    'special_cases': {
+                                    'inlink_dataviewjs': {
+                                                'condition': '🔴',  # ➕TODO: this has the issue that the embedded refs might also have the same code within them! Need to specify levels perhaps
+                                                'protocol_names': ['#👨‍💻/dataviewjs/mentions/1'],
+                                            }
+                                    }
+                    }, 
             'figures': 
                             {'reduce spacing between figures': '🔴',
                                       'put_figure_below_text': '🟢',
@@ -153,7 +162,7 @@ def get_parameters(version = 'default'):
                         'indent_length_of_first_line': 0,    # 0 if no indent is desired. Recommended 20 for usual indent
                         'if_text_before_first_section___place_before_table_of_contents': '🔴',
                         'insert_new_line_symbol':                                        '---',
-                        'add_table_of_contents':                                        '🔴',
+                        'add_table_of_contents':                                        '🟢',
                         'add_new_page_before_bibliography':                             '🟢',
                         'allowdisplaybreaks':                                           '🔴',
             }, 
@@ -168,8 +177,8 @@ def get_parameters(version = 'default'):
                                             ['todo',    ['yellow', 'red']]
                                         ]
                 },
-            'formatting_rules':{
-                        'non_embedded_references': { # find list of colors here: https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX
+            'formatting_rules':{  # find list of colors here: https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX
+                        'non_embedded_references': {'use': '🔴', # using it results in highly increased time, since the algorithm has to search inside all non embedded notes.
                                                     'notes_with_tags': [ # add tag, color ("\textcolor{}{}" function)
                                                                         ["#Latex/Formatting/method",         "teal"],
                                                                         ["#Latex/Formatting/characteristic", "gray"],
@@ -219,7 +228,11 @@ def get_parameters(version = 'default'):
                                     ['booktabs',    None,                                      'so that the toprule command works'],
                                     ['soul',        None,                                      'to strikeout text using \\st{}'],
 									['twemojis',	None,										'for twemojis'],			
-                                    ['rotating',    None,                                       'for rotating text on tables']						
+                                    ['rotating',    None,                                       'for rotating text on tables'],
+                                    ['algorithm',   None,                                       ''],
+                                    ['algpseudocode',None,                                      ''],
+                                    ['array',       None,                                       '']
+					
                                     ],
             'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
 											['✔',              '\\checkmark',            1],
@@ -229,25 +242,29 @@ def get_parameters(version = 'default'):
 											['🔗',              'LINK',                  1],
 											['\implies',        '\Rightarrow',            1],
 											['❓❓',              '?',                     1],
-											['❓',              '?',                      1],
+											['❓',              '',                      1],
 											['❌',              'NO',                    1],
 											['🤔',               '\\twemoji{thinking face}',                     1],
 											['⚠',               '\\twemoji{warning}',                    1],
 											['📚',              '\\twemoji{books}',                      1],
 											['📜',              '\\twemoji{page with curl}',                      1],
-											['⌛',               '\\twemoji{hourglass}',                     1],
 											['🔭',              '\\twemoji{telescope}',                     1],
 											['👆',              '\\twemoji{index pointing up}',                      1],
 											['💭',              '\\twemoji{thought balloon}',                      1],
 											['🔧',              '\\twemoji{screwdriver}', 1],
            									['⛏',				 '\\twemoji{pick}',        1],
-											['⏳',				 '\\twemoji{hourglass}',   1],
                                             ['🧪',                  '\\twemoji{test tube}',           1],
                                             ['⭐',                  '\\twemoji{star}',           1],
                                             ['💡',                  '\\twemoji{light bulb}',           1],
 											['📅',                  '\\twemoji{date}',           1],
                                             ['📍',                '\\twemoji{round pushpin}',           1],
-                                            ['📜',                  '\\twemoji{scroll}',          1] ,
+                                            ['📜',                  '\\twemoji{scroll}',          1],
+                                            ['🪞',                    'w',                          1],
+                                            ['👤',                  '\\twemoji{bust in silhouette}',           1],
+                                            ['👥',                  '\\twemoji{busts in silhouette}',           1],
+                                            ['🏫',                  '\\twemoji{school}',           1],
+                                            ['⚕️',                  '\\twemoji{medical symbol}',           1],
+											['⚪',					'\\twemoji{white circle}',		1]
                                             ]
             },
             #                                        ['\\text',          '\\textnormal',          1],
