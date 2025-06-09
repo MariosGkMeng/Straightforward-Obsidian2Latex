@@ -6,7 +6,6 @@ from embedded_notes import non_embedded_references_recognizer
 from equations import get_fields_from_Obsidian_note
 from symbol_replacements import *
 
-
 def convert_inline_code_of_line(text):
     # Regular expression to find inline code enclosed in backticks
     pattern = r'`([^`]+)`'
