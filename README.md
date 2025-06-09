@@ -25,12 +25,13 @@ General video showcasing all the functionalities (will be uploaded on YouTube. F
 # ➕TODOS
 ## To be added soon
 - Guide on how the dataview tables are converted (also, include the example in the `example_vault`)
-- More videos on the conversion
-- General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
+- (doing now) More videos on the conversion
+- (doing now) General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
 - Relative path to the `converter.py` from `👨‍💻convert_to_latex.md`
 - Make proper installer so that the user doesn't have to do manual work
 	- QuickAdd commmads: make function that appends to the `QuickAdd/data.json`. Install automatically if needed
- - Occasional cleanup of `PARS['📂']['list_paths_notes']`
+ - Automated occasional cleanup of `PARS['📂']['list_paths_notes']`
+ - Diagnostic stuff for errors (so far, the converter does not warn the user about syntactic errors)
 
 
 ## Ideas to work on
