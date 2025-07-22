@@ -1,44 +1,8 @@
-# Comparisons to other converters
- (➕under construction)
 
-🦄: This feature is unique to the tool in this repo (even not available in normal LateX).
+Quick jump to
+- [Comparisons to other converters](#comparisons-to-other-converters)
+- [🎞General video](general-video-under-development)
 
-|                                                                                                                                                                                                                                  | This repo | Pandoc Plugin                                  | Copy as Latex | Enhancing Export                                                                              |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ---------------------------------------------- | ------------- | --------------------------------------------------------------------------------------------- |
-| Embedded notes                                                                                                                                                                                                                   | ✔         | ❌                                              | ❌             | [❌](https://github.com/mokeyish/obsidian-enhancing-export/issues/293#issuecomment-2907856640) |
-| Equations                                                                                                                                                                                                                        | ✔         | ❌❓ --> maybe not, was not able to do it so far | ✔             | not running for me                                                                            |
-| [Equation referencing](#adding-equations)                                                                                                                                                                                        | ✔         | ❌ (seems to not be working)                    | ❌             | not running for me                                                                            |
-| 🦄 Jump to equation when using the label when the equation is inserted from another file                                                                                                                                         | ✔         | ❌                                              | ❌             | not running for me                                                                            |
-| Is fast                                                                                                                                                                                                                          | ✔ \*      | ✔✔                                             | ✔✔            | not running for me                                                                            |
-| Ignores comments                                                                                                                                                                                                                 | ✔         | ✔                                              | ✔             | not running for me                                                                            |
-| [Converting inline dataview code](#new-converting-inline-dataview-code)                                                                                                                                                          | ✔         | ❌                                              | ❌             | not running for me                                                                            |
-| 🦄Dataview Table conversion                                                                                                                                                                                                        | ✔         | ❌                                              | ❌             | not running for me                                                                            |
-| Can add custom latex code for specific things                                                                                                                                                                                    | ✔         | ❓                                              | ❓             | not running for me                                                                            |
-| Can control the sizes and latex class types for figures and tables from Obsidian                                                                                                                                                 | ✔         | ❓                                              | ❓             | not running for me                                                                            |
-| [Can treat cases wherein the note to be converted is too complicated, resulting in severe RAM consumption](#for-when-the-note-to-be-converted-is-too-large-and-contains-many-embedded-notes-resulting-in-severe-ram-consumption) | ✔         | ❌                                              | ❌             | not running for me                                                                            |
-| Can convert [admonition blocks](https://notes.nicolevanderhoeven.com/Obsidian+Admonition)                                                                                                                                        | ✔         | ❓                                              | ❓             | not running for me                                                                            |
-| [Parameterization code that hides parts of the note programmatically](#new-parameterizing-whether-parts-in-the-document-will-appear-in-the-pdf-file)                                                                             | ✔         | ❓                                              | ❓             | not running for me                                                                            |
-
-
-\*Provided that the embedded notes are already mapped in `PARS['📁']['list_paths_notes']`, therefore the algorithm does not need to search in the vault for them. Also, conditional formatting takes some time, since the algorithm has to search inside every linked note for certain tags.
-
-# 📽 General Video (under development)
-General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video I've rendered so far [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
-
-# ➕TODOS
-## To be added soon
-- Guide on how the dataview tables are converted (also, include the example in the `example_vault`)
-- (doing now) More videos on the conversion
-- (doing now) General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
-- Relative path to the `converter.py` from `👨‍💻convert_to_latex.md`
-- Make proper installer so that the user doesn't have to do manual work
-	- QuickAdd commmads: make function that appends to the `QuickAdd/data.json`. Install automatically if needed
- - Automated occasional cleanup of `PARS['📂']['list_paths_notes']`
- - Diagnostic stuff for errors (so far, the converter does not warn the user about syntactic errors)
-
-
-## Ideas to work on
-- Print to .pdf immediately from the note without interacting with LateX
 
 # Citing this work
 Please cite the following if you use it for publishable work (i.e., if you write your paper in Obsidian, and use this code to print to Latex)
@@ -465,3 +429,47 @@ I am encountering package problems when I try to run the package in a different 
 - [ ] Add video to show how the figure system works
 - [ ] Add video to show how the admonition system works
 
+## To be added soon
+- Guide on how the dataview tables are converted (also, include the example in the `example_vault`)
+- (doing now) More videos on the conversion
+- (doing now) General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
+- Relative path to the `converter.py` from `👨‍💻convert_to_latex.md`
+- Make proper installer so that the user doesn't have to do manual work
+	- QuickAdd commmads: make function that appends to the `QuickAdd/data.json`. Install automatically if needed
+ - Automated occasional cleanup of `PARS['📂']['list_paths_notes']`
+ - Diagnostic stuff for errors (so far, the converter does not warn the user about syntactic errors)
+
+## Ideas to work on
+- Print to .pdf immediately from the note without interacting with LateX
+
+
+
+# Appendix
+
+## Comparisons to other converters
+ (➕under construction)
+
+🦄: This feature is unique to the tool in this repo (even not available in normal LateX).
+
+|                                                                                                                                                                                                                                  | This repo | Pandoc Plugin                                  | Copy as Latex | Enhancing Export                                                                              |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ---------------------------------------------- | ------------- | --------------------------------------------------------------------------------------------- |
+| Embedded notes                                                                                                                                                                                                                   | ✔         | ❌                                              | ❌             | [❌](https://github.com/mokeyish/obsidian-enhancing-export/issues/293#issuecomment-2907856640) |
+| Equations                                                                                                                                                                                                                        | ✔         | ❌❓ --> maybe not, was not able to do it so far | ✔             | not running for me                                                                            |
+| [Equation referencing](#adding-equations)                                                                                                                                                                                        | ✔         | ❌ (seems to not be working)                    | ❌             | not running for me                                                                            |
+| 🦄 Jump to equation when using the label when the equation is inserted from another file                                                                                                                                         | ✔         | ❌                                              | ❌             | not running for me                                                                            |
+| Is fast                                                                                                                                                                                                                          | ✔ \*      | ✔✔                                             | ✔✔            | not running for me                                                                            |
+| Ignores comments                                                                                                                                                                                                                 | ✔         | ✔                                              | ✔             | not running for me                                                                            |
+| [Converting inline dataview code](#new-converting-inline-dataview-code)                                                                                                                                                          | ✔         | ❌                                              | ❌             | not running for me                                                                            |
+| 🦄Dataview Table conversion                                                                                                                                                                                                        | ✔         | ❌                                              | ❌             | not running for me                                                                            |
+| Can add custom latex code for specific things                                                                                                                                                                                    | ✔         | ❓                                              | ❓             | not running for me                                                                            |
+| Can control the sizes and latex class types for figures and tables from Obsidian                                                                                                                                                 | ✔         | ❓                                              | ❓             | not running for me                                                                            |
+| [Can treat cases wherein the note to be converted is too complicated, resulting in severe RAM consumption](#for-when-the-note-to-be-converted-is-too-large-and-contains-many-embedded-notes-resulting-in-severe-ram-consumption) | ✔         | ❌                                              | ❌             | not running for me                                                                            |
+| Can convert [admonition blocks](https://notes.nicolevanderhoeven.com/Obsidian+Admonition)                                                                                                                                        | ✔         | ❓                                              | ❓             | not running for me                                                                            |
+| [Parameterization code that hides parts of the note programmatically](#new-parameterizing-whether-parts-in-the-document-will-appear-in-the-pdf-file)                                                                             | ✔         | ❓                                              | ❓             | not running for me                                                                            |
+
+
+\*Provided that the embedded notes are already mapped in `PARS['📁']['list_paths_notes']`, therefore the algorithm does not need to search in the vault for them. Also, conditional formatting takes some time, since the algorithm has to search inside every linked note for certain tags.
+
+
+## 📽 General Video (under development)
+General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video I've rendered so far [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
