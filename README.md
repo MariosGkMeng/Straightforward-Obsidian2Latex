@@ -471,5 +471,5 @@ I am encountering package problems when I try to run the package in a different 
 \*Provided that the embedded notes are already mapped in `PARS['📁']['list_paths_notes']`, therefore the algorithm does not need to search in the vault for them. Also, conditional formatting takes some time, since the algorithm has to search inside every linked note for certain tags.
 
 
-## 📽 General Video (under development)
+## General Video (under development)
 General video showcasing all the functionalities (will be uploaded on YouTube. For now, you can view the video I've rendered so far [here](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing))
