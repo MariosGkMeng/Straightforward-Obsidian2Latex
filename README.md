@@ -1,5 +1,3 @@
-
-Quick jump to
 - [Comparisons to other converters](#comparisons-to-other-converters)
 - [🎞General video](#general-video-under-development)
 
