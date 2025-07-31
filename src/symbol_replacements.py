@@ -3,28 +3,38 @@ import re
 
 def escape_underscores_in_sections(text):
     """
-    Escapes underscores in section-related LaTeX commands such as \section, \subsection, etc.
+    Escapes underscores in LaTeX section-related commands, preserving nested braces.
     
     Parameters:
         text (str): A single line of LaTeX code.
     
     Returns:
-        str: The line with underscores escaped if it's a section-related command.
+        str: Line with underscores escaped in section titles.
     """
-    # List of LaTeX sectioning commands to check
+    import re
+
     section_commands = ['section', 'subsection', 'subsubsection', 'paragraph', 'subparagraph']
-    
+
     for command in section_commands:
-        # Match lines like \section{Some_text_here}
-        pattern = rf'(\\{command}\*?\s*\{{)([^}}]*)(\}})'
+        pattern = rf'(\\{command}\*?\s*)\{{'
         match = re.search(pattern, text)
         if match:
-            before, content, after = match.groups()
-            # Escape underscores in the content part
+            start_idx = match.end()  # index after the opening brace
+            brace_count = 1
+            i = start_idx
+            while i < len(text) and brace_count > 0:
+                if text[i] == '{':
+                    brace_count += 1
+                elif text[i] == '}':
+                    brace_count -= 1
+                i += 1
+
+            content = text[start_idx:i - 1]
             escaped_content = content.replace('_', r'\_')
-            return f"{before}{escaped_content}{after}"
-    
+            return text[:start_idx] + escaped_content + text[i - 1:]
+
     return text
+
     
 
 def symbol_replacement(S, SYMBOLS_TO_REPLACE):
@@ -50,6 +60,47 @@ def symbol_replacement(S, SYMBOLS_TO_REPLACE):
 
 def escape_underscores_in_texttt(text):
     """
+    Escapes underscores inside \texttt{...}, with better performance.
+    Handles nested braces and only processes if \texttt{ is present.
+    Prints original and modified text if 'add_explanation' is present.
+    """
+    if r'\texttt{' not in text:
+        return text
+
+    result = ''
+    i = 0
+    while True:
+        start_idx = text.find(r'\texttt{', i)
+        if start_idx == -1:
+            result += text[i:]
+            break
+
+        # Add text before \texttt{
+        result += text[i:start_idx]
+
+        # Find matching closing brace
+        brace_start = start_idx + len(r'\texttt{')
+        brace_count = 1
+        j = brace_start
+        while j < len(text) and brace_count > 0:
+            if text[j] == '{':
+                brace_count += 1
+            elif text[j] == '}':
+                brace_count -= 1
+            j += 1
+
+        # Extract and escape
+        inner = text[brace_start:j-1]
+        escaped_inner = inner.replace('_', r'\_')
+        result += r'\texttt{' + escaped_inner + '}'
+
+        i = j  # continue from after the closing brace
+
+    return result
+
+
+def escape_underscores_in_texttt__old(text):
+    """
     Replaces underscores with \_ inside the brackets of \texttt{}.
 
     Args:
@@ -70,3 +121,5 @@ def escape_underscores_in_texttt(text):
     replaced_text = re.sub(pattern, replace_underscores, text)
     
     return replaced_text
+
+
