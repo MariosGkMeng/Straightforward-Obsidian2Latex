@@ -733,16 +733,79 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     [print(msg) for msg in MESSAGES_TO_PRINT]
     clickable_files = f'[📁tex file](<file:///{PATHS["tex-file"]}>), [📁.pdf file](<file:///{PATHS["tex-file"].replace(".tex", "")}.pdf>)'
     replace_fields_in_Obsidian_note(PATHS['command_note'], ['files:: '], [clickable_files])
+    
+    
+    # # Modify the bash script file that triggers the pdf generation
+    # with open(PATHS['bash_script'], 'r', encoding='utf8') as f:
+    #     lines=f.readlines()    
+    
+    # lines1 = []
+    # for line in lines:
+    #     if 'FILE_NAME=' in line:
+    #         tmp = PATHS['tex-file'].split('\\')[-1].replace('.tex', '')
+    #         line = f'FILE_NAME="{tmp}"\n'
+
+    #     lines1.append(line)
+
+    # with open(PATHS['bash_script'], 'w', encoding='utf8') as f:
+    #     f.writelines(lines1)
+
+    # trigger the bash file
+    # import subprocess
+
+    # Run the bash file
+    # ## Convert to POSIX-style path (forward slashes)
+    # bash_path = PATHS['bash_script'].replace('\\', '/')
+    # ## run the subprocess
+    # subprocess.run(["bash", bash_path])
+    
+    compile_pdf = get_fields_from_Obsidian_note(PATHS['command_note'], ['compile_pdf:: '])[0][0]
+    
+    if compile_pdf=='true' or compile_pdf == '🟢' or compile_pdf == 'y' or compile_pdf == 'Y' or compile_pdf == 'yes' or compile_pdf == 'YES':
+        BASE_PATH = '\\'.join(PATHS['tex-file'].split('\\')[:-1])
+        FILE_NAME = PATHS['tex-file'].split('\\')[-1].replace('.tex', '')
+        TEXFILE = os.path.join(BASE_PATH, FILE_NAME + ".tex")
+        PDFFILE = os.path.join(BASE_PATH, FILE_NAME + ".pdf")
+
+        print(f"TEXFILE: {TEXFILE}")
+        print(f"PDFFILE: {PDFFILE}")
+
+        pdf_full_path = PDFFILE
+            
+
+        if os.path.exists(pdf_full_path + ".old"):
+            os.remove(pdf_full_path + ".old")
+        if os.path.exists(pdf_full_path):
+            os.rename(pdf_full_path, pdf_full_path + ".old")
 
         
-    # # Run the bash script (somehow it is not working from python for now 🤔)
-    # try:
-    #     result = subprocess.run(PATHS['bash_script'], shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    #     print("Output:", result.stdout.decode())
-    #     print("Errors:", result.stderr.decode())
-    # except subprocess.CalledProcessError as e:
-    #     print("Error:", e.stderr.decode())
+        # Try running pdflatex up to 2 times
+        for attempt in range(2):
+            print(f"▶ Running pdflatex (attempt {attempt + 1})...")
 
+            result = subprocess.run(
+                ["pdflatex", "-synctex=1", "-interaction=nonstopmode", "-shell-escape", TEXFILE],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                encoding="utf-8",
+                errors="replace",
+                cwd=BASE_PATH
+            )
+
+            print(result.stdout) 
+
+            # Brief pause to allow file system to register the PDF
+            time.sleep(0.5)
+
+            if os.path.exists(pdf_full_path):
+                print("✅ PDF generated successfully.")
+                break
+        else:
+            print("❌ PDF was not generated after 2 attempts.")
+            exit(1)
+
+        # Open the PDF
+        os.startfile(pdf_full_path)
 
 else:
     
