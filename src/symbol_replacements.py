@@ -37,23 +37,66 @@ def escape_underscores_in_sections(text):
 
     
 
-def symbol_replacement(S, SYMBOLS_TO_REPLACE):
-    
+import re
+
+def symbol_replacement(S, SYMBOLS_TO_REPLACE, protect_note_blocks=False):
     S_1 = []
+
     for s in S:
-        s1 = s
-        for symbol in SYMBOLS_TO_REPLACE:
-            s2 = symbol[2]
-            if s2 == 0:
-                s1 = s1.replace(symbol[0], symbol[1])
-            elif s2 == 1:
-                s1 = s1.replace(symbol[0], symbol[1] + ' ')
-            elif s2 == 2:
-                s1 = re.sub(symbol[0], symbol[1] + ' ', s1)
-            else:
-                raise Exception("Nothing coded for this case!")
-        
-        S_1.append(s1)
+        if protect_note_blocks:
+            parts = []
+            last_end = 0
+            protected_pattern = re.compile(r'\[\[.*?\]\]')
+
+            for match in protected_pattern.finditer(s):
+                start, end = match.span()
+                unprotected_text = s[last_end:start]
+
+                # Apply replacements only on unprotected text
+                for symbol in SYMBOLS_TO_REPLACE:
+                    s2 = symbol[2]
+                    if s2 == 0:
+                        unprotected_text = unprotected_text.replace(symbol[0], symbol[1])
+                    elif s2 == 1:
+                        unprotected_text = unprotected_text.replace(symbol[0], symbol[1] + ' ')
+                    elif s2 == 2:
+                        unprotected_text = re.sub(symbol[0], symbol[1] + ' ', unprotected_text)
+                    else:
+                        raise Exception("Nothing coded for this case!")
+
+                parts.append(unprotected_text)
+                parts.append(s[start:end])  # Keep protected block as-is
+                last_end = end
+
+            # Handle any remaining unprotected text
+            remaining_text = s[last_end:]
+            for symbol in SYMBOLS_TO_REPLACE:
+                s2 = symbol[2]
+                if s2 == 0:
+                    remaining_text = remaining_text.replace(symbol[0], symbol[1])
+                elif s2 == 1:
+                    remaining_text = remaining_text.replace(symbol[0], symbol[1] + ' ')
+                elif s2 == 2:
+                    remaining_text = re.sub(symbol[0], symbol[1] + ' ', remaining_text)
+                else:
+                    raise Exception("Nothing coded for this case!")
+            parts.append(remaining_text)
+
+            S_1.append("".join(parts))
+        else:
+            # Old behavior: replace everywhere
+            s1 = s
+            for symbol in SYMBOLS_TO_REPLACE:
+                s2 = symbol[2]
+                if s2 == 0:
+                    s1 = s1.replace(symbol[0], symbol[1])
+                elif s2 == 1:
+                    s1 = s1.replace(symbol[0], symbol[1] + ' ')
+                elif s2 == 2:
+                    s1 = re.sub(symbol[0], symbol[1] + ' ', s1)
+                else:
+                    raise Exception("Nothing coded for this case!")
+            S_1.append(s1)
 
     return S_1
 
