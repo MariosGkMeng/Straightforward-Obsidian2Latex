@@ -470,7 +470,7 @@ def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, ne
 
 def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PARS):
     
-    fields_to_fetch = ['caption:: ', 'package:: ', 'widths:: ', 'use_hlines:: ', 'use_vlines:: ', 'datav__file_column_name:: ', 'datav__exclude_columns:: ']
+    fields_to_fetch = ['caption:: ', 'package:: ', 'widths:: ', 'use_hlines:: ', 'use_vlines:: ', 'datav__file_column_name:: ', 'datav__exclude_columns:: ', 'datav__make_sections_out_of_notes:: ', 'datav__make_sections_out_of_notes:: ']
     fields_note = get_fields_from_Obsidian_note(path_embedded_reference, fields_to_fetch)
     caption = fields_note[0] if len(fields_note[0])==0 else fields_note[0][0]
     package = fields_note[1] if len(fields_note[1])==0 else fields_note[1][0]
@@ -482,9 +482,10 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
     use_vlines = fields_note[4] if len(fields_note[4])==0 else fields_note[4][0]
     datav__file_column_name = fields_note[5]
     datav__file_exclude_columns = fields_note[6]
+    datav__make_sections_out_of_notes = fields_note[7]
     label = embedded_ref.replace('table__block_', '')
     
-    table_fields = (caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, datav__file_exclude_columns)
+    table_fields = (caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, datav__file_exclude_columns, datav__make_sections_out_of_notes)
 
     
     embedded_tables_text = convert__tables(content__unfold, table_fields, PARS)
@@ -648,6 +649,15 @@ def is_dataview_table(S):
     pattern = r'^\s*```[\s]*dataview\s*$'
     return np.any([bool(re.match(pattern, s)) for s in S])
 
+def make_sections_out_of_notes_in_dataview_table(notes):
+    
+    lines = []
+    for note in notes:
+        lines.append(f'# {note}')
+        lines.append(f'!{note}')
+        lines.append('')
+        
+    return lines
 
 def convert__tables(S, table_fields, PARS):
     '''
@@ -661,7 +671,7 @@ def convert__tables(S, table_fields, PARS):
         txt_textwith = ''
         
         
-    caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, datav__file_exclude_columns = table_fields
+    caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, datav__file_exclude_columns, datav__make_sections_out_of_notes = table_fields
 
         
     caption = escape_underscore(caption)
@@ -692,8 +702,14 @@ def convert__tables(S, table_fields, PARS):
         if len(indexes_start_finish) != 2:
             raise Exception("something is wrong with the syntax of your dataview table block!")
         
-        table = write_Obsidian_table_from_dataview_query(''.join(S[i0+1:i1]), PARS['📁'], datav__file_column_name=datav__file_column_name[0], exclude_columns=datav__file_exclude_columns)
+        table, obsidian_notes =\
+            write_Obsidian_table_from_dataview_query(''.join(S[i0+1:i1]), PARS['📁'],
+                                                     datav__file_column_name=datav__file_column_name[0],
+                                                     exclude_columns=datav__file_exclude_columns)
         # concatenate the before and after text with the table
+        
+        if datav__make_sections_out_of_notes:
+            table += make_sections_out_of_notes_in_dataview_table(obsidian_notes)
         
         S = S[:i0] + table + S[i1+1:]
         
