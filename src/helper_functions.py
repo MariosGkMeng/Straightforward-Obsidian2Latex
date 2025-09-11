@@ -3,6 +3,39 @@ import numpy as np
 import re
 import datetime
 
+def detect_code_snippet(strings):
+    code_detected = False
+    language_detected = None
+    
+    code_languages = ['python', 'dataviewjs', 'dataview', 'javascript', 'java', 'c++', 'c#', 'html', 'css', 'bash', 'ruby', 'go', 'php']
+    
+    for s in strings:
+        # Check for Markdown-style code block
+        code_block_match = re.search(r'```\s*(\w+)?\n', s)
+        if code_block_match:
+            code_detected = True
+            lang = code_block_match.group(1)            
+            if lang and lang.lower() in code_languages:
+                language_detected = lang.lower()
+            break
+        
+        # Check for inline code-like syntax
+        if any(kw in s for kw in ['def ', 'class ', 'function ', 'console.log', '<html>', '#include']):
+            code_detected = True
+            # Try to guess language based on keywords
+            if 'def ' in s or 'class ' in s:
+                language_detected = 'python'
+            elif 'function ' in s or 'console.log' in s:
+                language_detected = 'javascript'
+            elif '<html>' in s:
+                language_detected = 'html'
+            elif '#include' in s:
+                language_detected = 'c/c++'
+            break
+
+    return code_detected, language_detected
+
+
 def get_file_cday(file_path):
     """
     Returns the creation date of the given file as a formatted string (YYYY-MM-DD).
@@ -33,7 +66,7 @@ def replace_outside_brackets(s, replace_list, replacement_list):
     pattern = r'(\[\[.*?\]\])|([^\[\]]+)'
     return re.sub(pattern, replacer, s)
 
-def escape_underscore(text):
+def escape_underscore(text, ignore_brackets=False):
     escaped = []
     inside_special = False  # Track whether we're inside a special segment
     inside_brackets = False  # Track whether we're inside [[ ]]
@@ -58,8 +91,8 @@ def escape_underscore(text):
                 inside_special = True  # Opening a special segment
                 delimiter = char
         
-        # Escape underscores only when NOT inside special characters or brackets
-        if char == "_" and not inside_special and not inside_brackets:
+        # Escape underscores only when NOT inside special characters or (unless ignore_brackets) brackets
+        if char == "_" and not inside_special and (ignore_brackets or not inside_brackets):
             escaped.append(r"\_")
         else:
             escaped.append(char)
@@ -170,51 +203,61 @@ def split_outside_parentheses(input_str):
     
     return result
 
+def write_Obsidian_table(table, return_lines=True, fill_empty_cells_with_dash=True):
+    '''
+    # Example
+    table = {
+        0: {1: 'col_1_title',
+            2: 'col_2_title',
+            3: 'col_3_title',
+            4: 'col_4_title'
+        },
+        1: {1: 'r1c1',
+            2: 'r1c2',
+            3: 'r1c3'
+        },
+        2: {1: 'r2c1',
+            2: 'r2c2',
+            3: 'r3c2',
+            4: 'r4c2'}
+    }
+    write_Obsidian_table(table)
+    '''
+    
+    if not isinstance(table, dict):
+        raise Exception('`table` input must be a dict!')
+    
+    cols = np.max([len(list(table[i].keys())) for i in list(table.keys())])
+    rows = len(table.keys())
+    lines = []
+    keys = list(table.keys())
+    
+    # Column titles
+    if 0 in keys:
+        lines.append('| ' + ' | '.join([f'**{escape_underscore(table[0][key], ignore_brackets=True)}**' for key in table[0].keys()]) + ' |')
+    else:
+        lines.append(''.join('| ' * cols) + '|')
 
-def write_Obsidian_table(table, return_lines = True):
-	'''
-	# Example
-	table = {
-		0: {1: 'col_1_title',
-			2: 'col_2_title',
-			3: 'col_3_title',
-			4: 'col_4_title'
-		},
-		1: {1: 'r1c1',
-			2: 'r1c2',
-			3: 'r1c3'
-		},
-		2: {1: 'r2c1',
-			2: 'r2c2',
-			3: 'r3c2',
-			4: 'r4c2'}
-	}
-	write_Obsidian_table(table)
-	'''
-	
-	if not isinstance(table, dict):
-		raise Exception('`table` input must be a dict!')
-	
-	cols = np.max([len(list(table[i].keys())) for i in list(table.keys())])
-	rows = len(table.keys())
-	lines = []
-	keys = list(table.keys())
-	if 0 in keys:
-		# has column titles
-		lines.append('| '+' | '.join([f'**{table[0][key]}**' for key in table[0].keys()]) + ' |')
-	else:
-		lines.append(''.join('| '*cols) + '|')
+    # Separator
+    lines.append(''.join('| --- ' * cols) + '|')
 
-	lines.append(''.join('| --- '*cols) + '|')
-	
-	for i in keys:
-		if i!=0:
-			lines.append('| '+' | '.join([table[i][key] for key in table[i].keys()]) + ' |')
-			lines[-1] += ' |'*(cols-len(table[i].keys()))
-	
-	if return_lines: 
-		return [l + '\n' for l in lines]
-	return '\n'.join(lines)
+    # Table rows
+    for i in keys:
+        if i != 0:
+            row_cells = []
+            for col in range(1, cols + 1):
+                if col in table[i].keys():
+                    str_append = escape_underscore(table[i][col], ignore_brackets=True) if len(table[i][col])>0 else ('-' if fill_empty_cells_with_dash else '')
+                    # print(escape_underscore(table[i][col]))
+                    row_cells.append(str_append)
+                else:
+                    row_cells.append('-' if fill_empty_cells_with_dash else '')
+            lines.append('| ' + ' | '.join(row_cells) + ' |')
+    
+    if return_lines:
+        return [l + '\n' for l in lines]
+    return '\n'.join(lines)
+
 
 
 
@@ -235,6 +278,76 @@ def get_list_of_separate_string_lines(S):
 
     return result_list
 
+
+def is_note(s):
+    if s.strip().startswith('[[') and s.strip().endswith(']]'):
+        return True
+    return False
+
+def is_path(path: str) -> bool:
+    """
+    Checks if a string is likely a folder path, including support for emojis and special Unicode.
+    """
+    INVALID_PATH_CHARS = r'<>:"|?*'
+
+    if not path or not isinstance(path, str):
+        return False
+
+    # Remove quotes and trim
+    path = path.strip().strip('"').strip("'")
+
+    # Must contain a slash or backslash to look like a path
+    if not any(sep in path for sep in ('/', '\\')):
+        return False
+
+    # Reject if it contains invalid filesystem characters
+    if any(char in path for char in INVALID_PATH_CHARS):
+        return False
+
+    # Heuristic: Reject if it looks like a filename with extension
+    if re.search(r'\.[a-zA-Z0-9]{1,5}$', os.path.basename(path)):
+        return False
+
+    return True
+
+def is_obsidian_note(s):
+    if s.strip().startswith('[[') and s.strip().endswith(']]'):
+        return True
+    return False
+        
+def replace_markdown_headers(content):
+    """
+    Replace Markdown headers in content with LaTeX equivalents,
+    and return a list of detected sections as [index, title].
+    """
+    sections = []
+
+    header_map = [
+        (r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+        (r'####### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+        (r'###### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+        (r'##### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+        (r'#### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+        (r'### (.*)', r'\\subsubsection{\1}'),
+        (r'## (.*)', r'\\subsection{\1}'),
+        (r'# (.*)', r'\\section{\1}')
+    ]
+
+    for i, line in enumerate(content):
+        original_line = line
+        line = line.replace('%%', '')  # Remove '%%' before replacements
+
+        for md_pattern, latex_repl in header_map:
+            new_line = re.sub(md_pattern, latex_repl, line)
+            if new_line != line:
+                # Save the section if header changed
+                header_title = re.sub(md_pattern, r'\1', line).strip()
+                sections.append([i, header_title])
+                line = new_line  # update line for next iteration
+
+        content[i] = line
+
+    return content, sections
 
 
 # # Example usage:
