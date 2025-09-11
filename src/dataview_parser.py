@@ -102,7 +102,7 @@ def extract_fields_from_query(query: str):
     # query = re.sub(r'"[^"]*"', '', query)
     
     # Extract the line starting with 'table' and trim leading whitespaces
-    table_line_match = re.search(r'\btable\b(.*)', query)
+    table_line_match = re.search(r'\btable\b(.*)', query, re.IGNORECASE)
     table_line = table_line_match.group(1).strip() if table_line_match else ""
     
     # Split by commas outside parentheses (only on the table line)
@@ -554,7 +554,8 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_colu
     col_idx_excl = []
     if exclude_columns:
         for col in exclude_columns:
-            col_idx_excl.append([item for item in table_data[0].items() if item[1]==col][0][0])
+            if col:
+                col_idx_excl.append([item for item in table_data[0].items() if item[1]==col][0][0])
 
     # remove columns that the user wishes to hide
     for idx in col_idx_excl:
@@ -572,13 +573,11 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_colu
             if not col_index + 2 in col_idx_excl:
                 table_data[row_index][col_index + 2] = field['expression'].replace('|', '\|')  # Start from column 2 for the fields
 
-            
-            
-
     # Generate the markdown table
     markdown_table = write_Obsidian_table(table_data)
 
-    return markdown_table
+    obsidian_notes = [t[1] for (_,t) in table_data.items() if is_note(t[1])]
+    return markdown_table, obsidian_notes
 
 # print(filtered_files)
 
