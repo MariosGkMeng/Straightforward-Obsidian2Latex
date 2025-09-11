@@ -429,38 +429,38 @@ for i_l, line in enumerate(reversed(content)):
 
 # Replace headers and map sections \==================================================
 Lc = len(content)-1
-sections = []
-for i in range(Lc+1):
-    # ⚠ The sequence of replacements matters: 
-    # ---- replace the lowest-level subsections first
-    content_00 = content[i]
+content, sections = replace_markdown_headers(content)
+# for i in range(Lc+1):
+#     # ⚠ The sequence of replacements matters: 
+#     # ---- replace the lowest-level subsections first
+#     content_00 = content[i]
 
-    content_0 = content[i]
+#     content_0 = content[i]
 
-    content[i] = re.sub(r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
-    content[i] = re.sub(r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
-    content[i] = re.sub(r'####### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
-    content[i] = re.sub(r'###### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
-    content[i] = re.sub(r'##### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
-    content[i] = re.sub(r'#### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
-    if content[i] != content_0:
-        sections.append([i, content_0.replace('#### ', '').replace('\n', '')])
+#     content[i] = re.sub(r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
+#     content[i] = re.sub(r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
+#     content[i] = re.sub(r'####### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
+#     content[i] = re.sub(r'###### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
+#     content[i] = re.sub(r'##### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
+#     content[i] = re.sub(r'#### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
+#     if content[i] != content_0:
+#         sections.append([i, content_0.replace('#### ', '').replace('\n', '')])
 
-    content_0 = content[i]
-    add_star = ''
-    content[i] = re.sub(r'### (.*)', r'\\subsubsection{\1}', content[i].replace('%%', ''))
-    if content[i] != content_0:
-        sections.append([i, content_0.replace('### ', '').replace('\n', '')])
+#     content_0 = content[i]
+#     add_star = ''
+#     content[i] = re.sub(r'### (.*)', r'\\subsubsection{\1}', content[i].replace('%%', ''))
+#     if content[i] != content_0:
+#         sections.append([i, content_0.replace('### ', '').replace('\n', '')])
 
-    content_0 = content[i]
-    content[i] = re.sub(r'## (.*)', r'\\subsection{\1}', content[i].replace('%%', ''))
-    if content[i] != content_0:
-        sections.append([i, content_0.replace('## ', '').replace('\n', '')])
+#     content_0 = content[i]
+#     content[i] = re.sub(r'## (.*)', r'\\subsection{\1}', content[i].replace('%%', ''))
+#     if content[i] != content_0:
+#         sections.append([i, content_0.replace('## ', '').replace('\n', '')])
 
-    content_0 = content[i]
-    content[i] = re.sub(r'# (.*)', r'\\section{\1}', content[i].replace('%%', ''))
-    if content[i] != content_0:
-        sections.append([i, content_0.replace('# ', '').replace('\n', '')])
+#     content_0 = content[i]
+#     content[i] = re.sub(r'# (.*)', r'\\section{\1}', content[i].replace('%%', ''))
+#     if content[i] != content_0:
+#         sections.append([i, content_0.replace('# ', '').replace('\n', '')])
 
 # \==================================================\==================================================
 
@@ -515,6 +515,23 @@ if PARS['⚙']['EMBEDDED REFERENCES']['treat_equation_blocks_separately']:
 content = convert_referencing(content, 'figures', cleveref_allowed = cleveref_allowed)
 content = EQUATIONS__check_and_correct_aligned_equations(content)
 content = convert_referencing(content, 'tables', cleveref_allowed = cleveref_allowed)
+
+# Unfold again, in case there were embedded notes in the tables
+[content, md_notes_embedded] = unfold_all_embedded_notes(content, PARS)
+
+# Repeat some conversions, since we have unfolded new content again
+## here1
+content = bullet_list_converter(content)
+# find reference blocks \==================================================
+#---1. they have to be at the end of the sentence (i.e. before "\n")
+blocks = get_reference_blocks(content)
+# \==================================================
+
+# Find and apply internal links
+internal_links = internal_links__identifier(content)
+content = internal_links__enforcer(content, [sections, blocks], internal_links, PARS['⚙']['INTERNAL_LINKS'])
+#
+
 
 content = convert_any_tags(content)
 
