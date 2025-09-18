@@ -235,9 +235,11 @@ def get_parameters(version = 'default'):
 					
                                     ],
             'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
-											['✔',              '\\checkmark',            1],
-											['🟢',              '$\\\\blacklozenge$',    2],
-											['🔴',              '\\\maltese',            2],
+											['−',              '-',            1],
+                                            ['✔',              '\\twemoji{check mark}',            1],
+											['🟢',              '\\twemoji{green circle}',    1],
+											['🔴',              '\\twemoji{red circle}',            1],
+                                            ['🙁',              '\\twemoji{disappointed face}',            1],
 											['➕',              '\\twemoji{plus}',            1],    # Alternatives: ['$\\\\boxplus$']
 											['🔗',              'LINK',                  1],
 											['\implies',        '\Rightarrow',            1],
@@ -259,6 +261,7 @@ def get_parameters(version = 'default'):
 											['📅',                  '\\twemoji{date}',           1],
                                             ['📍',                '\\twemoji{round pushpin}',           1],
                                             ['📜',                  '\\twemoji{scroll}',          1],
+                                            ['👎',                  '\\twemoji{thumbs down}',          1],
                                             ['🪞',                    'w',                          1],
                                             ['👤',                  '\\twemoji{bust in silhouette}',           1],
                                             ['👥',                  '\\twemoji{busts in silhouette}',           1],
