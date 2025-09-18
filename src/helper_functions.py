@@ -3,6 +3,25 @@ import numpy as np
 import re
 import datetime
 
+
+def remove_emojis(text: str) -> str:
+    emoji_pattern = re.compile(
+        "["
+        "\U0001F600-\U0001F64F"  # emoticons
+        "\U0001F300-\U0001F5FF"  # symbols & pictographs
+        "\U0001F680-\U0001F6FF"  # transport & map symbols
+        "\U0001F1E0-\U0001F1FF"  # flags
+        "\U00002700-\U000027BF"  # dingbats
+        "\U0001F900-\U0001F9FF"  # supplemental symbols and pictographs
+        "\U0001FA70-\U0001FAFF"  # symbols & pictographs extended-A
+        "\U00002600-\U000026FF"  # misc symbols
+        "\U00002B00-\U00002BFF"  # arrows
+        "]+",
+        flags=re.UNICODE
+    )
+    return emoji_pattern.sub("", text)
+
+
 def detect_code_snippet(strings):
     code_detected = False
     language_detected = None
@@ -257,8 +276,6 @@ def write_Obsidian_table(table, return_lines=True, fill_empty_cells_with_dash=Tr
     if return_lines:
         return [l + '\n' for l in lines]
     return '\n'.join(lines)
-
-
 
 
 def get_list_of_separate_string_lines(S):
