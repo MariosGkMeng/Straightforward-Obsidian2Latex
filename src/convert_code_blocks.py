@@ -81,8 +81,9 @@ def code_block_converter(S, PARS):
     if not isinstance(S, list):
         raise Exception('The input needs to be a list!')
     
-    begin_text_0 = '\\begin{minted}'
-    end_text_0 = '\end{minted}'
+    begin_text_0 = '\\begin{minted}[breaklines, breakanywhere, breaksymbolleft={}, breaksymbolright={}]'
+    end_text_0 = '\end{minted}\n'
+    not_generic_minted = False
 
     counter = 0
     S1 = []
@@ -102,6 +103,7 @@ def code_block_converter(S, PARS):
                         language_additive = ''
                         begin_text = ''
                         end_text = ''
+                        not_generic_minted = True
                     elif language=='dataview':
                         None # do nothing, it is handled elsewhere
                     else:
@@ -112,6 +114,7 @@ def code_block_converter(S, PARS):
                             language_additive = '{' + language + '}'
                             begin_text =  begin_text_0
                             end_text = end_text_0
+                            not_generic_minted = True
                         else:
                             language_additive = ''
                             idx_kind_default = 0
@@ -136,6 +139,7 @@ def code_block_converter(S, PARS):
                             title = kind_of_block
 
                             end_text = '\end{'+'tcolorbox'+'}'
+                            not_generic_minted = True
 
                             # Check for observation block
                             if kind_of_block == 'attention':
@@ -168,7 +172,7 @@ def code_block_converter(S, PARS):
 
                 s1 = begin_text+language_additive
             else:
-                s1 = end_text
+                s1 = end_text_0 if not not_generic_minted else end_text
 
             counter += 1
 
