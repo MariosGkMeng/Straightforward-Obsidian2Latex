@@ -158,20 +158,20 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                         idx=idx[0]
 
                         label_latex_format = type_of_link[iS] + section_i.replace(' ', '-')
-                        hyperref_text = Ii_sb_i[-1].replace('|', '')
+                        hyperref_text = remove_emojis(Ii_sb_i[-1].replace('|', ''))
 
                         latex_cmd = '\hypertarget' if type_of_link[iS]!='sec:' else '\label'
                         label_of_source = f'{latex_cmd}{{{label_latex_format}}}'
 
-                        hyperref_text = '{' + hyperref_text + '}' if len(hyperref_text) != 0 else '{' + (f'{Ii_sb_i[0]}>{Ii_sb_i[1]}' if Ii_sb_i[1] else f'{Ii_sb_i[0]}>{Ii_sb_i[2]}') + '}'
+                        hyperref_text = '{' + hyperref_text + '}' if len(hyperref_text) != 0 else '{' + (f'{Ii_sb_i[0]}|{Ii_sb_i[1]}' if Ii_sb_i[1] else f'{Ii_sb_i[0]}>{Ii_sb_i[2]}') + '}'
                             
-                        hyperref_text = escape_underscore(hyperref_text)
+                        hyperref_text = remove_emojis(escape_underscore(hyperref_text))
                         has_already_been_replaced = label_of_source.strip() in S[sections_blocks[iS][idx][0]]
                         if not has_already_been_replaced:
                             # Has not already been replaced
 
                             label__in_line = S[sections_blocks[iS][idx][0]].replace('\n', '')
-                            add__S_repl = ' \label{' + type_of_link[iS] + section_i.replace(' ', '-') + '}'
+                            add__S_repl = ' \label{' + type_of_link[iS] + remove_emojis(section_i).replace(' ', '-') + '}'
 
                             # Perform replacements on the label
                             if is_section_block:
@@ -192,6 +192,7 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                         else:
                             raise NotImplementedError
                         
+                        hyperref = remove_emojis(hyperref)
                         obsidian_hyperref = write_link_in_obsidian_format(Ii_sb_i, type_ref[iS])
                         S[line_number] = S[line_number].replace(obsidian_hyperref, hyperref)
                         
@@ -681,7 +682,7 @@ def get_hierarcy_from_lines(Lines):
         #is_commented_title = re.match(comment_pattern, ln_f)
 
         if has_section: # and not is_commented_title:
-            has_section = has_section[0]
+            has_section = has_section[0].strip()
             section_hierarchy = len(has_section)
             
             # set section hierarchy to zero, if we are in the Appendix
