@@ -163,8 +163,9 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                         latex_cmd = '\hypertarget' if type_of_link[iS]!='sec:' else '\label'
                         label_of_source = f'{latex_cmd}{{{label_latex_format}}}'
 
-                        hyperref_text = '{' + hyperref_text + '}' if len(hyperref_text) != 0 else '{' + 'ADD\\_NAME' + '}'
+                        hyperref_text = '{' + hyperref_text + '}' if len(hyperref_text) != 0 else '{' + (f'{Ii_sb_i[0]}>{Ii_sb_i[1]}' if Ii_sb_i[1] else f'{Ii_sb_i[0]}>{Ii_sb_i[2]}') + '}'
                             
+                        hyperref_text = escape_underscore(hyperref_text)
                         has_already_been_replaced = label_of_source.strip() in S[sections_blocks[iS][idx][0]]
                         if not has_already_been_replaced:
                             # Has not already been replaced
@@ -360,6 +361,8 @@ def non_embedded_references_converter(S, PARS):
             else:
                 text_to_replace = f'[[{note_name+tmp1[2]}]]'
                 replacement_text = tmp1[2][1:]
+                
+            replacement_text = escape_underscore(replacement_text)
 
             if formatting_rules['use']:
                 f = formatting_rules_to_check[0]
@@ -486,22 +489,21 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
     PARS_EMBEDDED_REFS = PARS['⚙']['EMBEDDED REFERENCES']
     all_embedded_refs = embedded_references_recognizer(S, PARS_EMBEDDED_REFS, mode)
 
-
     if PARS_EMBEDDED_REFS['adapt_section_hierarchy']:
         content_filter_1 = lambda x, Lines, lNum: change_section_hierarchy(x, Lines, lNum)
     else:
-        content_filter_1 = lambda x, Lines, lNum: (x)
+        content_filter_1 = lambda x, Lines, lNum: x
 
-    if PARS_EMBEDDED_REFS['write_obsidian_ref_name_on_latex_comment']:    
+    if PARS_EMBEDDED_REFS['write_obsidian_ref_name_on_latex_comment']:
         content_filter_2 = lambda s, x, mref: content_filter_2_name_latex_command(s, x, mref)
     else:
-        content_filter_2 = lambda s, x, mref: (x)
-        
+        content_filter_2 = lambda s, x, mref: x
+
     if PARS_EMBEDDED_REFS['special_cases']['inlink_dataviewjs']['condition']:
         content_filter_3 = lambda x, embedded_ref: treat_dataviewjs_inlink_cases(x, embedded_ref, PARS)
     else:
-        content_filter_3 = lambda x, embedded_ref: (x)
-
+        content_filter_3 = lambda x, embedded_ref: x
+        
     line_numbers_unfolded_notes = [ln[0] for ln in all_embedded_refs]
 
     for embedded_ref_info in all_embedded_refs:
