@@ -505,6 +505,8 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
         'caption_long:: ',
         'subfigure_widths:: ',
         'subfigure_abs_or_rel:: ',
+        'subfigure_captions:: ',
+        'subfigure_number_of_rows:: ',
         'cover_all_columns:: ',
         'caption_sub:: '
         ]
@@ -536,6 +538,7 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
     label = embedded_ref.replace('figure__block_', '')
     image_paths = [get_embedded_reference_path(x, PARS) for x in embedded_images]
     PARS['⚙']['figures']['num_columns'] = PARS['num_columns']
+    
     if len(image_paths) == 0:
         raise Exception("Could not find any images in your figure")
     converted = images_converter(image_paths, PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
@@ -554,19 +557,36 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     # --- ", height=0.5\\textheight" addition causes the aspect ratio to break
 
     # get parameters of the latex figure command
-    latex_figure_field = [0.7, '', '', '', '', False, ''] # the defaults
+    latex_figure_field = [0.7,
+                          '',
+                          '',
+                          '',
+                          '',
+                          '',
+                          1,
+                          False,
+                          ''
+                          ] # the defaults
 
     # change defaults, if user put something
     for iF, f in enum(fields[1]):
         if len(f)>0: 
-            if len(f[0])>0:
-                latex_figure_field[iF] = f[0]
+            if len([ff for ff in f if len(ff)>0])>0:
+                latex_figure_field[iF] = f[0] if len(f)==1 else f
 
-    figure_width, caption_short, caption_long, subfigure_widths, subfigure_abs_or_rel, cover_all_columns, caption_sub = latex_figure_field
+    figure_width, caption_short, caption_long, subfigure_widths, subfigure_abs_or_rel, subfigure_captions, subfigure_number_of_rows, cover_all_columns, caption_sub = latex_figure_field
     caption_long = escape_underscore(caption_long)
     
     TO_PRINT = []
-    subfigure_text_width = 1/len(images)
+    if not subfigure_number_of_rows:
+        subfigure_number_of_rows = 1
+    else:
+        subfigure_number_of_rows = float(subfigure_number_of_rows)
+    
+    subfigure_text_width = 1/len(images)*subfigure_number_of_rows
+    if subfigure_text_width>0.5:
+        subfigure_text_width = 0.5
+
     if cover_all_columns:
         str_figure = 'figure*'
     else:
@@ -582,7 +602,12 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     
     if cnd__include_subfigures:
         if len(caption_sub)==0:
-            caption_sub = ['' for i in range(len(images))]
+            caption_sub = ['' for i in range(len(images))] #here1
+            for i in range(len(subfigure_captions)):
+                caption_sub[i] = escape_underscore(subfigure_captions[i])
+                # print(subfigure_captions[i])
+                # print(escape_underscore(subfigure_captions[i]))
+
     else:
         caption_sub = [caption_long]
         
@@ -593,13 +618,13 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
             try:
                 widths = subfigure_widths.split(',')
                 widths = [float(p.strip()) for p in widths]
-                sumW = np.sum(widths)
+                sumW = np.sum(widths)/subfigure_number_of_rows
                 if subfigure_abs_or_rel!='rel' and subfigure_abs_or_rel!='abs': subfigure_abs_or_rel='rel'
                 if subfigure_abs_or_rel == 'rel' or sumW>1:
                     widths = [p/sumW for p in widths]
             except:
                 widths = [subfigure_text_width for _ in range(len(images))]
-                
+            
             begin_figure = [begin_figure + f'[b]{{{widths[i]}\\textwidth}}' for i in range(len(images))]
 
     for i_img, IM in enumerate(images):
@@ -619,7 +644,7 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
         begin_figure[i_img],
         '	\centering',
         f'	\includegraphics[width={str(figure_width)*cnd__no_subfigures}\linewidth]' + '{"'+path_img+'"}',
-        '	\caption['+caption_short+']'+('{'+caption_long_img+'}')*(len(caption_long)>0),
+        '	\caption['+caption_short+']'+('{'+caption_long_img+'}'),
         '   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
         '   '+fig_label*cnd__no_subfigures,
         end_figure]))
@@ -627,7 +652,7 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
     y = []
     if cnd__include_subfigures:
         if PARAMETERS['put_figure_below_text']:
-            begin_fig_global = f'\\begin{{{str_figure}}}[htb]\n' # '\\begin{figure}[H]\n'
+            begin_fig_global = f'\\begin{{{str_figure}}}[H]\n' # '\\begin{figure}[H]\n'
         else:
             begin_fig_global = f'\\begin{{{str_figure}}}\n'
         y.append(begin_fig_global)
@@ -673,6 +698,9 @@ def convert__tables(S, table_fields, PARS):
         
     caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, datav__file_exclude_columns, datav__make_sections_out_of_notes = table_fields
 
+    place_table_where_it_is_written = PARS['⚙']['TABLES']['place_table_where_it_is_written']
+    
+    ht_or_H = '[H]' if place_table_where_it_is_written else '[ht]'
         
     caption = escape_underscore(caption)
     latex_table_prefix = '#Latex/Table/'
@@ -691,7 +719,7 @@ def convert__tables(S, table_fields, PARS):
         elif latex_table_package_prefix+'tabular' in package:
             package = ID__TABLES__PACKAGE__tabular
         else:
-            raise Exception(f"You need to speficy a table package for table__block_{label}!")
+            package = ID__TABLES__PACKAGE__tabular
         
     # Check if it is a dataview table
     if is_dataview_table(S):
@@ -769,7 +797,7 @@ def convert__tables(S, table_fields, PARS):
     if iS_table_start==-1:
         raise Exception("Did not find any tables!")
     
-    cols = [[x.lstrip().rstrip() for x in cols if len(x)>0 and x!='\n']]
+    cols = [[escape_underscore(x.lstrip().rstrip()) for x in cols if len(x)>0 and x!='\n']]
 
     if format_column_names_with_bold:
         cols = [[f'**{x}**' for x in sublist] for sublist in cols]
@@ -850,7 +878,7 @@ def convert__tables(S, table_fields, PARS):
 
         latex_before_table = lbefore + [
             '%\\begin{center}',
-            '\\begin{table}[ht]',
+            '\\begin{table}'+ht_or_H,
             '\centering',
             f'\caption{{{caption}}}',
             '\label{tab:' + label + '}',
@@ -880,7 +908,7 @@ def convert__tables(S, table_fields, PARS):
 
         latex_before_table = [
             '%\\begin{center}',
-            '\\begin{table}[ht]',
+            '\\begin{table}'+ht_or_H,
             '\centering',
             '\caption{' + caption + '}',
             '\label{tab:' + label + '}',
@@ -943,7 +971,7 @@ def convert__tables(S, table_fields, PARS):
 
         latex_before_table = lbefore + [
             '%\\begin{center}',
-            '\\begin{table}[ht]',
+            '\\begin{table}'+ht_or_H,
             '\centering',
             '\caption{' + caption + '}',
             '\label{tab:' + label + '}',
