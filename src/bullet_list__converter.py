@@ -22,7 +22,8 @@ def bullet_list_converter(S):
 
         match_numbered_list = re.match(r'^(\t*)\d+\.\s(.*)$', line)
         match_checkbox_list = re.match(r'^([\t ]*-\s\[\s\]\s*)(.*)$', line)
-        match_bullet_list = re.match(r'^([\t ]*-\s*)(.*)$', line)
+        match_bullet_list = match_bullet_list = re.match(r'^([\t ]*-\s(?!\d))(.*)$', line)
+
 
         match = False
 
