@@ -6,6 +6,21 @@ from embedded_notes import non_embedded_references_recognizer
 from equations import get_fields_from_Obsidian_note
 from symbol_replacements import *
 
+
+# def convert_inline_code_of_line(text):
+#     # Case 1: Inside \hyperref[...] or \autoref{...} → strip backticks only
+#     text = re.sub(r'(\\hyperref\[[^\]]*?)`([^`]+)`', r'\1\2', text)
+#     text = re.sub(r'(\\autoref\{[^}]*?)`([^`]+)`', r'\1\2', text)
+    
+#     # Case 2: Everywhere else → replace with \texttt{}
+#     text = re.sub(r'`([^`]+)`', r'\\texttt{\1}', text)
+    
+#     return text
+
+# def convert_inline_code(S):
+#     return [convert_inline_code_of_line(s) for s in S]
+
+
 def convert_inline_code_of_line(text):
     # Regular expression to find inline code enclosed in backticks
     pattern = r'`([^`]+)`'
