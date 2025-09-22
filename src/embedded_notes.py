@@ -167,12 +167,12 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                             
                         hyperref_text = remove_emojis(escape_underscore(hyperref_text))
                         has_already_been_replaced = label_of_source.strip() in S[sections_blocks[iS][idx][0]]
-                        if not has_already_been_replaced:
+                        if not has_already_been_replaced:   
                             # Has not already been replaced
 
                             label__in_line = S[sections_blocks[iS][idx][0]].replace('\n', '')
                             add__S_repl = ' \label{' + type_of_link[iS] + remove_emojis(section_i).replace(' ', '-') + '}'
-
+                            add__S_repl = remove_inlink_code_format(add__S_repl)
                             # Perform replacements on the label
                             if is_section_block:
                                 S[sections_blocks[iS][idx][0]] = label__in_line + add__S_repl
@@ -193,6 +193,8 @@ def internal_links__enforcer(S, sections_blocks, internal_links, options):
                             raise NotImplementedError
                         
                         hyperref = remove_emojis(hyperref)
+                        hyperref = remove_inlink_code_format(hyperref)
+                        # print(hyperref)
                         obsidian_hyperref = write_link_in_obsidian_format(Ii_sb_i, type_ref[iS])
                         S[line_number] = S[line_number].replace(obsidian_hyperref, hyperref)
                         
