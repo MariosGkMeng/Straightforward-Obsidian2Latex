@@ -58,7 +58,7 @@ def get_parameters(version = 'default'):
     path_vault          = 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\' 
     #'G:\\My Drive\\MARIOS_LOG\\', 
     # 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\'
-    path_writing        = path_vault + '✍Writing\\'
+        path_writing        = path_vault + '✍Writing\\'
     path_templates        = path_vault + '👨‍💻Automations\\'
     path_table_block_template = path_templates + 'table_block.md'
     path_equation_block_template = path_templates + 'equation_block_single.md'
@@ -131,6 +131,8 @@ def get_parameters(version = 'default'):
                             'alignment':  [ID__TABLES__alignment__center,
                                             ID__TABLES__alignment__middle],
                             'rel-width': 1.2,
+                            'place_table_where_it_is_written': '🟢',
+                            'include_list_of_tables': '🟢',
                     },
             'margin': '0.9in',
             'use_date': '🔴',
@@ -156,7 +158,8 @@ def get_parameters(version = 'default'):
                             {'reduce spacing between figures': '🔴',
                                       'put_figure_below_text': '🟢',
                                                'include_path': '🟢', # not including the path works only if all the figures are in the same folder (appropriate for Overleaf projects)
-                        'use_overleaf_all_in_the_same_folder': '🔴'}, 
+                        'use_overleaf_all_in_the_same_folder': '🔴',
+                                    'include_list_of_figures': '🟢',}, 
                                                         
             'paragraph':{
                         'indent_length_of_first_line': 0,    # 0 if no indent is desired. Recommended 20 for usual indent
@@ -238,7 +241,9 @@ def get_parameters(version = 'default'):
 											['−',              '-',            1],
                                             ['✔',              '\\twemoji{check mark}',            1],
 											['🟢',              '\\twemoji{green circle}',    1],
+                                            ['⚫',              '\\twemoji{black circle}',    1],
 											['🔴',              '\\twemoji{red circle}',            1],
+                                            ['🙄',              '\\twemoji{face with rolling eyes}',            1]        ,
                                             ['🙁',              '\\twemoji{disappointed face}',            1],
 											['➕',              '\\twemoji{plus}',            1],    # Alternatives: ['$\\\\boxplus$']
 											['🔗',              'LINK',                  1],
@@ -252,6 +257,7 @@ def get_parameters(version = 'default'):
 											['📜',              '\\twemoji{page with curl}',                      1],
 											['🔭',              '\\twemoji{telescope}',                     1],
 											['👆',              '\\twemoji{index pointing up}',                      1],
+                                            ['👉',              '\\twemoji{backhand index pointing right}',                      1],
 											['💭',              '\\twemoji{thought balloon}',                      1],
 											['🔧',              '\\twemoji{screwdriver}', 1],
            									['⛏',				 '\\twemoji{pick}',        1],
