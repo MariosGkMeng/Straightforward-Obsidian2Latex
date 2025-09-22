@@ -22,6 +22,11 @@ def remove_emojis(text: str) -> str:
     return emoji_pattern.sub("", text)
 
 
+def remove_inlink_code_format(text: str) -> str:
+    # Remove backticks around inline code in the format `code`
+    return re.sub(r'`([^`]+)`', r'\1', text)
+
+
 def detect_code_snippet(strings):
     code_detected = False
     language_detected = None
@@ -168,7 +173,7 @@ def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, ne
 
 def get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields):
     
-    fields = ['' for _ in look_for_fields]
+    fields = [[] for _ in look_for_fields]
     
     with open(path_embedded_reference, 'r', encoding='utf8') as file:
         lines = file.readlines()
