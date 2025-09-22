@@ -88,6 +88,7 @@ def package_loader():
     out.append('\\usepackage{enumitem,amssymb}')
     out.append('\\newlist{todolist}{itemize}{2}')
     out.append('\setlist[todolist]{label=$\square$}')
+    # out.append('\\usepackage[colorlinks=true, linkcolor=grey, citecolor=red, urlcolor=magenta]{hyperref}')
     
     out.append('\\newtotcounter{citnum} %From the package documentation')
     out.append('\def\oldbibitem{} \let\oldbibitem=\\bibitem')
@@ -187,72 +188,66 @@ def identify__tables(S):
 
 RAISE_EXCEPTION_IN_STYLISTIC_USER_ERRORS = False
 
+
 def simple_stylistic_replacements(S, type=None):
-
-
     '''
-    For simple stylistic replacements. Includes conversions of:
-    - Bold font
-    - Highlighted font
-    - Italic font
-    - Strikeout (under dev.)
-    
+    For simple stylistic replacements. Ignores style characters inside `code` or $math$.
     '''
 
+    # Define replacements for style types
     if type == ID__STYLE__BOLD:
-        style_char = '\*\*'
-        replacement_func = lambda repl, string:  repl.append(['**'+string+'**', '\\textbf{' + string + '}'])
+        style_char = r'\*\*'
+        replacement_func = lambda repl, string: repl.append(['**'+string+'**', '\\textbf{' + string + '}'])
         l = 2
-        is_pair = True
-    
     elif type == ID__STYLE__HIGHLIGHTER:
-        style_char = '\=\='
-        replacement_func = lambda repl, string:  repl.append(['=='+string+'==', '\hl{' + string + '}'])
+        style_char = r'\=\='
+        replacement_func = lambda repl, string: repl.append(['=='+string+'==', '\\hl{' + string + '}'])
         l = 2
-        is_pair = True
-
     elif type == ID__STYLE__ITALIC:
-        style_char = '\*'
-        replacement_func = lambda repl, string:  repl.append(['*'+string+'*', '\\textit{' + string + '}'])
+        style_char = r'\*'
+        replacement_func = lambda repl, string: repl.append(['*'+string+'*', '\\textit{' + string + '}'])
         l = 1
-        is_pair = True
-    
     elif type == ID__STYLE__STRIKEOUT:
-        style_char = '\~\~'
-        replacement_func = lambda repl, string:  repl.append([f'~~{string}~~', f'\\st{{{string}}}'])
+        style_char = r'\~\~'
+        replacement_func = lambda repl, string: repl.append([f'~~{string}~~', f'\\st{{{string}}}'])
         l = 2
-        is_pair = True
-
-
-
-    else:
-        raise NotImplementedError
-
-    if is_pair:
-        l_iter = 2
     else:
         raise NotImplementedError
 
     S1 = []
     for s in S:
-        occurences = [x.start() for x in re.finditer(style_char, s)]
+        # 1. Find all code blocks `...` and math blocks $...$ and replace with temporary placeholders
+        protected = []
+        def protect_match(m):
+            protected.append(m.group(0))
+            return f"__PROTECTED_{len(protected)-1}__"
+
+        s_protected = re.sub(r'`[^`]*`|\$[^$]*\$', protect_match, s)
+
+        # 2. Perform your normal replacements on the protected string
+        occurences = [x.start() for x in re.finditer(style_char, s_protected)]
         L = len(occurences)
 
-        if L % l == 0:
+        if L % l == 0 and L > 0:
             replacements = []
-            for i in range(int(L/l_iter)):
+            for i in range(L // 2):
                 o0 = occurences[2*i]
                 o1 = occurences[2*i+1]
-                replacement_func(replacements, s[o0+l:o1])
-                
+                replacement_func(replacements, s_protected[o0+l:o1])
+
             for R in replacements:
-                s = s.replace(R[0], R[1])
-        else:
+                s_protected = s_protected.replace(R[0], R[1])
+
+        elif L % l != 0:
             if RAISE_EXCEPTION_IN_STYLISTIC_USER_ERRORS:
-                raise Exception("You have added an odd number of the '" + style_char + "' character in the string: '" + s + "'")
-        
-        S1.append(s)
-    
+                raise Exception(f"You have added an odd number of the '{style_char}' character in the string: '{s}'")
+
+        # 3. Restore the protected code/math blocks
+        for i, txt in enumerate(protected):
+            s_protected = s_protected.replace(f"__PROTECTED_{i}__", txt)
+
+        S1.append(s_protected)
+
     return S1
 
  
@@ -388,13 +383,19 @@ PARS['📁']['tex-file'] = PATHS['tex-file']
 with open(PATHS['markdown-file'], 'r', encoding='utf8') as f:
     content = f.readlines()
     
+# Remove "\n" from the end of the lines, since they are being added again later
+content_1 = []
+for i, s in enumerate(content):
+    if s.endswith("\n"):
+        s = s[:-1]
+    content_1.append(s)
+
+content = copy.copy(content_1)
 content = check_for_skipped_content(content, markdown_file, PARS)
     
 tmp1 = '#Latex/Command/Invoke_note'
 
 content_1 = []
-
-
 
 for i, s in enumerate(content):
     if s.startswith(tmp1):
@@ -511,6 +512,10 @@ if PARS['⚙']['EMBEDDED REFERENCES']['treat_equation_blocks_separately']:
 
     # check for references in those equations, and convert to LateX system
     content = EQUATIONS__convert_equation_referencing(content, cleveref_allowed = cleveref_allowed)
+
+# if PARS['⚙']['TABLES']['include_list_of_tables']:
+#     list_of_tables = [c for c in md__equations_embedded_new if c.startswith('table__block')]
+#     print_list_tables
 
 content = convert_referencing(content, 'figures', cleveref_allowed = cleveref_allowed)
 content = EQUATIONS__check_and_correct_aligned_equations(content)
@@ -707,6 +712,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
             ['\let\oldmarginpar\marginpar'] +\
             ['\\renewcommand\marginpar[1]{\oldmarginpar{\\tiny #1}} % Change "small" to your desired font size]'] + ['\n'*2] +\
             ['\\newcommand{\ignore}[1]{}']+\
+            ['\DeclareUnicodeCharacter{FE0F}{}'] +\
             ['% CUSTOM FUNCTIONS'] +\
             custom_latex+\
             ['% ======================================='] +\
@@ -717,7 +723,10 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
             [f"\\author{{{PARS['⚙']['author']}}}"*(len(PARS['⚙']['author'])>0)]+\
             [f'\\title{title}\n\maketitle'*(len(title)>0)]+\
             [text_before_first_section]+\
-            ['\\tableofcontents \n \\newpage'*paragraph['add_table_of_contents']]
+            ['\\tableofcontents \n \\newpage'*paragraph['add_table_of_contents']]+\
+            ['\listoftables \n \\newpage'*PARS['⚙']['TABLES']['include_list_of_tables']] +\
+            ['\listoffigures \n \\newpage'*PARS['⚙']['figures']['include_list_of_figures']] 
+               
 
     # LATEX = symbol_replacement(LATEX, [['_', '\_', 0]])
     LATEX1 = []
@@ -787,13 +796,16 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
         print(f"TEXFILE: {TEXFILE}")
         print(f"PDFFILE: {PDFFILE}")
 
-        pdf_full_path = PDFFILE
-            
+        watching_pdf_from_pdf_reader = False
 
-        if os.path.exists(pdf_full_path + ".old"):
-            os.remove(pdf_full_path + ".old")
-        if os.path.exists(pdf_full_path):
-            os.rename(pdf_full_path, pdf_full_path + ".old")
+        pdf_full_path = PDFFILE
+        if watching_pdf_from_pdf_reader:
+            
+             
+            if os.path.exists(pdf_full_path + ".old"):
+                os.remove(pdf_full_path + ".old")
+            if os.path.exists(pdf_full_path):
+                os.rename(pdf_full_path, pdf_full_path + ".old")
 
         
         # Try running pdflatex up to 2 times
@@ -817,12 +829,14 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
             if os.path.exists(pdf_full_path):
                 print("✅ PDF generated successfully.")
                 break
-        else:
-            print("❌ PDF was not generated after 2 attempts.")
-            exit(1)
+            else:
+                print("❌ PDF was not generated after 2 attempts.")
+                exit(1)
 
         # Open the PDF
-        os.startfile(pdf_full_path)
+        
+        if watching_pdf_from_pdf_reader: 
+            os.startfile(pdf_full_path)
 
 else:
     
