@@ -134,6 +134,7 @@ In this section, I will be writing what actions will cause errors in this versio
 6. Embedding a note that doesn't exist will trigger an error from `path_finder`
 7. Having an equation in the section's name might cause an error
 8. Adding an alias to a cross reference in Obsidian when the note being referenced is either a figure block, equation block, table block, or citation.
+9. In code blocks, if you start the line with "#", the converter confuses it with a section start. This will be corrected soon.
 
 
 
@@ -419,6 +420,7 @@ I am encountering package problems when I try to run the package in a different 
 	- `latex2pydata.sty` missing. Did not have this issue with my conversions. My `minted.sty` file does not require the latex2pydata package. Working on it.
 
 # TODOs
+- [ ] Fix error 9 in "what can cause errors" section.
 - [ ] Add promo video of the tool, showing how it looks like to write a complete manuscript
 - [X] Add a toy-vault with the appropriate paths and folders --> adjust the paths in the code accordingly
 	- [ ] Add comments within the note for the user to learn interactively
