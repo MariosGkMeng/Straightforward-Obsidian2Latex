@@ -243,20 +243,25 @@ def get_parameters(version = 'default'):
 											['🟢',              '\\twemoji{green circle}',    1],
                                             ['⚫',              '\\twemoji{black circle}',    1],
 											['🔴',              '\\twemoji{red circle}',            1],
+                                            ['🟡',              '\\twemoji{yellow circle}',            1],
                                             ['🙄',              '\\twemoji{face with rolling eyes}',            1]        ,
                                             ['🙁',              '\\twemoji{disappointed face}',            1],
 											['➕',              '\\twemoji{plus}',            1],    # Alternatives: ['$\\\\boxplus$']
 											['🔗',              'LINK',                  1],
 											['\implies',        '\Rightarrow',            1],
 											['❓❓',              '?',                     1],
+                                            ['⁉️', '\\twemoji{exclamation question mark}',                     1],
 											['❓',              '',                      1],
 											['❌',              'NO',                    1],
 											['🤔',               '\\twemoji{thinking face}',                     1],
+                                            ['🥱',               '\\twemoji{yawning face}',                     1],
+                                            ['😏',              '\\twemoji{smirking face}',                     1],
 											['⚠',               '\\twemoji{warning}',                    1],
 											['📚',              '\\twemoji{books}',                      1],
 											['📜',              '\\twemoji{page with curl}',                      1],
 											['🔭',              '\\twemoji{telescope}',                     1],
 											['👆',              '\\twemoji{index pointing up}',                      1],
+                                            ['☝️',             '\\twemoji{index pointing up}',                      1],
                                             ['👉',              '\\twemoji{backhand index pointing right}',                      1],
 											['💭',              '\\twemoji{thought balloon}',                      1],
 											['🔧',              '\\twemoji{screwdriver}', 1],
@@ -271,6 +276,7 @@ def get_parameters(version = 'default'):
                                             ['🪞',                    'w',                          1],
                                             ['👤',                  '\\twemoji{bust in silhouette}',           1],
                                             ['👥',                  '\\twemoji{busts in silhouette}',           1],
+                                            ['🗣️',                  '\\twemoji{busts in silhouette}',           1],
                                             ['🏫',                  '\\twemoji{school}',           1],
                                             ['⚕️',                  '\\twemoji{medical symbol}',           1],
 											['⚪',					'\\twemoji{white circle}',		1]
@@ -284,6 +290,7 @@ def get_parameters(version = 'default'):
        
 
     return PARS
+
 
 
 
@@ -351,3 +358,4 @@ def quick_add_table_block_text():
     """  
 
     return text
+
