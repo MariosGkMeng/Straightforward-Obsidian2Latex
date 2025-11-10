@@ -112,10 +112,16 @@ def code_block_converter(S, PARS):
             code_block_has_started = counter%2 == 0
             if code_block_has_started:
                 language = s1.replace(code_block_obsidian, '').lstrip().rstrip()
+                
+                # # Debugging
+                # if 'python' in language:
+                #     print('Debug: Found a python code block')
 
                 if len(language)>0:
                     if language=='latex':
                         language_additive = ''
+                        if 'fillInputTensorWithValue' in S[i+2]:
+                            print('debug')
                         begin_text = ''
                         end_text = ''
                         not_generic_minted = True
@@ -192,7 +198,39 @@ def code_block_converter(S, PARS):
             counter += 1
 
         if language=='latex': s1 = s1.replace('&', '#&')
+        
+        # s1 = protect_programmatic_comments(s1, language)
             
         S1.append(s1)
 
     return S1
+
+def protect_programmatic_comments(s, language):
+    if language == 'python':
+        in_single = False
+        in_double = False
+        escaped = False
+        result = []
+
+        for i, c in enumerate(s):
+            if c == '\\' and not escaped:
+                escaped = True
+                result.append(c)
+                continue
+
+            if c == "'" and not in_double and not escaped:
+                in_single = not in_single
+            elif c == '"' and not in_single and not escaped:
+                in_double = not in_double
+            elif c == '#' and not (in_single or in_double):
+                # Replace the start of comment with protected text
+                result.append('protected_py_comment')
+                continue
+
+            result.append(c)
+            escaped = False
+
+        return ''.join(result)
+    else:
+        return s
+        
