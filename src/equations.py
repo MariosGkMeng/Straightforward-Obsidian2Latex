@@ -43,116 +43,107 @@ def find_label_in_equation(input_string):
     label_match = label_pattern.search(input_string)
     return label_match
 
-
 def EQUATIONS__convert_non_numbered_to_numbered(S0):
-        
     """
     Converts equations from the format "$$equation_here$$\\label{label}" to:
-    "\begin{equation} \\label{label} \n \t equation_here \n \end{equation}"
+    "\\begin{equation} \\label{label} \n \t equation_here \n \\end{equation}"
+    Also processes pseudocode blocks (```pseudo ... ```),
+    while preserving indentation outside of those transformations.
     """
 
     convert_pseudocode_as_well = True
+
     if not convert_pseudocode_as_well:
 
-        S = S0
+        S = S0[:]
 
-        # with the following pattern, the equation label will only be identified if it starts with "eq__block_"
         pattern = re.compile(r'\$\$\s*(.*?)\s*\$\$(?:\s*\\label\{(eq__block_)([^}]+)\})?')
-        
         for i, s in enumerate(S):
             matches = pattern.findall(s)
-            text = s
+            text = s  # do NOT strip here
 
             if matches:
-
-                # put a new line between any text before the equation and the equation
+                # put a new line before $$ if needed
                 i_eq = text.find("$$")
                 if i_eq > 0:
                     text = text[:i_eq] + "\n" + text[i_eq+1:]
-                #
 
                 for match in matches:
-                    
                     equation = match[0].strip()
-                    label_prefix = match[1] if match[1] else ""
                     label_name = match[2] if match[2] else ""
 
-                    # Create the modified equation with the label if present
-                    modified_equation = f'\\begin{{equation}}' + (f' \\label{{eq:{label_name}}}' if label_name else '') + f'\n\t{equation}\n\\end{{equation}}'
+                    modified_equation = (
+                        f'\\begin{{equation}}' +
+                        (f' \\label{{eq:{label_name}}}' if label_name else '') +
+                        f'\n\t{equation}\n\\end{{equation}}'
+                    )
 
-                    # Bad programming patch (due to not being able to fix it with Regex)
-                    # Doing this because the equation will not be corrected when there's any between the equation body and the |"$" symbol
+                    # normalize spacing around $ for safety
                     for k in range(4):
-                        text = text.replace(' '*k+'$', '$').replace('$'+' '*k, '$')
-                    #
+                        text = text.replace(' ' * k + '$', '$').replace('$' + ' ' * k, '$')
 
-                    # Replace the original equation with the modified one
                     text = text.replace(f'${match[0]}$', modified_equation)
-
-                    # Remove the extra label after the end{equation}
                     text = re.sub(r'\$\s*\\label\{eq__block_[^\}]+\}', '', text)
 
-            S[i] = text.strip()
+            S[i] = text  # ← no .strip(), preserves indentation
 
+        # clean up any "$" before equation blocks
+        S = [re.sub(r'\$\s*(\\begin{equation})', r'\1', s) for s in S]
 
-        # Sometimes we still have unwanted "$" symbol before "\\begin{equation}", therefore need to remove it
-        pattern_remove_unwanted_previous_dollar = r'\$\s*(\\begin{equation})'
-        S = [re.sub(pattern_remove_unwanted_previous_dollar, r'\1', s) for s in S]
-        
-        
     else:
-        
-        S = S0
+        S = S0[:]
         new_S = []
         in_pseudo_block = False
         pseudo_block_lines = []
         pseudo_label = ""
+        in_code_block = False  # track ``` code blocks
 
-        # Compile reusable patterns
         eq_pattern = re.compile(r'\$\$\s*(.*?)\s*\$\$(?:\s*\\label\{(eq__block_)([^}]+)\})?')
-        label_pattern = re.compile(r'<!--\s*label\s*:\s*(eq__block_[\w\-]+)\s*-->')
         label_pattern = re.compile(
             r'(?:<!--\s*label\s*:\s*(alg__block_[\w\-]+)\s*-->)|(?:```\\label\{(eq__block__[\w\-]+)\})'
         )
-
-                
         unwanted_dollar_pattern = re.compile(r'\$\s*(\\begin{equation})')
 
         for line in S:
-            # Start of pseudocode block
-            if line.strip().startswith("```pseudo"):
+            stripped = line.strip()
+
+            # toggle fenced code blocks
+            if stripped.startswith("```") and not stripped.startswith("```pseudo") and not in_pseudo_block:
+                in_code_block = not in_code_block
+                new_S.append(line)
+                continue
+
+            if in_code_block:
+                new_S.append(line)
+                continue
+
+            # handle pseudocode
+            if stripped.startswith("```pseudo"):
                 in_pseudo_block = True
                 pseudo_block_lines = []
                 pseudo_label = ""
                 continue
 
-            # End of pseudocode block
-            elif line.strip().startswith("```") and in_pseudo_block:
-                # Pseudocode label line (outside the block)
+            elif stripped.startswith("```") and in_pseudo_block:
                 label_match = label_pattern.search(line)
                 if label_match:
-                    # Check which group matched
                     pseudo_label = label_match.group(1) or label_match.group(2)
-                    pseudo_label = pseudo_label.replace('```', '')
+                    pseudo_label = pseudo_label.replace('```', '') if pseudo_label else ""
 
                 in_pseudo_block = False
-                algorithm_body = '\n'.join(f'\t{l}' for l in pseudo_block_lines)
+                algorithm_body = '\n'.join(f'\t{l.rstrip()}' for l in pseudo_block_lines)
                 label_string = f'\\label{{alg:{pseudo_label}}}' if pseudo_label else ''
-                latex_block = (
-                    f'{label_string}\n'
-                    f'{algorithm_body}\n'
-                )
+                latex_block = f'{label_string}\n{algorithm_body}\n'
                 new_S.append(latex_block)
                 continue
 
-            # Inside pseudocode block
             if in_pseudo_block:
-                pseudo_block_lines.append(line)
+                pseudo_block_lines.append(line.rstrip('\n'))
                 continue
 
-            # Otherwise, process equations in this line
+            # process equations
             matches = eq_pattern.findall(line)
-            text = line
+            text = line  # preserve indentation
 
             if matches:
                 i_eq = text.find("$$")
@@ -161,7 +152,6 @@ def EQUATIONS__convert_non_numbered_to_numbered(S0):
 
                 for match in matches:
                     equation = match[0].strip()
-                    label_prefix = match[1] if match[1] else ""
                     label_name = match[2] if match[2] else ""
 
                     modified_equation = (
@@ -176,19 +166,13 @@ def EQUATIONS__convert_non_numbered_to_numbered(S0):
                     text = text.replace(f'${match[0]}$', modified_equation)
                     text = re.sub(r'\$\s*\\label\{eq__block_[^\}]+\}', '', text)
 
-            new_S.append(text.strip())
+            new_S.append(text)  # ← no strip()
 
-        # Post-process to remove any dangling dollar before equations
+        # cleanup
         new_S = [re.sub(unwanted_dollar_pattern, r'\1', s) for s in new_S]
-
         S = new_S
 
-
-
-
     return S
-
-
 
 def add_new_line_equations(S0):
 
@@ -469,9 +453,19 @@ def replace_fields_in_Obsidian_note(path_embedded_reference, look_for_fields, ne
 
 
 def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PARS):
+
+    fields_note = get_fields_from_Obsidian_note(path_embedded_reference, 
+                    [
+                    'caption:: ',
+                    'package:: ',
+                    'widths:: ',
+                    'use_hlines:: ',
+                    'use_vlines:: ',
+                    'datav__file_column_name:: ',
+                    'datav__exclude_columns:: ',
+                    'datav__make_sections_out_of_notes:: ',
+                    'datav__make_sections_out_of_notes:: '])
     
-    fields_to_fetch = ['caption:: ', 'package:: ', 'widths:: ', 'use_hlines:: ', 'use_vlines:: ', 'datav__file_column_name:: ', 'datav__exclude_columns:: ', 'datav__make_sections_out_of_notes:: ', 'datav__make_sections_out_of_notes:: ']
-    fields_note = get_fields_from_Obsidian_note(path_embedded_reference, fields_to_fetch)
     caption = fields_note[0] if len(fields_note[0])==0 else fields_note[0][0]
     package = fields_note[1] if len(fields_note[1])==0 else fields_note[1][0]
     try:
@@ -485,9 +479,9 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
     datav__make_sections_out_of_notes = fields_note[7]
     label = embedded_ref.replace('table__block_', '')
     
-    table_fields = (caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, datav__file_exclude_columns, datav__make_sections_out_of_notes)
+    table_fields = (caption, package, label, widths, use_hlines, use_vlines,
+                    datav__file_column_name, datav__file_exclude_columns, datav__make_sections_out_of_notes)
 
-    
     embedded_tables_text = convert__tables(content__unfold, table_fields, PARS)
     
     embedded_tables_text_1 = []
@@ -511,6 +505,7 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
         'caption_sub:: '
         ]
     
+
     fields = get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields)
     extensions = ['.png', '.jpg', '.pdf']
 
@@ -639,12 +634,15 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
             path_img = path_img.replace(img_directory+'/', '')
 
         # label_img = IM.split('\\')[-1]
+        
         caption_long_img = caption_sub[i_img]
+        
+        caption_text = '	\caption['+caption_short+']'+('{'+caption_long_img+'}') if caption_short else '	\caption{'+caption_long_img+'}'
         TO_PRINT.append(' \n'.join([
         begin_figure[i_img],
         '	\centering',
         f'	\includegraphics[width={str(figure_width)*cnd__no_subfigures}\linewidth]' + '{"'+path_img+'"}',
-        '	\caption['+caption_short+']'+('{'+caption_long_img+'}'),
+        caption_text,
         '   \captionsetup{skip=-10pt} % Adjust the skip value as needed'*PARAMETERS['reduce spacing between figures'],
         '   '+fig_label*cnd__no_subfigures,
         end_figure]))
@@ -696,27 +694,26 @@ def convert__tables(S, table_fields, PARS):
         txt_textwith = ''
         
         
-    caption, package, label, widths, use_hlines, use_vlines, datav__file_column_name, datav__file_exclude_columns, datav__make_sections_out_of_notes = table_fields
-
-    place_table_where_it_is_written = PARS['⚙']['TABLES']['place_table_where_it_is_written']
+    caption, package, label, widths, use_hlines, use_vlines,\
+        datav__file_column_name, datav__file_exclude_columns, datav__make_sections_out_of_notes = table_fields
     
-    ht_or_H = '[H]' if place_table_where_it_is_written else '[ht]'
+    ht_or_H = '[H]' if PARS['⚙']['TABLES']['place_table_where_it_is_written'] else '[ht]'
         
     caption = escape_underscore(caption)
     latex_table_prefix = '#Latex/Table/'
     latex_table_prefix_row_format_color = latex_table_prefix + 'Format/rowcolor/'
     TABLE_SETTINGS = PARS['⚙']['TABLES']
+    is_table_package = lambda pkg: latex_table_prefix+'package/'+pkg in package
     if not package:
         package = TABLE_SETTINGS['package']
     else:
-        latex_table_package_prefix = latex_table_prefix+'package/'
-        if latex_table_package_prefix+'longtable' in package:
+        if is_table_package(r'longtable'):
             package = ID__TABLES__PACKAGE__long_table
-        elif latex_table_package_prefix+'tabularx' in package:
+        elif is_table_package(r'tabularx'):
             package = ID__TABLES__PACKAGE__tabularx
-        elif latex_table_package_prefix+'longtblr' in package:
+        elif is_table_package(r'longtblr'):
             package = ID__TABLES__PACKAGE__longtblr
-        elif latex_table_package_prefix+'tabular' in package:
+        elif is_table_package(r'tabular'):
             package = ID__TABLES__PACKAGE__tabular
         else:
             package = ID__TABLES__PACKAGE__tabular
@@ -735,9 +732,11 @@ def convert__tables(S, table_fields, PARS):
                                                      datav__file_column_name=datav__file_column_name[0],
                                                      exclude_columns=datav__file_exclude_columns)
         # concatenate the before and after text with the table
-        
-        if datav__make_sections_out_of_notes:
-            table += make_sections_out_of_notes_in_dataview_table(obsidian_notes)
+        try:
+            if datav__make_sections_out_of_notes[0]:
+                table += make_sections_out_of_notes_in_dataview_table(obsidian_notes)
+        except:
+            None
         
         S = S[:i0] + table + S[i1+1:]
         
