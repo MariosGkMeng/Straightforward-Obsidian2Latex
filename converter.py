@@ -16,7 +16,6 @@ import copy
 # Add the src directory to the Python pathf
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
-
 from remove_markdown_comment import *
 from symbol_replacements import *
 from embedded_notes import *
@@ -26,8 +25,6 @@ from helper_functions import *
 from equations import *
 from path_searching import *
 from get_parameters import *
-
-
 
 # Global constants
 ID__TABLES__alignment__center = 0
@@ -47,6 +44,7 @@ ID__STYLE__BOLD             = 0
 ID__STYLE__HIGHLIGHTER      = 1
 ID__STYLE__ITALIC           = 2
 ID__STYLE__STRIKEOUT        = 3
+ID__STYLE__COLORED_TEXT     = 4
 
 ID__DOCUMENT_CLASS__ARTICLE = 'article'
 ID__DOCUMENT_CLASS__EXTARTICLE = 'extarticle'
@@ -191,10 +189,11 @@ RAISE_EXCEPTION_IN_STYLISTIC_USER_ERRORS = False
 
 def simple_stylistic_replacements(S, type=None):
     '''
-    For simple stylistic replacements. Ignores style characters inside `code` or $math$.
+    For simple stylistic replacements. Ignores style characters inside `code`, $math$,
+    and also ignores any lines inside fenced code blocks (``` ... ```).
     '''
-
     # Define replacements for style types
+    type_category = 1
     if type == ID__STYLE__BOLD:
         style_char = r'\*\*'
         replacement_func = lambda repl, string: repl.append(['**'+string+'**', '\\textbf{' + string + '}'])
@@ -211,12 +210,41 @@ def simple_stylistic_replacements(S, type=None):
         style_char = r'\~\~'
         replacement_func = lambda repl, string: repl.append([f'~~{string}~~', f'\\st{{{string}}}'])
         l = 2
+    elif type == ID__STYLE__COLORED_TEXT:
+        f_convert = lambda s: re.sub(
+            r'<span style="color:(.*?)">(.*?)</span>',
+            lambda m: f'\\textcolor{{{m.group(1)}}}{{{m.group(2)}}}',
+            s
+        )
+        type_category = 2
     else:
         raise NotImplementedError
 
     S1 = []
+    in_code_block = False  # Track fenced code block state
+
     for s in S:
-        # 1. Find all code blocks `...` and math blocks $...$ and replace with temporary placeholders
+        if type_category == 2:
+            s = f_convert(s)
+            S1.append(s)
+            continue
+        
+        stripped = s.strip()
+
+        # Toggle when encountering a fenced code block line
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            S1.append(s)  # keep ``` lines as-is
+            continue
+
+        # Skip all processing if we're inside a fenced code block
+        if in_code_block:
+            S1.append(s)
+            continue
+
+        # --- process line outside code blocks ---
+
+        # 1. Protect inline code and math blocks
         protected = []
         def protect_match(m):
             protected.append(m.group(0))
@@ -224,7 +252,7 @@ def simple_stylistic_replacements(S, type=None):
 
         s_protected = re.sub(r'`[^`]*`|\$[^$]*\$', protect_match, s)
 
-        # 2. Perform your normal replacements on the protected string
+        # 2. Perform stylistic replacements
         occurences = [x.start() for x in re.finditer(style_char, s_protected)]
         L = len(occurences)
 
@@ -242,13 +270,14 @@ def simple_stylistic_replacements(S, type=None):
             if RAISE_EXCEPTION_IN_STYLISTIC_USER_ERRORS:
                 raise Exception(f"You have added an odd number of the '{style_char}' character in the string: '{s}'")
 
-        # 3. Restore the protected code/math blocks
+        # 3. Restore protected code/math blocks
         for i, txt in enumerate(protected):
             s_protected = s_protected.replace(f"__PROTECTED_{i}__", txt)
 
         S1.append(s_protected)
 
     return S1
+
 
  
 
@@ -293,56 +322,6 @@ def get_reference_blocks(S):
         
     return blocks
 
-
-def evaluate_obsidian_expression(expr, markdown_file, PARS):
-
-    if expr.startswith("`") and expr.endswith("`"):
-        expr = expr.replace("`", "")
-        parts = expr.split(".")
-        
-        assert parts[0][0] == "=", "Invalid expression format"
-        assert " " not in parts[0], "Invalid expression format"
-        assert " " not in parts[1], "Invalid expression format"   
-             
-        note_name = parts[0][1:]
-        if note_name == 'this':
-            note_name = markdown_file
-        
-        return get_fields_from_Obsidian_note(get_embedded_reference_path(note_name,PARS), [parts[1]+":: "])[0][0]    
-    else:
-        return expr.lower()
-
-def check_for_skipped_content(content, markdown_file, PARS):
-    
-    idxs = [i for i, s in enumerate(content) if s.startswith("#Latex/Command/Use_section")]    
-    assert len(idxs) % 2 ==0, "You have to define the start and end of the section in the command note!"
-
-    idx_skip = []
-    for i in range(int(len(idxs)/2)):
-        start = idxs[2*i]
-        end = idxs[2*i+1]
-        value = content[start].replace("#Latex/Command/Use_section/Start","").strip().replace("(","").replace(")","")
-        
-        idx_skip.append([start, start])
-        idx_skip.append([end, end])
-        
-        if evaluate_obsidian_expression(value, markdown_file, PARS) == "false":
-            idx_skip.append([start, end])
-
-    # Flatten out the skip ranges into a set of indices to skip (including start and end)
-    skip_indices = set()
-    for start, end in idx_skip:
-        skip_indices.update(range(start, end + 1))  # notice the +1 to include 'end'
-
-    # Build content_1 without the skipped entries
-    content_1 = [item for i, item in enumerate(content) if i not in skip_indices]
-
-    content = copy.copy(content_1)
-    
-    return content
-
-import re
-
 def convert_any_tags(S):
     pattern = r'#\S+'
     for i, s in enumerate(S):
@@ -362,8 +341,6 @@ def convert_any_tags(S):
         S[i] = re.sub(pattern, replace_tag, s)
 
     return S
-
-
 
 PATHS = PARS['📁']
 
@@ -407,10 +384,11 @@ for i, s in enumerate(content):
     content_1.append(s)
 
 content = copy.copy(content_1)
-content = remove_markdown_comments(content)
 
-# Convert bullet and numbered lists
-content = bullet_list_converter(content)
+content = perform_repetitive_functions(content, [
+    lambda x: remove_markdown_comments(x), 
+    lambda x: bullet_list_converter(x)
+    ])
 
 [content, md_notes_embedded] = unfold_all_embedded_notes(content, PARS)
 
@@ -431,38 +409,6 @@ for i_l, line in enumerate(reversed(content)):
 # Replace headers and map sections \==================================================
 Lc = len(content)-1
 content, sections = replace_markdown_headers(content)
-# for i in range(Lc+1):
-#     # ⚠ The sequence of replacements matters: 
-#     # ---- replace the lowest-level subsections first
-#     content_00 = content[i]
-
-#     content_0 = content[i]
-
-#     content[i] = re.sub(r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
-#     content[i] = re.sub(r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
-#     content[i] = re.sub(r'####### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
-#     content[i] = re.sub(r'###### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
-#     content[i] = re.sub(r'##### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
-#     content[i] = re.sub(r'#### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\', content[i].replace('%%', ''))
-#     if content[i] != content_0:
-#         sections.append([i, content_0.replace('#### ', '').replace('\n', '')])
-
-#     content_0 = content[i]
-#     add_star = ''
-#     content[i] = re.sub(r'### (.*)', r'\\subsubsection{\1}', content[i].replace('%%', ''))
-#     if content[i] != content_0:
-#         sections.append([i, content_0.replace('### ', '').replace('\n', '')])
-
-#     content_0 = content[i]
-#     content[i] = re.sub(r'## (.*)', r'\\subsection{\1}', content[i].replace('%%', ''))
-#     if content[i] != content_0:
-#         sections.append([i, content_0.replace('## ', '').replace('\n', '')])
-
-#     content_0 = content[i]
-#     content[i] = re.sub(r'# (.*)', r'\\section{\1}', content[i].replace('%%', ''))
-#     if content[i] != content_0:
-#         sections.append([i, content_0.replace('# ', '').replace('\n', '')])
-
 # \==================================================\==================================================
 
 table_new_col_symbol = [['&',               '\&',                     1]]
@@ -525,7 +471,6 @@ content = convert_referencing(content, 'tables', cleveref_allowed = cleveref_all
 [content, md_notes_embedded] = unfold_all_embedded_notes(content, PARS)
 
 # Repeat some conversions, since we have unfolded new content again
-## here1
 content = bullet_list_converter(content)
 # find reference blocks \==================================================
 #---1. they have to be at the end of the sentence (i.e. before "\n")
@@ -643,7 +588,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     LATEX = symbol_replacement(LATEX, PARS['par']['symbols-to-replace'])
     # LATEX = [replace_outside_brackets(s, [s[0] for s in PARS['par']['symbols-to-replace']], [s[1] for s in PARS['par']['symbols-to-replace']]) for s in LATEX]
     
-    styles_replacement = [ID__STYLE__BOLD, ID__STYLE__HIGHLIGHTER, ID__STYLE__ITALIC]#, ID__STYLE__STRIKEOUT]
+    styles_replacement = [ID__STYLE__BOLD, ID__STYLE__HIGHLIGHTER, ID__STYLE__ITALIC, ID__STYLE__COLORED_TEXT]#, ID__STYLE__STRIKEOUT]
     
     for style in styles_replacement:
         LATEX = simple_stylistic_replacements(LATEX, type=style)
