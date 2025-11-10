@@ -389,7 +389,8 @@ def evaluate_expression(expression, fields, file_path):
     try:
         result = eval(expression)
     except Exception as e:
-        result = f"Error evaluating expression: {e}"
+        # result = f"Error evaluating expression: {e}"
+        result = '-'
 
     return result
 
