@@ -542,6 +542,8 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 section_name = section.lstrip('#')
                 try:
                     content__unfold = extract_section_from_file(path_embedded_reference, section_name)
+                    # if 'code_block__OpenLAB_id' in path_embedded_reference:
+                    #     print('debug')
                 except:
                     path_embedded_reference = get_embedded_reference_path(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
                 
@@ -551,6 +553,13 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 if is_in_normal_case:
                     # since we don't expect to have comments in the single block (code optimization)
                     content__unfold = remove_markdown_comments(content__unfold)
+                    
+                    #  ➕Try to program it this way in the future:
+                    # content__unfold = perform_repetitive_functions(content__unfold, [
+                    #     lambda S: remove_markdown_comments(S), 
+                    #     lambda S: bullet_list_converter(S)
+                    #     ])
+                    
                 else:
                     if cnd__mode_is__equation_blocks_only:                  
                         # ➕ there is an unclear method here: 
@@ -679,42 +688,75 @@ def get_hierarcy_from_lines(Lines):
     comment_pattern = r'^\s*#+\s*%%.*%%.*$'  # Pattern to detect commented titles
 
     sections = []
-    for iL, ln_f in enumerate(Lines):
-        has_section = extract_section_from_line(ln_f)
-        #is_commented_title = re.match(comment_pattern, ln_f)
+    in_code_block = False  # Track whether we're inside a code block
 
-        if has_section: # and not is_commented_title:
+    for iL, ln_f in enumerate(Lines):
+        stripped = ln_f.strip()
+
+        # Toggle code block state when encountering a ``` line
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            continue  # skip the ``` line itself entirely
+
+        # Skip any lines inside a code block
+        if in_code_block:
+            continue
+
+        # process only non-code lines
+        has_section = extract_section_from_line(ln_f)
+        # is_commented_title = re.match(comment_pattern, ln_f)
+
+        if has_section:  # and not is_commented_title:
             has_section = has_section[0].strip()
             section_hierarchy = len(has_section)
-            
-            # set section hierarchy to zero, if we are in the Appendix
-            if ln_f.startswith('# Appendix'): section_hierarchy = 0
-            
-            tmp_l = ln_f.replace(has_section, '').replace('\n', '').rstrip().lstrip()
-            section_i = [iL, section_hierarchy, tmp_l]
 
+            # Set section hierarchy to zero if we are in the Appendix
+            if ln_f.startswith('# Appendix'):
+                section_hierarchy = 0
+
+            tmp_l = ln_f.replace(has_section, '').replace('\n', '').strip()
+            section_i = [iL, section_hierarchy, tmp_l]
             sections.append(section_i)
 
     return sections
 
 def change_section_hierarchy(content__unfold, S, line_number):
-
+    """
+    Adjust the section hierarchy of Markdown headings in `content__unfold`,
+    relative to the section at `line_number`, while ignoring any lines inside
+    fenced code blocks (``` ... ```).
+    """
     # get file hierarchy of how lines are right now
     secs = get_hierarcy_from_lines(S)
     try:
-        idx = [i for i, j in enumerate(secs) if j[0]<line_number][-1]
-    except:
+        idx = [i for i, j in enumerate(secs) if j[0] < line_number][-1]
+    except IndexError:
         return content__unfold
 
     level = secs[idx][1]
     content__unfold_modified = []
+    in_code_block = False  # Track whether we are inside a fenced code block
 
     for c in content__unfold:
+        stripped = c.strip()
+
+        # Toggle fenced code block detection
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            content__unfold_modified.append(c)
+            continue  # Skip processing the ``` line itself
+
+        # Skip processing lines inside fenced code blocks
+        if in_code_block:
+            content__unfold_modified.append(c)
+            continue
+
+        # Process headings only outside code blocks
         has_section = extract_section_from_line(c)
         if has_section:
             has_section[0] = has_section[0].strip()
             previous_level = len(has_section[0])
-            c1 = has_section[0] + level*'#' + ' ' + c[previous_level:].lstrip()
+            c1 = has_section[0] + level * '#' + ' ' + c[previous_level:].lstrip()
         else:
             c1 = c
 
