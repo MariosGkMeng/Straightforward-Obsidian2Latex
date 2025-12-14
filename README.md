@@ -27,7 +27,7 @@ Please cite the following if you use it for publishable work (i.e., if you write
 
 
 
-# Straightforward-Obsidian2Latex
+# Straightforward-Obsidian2Latex ("sales pitch")
 
 - Do you want to
 	- write your documents entirely in Obsidian, and then print them to LateX (e.g., for scientific papers and lab reports)?
