@@ -13,6 +13,22 @@ from helper_functions import *
 # from
 
 special_cases = ['eq__block', 'figure__block', 'table__block']
+_LATEX_LEVELS = {
+    "section": 1,
+    "subsection": 2,
+    "subsubsection": 3,
+    "paragraph": 4,
+    "subparagraph": 5,
+}
+
+_MD_HEADING_RE = re.compile(r'^\s*(#{1,6})\s+(.*?)\s*$')
+# Supports: \section{Title}, \section*{Title}, \section[Short]{Long}
+_LATEX_HEADING_RE = re.compile(
+    r'^\s*\\(?P<cmd>part|chapter|section|subsection|subsubsection|paragraph|subparagraph)\*?'
+    r'(?:\[[^\]]*\])?\s*'
+    r'\{(?P<title>[^}]*)\}\s*$'
+)
+
 
 def write_link_in_obsidian_format(s, link_type, is_embedded = False):
 
@@ -582,6 +598,8 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                     content__unfold = content_filter_2(S[line_number], content__unfold, markdown_ref)
                     content__unfold = content_filter_3(content__unfold, embedded_ref)
                     
+                content__unfold = convert_latex_command(content__unfold, command = 'invoke_note')
+                    
                 # S[line_number] = get_unfolded_and_converted_embedded_content(embedded_ref, where_to_search_for_embedded_notes, line_number, is_in_normal_case, cnd__mode_is__equation_blocks_only, content_filter_2, PARS)
 
                 S[line_number] = S[line_number].replace(markdown_ref, ''.join(content__unfold))
@@ -684,41 +702,80 @@ def get_file_hierarchy(obsidian_file):
     with open(obsidian_file, 'r', encoding='utf8') as f: Lines = f.readlines()
     return get_hierarcy_from_lines(Lines), Lines
 
-def get_hierarcy_from_lines(Lines):
-    comment_pattern = r'^\s*#+\s*%%.*%%.*$'  # Pattern to detect commented titles
 
+
+def get_hierarcy_from_lines(Lines):
     sections = []
-    in_code_block = False  # Track whether we're inside a code block
+    in_code_block = False
+    in_appendix = False  # supports LaTeX \appendix too
 
     for iL, ln_f in enumerate(Lines):
         stripped = ln_f.strip()
 
-        # Toggle code block state when encountering a ``` line
+        # Toggle code block state
         if stripped.startswith("```"):
             in_code_block = not in_code_block
-            continue  # skip the ``` line itself entirely
+            continue
 
-        # Skip any lines inside a code block
         if in_code_block:
             continue
 
-        # process only non-code lines
-        has_section = extract_section_from_line(ln_f)
-        # is_commented_title = re.match(comment_pattern, ln_f)
+        # Track LaTeX appendix mode
+        if re.match(r'^\s*\\appendix\b', ln_f):
+            in_appendix = True
+            continue  # \appendix isn't itself a section title line
 
-        if has_section:  # and not is_commented_title:
-            has_section = has_section[0].strip()
-            section_hierarchy = len(has_section)
+        parsed = extract_section_from_line(ln_f)
+        if not parsed:
+            continue
 
-            # Set section hierarchy to zero if we are in the Appendix
-            if ln_f.startswith('# Appendix'):
-                section_hierarchy = 0
+        section_hierarchy, title = parsed
 
-            tmp_l = ln_f.replace(has_section, '').replace('\n', '').strip()
-            section_i = [iL, section_hierarchy, tmp_l]
-            sections.append(section_i)
+        # Your special appendix rule (Markdown + LaTeX appendix mode)
+        if ln_f.lstrip().startswith('# Appendix') or in_appendix:
+            section_hierarchy = 0
+
+        section_i = [iL, section_hierarchy, title]
+        sections.append(section_i)
 
     return sections
+
+# TODO: DELETE THIS OLD FUNCTION AFTER TESTING OF NEW FUNCTION IS SUCCESSFUL
+# def get_hierarcy_from_lines_old(Lines):
+#     comment_pattern = r'^\s*#+\s*%%.*%%.*$'  # Pattern to detect commented titles
+
+#     sections = []
+#     in_code_block = False  # Track whether we're inside a code block
+
+#     for iL, ln_f in enumerate(Lines):
+#         stripped = ln_f.strip()
+
+#         # Toggle code block state when encountering a ``` line
+#         if stripped.startswith("```"):
+#             in_code_block = not in_code_block
+#             continue  # skip the ``` line itself entirely
+
+#         # Skip any lines inside a code block
+#         if in_code_block:
+#             continue
+
+#         # process only non-code lines
+#         has_section = extract_section_from_line(ln_f)
+#         # is_commented_title = re.match(comment_pattern, ln_f)
+
+#         if has_section:  # and not is_commented_title:
+#             has_section = has_section[0].strip()
+#             section_hierarchy = len(has_section)
+
+#             # Set section hierarchy to zero if we are in the Appendix
+#             if ln_f.startswith('# Appendix'):
+#                 section_hierarchy = 0
+
+#             tmp_l = ln_f.replace(has_section, '').replace('\n', '').strip()
+#             section_i = [iL, section_hierarchy, tmp_l]
+#             sections.append(section_i)
+
+#     return sections
 
 def change_section_hierarchy(content__unfold, S, line_number):
     """
@@ -753,16 +810,46 @@ def change_section_hierarchy(content__unfold, S, line_number):
 
         # Process headings only outside code blocks
         has_section = extract_section_from_line(c)
-        if has_section:
-            has_section[0] = has_section[0].strip()
-            previous_level = len(has_section[0])
-            c1 = has_section[0] + level * '#' + ' ' + c[previous_level:].lstrip()
-        else:
-            c1 = c
+        parsed = extract_section_from_line(c)
+        if not parsed:
+            content__unfold_modified.append(c)
+            continue
+
+        section_hierarchy, title = parsed
+        previous_level = section_hierarchy
+        c1 = (previous_level + level) * '#' + ' ' + title
+        
+        # TODO: DELETE THIS SNIPPET AFTER TESTING OF NEW CODE ABOVE IS SUCCESSFUL
+        # if has_section:
+        #     has_section[0] = has_section[0].strip()
+        #     previous_level = len(has_section[0])
+        #     c1 = has_section[0] + level * '#' + ' ' + c[previous_level:].lstrip()
+        # else:
+        #     c1 = c
 
         content__unfold_modified.append(c1)
 
     return content__unfold_modified
 
-def extract_section_from_line(line):
-    return re.findall(r'^#+\s+', line)
+def extract_section_from_line(line: str):
+    """
+    Returns (hierarchy: int, title: str) if line is a heading in either:
+      - Markdown:   ### Title
+      - LaTeX:      \\subsection{Title} or \\subsection*{Title} or \\subsection[Short]{Long}
+    Otherwise returns None.
+    """
+    m = _MD_HEADING_RE.match(line)
+    if m:
+        hashes, title = m.group(1), m.group(2)
+        return (len(hashes), title.strip())
+
+    m = _LATEX_HEADING_RE.match(line)
+    if m:
+        cmd = m.group("cmd")
+        title = m.group("title").strip()
+        return (_LATEX_LEVELS[cmd], title)
+
+    return None
+
+
+
