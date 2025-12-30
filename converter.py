@@ -11,6 +11,7 @@ import cProfile
 import pstats
 import io
 import copy
+from pathlib import Path
 #
 
 # Add the src directory to the Python pathf
@@ -370,20 +371,7 @@ for i, s in enumerate(content):
 content = copy.copy(content_1)
 content = check_for_skipped_content(content, markdown_file, PARS)
     
-tmp1 = '#Latex/Command/Invoke_note'
-
-content_1 = []
-
-for i, s in enumerate(content):
-    if s.startswith(tmp1):
-        # embedded_ref=s.replace(tmp1, '').strip() 
-        # unfolded_content = get_unfolded_and_converted_embedded_content(embedded_ref, 'vault', True, False, PARS)
-        # content = content[:i] + ['% START'+s] + unfolded_content + ['\n'*2] + ['% END'+s] + content[i+1:] + ['\n'*2]
-        s = s.replace(tmp1, '').replace('[[', '![[')
-        # break
-    content_1.append(s)
-
-content = copy.copy(content_1)
+content = convert_latex_command(content, command = 'invoke_note')
 
 content = perform_repetitive_functions(content, [
     lambda x: remove_markdown_comments(x), 
@@ -479,6 +467,8 @@ blocks = get_reference_blocks(content)
 
 # Find and apply internal links
 internal_links = internal_links__identifier(content)
+sections = get_hierarcy_from_lines(content)
+sections = [[s[0], s[2]] for s in sections]
 content = internal_links__enforcer(content, [sections, blocks], internal_links, PARS['⚙']['INTERNAL_LINKS'])
 #
 
@@ -571,6 +561,21 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
 
     # Replace "#" with "" (temporary patch ➕)
     content = [x.replace("#", "\#") for x in content]
+    # content_1 = []
+    # in_code_block = False  # Track fenced code block state
+    # for s in content:
+    #     # Toggle fenced code block detection
+    #     if s.startswith("```"):
+    #         in_code_block = not in_code_block
+    #         content_1.append(s)
+    #         continue  # Skip processing the ``` line itself
+
+    #     # Skip processing lines inside fenced code blocks
+    #     if in_code_block:
+    #         content__unfold_modified.append(c)
+    #         continue
+
+    
 
     LATEX = []
     i0 = IDX__TABLES[0]
@@ -636,8 +641,12 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     LATEX = convert_inline_code(LATEX)
         
     document_class = PARS['⚙']['document_class']
-
-    doc_class_fontsize = f'[{document_class["fontsize"]}]' if len(document_class['fontsize'])>0 else ''
+    
+    if not '\documentclass[' in document_class['class']:
+        doc_class_fontsize = f'[{document_class["fontsize"]}]' if len(document_class['fontsize'])>0 else ''
+        document_class_text = f"\\documentclass{doc_class_fontsize}{{{document_class['class']}}}"
+    else:
+        document_class_text = document_class['class']
 
     is_ifac = document_class['class'] == 'ifacconf'
     
@@ -645,8 +654,15 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
         custom_latex = [line for line in open(PATHS['custom_latex_commands'])]
     except:
         custom_latex = []
+        
+    # list_of_figures =         
+    #     "\\ifnum\\value{table}>0\n"
+    #     "  \\listoftables\n"
+    #     "  \\newpage\n"
+    #     "\\fi"
+    #     if PARS['⚙']['TABLES']['include_list_of_tables'] else ""
     
-    PREAMBLE = [f"\\documentclass{doc_class_fontsize}{{{document_class['class']}}}"] +\
+    PREAMBLE = [document_class_text] +\
             [is_ifac*'\\newcounter{part} % fix the issue in the class'] +\
             [is_ifac*'\counterwithin*{section}{part}'] +\
             ['% Loading packages that were defined in `src\get_parameters.py`'] +\
@@ -745,41 +761,143 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
 
         pdf_full_path = PDFFILE
         if watching_pdf_from_pdf_reader:
-            
-             
             if os.path.exists(pdf_full_path + ".old"):
                 os.remove(pdf_full_path + ".old")
             if os.path.exists(pdf_full_path):
                 os.rename(pdf_full_path, pdf_full_path + ".old")
 
+        # os.remove(pdf_full_path) if os.path.exists(pdf_full_path) else None
+        cmd_pdflatex = ["pdflatex", "-synctex=1", "-interaction=nonstopmode", "-shell-escape", TEXFILE]
+        cmd_latexmk = [
+            "latexmk",
+            "-pdf",
+            "-interaction=nonstopmode",
+            "-synctex=1",
+            "-shell-escape",
+            "-bibtex",          # force bibtex usage when needed
+            "-f",               # keep going even if there are errors (optional, helpful while debugging)
+            TEXFILE,
+        ]
+
         
-        # Try running pdflatex up to 2 times
-        for attempt in range(2):
-            print(f"▶ Running pdflatex (attempt {attempt + 1})...")
-
-            result = subprocess.run(
-                ["pdflatex", "-synctex=1", "-interaction=nonstopmode", "-shell-escape", TEXFILE],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                encoding="utf-8",
-                errors="replace",
-                cwd=BASE_PATH
-            )
-
-            print(result.stdout) 
-
-            # Brief pause to allow file system to register the PDF
-            time.sleep(0.5)
-
-            if os.path.exists(pdf_full_path):
-                print("✅ PDF generated successfully.")
+        
+        COMMAND_MAP = [ # command and number of attempts
+            [cmd_latexmk, 2],
+            [cmd_pdflatex, 2],
+            ] 
+        
+        n_attempts_total = sum([cmd[1] for cmd in COMMAND_MAP])
+        generated_pdf = False
+        has_undefined_references = False
+        z = 0
+        for cmd, max_attempts in COMMAND_MAP:
+            if generated_pdf:
                 break
-            else:
-                print("❌ PDF was not generated after 2 attempts.")
-                exit(1)
+            for attempt in range(max_attempts):
+                print(f"▶ Running pdflatex (attempt {attempt + 1})...")
 
-        # Open the PDF
-        
+                # result = subprocess.run(
+                #     ["pdflatex", "-synctex=1", "-interaction=nonstopmode", "-shell-escape", TEXFILE],
+                #     stdout=subprocess.PIPE,
+                #     stderr=subprocess.PIPE,
+                #     encoding="utf-8",
+                #     errors="replace",
+                #     cwd=BASE_PATH
+                # )
+                
+                # result = subprocess.run(
+                #     [
+                #         "latexmk",
+                #         "-pdf",
+                #         "-shell-escape",
+                #         "-synctex=1",
+                #         "-interaction=nonstopmode",
+                #         TEXFILE,
+                #     ],
+                #     stdout=subprocess.PIPE,
+                #     stderr=subprocess.PIPE,
+                #     encoding="utf-8",
+                #     errors="replace",
+                #     cwd=BASE_PATH,
+                # )
+
+                
+                result = subprocess.run(
+                    cmd,
+                    cwd=str(BASE_PATH),
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,          # same as encoding="utf-8" + universal newlines
+                    errors="replace",
+                )
+
+                print(result.stdout) 
+
+                # Brief pause to allow file system to register the PDF
+                time.sleep(0.5)
+
+                if result.returncode == 0:# and os.path.exists(pdf_full_path):
+                    print("✅ PDF generated successfully.")
+                    generated_pdf = True
+                    
+                    # check for undefined references warnings
+                    
+                    logfile = Path(TEXFILE).with_suffix(".log")
+
+                    log_text = logfile.read_text(encoding="utf-8", errors="replace")
+
+                    problems = []
+
+                    if "There were undefined references" in log_text:
+                        problems.append("Undefined references")
+                        has_undefined_references = True
+
+                    if "Citation `" in log_text and "undefined" in log_text:
+                        problems.append("Undefined citations")
+                        
+                    if not has_undefined_references:
+                        lines_result = result.stdout.split('\n')
+                        if [t for t in lines_result if 'There were undefined citations' in t]:
+                            problems.append("Undefined citations")
+                            has_undefined_references = True
+                    
+                    if has_undefined_references:
+                        print("⚠️ Warning: The document has " + ', '.join(problems) + ". Will run the bibtex subprocess.")
+                        
+                        
+                        result = subprocess.run(
+                            [
+                                "bibtex",
+                                Path(TEXFILE).stem,
+                            ],
+                            cwd=str(BASE_PATH),
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            text=True,          # same as encoding="utf-8" + universal newlines
+                            errors="replace",
+                        )
+                        print(result.stdout) 
+                        
+                        for _ in range(2):
+                            result = subprocess.run(
+                                cmd_pdflatex,
+                                cwd=str(BASE_PATH),
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                text=True,          # same as encoding="utf-8" + universal newlines
+                                errors="replace",
+                            )
+                            print(result.stdout) 
+                                        
+                    break
+
+            # Open the PDF
+            z+=1
+            
+        if z==n_attempts_total-1 and not generated_pdf:    
+            print("❌ PDF was not generated after 2 attempts.")
+            exit(1)
+    
         if watching_pdf_from_pdf_reader: 
             os.startfile(pdf_full_path)
 
