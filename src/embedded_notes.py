@@ -557,6 +557,9 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 
                 section_name = section.lstrip('#')
                 try:
+                    # if 'writing--THESIS--Robustness to uncertainty due to model mismatch' in markdown_ref:
+                    #     print('d')
+
                     content__unfold = extract_section_from_file(path_embedded_reference, section_name)
                     # if 'code_block__OpenLAB_id' in path_embedded_reference:
                     #     print('debug')
@@ -817,7 +820,7 @@ def change_section_hierarchy(content__unfold, S, line_number):
 
         section_hierarchy, title = parsed
         previous_level = section_hierarchy
-        c1 = (previous_level + level) * '#' + ' ' + title
+        c1 = (previous_level + level) * '#' + ' ' + title + '\n'
         
         # TODO: DELETE THIS SNIPPET AFTER TESTING OF NEW CODE ABOVE IS SUCCESSFUL
         # if has_section:
@@ -850,6 +853,3 @@ def extract_section_from_line(line: str):
         return (_LATEX_LEVELS[cmd], title)
 
     return None
-
-
-
