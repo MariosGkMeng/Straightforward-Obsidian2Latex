@@ -90,7 +90,7 @@ def get_expressions_and_aliases(input_str):
     for part in input_str:
         parts = part.split(' as ')
         expressions.append(parts[0].strip())
-        aliases.append(parts[1].strip() if len(parts) > 1 else parts[0].strip())
+        aliases.append((parts[1].strip() if len(parts) > 1 else parts[0].strip()).replace('"', ''))
     return expressions, aliases
 
 def extract_fields_from_query(query: str):
@@ -126,7 +126,7 @@ def extract_fields_from_query(query: str):
     
     return fields
 
-def parse_dataview_query(query: str, PATHS: dict):
+def parse_dataview_query(query: str, PATHS: dict, this_note_path: str):
     result = {}
     vault_folder = PATHS['vault']
     # Step 1: Check if it's a Dataview table query
@@ -137,7 +137,7 @@ def parse_dataview_query(query: str, PATHS: dict):
     # Step 2: Extract fields using the helper function
     result["fields"] = extract_fields_from_query(query)
     
-    # Step 3: Extract folder name (after 'from')
+    # Step 3: Extract folder name or tag (after 'from')
     code_version = 1
     if code_version == 0:
         from_match = re.search(r'(?i)from\s+"([^"]+)"', query)
@@ -154,17 +154,34 @@ def parse_dataview_query(query: str, PATHS: dict):
             # if is_path(parts[0]): result["folder"] = parts[0].replace('"', '')  # Extract the folder name
             rel_path = parts[0].replace('"', '').replace("'", "").replace("/", "\\")
             
-            if os.path.exists(vault_folder+rel_path): 
-                result["folder"] = parts[0].replace('"', '')  # Extract the folder name
+            m = re.match(r'^#\S', rel_path)
+            result["tag"] = None
+            if m is not None:
+                if m[0]:
+                    result["tag"] = rel_path
+                else:
+                    if os.path.exists(vault_folder+rel_path): 
+                        result["folder"] = parts[0].replace('"', '')  # Extract the folder name
+            else:
+                if os.path.exists(vault_folder+rel_path): 
+                    result["folder"] = parts[0].replace('"', '')  # Extract the folder name
+
+            if result["tag"] is None:
+                if len([p for p in parts[0::2] if is_path(p)]) > 1:
+                    raise ValueError("Multiple paths detected in FROM clause. Haven't included this case yet.")
             
-            if len([p for p in parts[0::2] if is_path(p)]) > 1:
-                raise ValueError("Multiple paths detected in FROM clause. Haven't included this case yet.")
-            
-            if len(parts)>0:
-                result["folder"] = [part for part in parts[0::2] if is_path(part)][0]
-                # for part in parts[0::2]:
-            
-            other_from_filters = parts[0::2]
+                if len(parts)>0:
+                    result["folder"] = [part for part in parts[0::2] if is_path(part)][0]
+                    # for part in parts[0::2]:
+                    
+            else:
+                # get the list of notes that contain the tag
+                tagged_notes_file = get_fields_from_Obsidian_note(this_note_path, ["search_results_if_necessary:: "])[0][0]
+                tagged_notes_file = get_embedded_reference_path(tagged_notes_file, PATHS)
+                with open(tagged_notes_file, encoding='utf8') as f:
+                    result['files_with_the_tag'] = f.readlines()
+
+            other_from_filters = parts[2::2]
             result["other__from__filters"] = other_from_filters
     else:
         raise notImplementedError("Code version not implemented")
@@ -175,7 +192,7 @@ def parse_dataview_query(query: str, PATHS: dict):
         result["sort"] = {"field": sort_match.group(1), "order": sort_match.group(2)}
     
     # Step 5: Extract 'contains' filters (after 'where')
-    where_match = re.search(r'where\s+(.+)', query, re.DOTALL)
+    where_match = re.search(r'(?mi)^\s*where\s+([^\n\r]+)', query)
     if where_match:
         where_clause = where_match.group(1)
         
@@ -283,6 +300,9 @@ def filter_files_with_logic(parsed_query, files):
         #     for f_i  in f:
         #         fields_1.append(f_i.replace(":: ", ""))
         # fields = fields_1
+        
+        # if file.split('\\')[-1].startswith('p112'):
+        #     print('debug')
         
         try:
             with open(file, 'r', encoding='utf-8') as f:
@@ -518,16 +538,34 @@ def sort_evaluated_fields(all_evaluated_fields, files, parsed_query):
     return sorted_fields, files
 
 
-def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_column_name='File Name', exclude_columns=[]):
+def write_Obsidian_table_from_dataview_query(query_text, PATHS, this_file_path, datav__file_column_name='File Name', exclude_columns=[]):
     
     query = query_text
     vault_folder = PATHS['vault']
-    parsed_query = parse_dataview_query(query, PATHS)
+    parsed_query = parse_dataview_query(query, PATHS, this_file_path)
+    
+    if parsed_query['tag'] is None:
+        parsed_query['folder'] = parsed_query['folder'].replace('/', '\\').strip('"')
         
-    parsed_query['folder'] = parsed_query['folder'].replace('/', '\\').strip('"')
-    files = get_all_files_in_folder(vault_folder, parsed_query['folder'])
-    files = [f for f in files if f.endswith('.md')]
+        files = get_all_files_in_folder(vault_folder, parsed_query['folder'])
+        files = [f for f in files if f.endswith('.md')]
+    else:
+        files = [PATHS['vault']+x.strip().replace('/','\\') for x in parsed_query['files_with_the_tag']]
 
+    for filter in parsed_query.get('other__from__filters', []):
+        print("⚠️WARNING: ASSUMING THAT THE 'AND' OPERATOR IS USED IN THE 'FROM' CLAUSE FILTERS. PLEASE CHECK IF THIS IS CORRECT.")
+        if is_note(filter):
+            try:
+                filter_path = get_embedded_reference_path(filter, PATHS)
+                res=get_fields_from_Obsidian_note(filter_path, ["links_for_latex_conversion:: "])[0][0].split(',')
+                pattern = re.compile(r'\[(.*?)\]')
+                linked_notes = [f'{pattern.search(t).group(1)}.md' for t in res]
+                tmp1 = [f.split('\\')[-1] for f in files]
+                indices = [i for i, x in enumerate(tmp1) if x in linked_notes]
+                files = [files[i] for i in indices]
+            except:
+                None
+            
     if 'filters' in parsed_query.keys():
         # Filter the files based on the 'contains' filters
         filtered_files = filter_files_with_logic(parsed_query, files)
@@ -556,7 +594,8 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_colu
     if exclude_columns:
         for col in exclude_columns:
             if col:
-                col_idx_excl.append([item for item in table_data[0].items() if item[1]==col][0][0])
+                # TODO: that "col in item[1]" might create issues if two columns have similar names. Make sure that the trailing "'" are removed from col and item[1]
+                col_idx_excl.append([item for item in table_data[0].items() if col in item[1]][0][0])
 
     # remove columns that the user wishes to hide
     for idx in col_idx_excl:
@@ -566,7 +605,13 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_colu
     # Populate the table rows with evaluated field values for each file
     for row_index, (file_path, file_fields) in enumerate(zip(filtered_files, all_evaluated_fields), start=1):
         table_data[row_index] = {}
-        dum1 = file_path.replace(vault_folder + parsed_query['folder'] + "\\", "").split('\\')[-1]
+        
+        # patch, quick fix
+        try:
+            dum1 = file_path.replace(vault_folder + parsed_query['folder'] + "\\", "").split('\\')[-1]
+        except:
+            dum1 = file_path.split('\\')[-1]
+            
         dum1 = f'[[{dum1.replace(".md", "")}]]'
         table_data[row_index][1] = dum1
         
@@ -575,7 +620,16 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, datav__file_colu
                 table_data[row_index][col_index + 2] = field['expression'].replace('|', '\|')  # Start from column 2 for the fields
 
     # Generate the markdown table
-    markdown_table = write_Obsidian_table(table_data)
+    table_data_1 = {}
+    
+    for row_idx, row_data in table_data.items():
+        table_data_1[row_idx] = {}
+        z = 0
+        for col_idx, col_data in row_data.items():
+            z += 1
+            table_data_1[row_idx][z] = col_data
+            
+    markdown_table = write_Obsidian_table(table_data_1)
 
     obsidian_notes = [t[1] for (_,t) in table_data.items() if is_note(t[1])]
     return markdown_table, obsidian_notes
