@@ -79,7 +79,6 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 	- Inluding section hierarchization (i.e., keeping track on what level of section the embedded note was, thus converting any sections inside it to subsections that adhere to the initial hierarchy
 - [X] Equations (although the equations in Obsidian are exactly the same as in Latex)
   - [X] Numbered equations
-- [X] Discard of text that is inside comments
 - [X] Bold font
 - [X] Highlighted font
 - [X] Removal of Obsidian Comments
