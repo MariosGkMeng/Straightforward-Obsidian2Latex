@@ -360,10 +360,12 @@ def non_embedded_references_converter(S, PARS):
     options = PARS['⚙']['EMBEDDED REFERENCES']
     formatting_rules = PARS['⚙']['formatting_rules']['non_embedded_references']    
 
+    # Treat citations first before any other linked note
     if options['treat_citations']:
         # change citations, like: "[[p110]]" to "\cite{p110}"
         for i, s in enum(S):
             S[i] = replace_obsidian_bibliography_link_with_cite(s)
+    # 
 
     formatting_rules_keys = formatting_rules.keys()
     
@@ -853,3 +855,6 @@ def extract_section_from_line(line: str):
         return (_LATEX_LEVELS[cmd], title)
 
     return None
+
+
+
