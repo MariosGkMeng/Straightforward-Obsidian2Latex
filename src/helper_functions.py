@@ -2,6 +2,8 @@ import os
 import numpy as np
 import re
 import datetime
+import copy
+from path_searching import *
 
 
 def remove_emojis(text: str) -> str:
@@ -337,12 +339,16 @@ def is_obsidian_note(s):
         return True
     return False
         
+import re
+
 def replace_markdown_headers(content):
     """
     Replace Markdown headers in content with LaTeX equivalents,
-    and return a list of detected sections as [index, title].
+    and return a list of detected sections as [index, title],
+    ignoring anything inside fenced code blocks (``` ... ```).
     """
     sections = []
+    in_code_block = False  # Track if we're inside a code block
 
     header_map = [
         (r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
@@ -356,20 +362,88 @@ def replace_markdown_headers(content):
     ]
 
     for i, line in enumerate(content):
+        stripped = line.strip()
+
+        # Toggle code block detection
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            continue  # skip ``` lines entirely
+
+        # Skip any content inside code blocks
+        if in_code_block:
+            continue
+
         original_line = line
-        line = line.replace('%%', '')  # Remove '%%' before replacements
+        line = line.replace('%%', '')  # remove '%%' before replacements
 
         for md_pattern, latex_repl in header_map:
-            new_line = re.sub(md_pattern, latex_repl, line)
+            new_line = re.sub(md_pattern, latex_repl, line) + 0*'\n'
+            # if 'Motivating case' in line:
+            #     print('d')
             if new_line != line:
-                # Save the section if header changed
+                # Header detected and replaced
                 header_title = re.sub(md_pattern, r'\1', line).strip()
                 sections.append([i, header_title])
-                line = new_line  # update line for next iteration
+                line = new_line  # update for next possible pattern
 
         content[i] = line
 
     return content, sections
+
+
+# perform_repetitive_functions(lambda: S, [remove_markdown_comments(S), bullet_list_converter(S)])
+def perform_repetitive_functions(S, functions):
+    for func in functions:
+        S = func(S)
+    return S
+
+def evaluate_obsidian_expression(expr, markdown_file, PARS):
+
+    if expr.startswith("`") and expr.endswith("`"):
+        expr = expr.replace("`", "")
+        parts = expr.split(".")
+        
+        assert parts[0][0] == "=", "Invalid expression format"
+        assert " " not in parts[0], "Invalid expression format"
+        assert " " not in parts[1], "Invalid expression format"   
+             
+        note_name = parts[0][1:]
+        if note_name == 'this':
+            note_name = markdown_file
+        
+        return get_fields_from_Obsidian_note(get_embedded_reference_path(note_name,PARS), [parts[1]+":: "])[0][0]    
+    else:
+        return expr.lower()
+
+
+def check_for_skipped_content(content, markdown_file, PARS):
+    
+    idxs = [i for i, s in enumerate(content) if s.startswith("#Latex/Command/Use_section")]    
+    assert len(idxs) % 2 ==0, "You have to define the start and end of the section in the command note!"
+
+    idx_skip = []
+    for i in range(int(len(idxs)/2)):
+        start = idxs[2*i]
+        end = idxs[2*i+1]
+        value = content[start].replace("#Latex/Command/Use_section/Start","").strip().replace("(","").replace(")","")
+        
+        idx_skip.append([start, start])
+        idx_skip.append([end, end])
+        
+        if evaluate_obsidian_expression(value, markdown_file, PARS) == "false":
+            idx_skip.append([start, end])
+
+    # Flatten out the skip ranges into a set of indices to skip (including start and end)
+    skip_indices = set()
+    for start, end in idx_skip:
+        skip_indices.update(range(start, end + 1))  # notice the +1 to include 'end'
+
+    # Build content_1 without the skipped entries
+    content_1 = [item for i, item in enumerate(content) if i not in skip_indices]
+
+    content = copy.copy(content_1)
+    
+    return content
 
 
 # # Example usage:
@@ -377,3 +451,20 @@ def replace_markdown_headers(content):
 # replace_list = ["☺", "😀"]
 # replacement = "X"
 # print(replace_outside_brackets(s, replace_list, replacement))
+def convert_latex_command(S, command = 'invoke_note'):
+    
+    if command == 'invoke_note':
+        S_1 = []
+
+        for i, s in enumerate(S):
+            if s.startswith('#Latex/Command/Invoke_note'):
+                s = s.replace('#Latex/Command/Invoke_note', '').replace('[[', '![[')
+            S_1.append(s)
+
+        return copy.copy(S_1)
+        
+    else:
+        raise NotImplementedError
+    
+
+    
