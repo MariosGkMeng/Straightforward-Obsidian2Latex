@@ -17,6 +17,10 @@ def remove_markdown_comments(S):
     comment_has_started = False
     line_number__of_comment_to_close = 0
 
+    return_string = False
+    if isinstance(S, str):
+        return_string = True
+        S = [S]
 
     for i, s in enum(S):
         to_delete = []
@@ -97,4 +101,7 @@ def remove_markdown_comments(S):
     
         S[i] = s
 
-    return S
+    if not return_string:
+        return S
+    else:
+        return S[0]
