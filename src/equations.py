@@ -482,7 +482,7 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
     table_fields = (caption, package, label, widths, use_hlines, use_vlines,
                     datav__file_column_name, datav__file_exclude_columns, datav__make_sections_out_of_notes)
 
-    embedded_tables_text = convert__tables(content__unfold, table_fields, PARS)
+    embedded_tables_text = convert__tables(content__unfold, table_fields, embedded_ref, PARS)
     
     embedded_tables_text_1 = []
     for line in embedded_tables_text:
@@ -682,7 +682,7 @@ def make_sections_out_of_notes_in_dataview_table(notes):
         
     return lines
 
-def convert__tables(S, table_fields, PARS):
+def convert__tables(S, table_fields, embedded_ref, PARS):
     '''
     Converts tables depending on the user's preferences    
     '''
@@ -728,7 +728,7 @@ def convert__tables(S, table_fields, PARS):
             raise Exception("something is wrong with the syntax of your dataview table block!")
         
         table, obsidian_notes =\
-            write_Obsidian_table_from_dataview_query(''.join(S[i0+1:i1]), PARS['📁'],
+            write_Obsidian_table_from_dataview_query(''.join(S[i0+1:i1]), PARS['📁'], get_embedded_reference_path(embedded_ref, PARS),
                                                      datav__file_column_name=datav__file_column_name[0],
                                                      exclude_columns=datav__file_exclude_columns)
         # concatenate the before and after text with the table
