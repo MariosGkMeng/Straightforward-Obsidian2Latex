@@ -58,7 +58,7 @@ def get_parameters(version = 'default'):
     path_vault          = 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\' 
     #'G:\\My Drive\\MARIOS_LOG\\', 
     # 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\'
-        path_writing        = path_vault + '✍Writing\\'
+    path_writing        = path_vault + '✍Writing\\'
     path_templates        = path_vault + '👨‍💻Automations\\'
     path_table_block_template = path_templates + 'table_block.md'
     path_equation_block_template = path_templates + 'equation_block_single.md'
@@ -117,7 +117,11 @@ def get_parameters(version = 'default'):
         V__document_class = {'class': ID__DOCUMENT_CLASS__CONFERENCE__IFAC, 'fontsize': ''}
         V__author = ''
          
-    # elif version =='[✍⌛writing--THESIS--high-level-structure]]':
+    elif version =='[[✍⌛writing--THESIS--high-level-structure]]':
+    # \documentclass[a4paper, 12pt, openany]{book} %chose the paper size and font size. Openany ensures that all all chapters and similar may begin at any page, not only odd pages. For the introductory pages and appendices we want openany, but for chapter pages in the main content we want chapters to begin only on odd pages (right hand side). The book class ensures that the margins are automatically adjusted such that left hand pages are slightly moved to the left and vice versa at the right, which makes the thesis very readable and good looking when printed in bound book format.
+        V__document_class = {'class': '\documentclass[a4paper, 12pt, openany]{book}', 'fontsize': '12pt'}
+        V__author = 'Marios Gkionis'
+
         
     #     #\documentclass[a4paper, 12pt, openany]{book}
     PARS = conv_dict({
@@ -234,7 +238,8 @@ def get_parameters(version = 'default'):
                                     ['rotating',    None,                                       'for rotating text on tables'],
                                     ['algorithm',   None,                                       ''],
                                     ['algpseudocode',None,                                      ''],
-                                    ['array',       None,                                       '']
+                                    ['array',       None,                                       ''],
+                                    ['mdframed',    None,                                       'for framed boxes'],
 					
                                     ],
             'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
@@ -248,6 +253,7 @@ def get_parameters(version = 'default'):
                                             ['🙁',              '\\twemoji{disappointed face}',            1],
 											['➕',              '\\twemoji{plus}',            1],    # Alternatives: ['$\\\\boxplus$']
 											['🔗',              'LINK',                  1],
+                                            ['😯',              '\\twemoji{face with open mouth}', 1],
 											['\implies',        '\Rightarrow',            1],
 											['❓❓',              '?',                     1],
                                             ['⁉️', '\\twemoji{exclamation question mark}',                     1],
@@ -290,7 +296,6 @@ def get_parameters(version = 'default'):
        
 
     return PARS
-
 
 
 
@@ -358,4 +363,3 @@ def quick_add_table_block_text():
     """  
 
     return text
-
