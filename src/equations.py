@@ -804,7 +804,8 @@ def convert__tables(S, table_fields, embedded_ref, PARS):
     data = []
     for s in S[iS_table_start+2:]:
         c = s.split('|')
-        c = [x.lstrip().rstrip() for x in c if len(x.lstrip().rstrip())>0 and x!='\n']
+        c = [x.lstrip().rstrip() for x in c]
+        c = c[1:-1] # remove first and last empty elements due to leading and trailing '|'
         c = ['\\newline '.join(ci.split('<br>')) for ci in c]
         c = [escape_underscore(ci) for ci in c]
         # check for table commands
