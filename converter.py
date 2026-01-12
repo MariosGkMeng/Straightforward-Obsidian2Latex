@@ -891,8 +891,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
                                         
                     break
 
-            # Open the PDF
-            z+=1
+                z+=1
             
         if z==n_attempts_total-1 and not generated_pdf:    
             print("❌ PDF was not generated after 2 attempts.")
