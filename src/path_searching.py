@@ -16,7 +16,8 @@ def search_embedded_reference_in_vault(u, PARS, search_in = 'vault'):
     '''
     # global has_come_here_at_least_once
     files = []
-    vault_path = PARS['📁'][search_in]
+    PATH_dict = PARS['📁'] if '📁' in PARS.keys() else PARS
+    vault_path = PATH_dict[search_in]
     os.chdir(vault_path)    
     
     if search_embedded_reference_in_vault.calls == 1: 
@@ -44,9 +45,11 @@ def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
     searches in the textfile (PARS['📁']['list_paths_notes']) for the path. 
     If it does not exist, it uses the `search_embedded_reference_in_vault` function to find it in the vault.
     '''
-
-    path_list_of_notes = PARS['📁']['list_paths_notes'] # search in that list first, and if the file doesn't exist, then search the entire vault (which is time-consuming)
     
+    PATH_dict = PARS['📁'] if '📁' in PARS.keys() else PARS
+
+    path_list_of_notes = PATH_dict['list_paths_notes'] # search in that list first, and if the file doesn't exist, then search the entire vault (which is time-consuming)
+
     # Read the text file
     with open(path_list_of_notes, 'r', encoding='utf8') as file:
         lines = file.readlines()
@@ -98,7 +101,7 @@ def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
             else:
                 raise Exception(f"No information found for '{fileName}' in the provided text file and unable to find an alternative path.")
         else:
-            path_found = PARS['📁']['vault'] + fileName
+            path_found = PATH_dict['vault'] + fileName
             update_list_of_embedded_note_paths(fileName, path_found, path_list_of_notes)
             return path_found
         
