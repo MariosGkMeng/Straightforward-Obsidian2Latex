@@ -106,6 +106,9 @@ def get_parameters(version = 'default'):
         
     V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': ''}
     V__author = 'Marios Gkionis'
+    V__bib_package = 'natbib'
+    V__bib_style = 'apacite'
+    V__use_natbib = True
         
     if version =='[[👆👆RL--writing--1]]':
         
@@ -121,13 +124,22 @@ def get_parameters(version = 'default'):
     # \documentclass[a4paper, 12pt, openany]{book} %chose the paper size and font size. Openany ensures that all all chapters and similar may begin at any page, not only odd pages. For the introductory pages and appendices we want openany, but for chapter pages in the main content we want chapters to begin only on odd pages (right hand side). The book class ensures that the margins are automatically adjusted such that left hand pages are slightly moved to the left and vice versa at the right, which makes the thesis very readable and good looking when printed in bound book format.
         V__document_class = {'class': '\documentclass[a4paper, 12pt, openany]{book}', 'fontsize': '12pt'}
         V__author = 'Marios Gkionis'
-
         
-    #     #\documentclass[a4paper, 12pt, openany]{book}
+    elif version == '[[✍⌛writing--THESIS--Paper-3]]':
+        V__document_class = {'class': '\documentclass[preprint,12pt,authoryear]{elsarticle}', 'fontsize': '12pt'}
+        V__author = 'Marios Gkionis'
+        V__bib_style = 'elsarticle-harv'
+        
+    V__use_pkg__apacite = (V__bib_style == 'apacite')
+    
     PARS = conv_dict({
         '⚙': # SETTINGS 
             {'SEARCH_IN_FILE': {'condition':'🔴', 'text_to_seach': 'w_{E_{2}}','replace_with': '\\beta_{2}'},
              'document_class': V__document_class,
+             'bibliography': {
+                            'package': V__bib_package,
+                            'style': V__bib_style,
+             },
             'TABLES':{
                                 'package': ID__TABLES__PACKAGE__tabularx,
                     'hlines-to-all-rows': '🟢',
@@ -211,36 +223,35 @@ def get_parameters(version = 'default'):
                                     'before-lines': ['{colspec}']
                                 },
                 'packages-to-load':[ # preamble packages, #exclude for doc_class  # comment (placed inside the latex file, next to the package loading)      
-                                    ['hyperref',    None,                                    ''],
-                                    ['graphicx',    None,                                    ''],
-                                    ['subcaption',  None,                                    'for subfigures'],
-                                    ['amssymb',     None,                                    'need more symbols'],
-                                    ['titlesec',    ID__DOCUMENT_CLASS__CONFERENCE__IFAC,    "so that we can add more subsections (using 'paragraph')"],
-                                    ['xcolor, soul',None,                                   'for the highlighter'],
-                                    ['amsmath',     None,                                    ''],
-                                    ['amsfonts',    None,                                    ''],
-                                    ['cancel',      None,                                    ''],
-                                    ['minted',      None,                                    ''],
-                                    ['apacite',     None,                                    'apa citation style'],
-                                    ['caption',     None,                                    'to set smaller vertical spacing between two figures'],
-                                    ['cleveref',    None,                                    'for clever references'],
-                                    ['tcolorbox',   None,                                    ''],
-                                    ['float',       None,                                    'to make the figures stay between the text at which they are defined'],
-                                    ['pdfpages',    None,                                     ''],
-                                    ['totcount',    None,                                     ''],
-                                    ['lipsum',      None,                                     ''],
-                                    ['ragged2e',    None,                                     'can wrap text for tables in the tabularx environment'],
-                                    ['natbib',      None,                                     "Such that we avoid the error (`Illegal parameter number in definition of \\reserved@a`) of not being able to add citations in captions"],
-                                    ['pdfcomment',  None,                                     'for popup comments in the .pdf'],
-                                    ['booktabs',    None,                                      'so that the toprule command works'],
-                                    ['soul',        None,                                      'to strikeout text using \\st{}'],
-									['twemojis',	None,										'for twemojis'],			
-                                    ['rotating',    None,                                       'for rotating text on tables'],
-                                    ['algorithm',   None,                                       ''],
-                                    ['algpseudocode',None,                                      ''],
-                                    ['array',       None,                                       ''],
-                                    ['mdframed',    None,                                       'for framed boxes'],
-					
+                                    [True,              'hyperref',    None,                                    ''],
+                                    [True,              'graphicx',    None,                                    ''],
+                                    [True,              'subcaption',  None,                                    'for subfigures'],
+                                    [True,              'amssymb',     None,                                    'need more symbols'],
+                                    [True,              'titlesec',    ID__DOCUMENT_CLASS__CONFERENCE__IFAC,    "so that we can add more subsections (using 'paragraph')"],
+                                    [True,              'xcolor, soul',None,                                   'for the highlighter'],
+                                    [True,              'amsmath',     None,                                    ''],
+                                    [True,              'amsfonts',    None,                                    ''],
+                                    [True,              'cancel',      None,                                    ''],
+                                    [True,              'minted',      None,                                    ''],
+                                    [V__use_pkg__apacite,'apacite',     None,                                    'apa citation style'],
+                                    [True,              'caption',     None,                                    'to set smaller vertical spacing between two figures'],
+                                    [True,              'cleveref',    None,                                    'for clever references'],
+                                    [True,              'tcolorbox',   None,                                    ''],
+                                    [True,              'float',       None,                                    'to make the figures stay between the text at which they are defined'],
+                                    [True,              'pdfpages',    None,                                     ''],
+                                    [True,               'totcount',    None,                                     ''],
+                                    [True,              'lipsum',      None,                                     ''],
+                                    [True,              'ragged2e',    None,                                     'can wrap text for tables in the tabularx environment'],
+                                    [V__use_natbib,     'natbib',      None,                                     "Such that we avoid the error (`Illegal parameter number in definition of \\reserved@a`) of not being able to add citations in captions"],
+                                    [True,              'pdfcomment',  None,                                     'for popup comments in the .pdf'],
+                                    [True,              'booktabs',    None,                                      'so that the toprule command works'],
+                                    [True,              'soul',        None,                                      'to strikeout text using \\st{}'],
+									[True,              'twemojis',	None,										'for twemojis'],			
+                                    [True,              'rotating',    None,                                       'for rotating text on tables'],
+                                    [True,              'algorithm',   None,                                       ''],
+                                    [True,              'algpseudocode',None,                                      ''],
+                                    [True,              'array',       None,                                       ''],
+                                    [True,              'mdframed',    None,                                       'for framed boxes'],
                                     ],
             'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
 											['−',              '-',            1],
@@ -279,7 +290,7 @@ def get_parameters(version = 'default'):
                                             ['📍',                '\\twemoji{round pushpin}',           1],
                                             ['📜',                  '\\twemoji{scroll}',          1],
                                             ['👎',                  '\\twemoji{thumbs down}',          1],
-                                            ['🪞',                    'w',                          1],
+                                            ['🪞',                    '\\twemoji{mirror}',                          1],
                                             ['👤',                  '\\twemoji{bust in silhouette}',           1],
                                             ['👥',                  '\\twemoji{busts in silhouette}',           1],
                                             ['🗣️',                  '\\twemoji{busts in silhouette}',           1],
