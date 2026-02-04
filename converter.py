@@ -76,13 +76,18 @@ def package_loader():
     page_margin         = settings['margin']
 
     out = ['\\usepackage[table]{xcolor}']
-    packages_to_load.append(['tabularx', None, ''])
-    packages_to_load.append(['longtable', None, ''])
-    packages_to_load.append(['tabularray', None, ''])
+    packages_to_load.append([True, 'tabularx', None, ''])
+    packages_to_load.append([True, 'longtable', None, ''])
+    packages_to_load.append([True, 'tabularray', None, ''])
     
     doc_class = PARS['⚙']['document_class']['class']
     
-    out += [f"{(pkg[1]==doc_class)*'%💀'}\\usepackage{{{pkg[0]}}}{(' % ' + pkg[2]) if len(pkg[2]) > 0 else ''}" for pkg in packages_to_load]
+    out += [
+    f"{(pkg[2] == doc_class) * '%💀'}\\usepackage{{{pkg[1]}}}"
+    f"{(' % ' + pkg[3]) if len(pkg[3]) > 0 else ''}"
+    for pkg in packages_to_load
+    if pkg[0]
+    ]
 
     out.append('\\usepackage{enumitem,amssymb}')
     out.append('\\newlist{todolist}{itemize}{2}')
@@ -439,7 +444,7 @@ for i, ln in enum(embeded_refs):
 
 
 md__equations_embedded_new = []
-cleveref_allowed = [p for p in PARS['par']['packages-to-load'] if p[0]=='cleveref'][0][1] != PARS['⚙']['document_class']['class']
+cleveref_allowed = [p for p in PARS['par']['packages-to-load'] if p[1]=='cleveref'][0][1] != PARS['⚙']['document_class']['class']
 if PARS['⚙']['EMBEDDED REFERENCES']['treat_equation_blocks_separately']:
     # this means that all equation blocks were ignored, and we need to unfold them now
     [content, md__equations_embedded_new] = unfold_embedded_notes(content, [], PARS, mode='equation_blocks_only')
@@ -702,8 +707,11 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     for l in LATEX2:
         LATEX_3.append(l.replace("\\\\_", "\\_"))
     
-    LATEX = PREAMBLE + LATEX_3 + [('\\newpage \n '*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5 + '\\bibliographystyle{apacite}']+\
-        ['\\bibliography{' + PATHS['bibtex_file_name'] + '}'] + ['\end{document}']
+
+    last_bib_lines_before_document_end = ['\\bibliographystyle{'+PARS['⚙']['bibliography']['style']+'}'] +\
+            ['\\bibliography{' + PATHS['bibtex_file_name'] + '}'] 
+    LATEX = PREAMBLE + LATEX_3 + [('\\newpage \n '*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5]+\
+        last_bib_lines_before_document_end + ['\end{document}']
 
 
     with open(PATHS['tex-file'], 'w', encoding='utf8') as f:
