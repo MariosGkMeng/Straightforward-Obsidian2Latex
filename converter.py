@@ -383,7 +383,7 @@ content = perform_repetitive_functions(content, [
     lambda x: bullet_list_converter(x)
     ])
 
-[content, md_notes_embedded] = unfold_all_embedded_notes(content, PARS)
+[content, md_notes_embedded, special_notes_all] = unfold_all_embedded_notes(content, PARS)
 
 content = check_for_skipped_content(content, markdown_file, PARS)
 
@@ -447,7 +447,7 @@ md__equations_embedded_new = []
 cleveref_allowed = [p for p in PARS['par']['packages-to-load'] if p[1]=='cleveref'][0][1] != PARS['⚙']['document_class']['class']
 if PARS['⚙']['EMBEDDED REFERENCES']['treat_equation_blocks_separately']:
     # this means that all equation blocks were ignored, and we need to unfold them now
-    [content, md__equations_embedded_new] = unfold_embedded_notes(content, [], PARS, mode='equation_blocks_only')
+    [content, md__equations_embedded_new, _] = unfold_embedded_notes(content, [], [], PARS, mode='equation_blocks_only')
 
     # check for references in those equations, and convert to LateX system
     content = EQUATIONS__convert_equation_referencing(content, cleveref_allowed = cleveref_allowed)
@@ -461,8 +461,10 @@ content = EQUATIONS__check_and_correct_aligned_equations(content)
 content = convert_referencing(content, 'tables', cleveref_allowed = cleveref_allowed)
 
 # Unfold again, in case there were embedded notes in the tables
-[content, md_notes_embedded] = unfold_all_embedded_notes(content, PARS)
-
+[content, md_notes_embedded, special_notes] = unfold_all_embedded_notes(content, PARS)
+for key, values in special_notes.items():
+    special_notes_all[key].extend(values)
+    
 # Repeat some conversions, since we have unfolded new content again
 content = bullet_list_converter(content)
 # find reference blocks \==================================================
@@ -552,7 +554,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
         pr = cProfile.Profile()
         pr.enable()
 
-        content = non_embedded_references_converter(content, PARS) 
+        content = non_embedded_references_converter(content, special_notes_all, PARS) 
         pr.disable()
         s = io.StringIO()
         ps = pstats.Stats(pr, stream=s).sort_stats('cumulative')
@@ -829,7 +831,17 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
                 #     cwd=BASE_PATH,
                 # )
 
-                
+
+                pdf_path = Path(TEXFILE).with_suffix(".pdf")
+
+                # --- snapshot BEFORE ---
+                if pdf_path.exists():
+                    before_mtime = pdf_path.stat().st_mtime
+                    before_size = pdf_path.stat().st_size
+                else:
+                    before_mtime = None
+                    before_size = None
+                    
                 result = subprocess.run(
                     cmd,
                     cwd=str(BASE_PATH),
@@ -839,12 +851,33 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
                     errors="replace",
                 )
 
+
+                # --- snapshot AFTER ---
+                if pdf_path.exists():
+                    after_mtime = pdf_path.stat().st_mtime
+                    after_size = pdf_path.stat().st_size
+                else:
+                    after_mtime = None
+                    after_size = None
+
+                pdf_changed = (
+                    before_mtime != after_mtime
+                    or before_size != after_size
+                )
+
                 print(result.stdout) 
+                
+                pdf_path = Path(TEXFILE).with_suffix(".pdf")
+                pdf_ok = pdf_path.exists() and pdf_path.stat().st_size > 0 and pdf_changed
+
+                clean = (result.returncode == 0)
+                success = pdf_ok            # compiled PDF exists
+                success_clean = pdf_ok and clean
 
                 # Brief pause to allow file system to register the PDF
                 time.sleep(0.5)
 
-                if result.returncode == 0:# and os.path.exists(pdf_full_path):
+                if success:# and os.path.exists(pdf_full_path):
                     print("✅ PDF generated successfully.")
                     generated_pdf = True
                     
