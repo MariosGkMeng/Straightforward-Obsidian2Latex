@@ -94,26 +94,35 @@ def unfold_all_embedded_notes(S, PARS):
     Unfolds the content of all embedded notes (Like when it is written in the form: "![[note#section]] or ![[note^block]]")
     """
     md__files_embedded_prev0 = []
+    special_notes = {
+        'quotes': [],
+        'questions': [],
+    }
     md__files_embedded_prev = md__files_embedded_prev0.copy()
 
-    lambda__unfold_embedded_notes = lambda x, y: unfold_embedded_notes(x, y, PARS, mode='normal')
+    lambda__unfold_embedded_notes = lambda x, y, special_notes:\
+        unfold_embedded_notes(x, y, special_notes, PARS, mode='normal')
 
-    [S, md__files_embedded_new] = lambda__unfold_embedded_notes(S, md__files_embedded_prev)
+    [S, md__files_embedded_new, special_notes] =\
+        lambda__unfold_embedded_notes(S, md__files_embedded_prev, special_notes)
 
-    CND__LIST_OF_EMBEDDED_NOTES_IS_CHANGING = md__files_embedded_prev0 != md__files_embedded_new
+    CND__LIST_OF_EMBEDDED_NOTES_IS_CHANGING =\
+        md__files_embedded_prev0 != md__files_embedded_new
 
     # unfold notes until there is nothing to unfold (loop is needed because there is "depth" in the embedded notes)
     while CND__LIST_OF_EMBEDDED_NOTES_IS_CHANGING:
         md__files_embedded_prev0 = md__files_embedded_new.copy()
         md__files_embedded_prev = md__files_embedded_prev0.copy()
 
-        [S, md__files_embedded_new] = lambda__unfold_embedded_notes(S, md__files_embedded_prev)
+        [S, md__files_embedded_new, special_notes] =\
+            lambda__unfold_embedded_notes(S, md__files_embedded_prev, special_notes)
         # Convert bullet and numbered lists
         # S = bullet_list_converter(S)
 
-        CND__LIST_OF_EMBEDDED_NOTES_IS_CHANGING = md__files_embedded_prev0 != md__files_embedded_new
+        CND__LIST_OF_EMBEDDED_NOTES_IS_CHANGING =\
+            md__files_embedded_prev0 != md__files_embedded_new
 
-    return S, md__files_embedded_new
+    return S, md__files_embedded_new, special_notes
 
 def search_in_embedded_notes(S, PARS):
 
@@ -251,34 +260,6 @@ def embedded_references_recognizer(S, options, mode):
     pattern_embedded_with_section = pattern_embedded_with_section_path
     
 
-    # The following commented if clause was commented because both me and ChatGPT can't find a proper regex expression
-    # Replaced that with a dirty patch starting from `if discard_special_cases:`
-    # if cnd__mode_is__normal: 
-
-    #     if not options['treat_equation_blocks_separately']:
-    #         pattern_embedded_with_section = pattern_embedded_with_section_0
-    #     else:
-
-    #         # Adjusted regex pattern to exclude strings containing "[[eq__block and any other character]]"
-    #         # pattern_embedded_with_section = '!(?!\[\[eq__block).*\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
-
-    #         pattern_embedded_with_section = '!(?!\[\[eq__block)(?!\[\[figure__block).*\[\[([\.' + all_chars + ']+)(\#[' + all_chars + ']+)?(\|[' + all_chars + ']+)?\]\]'
-
-    
-    # elif cnd__mode_is__equation_blocks_only or cnd__mode_is__figure_blocks_only:
-    #     # Combined pattern
-    #     pattern_embedded_with_section = pattern_embedded_with_section_0
-
-    #     # The following pattern doesn't work:
-    #     # pattern_embedded_with_section = r'!\[\[(eq__block[^\[\]\|]+)(#[^\[\]\|]+)?(\|[^\[\]\|]+)?\]\]' 
-    #     # output = [('eq__block_single__23#expr', '', '')]
-    #     # desired_output = [('eq__block_single__23', '#expr', '')]
-    #     # ChatGPT cannot correct it! 
-    #     # Therefore, I am making a patch
-
-    # else:
-    #     raise Exception('Nothing coded for this case!')
-
     MATCHES = []
     for i, s in enum(S):
         match_pattern_embedded = re.findall(pattern_embedded_with_section, s)
@@ -353,8 +334,22 @@ def replace_obsidian_bibliography_link_with_cite(s):
     replaced_string = re.sub(pattern, r'\\cite{p\1}', s)
     return replaced_string
 
+def convert_special_block_referencing(s, block_notes, block_type='quote'):
+    pattern = r'\[\[([^\[\]]+)\]\]'  # Regular expression pattern to match ![[note]]
+    
+    if block_type == 'quote':
+        f_converted_text = lambda m: f'Quote~\\ref{{qt:{obsidian_to_latex_ref(m)}}}'
+    elif block_type == 'question':        
+        f_converted_text = lambda m: f'Question~\\ref{{q:{obsidian_to_latex_ref(m)}}}'
+    
+    match=re.search(pattern, s)
+    if match:
+        for m in re.findall(pattern, s):
+            if f'[[{m}]]' in block_notes:
+                s = s.replace(f'[[{m}]]', f_converted_text(m))
+    return s
 
-def non_embedded_references_converter(S, PARS):
+def non_embedded_references_converter(S, special_notes, PARS):
 
     links = non_embedded_references_recognizer(S)
     options = PARS['⚙']['EMBEDDED REFERENCES']
@@ -366,6 +361,12 @@ def non_embedded_references_converter(S, PARS):
         for i, s in enum(S):
             S[i] = replace_obsidian_bibliography_link_with_cite(s)
     # 
+    
+    # Treat quotes and questions
+    for block_type in ['quotes', 'questions']:
+        for i, s in enum(S):
+            S[i] = convert_special_block_referencing(s, special_notes[block_type], block_type[:-1])
+    #
 
     formatting_rules_keys = formatting_rules.keys()
     
@@ -462,7 +463,36 @@ def treat_dataviewjs_inlink_cases(content__unfold, embedded_ref, PARS):
         # if yes, then we need to change the embedded_ref
         # for now, I am just removing the 'dataviewjs' part
 
-def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
+
+def check_for_special_cases_in_embedded_reference(embedded_ref, path_embedded_reference, special_notes, list_of_citations_in_vault, PARS):
+     
+    
+    conditions = {
+        'is_quote': False,
+        'is_question': False
+    }
+    
+    try:
+        conditions['is_quote'] = get_containing_folder(path_embedded_reference) in PARS['📁']['quotes']
+        if not list_of_citations_in_vault:
+            list_of_citations_in_vault = get_list_of_citation_keys_in_vault(PARS)
+            
+        special_notes['quotes'].append(f'[[{embedded_ref}]]') if conditions['is_quote'] else None
+    except:
+        conditions['is_quote'] = False
+        
+    try:
+        conditions['is_question'] = get_containing_folder(path_embedded_reference) in PARS['📁']['questions']            
+        special_notes['questions'].append(f'[[{embedded_ref}]]') if conditions['is_question'] else None
+    except:
+        conditions['is_question'] = False        
+        
+        
+    return conditions, special_notes, list_of_citations_in_vault
+
+    
+
+def unfold_embedded_notes(S, md__files_embedded, special_notes, PARS, mode='normal'):
     
     '''
     Unfolds the content of embedded notes in the given list of notes.
@@ -473,6 +503,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
 
         1. S (List): the content of the note (including so-far conversions)
         2. md__files_embedded(List): a list that contains all embedded references. It is needed to ensure that we do not reach an infinite loop of unfolding notes
+        3. special_notes(Dict): a list that contains all the embedded notes that are in a special category. It is needed to ensure that we can treat them differently if needed (for example, by putting them in a quote environment in Latex)
 
     '''
 
@@ -519,6 +550,9 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
         content_filter_2 = lambda s, x, mref: content_filter_2_name_latex_command(s, x, mref)
     else:
         content_filter_2 = lambda s, x, mref: x
+        
+    content_filter_if_quote = lambda x, is_quote, embedded_ref_name, quoter_name: make_quote(''.join(x).strip(), embedded_ref_name, quoter = quoter_name) if is_quote else x
+    content_filter_if_question = lambda x, is_question, embedded_ref_name: make_question(''.join(x).strip(), embedded_ref_name) if is_question else x
 
     if PARS_EMBEDDED_REFS['special_cases']['inlink_dataviewjs']['condition']:
         content_filter_3 = lambda x, embedded_ref: treat_dataviewjs_inlink_cases(x, embedded_ref, PARS)
@@ -526,6 +560,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
         content_filter_3 = lambda x, embedded_ref: x
         
     line_numbers_unfolded_notes = [ln[0] for ln in all_embedded_refs]
+    list_of_citations_in_vault = []
 
     for embedded_ref_info in all_embedded_refs:
         line_number = embedded_ref_info[0]
@@ -551,20 +586,23 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 # Unfold this note ONLY when it hasn't already been unfolded
 
                 try:
-                    path_embedded_reference = get_embedded_reference_path(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
+                    path_embedded_reference =\
+                        get_embedded_reference_path(embedded_ref, PARS,\
+                            search_in=where_to_search_for_embedded_notes)
                 except:
                     continue
                 md__files_embedded.append(embedded_ref)
-                if len(path_embedded_reference) == 0: raise Exception(f'File: {embedded_ref} cannot be found in {PARS["📁"][where_to_search_for_embedded_notes]}')
-
+                if len(path_embedded_reference) == 0:\
+                    raise Exception(f'File: {embedded_ref} cannot be found in {PARS["📁"][where_to_search_for_embedded_notes]}')
+                
+                conditions_special_notes, special_notes, list_of_citations_in_vault =\
+                    check_for_special_cases_in_embedded_reference(embedded_ref,\
+                        path_embedded_reference, special_notes,\
+                        list_of_citations_in_vault, PARS)
+                
                 section_name = section.lstrip('#')
                 try:
-                    # if 'writing--THESIS--Robustness to uncertainty due to model mismatch' in markdown_ref:
-                    #     print('d')
-
                     content__unfold = extract_section_from_file(path_embedded_reference, section_name)
-                    # if 'code_block__OpenLAB_id' in path_embedded_reference:
-                    #     print('debug')
                 except:
                     path_embedded_reference = get_embedded_reference_path(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
                 
@@ -574,12 +612,6 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                 if is_in_normal_case:
                     # since we don't expect to have comments in the single block (code optimization)
                     content__unfold = remove_markdown_comments(content__unfold)
-                    
-                    #  ➕Try to program it this way in the future:
-                    # content__unfold = perform_repetitive_functions(content__unfold, [
-                    #     lambda S: remove_markdown_comments(S), 
-                    #     lambda S: bullet_list_converter(S)
-                    #     ])
                     
                 else:
                     if cnd__mode_is__equation_blocks_only:                  
@@ -600,6 +632,8 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
                         raise NotImplementedError
                 
                 if len(content__unfold) > 0: 
+                    content__unfold = content_filter_if_quote(content__unfold, conditions_special_notes['is_quote'], markdown_ref, replace_obsidian_bibliography_link_with_cite(get_ref_from_note(markdown_ref)))
+                    content__unfold = content_filter_if_question(content__unfold, conditions_special_notes['is_question'], embedded_ref)
                     content__unfold = content_filter_2(S[line_number], content__unfold, markdown_ref)
                     content__unfold = content_filter_3(content__unfold, embedded_ref)
                     
@@ -625,7 +659,7 @@ def unfold_embedded_notes(S, md__files_embedded, PARS, mode='normal'):
             for s in S1: S2+=s
 
             S = S2
-    return S, md__files_embedded
+    return S, md__files_embedded, special_notes
 
 def get_unfolded_and_converted_embedded_content(embedded_ref, where_to_search_for_embedded_notes, is_in_normal_case, cnd__mode_is__equation_blocks_only, PARS):
     
