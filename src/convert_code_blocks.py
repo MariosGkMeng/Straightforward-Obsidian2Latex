@@ -126,7 +126,9 @@ def code_block_converter(S, PARS):
                         end_text = ''
                         not_generic_minted = True
                     elif language=='dataview':
-                        None # do nothing, it is handled elsewhere
+                        n_first_lines_print = 4
+                        S_print_first_few_lines = '\n'+'\n'.join(S[i:i+n_first_lines_print])+'\n'
+                        raise Exception(f'Found a dataview block outside a table environment! Here are the first {n_first_lines_print} lines: {S_print_first_few_lines}')
                     else:
                         
                         IS_ADMONITION_BLOCK = language.startswith('ad-')
