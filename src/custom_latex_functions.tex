@@ -3,13 +3,20 @@
 
 % Command to insert vertical lines and new pages
 \newcommand{\DrawVerticalLines}[1]{%
-	\ifnum#1>0
-	\begin{tikzpicture}[remember picture, overlay]
-		\draw[thick] (1cm, 0cm) -- (1cm, -\textheight); % Vertical line
-	\end{tikzpicture}
-	\newpage
-	\DrawVerticalLines{\numexpr#1-1\relax} % Recursive call
-	\fi
+    \par\bigskip
+    \textbf{Inserting #1 empty pages}\par\medskip  % <-- added line
+
+    \DrawVerticalLinesAux{#1}%
+}
+
+\newcommand{\DrawVerticalLinesAux}[1]{%
+    \ifnum#1>0
+        \begin{tikzpicture}[remember picture, overlay]
+            \draw[thick] (1cm, 0cm) -- (1cm, -\textheight); % Vertical line
+        \end{tikzpicture}
+        \newpage
+        \DrawVerticalLinesAux{\numexpr#1-1\relax}%
+    \fi
 }
 
 % Define a new counter for observations
@@ -20,3 +27,53 @@
 	\refstepcounter{observation} % Increase counter and make it referenceable
 	\par\noindent\textbf{Observation \theobservation.} % Bold heading with number
 }{\par}
+
+
+\newenvironment{coloredGreen}{%
+  \begin{mdframed}[backgroundcolor=green,linewidth=0pt]%
+}{%
+  \end{mdframed}%
+}
+
+
+\usepackage{framed}
+
+%\newenvironment{myquote}
+%{\begin{leftbar}\itshape}
+%	{\end{leftbar}}
+	
+	
+\usepackage{framed} % provides leftbar
+
+\newcommand{\quoteauthor}{}
+
+\newcounter{quotectr}
+
+\newenvironment{myquote}[1]
+{%
+	\refstepcounter{quotectr}%
+	\renewcommand{\quoteauthor}{#1}%
+	\begin{leftbar}\itshape
+		\textbf{Quote~\thequotectr.}\quad
+	}
+	{%
+		\par\hfill--- \quoteauthor
+	\end{leftbar}
+}
+
+\newcounter{questionctr}
+
+\newenvironment{question}
+{%
+	\refstepcounter{questionctr}%
+	\begin{quote}\bfseries
+		\textbf{Question~\thequestionctr.}\quad
+	}
+	{%
+	\end{quote}	
+}
+
+
+\newcommand{\folderlink}[1]{%
+	\href{#1}{\twemoji{open file folder}}%
+}
