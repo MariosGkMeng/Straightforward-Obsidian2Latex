@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import re
+import unicodedata
 import datetime
 import copy
 from path_searching import *
@@ -465,6 +466,77 @@ def convert_latex_command(S, command = 'invoke_note'):
         
     else:
         raise NotImplementedError
-    
 
+def get_containing_folder(note_path: str):
+    return '\\'.join(note_path.split('\\')[:-1])+'\\'
+
+def get_obsidian_note_name_from_path(note_path: str):
+    return '[['+note_path.split('\\')[-1].replace('.md', '')+']]'
+
+def make_quote(text: str, embeded_ref_name: str, quoter = '') -> str:
+
+    ref_name = obsidian_to_latex_ref(embeded_ref_name)
+    converted_str = f"\\begin{{myquote}}{{{quoter}}}\\label{{qt:{ref_name}}}\n{text}\n\\end{{myquote}}"
+    converted_str = converted_str.split('\n')
+    converted_str = [line + '\n' for line in converted_str]
+    return converted_str
+        
+
+def make_question(text: str, embeded_ref_name: str) -> str:
+
+    ref_name = obsidian_to_latex_ref(embeded_ref_name)
+    converted_str = f"\\begin{{question}}\\label{{q:{ref_name}}}\n{text}\n\\end{{question}}"
+    converted_str = converted_str.split('\n')
+    converted_str = [line + '\n' for line in converted_str]
+    return converted_str
+
+def obsidian_to_latex_ref(obsidian_note_ref: str) -> str:
+    """
+    Convert an Obsidian embed reference into a LaTeX-safe label.
+    """
+    # Remove surrounding quotes
+    s = obsidian_note_ref.strip().strip("'\"")
+
+    # Extract content inside [[...]]
+    match = re.search(r"\[\[(.*?)\]\]", s)
+    if match:
+        s = match.group(1)
+
+    # Normalize unicode (é → e, etc.)
+    s = unicodedata.normalize("NFKD", s)
+    s = s.encode("ascii", "ignore").decode("ascii")
+
+    # Replace whitespace with hyphens
+    s = re.sub(r"\s+", "-", s)
+
+    # Remove invalid LaTeX label characters
+    # (keep letters, numbers, hyphens, colons)
+    s = re.sub(r"[^a-zA-Z0-9\-:]", "", s)
+
+    # Collapse multiple hyphens
+    s = re.sub(r"-{2,}", "-", s)
+
+    # Lowercase for consistency
+    return s.lower()
+
+def get_list_of_citation_keys_in_vault(PARS):
+    citation_keys = set()
+    folder = PARS['📁']['bibliography']
+    pattern = r'\[\[p(\d+)\]\]'
+    all_files = get_all_files_in_folder(PARS['📁']['vault'], folder)
+    for file_path in all_files:
+        if file_path.lower().endswith('.md'):
+            note_name = get_obsidian_note_name_from_path(file_path)
+            match = re.search(pattern, note_name)
+            if match:
+                citation_keys.add('p'+match.group(1))
     
+    return list(citation_keys)
+
+def get_ref_from_note(markdown_ref):
+    note_id = re.search(
+        r"!\[\[(.*?)(?:--.*)?\]\]",
+        markdown_ref
+    ).group(1)
+    
+    return '[[' + note_id + ']]'
