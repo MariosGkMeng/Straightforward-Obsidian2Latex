@@ -107,7 +107,7 @@ def get_parameters(version = 'default'):
     V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': ''}
     V__author = 'Marios Gkionis'
     V__bib_package = 'natbib'
-    V__bib_style = 'apacite'
+    V__bib_style = 'apacite_modified'
     V__use_natbib = True
         
     if version =='[[👆👆RL--writing--1]]':
@@ -130,7 +130,7 @@ def get_parameters(version = 'default'):
         V__author = 'Marios Gkionis'
         V__bib_style = 'elsarticle-harv'
         
-    V__use_pkg__apacite = (V__bib_style == 'apacite')
+    V__use_pkg__apacite = 'apacite' in V__bib_style
     
     PARS = conv_dict({
         '⚙': # SETTINGS 
@@ -214,6 +214,9 @@ def get_parameters(version = 'default'):
                      'bash_script': path_vault + '✍Writing\\compile_and_open.sh',
                 'bibtex_file_name': 'BIBTEX',           # your bibtex file name 
             'custom_latex_commands': path_vault + '✍Writing\\custom_latex_functions.tex',
+            'quotes': [path_vault + 'Literature\\Notes\\quotes from papers\\'],
+            'questions': [path_vault + '🏗small parts\\❓research_questions\\'],
+            'bibliography': path_vault + 'Literature\\publication_note_objects\\',
                 },
         'par':
             {
