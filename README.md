@@ -137,6 +137,7 @@ In this section, I will be writing what actions will cause errors in this versio
 8. Adding an alias to a cross reference in Obsidian when the note being referenced is either a figure block, equation block, table block, or citation.
 9. In code blocks, if you start the line with "#", the converter confuses it with a section start. This will be corrected soon.
 10. In dataview table conversion make sure that you don't use any commas for any column names, as in this case the comma character separates between the columns
+11. Embedding more than one equations, figures, and tables in the same line will not render them correctly
 
 
 
