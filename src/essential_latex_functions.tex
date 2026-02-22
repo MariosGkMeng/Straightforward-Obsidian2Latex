@@ -1,0 +1,55 @@
+\usepackage{xparse}
+
+% --- Encoding ---
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+
+% --- Hyperref ---
+\usepackage{hyperref}
+
+% --- Symbol icons (pdfLaTeX safe) ---
+\usepackage{pifont} % provides \ding
+
+% --- xparse for clean environments ---
+\usepackage{xparse}
+
+\makeatletter
+
+% ------------------------------------------------
+% Path to your BAT trigger (define once)
+% ------------------------------------------------
+\newcommand{\BATTRIGGER}{C:/Users/mariosg/OneDrive - NTNU/FILES/workTips/Literature/Straightforward-Obsidian2Latex/batTrigger.bat}
+
+% ------------------------------------------------
+% Low-level Windows Launch command
+% ------------------------------------------------
+\NewDocumentCommand{\launchbuttonwin}{m m m}{%
+	\leavevmode
+	\pdfstartlink attr{/Border[0 0 0]} user{%
+		/Subtype/Link
+		/A << /S /Launch
+		/Win << /F (\pdfescapestring{#1})
+		/P (\pdfescapestring{#2})
+		>>
+		>>
+	}%
+	#3%
+	\pdfendlink
+}
+
+% ------------------------------------------------
+% Environment: shows a small clickable icon
+% Text below flows normally and can span pages
+% ------------------------------------------------
+\NewDocumentEnvironment{launchblock}{m}
+{%
+	\par\noindent
+	% Clickable pencil-like icon
+	\launchbuttonwin{\BATTRIGGER}{#1}{\ding{46}}%
+	\hspace{0.5em}
+}
+{%
+	\par\medskip
+}
+
+\makeatother
