@@ -378,6 +378,10 @@ content = check_for_skipped_content(content, markdown_file, PARS)
     
 content = convert_latex_command(content, command = 'invoke_note')
 
+if PARS['⚙']['EMBEDDED REFERENCES']['convert_equations_outside_of_equation_blocks']:
+    content = EQUATIONS__convert_non_numbered_to_numbered(content)
+
+
 content = perform_repetitive_functions(content, [
     lambda x: remove_markdown_comments(x), 
     lambda x: bullet_list_converter(x)
@@ -540,7 +544,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     #         LATEX_TABLES.append(convert__tables(content[idx_table[0]:idx_table[1]]))
         
     
-
+    content = convert_inline_latex_commands(content)
     content = convert_inline_field_placement_command(content, PARS)
         
     cnd_choice_cmd_found = True
@@ -662,6 +666,14 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     except:
         custom_latex = []
         
+    try:
+        essential_latex = [line for line in open(PATHS['essential_latex_commands'])]
+    except:
+        essential_latex = []
+        
+        
+
+        
     # list_of_figures =         
     #     "\\ifnum\\value{table}>0\n"
     #     "  \\listoftables\n"
@@ -682,6 +694,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
             ['\\newcommand{\ignore}[1]{}']+\
             ['\DeclareUnicodeCharacter{FE0F}{}'] +\
             ['% CUSTOM FUNCTIONS'] +\
+            essential_latex+\
             custom_latex+\
             ['% ======================================='] +\
             ['\n'*3] + ['\\begin{document}']+\
