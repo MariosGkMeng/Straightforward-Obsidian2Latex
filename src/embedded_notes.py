@@ -316,7 +316,8 @@ def non_embedded_references_recognizer(S):
     for i, s in enum(S):
         match_pattern_embedded = re.findall(pattern_embedded_with_section, s)
         if len(match_pattern_embedded) != 0:
-            MATCHES.append([i, match_pattern_embedded])
+            for match in match_pattern_embedded:
+                MATCHES.append([i, match])
             # path-finder
 
     return MATCHES
@@ -374,26 +375,28 @@ def non_embedded_references_converter(S, special_notes, PARS):
 
     for link in links:
         line = link[0]  
-        for link1 in link[1]:
-            tmp1 = link1
-            note_name = tmp1[0]
-            if len(tmp1[2]) == 0:
-                text_to_replace = f'[[{note_name}]]'
-                replacement_text = note_name
-            else:
-                text_to_replace = f'[[{note_name+tmp1[2]}]]'
-                replacement_text = tmp1[2][1:]
-                
-            replacement_text = escape_underscore(replacement_text)
+        link1 = link[1]
+        # for link1 in link[1]:
+        tmp1 = link1
+        note_name = tmp1[0]
+        
+        if len(tmp1[1]) == 0 and len(tmp1[2]) == 0:
+            text_to_replace = f'[[{note_name}]]'
+            replacement_text = note_name
+        else:
+            text_to_replace = f'[[{note_name+tmp1[2]}]]' if len(tmp1[2])>0 else f'[[{note_name+tmp1[1]}]]'
+            replacement_text = tmp1[2][1:] if len(tmp1[2])>0 else tmp1[1][1:]
 
-            if formatting_rules['use']:
-                f = formatting_rules_to_check[0]
-                if f in formatting_rules_keys:
-                    note_path = get_embedded_reference_path(note_name, PARS, search_in = 'vault')
-                    formatting_notes = formatting_rules[f]
-                    replacement_text = formatting_rule__notes_with_tags(note_path, replacement_text, formatting_notes)
+        replacement_text = escape_underscore(replacement_text)
+
+        if formatting_rules['use']:
+            f = formatting_rules_to_check[0]
+            if f in formatting_rules_keys:
+                note_path = get_embedded_reference_path(note_name, PARS, search_in = 'vault')
+                formatting_notes = formatting_rules[f]
+                replacement_text = formatting_rule__notes_with_tags(note_path, replacement_text, formatting_notes)
                         
-            S[line] = S[line].replace(text_to_replace, replacement_text)
+        S[line] = S[line].replace(text_to_replace, replacement_text)
 
     return S
 
@@ -559,6 +562,17 @@ def unfold_embedded_notes(S, md__files_embedded, special_notes, PARS, mode='norm
     else:
         content_filter_3 = lambda x, embedded_ref: x
         
+    if PARS_EMBEDDED_REFS['convert_equations_outside_of_equation_blocks'] and not cnd__mode_is__equation_blocks_only:
+        content_filter_free_equations = lambda x: EQUATIONS__convert_non_numbered_to_numbered(x)
+    else:
+        content_filter_free_equations = lambda x: x
+        
+    if PARS_EMBEDDED_REFS['add_clickable_to_obsidian_note']:
+        note_map = get_note_map()
+        content_filter_cliclable = lambda x, embedded_ref: wrap_obsidian_content_in_clickable_latex_command(x, embedded_ref, note_map, PARS)
+    else:
+        content_filter_cliclable = lambda x, embedded_ref: x
+        
     line_numbers_unfolded_notes = [ln[0] for ln in all_embedded_refs]
     list_of_citations_in_vault = []
 
@@ -606,6 +620,7 @@ def unfold_embedded_notes(S, md__files_embedded, special_notes, PARS, mode='norm
                 except:
                     path_embedded_reference = get_embedded_reference_path(embedded_ref, PARS, search_in=where_to_search_for_embedded_notes)
                 
+                content__unfold = content_filter_free_equations(content__unfold)
                 content__unfold = content_filter_1(content__unfold, S, line_number)
                 content__unfold = content_filter_inline_code_snippets(content__unfold, path_embedded_reference)
                     
@@ -634,6 +649,7 @@ def unfold_embedded_notes(S, md__files_embedded, special_notes, PARS, mode='norm
                 if len(content__unfold) > 0: 
                     content__unfold = content_filter_if_quote(content__unfold, conditions_special_notes['is_quote'], markdown_ref, replace_obsidian_bibliography_link_with_cite(get_ref_from_note(markdown_ref)))
                     content__unfold = content_filter_if_question(content__unfold, conditions_special_notes['is_question'], embedded_ref)
+                    content__unfold = content_filter_cliclable(content__unfold, embedded_ref)
                     content__unfold = content_filter_2(S[line_number], content__unfold, markdown_ref)
                     content__unfold = content_filter_3(content__unfold, embedded_ref)
                     
