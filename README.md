@@ -273,6 +273,19 @@ BUT: as a user, you have to add the BibTex citation manually in your designated 
 
 I will add different rules upon user request.
 
+### (NEW) Opening the embedded Obsidian note from the .pdf (akin to the syncTex feature in LateX)
+
+It is possible to compile the .pdf file such that for each embedded note, you can navigate to that note by clicking on its beginning in the .pdf file. 
+An example is shown in the video below.
+
+
+
+
+https://github.com/user-attachments/assets/47255690-7a18-4e52-8dd1-408277e3d170
+
+
+
+
 ### (NEW) Converting inline (dataview) code
 [back to comparisons to other converters](#comparisons-to-other-converters)
 
