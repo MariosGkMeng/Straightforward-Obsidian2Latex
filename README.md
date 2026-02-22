@@ -178,7 +178,7 @@ In this section, I will be writing what actions will cause errors in this versio
 # 📽 List of videos
 If you want to jump to some videos, here's the list:
 
-|     |     | 
+|  Link to location in the ReadMe   | Comment/Description     | 
 | --- | --- | 
 | [General video](https://drive.google.com/file/d/1KK-r5KZQHdIEtGJf9gZzpQrIEesj6_GA/view?usp=sharing) | General video showcasing the tool |
 | [create equation block for referencing](#video-1)    |  create equation block for referencing   |
@@ -186,6 +186,8 @@ If you want to jump to some videos, here's the list:
 | [why this conversion system is very convenient](#video-3)    | why this conversion system is very convenient    |
 | [how to write equations quickly](#video-4)    | Much faster than vanilla LateX, or vanilla Obsidian!    |
 | [(⭐📢NEW) SyncTex-like functionality (navigate to the proper location in Obsidian by clicking the text in the .pdf file)](#video-showcasing-the-synxtex-like-functionality) | SyncTex-like functionality (navigate to the proper location in Obsidian by clicking the text in the .pdf file) |
+
+
 
 # ℹ How to use
 ## Prerequisites
