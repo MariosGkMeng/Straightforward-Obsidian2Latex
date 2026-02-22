@@ -176,10 +176,13 @@ def parse_dataview_query(query: str, PATHS: dict, this_note_path: str):
                     
             else:
                 # get the list of notes that contain the tag
-                tagged_notes_file = get_fields_from_Obsidian_note(this_note_path, ["search_results_if_necessary:: "])[0][0]
-                tagged_notes_file = get_embedded_reference_path(tagged_notes_file, PATHS)
-                with open(tagged_notes_file, encoding='utf8') as f:
-                    result['files_with_the_tag'] = f.readlines()
+                try:
+                    tagged_notes_file = get_fields_from_Obsidian_note(this_note_path, ["search_results_if_necessary:: "])[0][0]
+                    tagged_notes_file = get_embedded_reference_path(tagged_notes_file, PATHS)
+                    with open(tagged_notes_file, encoding='utf8') as f:
+                        result['files_with_the_tag'] = f.readlines()
+                except:
+                    result['files_with_the_tag'] = []
 
             other_from_filters = parts[2::2]
             result["other__from__filters"] = other_from_filters
