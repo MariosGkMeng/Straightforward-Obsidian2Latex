@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
-
+from helper_functions import get_fields_from_Obsidian_note, assert_condition
+import time
 
 def get_parameters(version = 'default'):
     
@@ -58,6 +59,15 @@ def get_parameters(version = 'default'):
 
     # USER PARAMETERS
     path_vault          = 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\' 
+    command_note        = path_vault+'✍Writing\\👨‍💻convert_to_latex.md'
+    
+    try:
+        add_clickable_to_embedded_obsidian_note = assert_condition(get_fields_from_Obsidian_note(command_note, ['add_clickable_to_embedded_obsidian_note:: '])[0][0])
+    except:
+        add_clickable_to_embedded_obsidian_note = False
+        print("Could not read the parameter 'add_clickable_to_embedded_obsidian_note' from the command note. Setting it to False by default.")
+        time.sleep(3)
+    
     #'G:\\My Drive\\MARIOS_LOG\\', 
     # 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\'
     path_writing        = path_vault + '✍Writing\\'
@@ -163,7 +173,7 @@ def get_parameters(version = 'default'):
                             {'convert_non_embedded_references': '🟢',  # if True, then references such as "[[another note]]" will be changed to "another note". If FAlse, they will remain as is
                             'treat_equation_blocks_separately': '🟢', # if True, then the equation blocks are treated separately, in order to increase speed
                                              'treat_citations': '🟢',
-                            'add_clickable_to_obsidian_note': '🟢',
+                            'add_clickable_to_obsidian_note': add_clickable_to_embedded_obsidian_note,
                 'convert_equations_outside_of_equation_blocks': '🟢', # if True, then equations that are outside of equation blocks will also be converted. If False, only equations that are inside equation blocks will be converted. It is recommended to set it to False, since it increases speed and also reduces the risk of converting something that is not an equation.
                                      'adapt_section_hierarchy': '🟢', # if True, then whenever there are sections in an embedded reference, their hierarchy will change, based on whether the embedded note was already in sections (so we don't break the hierarchy)
                     'write_obsidian_ref_name_on_latex_comment': '🟢',
@@ -211,7 +221,7 @@ def get_parameters(version = 'default'):
             }},
         '📁': # Paths 
             {
-                    'command_note': path_vault+'✍Writing\\👨‍💻convert_to_latex.md',
+                    'command_note': command_note,
                            'vault': path_vault,
                  'equation_blocks': path_equation_blocks,
                 'list_paths_notes': path_list_note_paths, # saves time from searching of the note's path
