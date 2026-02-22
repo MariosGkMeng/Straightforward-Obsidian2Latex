@@ -1,4 +1,6 @@
 import os
+from pathlib import Path
+
 
 def get_parameters(version = 'default'):
     
@@ -161,6 +163,8 @@ def get_parameters(version = 'default'):
                             {'convert_non_embedded_references': '🟢',  # if True, then references such as "[[another note]]" will be changed to "another note". If FAlse, they will remain as is
                             'treat_equation_blocks_separately': '🟢', # if True, then the equation blocks are treated separately, in order to increase speed
                                              'treat_citations': '🟢',
+                            'add_clickable_to_obsidian_note': '🟢',
+                'convert_equations_outside_of_equation_blocks': '🟢', # if True, then equations that are outside of equation blocks will also be converted. If False, only equations that are inside equation blocks will be converted. It is recommended to set it to False, since it increases speed and also reduces the risk of converting something that is not an equation.
                                      'adapt_section_hierarchy': '🟢', # if True, then whenever there are sections in an embedded reference, their hierarchy will change, based on whether the embedded note was already in sections (so we don't break the hierarchy)
                     'write_obsidian_ref_name_on_latex_comment': '🟢',
                     'special_cases': {
@@ -213,6 +217,7 @@ def get_parameters(version = 'default'):
                 'list_paths_notes': path_list_note_paths, # saves time from searching of the note's path
                      'bash_script': path_vault + '✍Writing\\compile_and_open.sh',
                 'bibtex_file_name': 'BIBTEX',           # your bibtex file name 
+            'essential_latex_commands': Path(__file__).resolve().parent / 'essential_latex_functions.tex',
             'custom_latex_commands': path_vault + '✍Writing\\custom_latex_functions.tex',
             'quotes': [path_vault + 'Literature\\Notes\\quotes from papers\\'],
             'questions': [path_vault + '🏗small parts\\❓research_questions\\'],
@@ -251,7 +256,8 @@ def get_parameters(version = 'default'):
                                     [True,              'soul',        None,                                      'to strikeout text using \\st{}'],
 									[True,              'twemojis',	None,										'for twemojis'],			
                                     [True,              'rotating',    None,                                       'for rotating text on tables'],
-                                    [True,              'algorithm',   None,                                       ''],
+                                    [True,              'algorithm2e',   None,                                       ''],
+                                    [True,              'algorithmicx',   None,                                       ''],
                                     [True,              'algpseudocode',None,                                      ''],
                                     [True,              'array',       None,                                       ''],
                                     [True,              'mdframed',    None,                                       'for framed boxes'],
