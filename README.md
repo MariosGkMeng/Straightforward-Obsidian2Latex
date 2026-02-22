@@ -185,7 +185,7 @@ If you want to jump to some videos, here's the list:
 | [convert and see the result in LateX](#video-2)     |  convert and see the result in LateX   |
 | [why this conversion system is very convenient](#video-3)    | why this conversion system is very convenient    |
 | [how to write equations quickly](#video-4)    | Much faster than vanilla LateX, or vanilla Obsidian!    |
-| [(⭐📢NEW) SyncTex-like functionality (navigate to the proper location in Obsidian by clicking the text in the .pdf file)](#video-showcasing-the-synxtex-like-functionality) | SyncTex-like functionality (navigate to the proper location in Obsidian by clicking the text in the .pdf file) |
+| [(⭐📢NEW) SyncTex-like functionality (navigate to the proper location in Obsidian by clicking the text in the .pdf file)](#video-showcasing-the-synctex-like-functionality) | SyncTex-like functionality (navigate to the proper location in Obsidian by clicking the text in the .pdf file) |
 
 
 
@@ -281,12 +281,11 @@ I will add different rules upon user request.
 It is possible to compile the .pdf file such that for each embedded note, you can navigate to that note by clicking on its beginning in the .pdf file. 
 An example is shown in the video below.
 
+In order for the converter to establish the links between the .pdf file and your Obsidian notes, first navigate to the `👨‍💻convert_to_latex.md` note (located in the `example_vault`) and set the field `add_clickable_to_embedded_obsidian_note` to `true` (and to `false` in order to deactivate this).
 
-#### Video showcasing the synxTex-like functionality
 
+#### Video showcasing the syncTex-like functionality
 https://github.com/user-attachments/assets/47255690-7a18-4e52-8dd1-408277e3d170
-
-
 
 
 ### (NEW) Converting inline (dataview) code
