@@ -1,8 +1,10 @@
+from __future__ import annotations
 import re
 import os
 import numpy as np
 from dataview_parser import write_Obsidian_table_from_dataview_query
 from helper_functions import *
+from typing import List
 
 
 # For recognizing file names, section names, block names
@@ -37,6 +39,57 @@ CMD__TABLE__TABULARX__CENTERING = '\\newcolumntype{Y}{>{\\centering\\arraybacksl
 aligned_or_split = ['aligned', 'align', 'split']
 # def regex_patterns_for_equations():
     
+def join_multiline_display_math(S0: List[str]) -> List[str]:
+    out: List[str] = []
+    i = 0
+    n = len(S0)
+
+    def starts_block(line: str) -> bool:
+        s = line.strip()
+        return s == "$$" or line.lstrip().startswith("$$")
+
+    def is_single_line_block(line: str) -> bool:
+        # "$$ ... $$" on one line (possibly with trailing stuff like \label)
+        return line.count("$$") >= 2
+
+    def ends_block(line: str) -> bool:
+        ls = line.lstrip()
+        rs = line.rstrip()
+        return rs.endswith("$$") or ls.startswith("$$")  # covers "$$\\label{...}"
+
+    while i < n:
+        line = S0[i]
+
+        # already complete on one line -> keep
+        if is_single_line_block(line):
+            out.append(line)
+            i += 1
+            continue
+
+        if starts_block(line):
+            block = [line]
+            i += 1
+
+            # consume until we hit a closing $$ line
+            while i < n:
+                block.append(S0[i])
+                if ends_block(S0[i]):
+                    break
+                i += 1
+
+            # if we found a closer, join; otherwise, leave unchanged
+            if len(block) >= 2 and ends_block(block[-1]):
+                out.append("".join(block)+ "\n")  
+                i += 1
+            else:
+                out.extend(block)
+                i += 1
+        else:
+            out.append(line)
+            i += 1
+
+    return out
+    
 
 def find_label_in_equation(input_string):
     label_pattern = re.compile(r'\\label\s*{\s*(?:eq__block_)([^}]+)\s*}')
@@ -51,6 +104,7 @@ def EQUATIONS__convert_non_numbered_to_numbered(S0):
     while preserving indentation outside of those transformations.
     """
 
+    S0 = join_multiline_display_math(S0)
     convert_pseudocode_as_well = True
 
     if not convert_pseudocode_as_well:
@@ -163,8 +217,15 @@ def EQUATIONS__convert_non_numbered_to_numbered(S0):
                     for k in range(4):
                         text = text.replace(' ' * k + '$', '$').replace('$' + ' ' * k, '$')
 
-                    text = text.replace(f'${match[0]}$', modified_equation)
-                    text = re.sub(r'\$\s*\\label\{eq__block_[^\}]+\}', '', text)
+                    if label_name:
+                        # if the equation has a label name, meaning that it came from unfolding and converting an equation block
+                        text = text.replace(f'$${match[0]}$$', modified_equation)
+                        text = re.sub(r'\$\s*\\label\{eq__block_[^\}]+\}', '', text)
+                        text = text.replace(f'\\label{{eq__block_{label_name}}}', '')  # remove the initial label from the equation if it exists, since we already added it in the modified_equation
+                    else:
+                        text = text.replace(f'$${match[0]}$$', modified_equation)
+                        if not text.endswith('\n'):
+                            text += '\n'
 
             new_S.append(text)  # ← no strip()
 
@@ -322,10 +383,14 @@ def EQUATIONS__check_and_correct_aligned_equations(S0):
                 text_before_equation_that_was_on_same_line = match_equation.group(1)
 
                 if len(text_before_equation_that_was_on_same_line) > 0:
-                    LISTS.append([text_before_equation_that_was_on_same_line])
+                    to_append = [text_before_equation_that_was_on_same_line]
+                    if to_append:
+                        LISTS.append(to_append)
                     S0[j] = S0[j].replace(text_before_equation_that_was_on_same_line, "") # removing it for good measure
             #
-            LISTS.append(EQUATIONS__correct_aligned_equation(S0[j:j1+1]))
+            to_append = EQUATIONS__correct_aligned_equation(S0[j:j1+1])
+            if to_append:
+                LISTS.append(to_append)
 
     S0_modified = []
     for list in LISTS:
