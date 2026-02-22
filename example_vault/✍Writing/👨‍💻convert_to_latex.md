@@ -15,7 +15,7 @@
 # Previous jobs
 Can save previously converted notes here
 %%
-
+add_clickable_to_embedded_obsidian_note:: false
 convert_note:: [[example_writing]]
 --
 compile_pdf:: true
