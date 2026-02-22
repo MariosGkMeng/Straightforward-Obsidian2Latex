@@ -185,6 +185,7 @@ If you want to jump to some videos, here's the list:
 | [convert and see the result in LateX](#video-2)     |  convert and see the result in LateX   |
 | [why this conversion system is very convenient](#video-3)    | why this conversion system is very convenient    |
 | [how to write equations quickly](#video-4)    | Much faster than vanilla LateX, or vanilla Obsidian!    |
+| [(⭐📢NEW) SyncTex-like functionality (navigate to the proper location in Obsidian by clicking the text in the .pdf file)](#video-showcasing-the-synxtex-like-functionality) | SyncTex-like functionality (navigate to the proper location in Obsidian by clicking the text in the .pdf file) |
 
 # ℹ How to use
 ## Prerequisites
@@ -279,7 +280,7 @@ It is possible to compile the .pdf file such that for each embedded note, you ca
 An example is shown in the video below.
 
 
-
+#### Video showcasing the synxTex-like functionality
 
 https://github.com/user-attachments/assets/47255690-7a18-4e52-8dd1-408277e3d170
 
