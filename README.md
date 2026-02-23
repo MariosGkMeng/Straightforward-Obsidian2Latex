@@ -91,6 +91,7 @@ I want to see it not being used at all, but due to its legacy, I doubt it will h
 - [X] Subplots
 - [X] Conditional Formatting: colored text for notes that contain specific tag(s)
 - [X] (**NEW**) Performing dataview inline code in the form: `= choice([[note]].field[0], [[note]].field[1], "")`. This enhances parameterization of the document.
+- [X] (**NEW**) Clicking on the generated .pdf file to open the corresponding embedded note. Can be found [here](#video-showcasing-the-synctex-like-functionality).
 
 
 # 👨‍💻🚧 What it cannot convert (so far)
