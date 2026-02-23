@@ -5,18 +5,18 @@ import time
 from pathlib import Path
 import json
 
-# --- configure ---
-IN_DEBUG_MODE = False
-VAULT = "workTips"  # must match Obsidian vault name exactly
-with open(Path(__file__).resolve().parent / 'src\\note_map.json', "r", # coding=utf-8
-encoding="utf-8") as f:
-    NOTE_MAP = json.load(f)
-
-
 def print_msg(msg, dt = 2):
     if IN_DEBUG_MODE:
         print(msg)
         time.sleep(dt)
+
+# --- configure ---
+IN_DEBUG_MODE = False
+VAULT = "workTips"  # must match Obsidian vault name exactly
+note_map_path = Path(__file__).resolve().parent / "note_map.json"
+
+with open(note_map_path, "r", encoding="utf-8") as f:
+    NOTE_MAP = json.load(f)
 
 def open_obsidian_note(vault: str, note_path: str, block_id: str = None) -> None:
     uri = (
