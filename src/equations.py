@@ -46,7 +46,7 @@ def join_multiline_display_math(S0: List[str]) -> List[str]:
 
     def starts_block(line: str) -> bool:
         s = line.strip()
-        return s == "$$" or line.lstrip().startswith("$$")
+        return "$$" in s #s == "$$" or line.lstrip().startswith("$$")
 
     def is_single_line_block(line: str) -> bool:
         # "$$ ... $$" on one line (possibly with trailing stuff like \label)
@@ -55,7 +55,7 @@ def join_multiline_display_math(S0: List[str]) -> List[str]:
     def ends_block(line: str) -> bool:
         ls = line.lstrip()
         rs = line.rstrip()
-        return rs.endswith("$$") or ls.startswith("$$")  # covers "$$\\label{...}"
+        return "$$" in line.strip() #rs.endswith("$$") or ls.startswith("$$")  # covers "$$\\label{...}"
 
     while i < n:
         line = S0[i]
