@@ -526,6 +526,7 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
                     'widths:: ',
                     'use_hlines:: ',
                     'use_vlines:: ',
+                    'exclude_columns:: ',
                     'datav__file_column_name:: ',
                     'datav__exclude_columns:: ',
                     'datav__make_sections_out_of_notes:: ',
@@ -539,12 +540,13 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
         widths = [f.strip() for f in fields_note[2].split(',')]
     use_hlines = fields_note[3] if len(fields_note[3])==0 else fields_note[3][0]
     use_vlines = fields_note[4] if len(fields_note[4])==0 else fields_note[4][0]
-    datav__file_column_name = fields_note[5]
-    datav__file_exclude_columns = fields_note[6]
-    datav__make_sections_out_of_notes = fields_note[7]
+    exclude_columns = fields_note[5]
+    datav__file_column_name = fields_note[6]
+    datav__file_exclude_columns = fields_note[7]
+    datav__make_sections_out_of_notes = fields_note[8]
     label = embedded_ref.replace('table__block_', '')
     
-    table_fields = (caption, package, label, widths, use_hlines, use_vlines,
+    table_fields = (caption, package, label, widths, use_hlines, use_vlines, exclude_columns,
                     datav__file_column_name, datav__file_exclude_columns, datav__make_sections_out_of_notes)
 
     embedded_tables_text = convert__tables(content__unfold, table_fields, embedded_ref, PARS)
@@ -747,6 +749,10 @@ def make_sections_out_of_notes_in_dataview_table(notes):
         
     return lines
 
+def _strip_trailing_hline(row: str) -> str:
+    # Remove any trailing \hline that might already be appended by latex_table generation
+    
+    return re.sub(r'(?:\s*\\hline\s*)+$', '', row).rstrip()
 def convert__tables(S, table_fields, embedded_ref, PARS):
     '''
     Converts tables depending on the user's preferences    
@@ -759,7 +765,7 @@ def convert__tables(S, table_fields, embedded_ref, PARS):
         txt_textwith = ''
         
         
-    caption, package, label, widths, use_hlines, use_vlines,\
+    caption, package, label, widths, use_hlines, use_vlines, exclude_columns,\
         datav__file_column_name, datav__file_exclude_columns, datav__make_sections_out_of_notes = table_fields
     
     ht_or_H = '[H]' if PARS['⚙']['TABLES']['place_table_where_it_is_written'] else '[ht]'
@@ -853,16 +859,22 @@ def convert__tables(S, table_fields, embedded_ref, PARS):
 
     for iS, s in enumerate(S):
         if is_in_table_line(s):
-            cols = s.split('|')
+            cols_0 = s.split('|')
             iS_table_start = iS
-            break
-          
+            break                  
           
     if iS_table_start==-1:
         raise Exception("Did not find any tables!")
     
-    cols = [[escape_underscore(x.lstrip().rstrip()) for x in cols if len(x)>0 and x!='\n']]
+    cols_0 = [[escape_underscore(x.lstrip().rstrip()) for x in cols_0 if len(x)>0 and x!='\n']]
+    if exclude_columns:
+        exclude_columns = [exclude_columns] if isinstance(exclude_columns, str) else exclude_columns
+        i_cols_include = [i for i,c in enumerate(cols_0[0]) if c not in exclude_columns]
+    else:
+        i_cols_include = list(range(len(cols_0[0])))
 
+    cols = [[cols_0[0][i] for i in i_cols_include]]
+    
     if format_column_names_with_bold:
         cols = [[f'**{x}**' for x in sublist] for sublist in cols]
 
@@ -899,6 +911,10 @@ def convert__tables(S, table_fields, embedded_ref, PARS):
             except:
                 None
             
+        try:
+            c = [c[i] for i in i_cols_include]
+        except:
+            None # might be an empty list
         data.append(c)
 
     y = cols + data
@@ -1006,25 +1022,54 @@ def convert__tables(S, table_fields, embedded_ref, PARS):
         else:
             table_width = table_width_custom_0
 
+        # --- Normalize header row (from latex_table[0]) ---
+        header_row = _strip_trailing_hline(latex_table[0].strip())
+        # header_row should already contain the final '\\\\'
+        # enforce exactly: '\\\\ \\hline'
+        if header_row.endswith('\\\\'):
+            header_row = header_row + (' \\hline' if use_hlines else '')
+        else:
+            header_row = header_row + (' \\\\ \\hline' if use_hlines else ' \\\\')
 
-        latex_before_table=[
-        	'%\\begin{center}',
-		    '\\begin{longtable}{' + table_width + '}',            
-            f'\caption{{{caption}}}',
-            '\label{tab:' + label + '}\\\\',
-			'\hline',
-			''+latex_table[0],
-			'\hline',
-			'\endfirsthead % Use \endfirsthead for the line after the first header',
-			'\hline',
-			'\endfoot',
-            ]
+        # --- Build body rows (force per-row \hline if requested) ---
+        body_rows = []
+        for row in latex_table[1:]:
+            r = _strip_trailing_hline(row.strip())
+            if use_hlines:
+                # ensure each row ends with '\\\\ \\hline'
+                if r.endswith('\\\\'):
+                    r = r + ' \\hline'
+                else:
+                    r = r + ' \\\\ \\hline'
+            body_rows.append('    ' + r)
 
-        latex_after_table = [
-            '\end' + PCKG_NAME,
+        latex_before_table = [
+            '%\\begin{center}',
+            '\\begin{longtable}{' + table_width + '}',
+            f'\\caption{{{caption}}}',
+            '\\label{tab:' + label + '}\\\\',
+            '\\hline',
+            '    ' + header_row,
+            '\\endfirsthead',
+            '',
+            '\\hline',
+            '    ' + header_row,
+            '\\endhead',
+            '',
+            '\\hline',
+            f'\\multicolumn{{{N_cols}}}{{r}}{{\\emph{{Continued on next page}}}} \\\\ \\hline',
+            '\\endfoot',
+            '',
+            '\\hline',
+            '\\endlastfoot',
         ]
 
-        LATEX = latex_before_table + ['    '+x for x in latex_table[1:]] + latex_after_table
+        latex_after_table = [
+            '\\end' + PCKG_NAME,
+        ]
+
+        LATEX = latex_before_table + body_rows + latex_after_table
+
     
     elif package == ID__TABLES__PACKAGE__tabular:
         PCKG_NAME = '{tabular}'
