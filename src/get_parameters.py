@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from helper_functions import get_fields_from_Obsidian_note, assert_condition
 import time
+from typing import Iterable, List, Sequence, Tuple
 
 def get_parameters(version = 'default'):
     
@@ -119,13 +120,23 @@ def get_parameters(version = 'default'):
     V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': ''}
     V__author = 'Marios Gkionis'
     V__bib_package = 'natbib'
-    V__bib_style = 'apacite_modified'
+    V__bib_style = ''
     V__use_natbib = True
+    V__use_pkg__minted = False
+    V__custom_preamble_path = None
+    V__include_list_of_tables = False
+    V__include_list_of_figures = False
+    V__add_table_of_contents = False
+    symbol_replacement_additions_patterns = []
         
     if version =='[[👆👆RL--writing--1]]':
         
         V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': '9pt'}
         V__author = ''
+        V__include_list_of_tables = True
+        V__include_list_of_figures = True
+        V__add_table_of_contents = True
+
         
     elif version =='[[✍⌛writing--FaultDiag--Drillstring--MAIN]]':
         
@@ -136,11 +147,27 @@ def get_parameters(version = 'default'):
     # \documentclass[a4paper, 12pt, openany]{book} %chose the paper size and font size. Openany ensures that all all chapters and similar may begin at any page, not only odd pages. For the introductory pages and appendices we want openany, but for chapter pages in the main content we want chapters to begin only on odd pages (right hand side). The book class ensures that the margins are automatically adjusted such that left hand pages are slightly moved to the left and vice versa at the right, which makes the thesis very readable and good looking when printed in bound book format.
         V__document_class = {'class': '\documentclass[a4paper, 12pt, openany]{book}', 'fontsize': '12pt'}
         V__author = 'Marios Gkionis'
+        V__include_list_of_tables = True
+        V__include_list_of_figures = True
+        V__add_table_of_contents = True
+
         
     elif version == '[[✍⌛writing--THESIS--Paper-3]]':
         V__document_class = {'class': '\documentclass[preprint,12pt,authoryear]{elsarticle}', 'fontsize': '12pt'}
         V__author = 'Marios Gkionis'
         V__bib_style = 'elsarticle-harv'
+        V__custom_preamble_path = '[[✍⌛writing--THESIS--Paper-3--latex-preamble]]'
+        symbol_replacement_additions_patterns: List[Tuple[str, str]] = [
+            (r"\\mathbb\{((?:[^{}]|\{[^{}]*\})*)\}", r"\\mathds{\1}"),
+        ]
+    elif version == '[[✍⌛writing--THESIS--Paper-3--Results]]':
+        V__custom_preamble_path = '[[✍⌛writing--THESIS--Paper-3--Results--latex-preamble]]'
+        V__bib_style = 'elsarticle-harv'
+    elif version == '[[✍⌛writing--THESIS--Paper-3--Introduction]]':
+        V__custom_preamble_path = '[[✍⌛writing--THESIS--Paper-3-Introduction--latex-preamble]]'
+        V__bib_style = 'elsarticle-harv'
+
+        
         
     V__use_pkg__apacite = 'apacite' in V__bib_style
     
@@ -160,7 +187,7 @@ def get_parameters(version = 'default'):
                                             ID__TABLES__alignment__middle],
                             'rel-width': 1.2,
                             'place_table_where_it_is_written': '🟢',
-                            'include_list_of_tables': '🟢',
+                            'include_list_of_tables': V__include_list_of_tables,
                     },
             'margin': '0.9in',
             'use_date': '🔴',
@@ -189,15 +216,16 @@ def get_parameters(version = 'default'):
                                       'put_figure_below_text': '🟢',
                                                'include_path': '🟢', # not including the path works only if all the figures are in the same folder (appropriate for Overleaf projects)
                         'use_overleaf_all_in_the_same_folder': '🔴',
-                                    'include_list_of_figures': '🟢',}, 
+                                    'include_list_of_figures': V__include_list_of_figures,}, 
                                                         
             'paragraph':{
                         'indent_length_of_first_line': 0,    # 0 if no indent is desired. Recommended 20 for usual indent
                         'if_text_before_first_section___place_before_table_of_contents': '🔴',
                         'insert_new_line_symbol':                                        '---',
-                        'add_table_of_contents':                                        '🟢',
+                        'add_table_of_contents':                                        V__add_table_of_contents,
                         'add_new_page_before_bibliography':                             '🟢',
                         'allowdisplaybreaks':                                           '🔴',
+                        'symbol_replacement_additions_patterns':                        symbol_replacement_additions_patterns
             }, 
             'author': V__author,
             'title': '',
@@ -232,6 +260,7 @@ def get_parameters(version = 'default'):
             'quotes': [path_vault + 'Literature\\Notes\\quotes from papers\\'],
             'questions': [path_vault + '🏗small parts\\❓research_questions\\'],
             'bibliography': path_vault + 'Literature\\publication_note_objects\\',
+            'custom_preamble': V__custom_preamble_path
                 },
         'par':
             {
@@ -241,19 +270,18 @@ def get_parameters(version = 'default'):
                                     'before-lines': ['{colspec}']
                                 },
                 'packages-to-load':[ # preamble packages, #exclude for doc_class  # comment (placed inside the latex file, next to the package loading)      
-                                    [True,              'hyperref',    None,                                    ''],
                                     [True,              'graphicx',    None,                                    ''],
                                     [True,              'subcaption',  None,                                    'for subfigures'],
+                                    [True,              'enumitem',    None,                                    ''],
                                     [True,              'amssymb',     None,                                    'need more symbols'],
                                     [True,              'titlesec',    ID__DOCUMENT_CLASS__CONFERENCE__IFAC,    "so that we can add more subsections (using 'paragraph')"],
                                     [True,              'xcolor, soul',None,                                   'for the highlighter'],
                                     [True,              'amsmath',     None,                                    ''],
                                     [True,              'amsfonts',    None,                                    ''],
                                     [True,              'cancel',      None,                                    ''],
-                                    [True,              'minted',      None,                                    ''],
+                                    [V__use_pkg__minted,'minted',      None,                                    ''],
                                     [V__use_pkg__apacite,'apacite',     None,                                    'apa citation style'],
-                                    [True,              'caption',     None,                                    'to set smaller vertical spacing between two figures'],
-                                    [True,              'cleveref',    None,                                    'for clever references'],
+                                    [True,              'caption',     None,                                    'to set smaller vertical spacing between two figures'],                                    
                                     [True,              'tcolorbox',   None,                                    ''],
                                     [True,              'float',       None,                                    'to make the figures stay between the text at which they are defined'],
                                     [True,              'pdfpages',    None,                                     ''],
@@ -271,6 +299,8 @@ def get_parameters(version = 'default'):
                                     [True,              'algpseudocode',None,                                      ''],
                                     [True,              'array',       None,                                       ''],
                                     [True,              'mdframed',    None,                                       'for framed boxes'],
+                                    [True,              'hyperref',    None,                                    ''],
+                                    [True,              'cleveref',    None,                                    'for clever references'],
                                     ],
             'symbols-to-replace': [       # Obsidian symbol, latex symbol,            type of replacement (1 or 2)
 											['−',              '-',            1],
