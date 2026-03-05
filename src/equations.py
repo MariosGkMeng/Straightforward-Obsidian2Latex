@@ -407,7 +407,7 @@ def EQUATIONS__convert_equation_referencing(S0, cleveref_allowed = False):
     pattern = r'\[\[eq__block_(.*?)\]\]'
     
     if cleveref_allowed:
-        pattern_ref = r'\\Cref{eq:\1}'
+        pattern_ref = r'\\cref{eq:\1}'
     else:
         pattern_ref = r'\\ref{eq:\1}'
     
@@ -425,7 +425,7 @@ def convert_referencing(S0, mode, cleveref_allowed = False):
     pattern = [r'\[\[table__block_(.*?)\]\]', r'\[\[figure__block_(.*?)\]\]']
     
     if cleveref_allowed:
-        replacement = [r'\\Cref{tab:\1}', r'\\Cref{fig:\1}']
+        replacement = [r'\\cref{tab:\1}', r'\\cref{fig:\1}']
     else:
         replacement = [r'\\ref{tab:\1}', r'\\ref{fig:\1}']
         
@@ -523,6 +523,7 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
                     [
                     'caption:: ',
                     'package:: ',
+                    'header_rotation:: ',
                     'widths:: ',
                     'use_hlines:: ',
                     'use_vlines:: ',
@@ -534,19 +535,20 @@ def TABLES__get_table(content__unfold, embedded_ref, path_embedded_reference, PA
     
     caption = fields_note[0] if len(fields_note[0])==0 else fields_note[0][0]
     package = fields_note[1] if len(fields_note[1])==0 else fields_note[1][0]
+    header_rotation = fields_note[2] if len(fields_note[2])==0 else fields_note[2][0]
     try:
-        widths = [f.strip() for f in fields_note[2][0].split(',')]
+        widths = [f.strip() for f in fields_note[3][0].split(',')]
     except:
-        widths = [f.strip() for f in fields_note[2].split(',')]
-    use_hlines = fields_note[3] if len(fields_note[3])==0 else fields_note[3][0]
-    use_vlines = fields_note[4] if len(fields_note[4])==0 else fields_note[4][0]
-    exclude_columns = fields_note[5]
-    datav__file_column_name = fields_note[6]
-    datav__file_exclude_columns = fields_note[7]
-    datav__make_sections_out_of_notes = fields_note[8]
+        widths = [f.strip() for f in fields_note[3].split(',')]
+    use_hlines = fields_note[4] if len(fields_note[4])==0 else fields_note[4][0]
+    use_vlines = fields_note[5] if len(fields_note[5])==0 else fields_note[5][0]
+    exclude_columns = fields_note[6]
+    datav__file_column_name = fields_note[7]
+    datav__file_exclude_columns = fields_note[8]
+    datav__make_sections_out_of_notes = fields_note[9]
     label = embedded_ref.replace('table__block_', '')
     
-    table_fields = (caption, package, label, widths, use_hlines, use_vlines, exclude_columns,
+    table_fields = (caption, package, header_rotation, label, widths, use_hlines, use_vlines, exclude_columns,
                     datav__file_column_name, datav__file_exclude_columns, datav__make_sections_out_of_notes)
 
     embedded_tables_text = convert__tables(content__unfold, table_fields, embedded_ref, PARS)
@@ -765,7 +767,7 @@ def convert__tables(S, table_fields, embedded_ref, PARS):
         txt_textwith = ''
         
         
-    caption, package, label, widths, use_hlines, use_vlines, exclude_columns,\
+    caption, package, header_rotation, label, widths, use_hlines, use_vlines, exclude_columns,\
         datav__file_column_name, datav__file_exclude_columns, datav__make_sections_out_of_notes = table_fields
     
     ht_or_H = '[H]' if PARS['⚙']['TABLES']['place_table_where_it_is_written'] else '[ht]'
@@ -875,9 +877,17 @@ def convert__tables(S, table_fields, embedded_ref, PARS):
 
     cols = [[cols_0[0][i] for i in i_cols_include]]
     
-    if format_column_names_with_bold:
-        cols = [[f'**{x}**' for x in sublist] for sublist in cols]
-
+    # if format_column_names_with_bold:
+    #     cols = [[f'**{x}**' for x in sublist] for sublist in cols]
+    cols[0]=simple_stylistic_replacements(cols[0], type=0)
+    try:
+        header_rotation = int(header_rotation)
+        assert header_rotation==90, 'Have not programmed anything outside this case'
+        cols[0] = [f'\\rothead{{{c}}}' for c in cols[0]]
+    except:
+        header_rotation = 0
+        
+        
     data = []
     for s in S[iS_table_start+2:]:
         c = s.split('|')
