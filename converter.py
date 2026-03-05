@@ -12,6 +12,7 @@ import pstats
 import io
 import copy
 from pathlib import Path
+
 #
 
 # Add the src directory to the Python pathf
@@ -26,6 +27,7 @@ from helper_functions import *
 from equations import *
 from path_searching import *
 from get_parameters import *
+from move_images_to_local_folder import *
 
 # Global constants
 ID__TABLES__alignment__center = 0
@@ -89,7 +91,6 @@ def package_loader():
     if pkg[0]
     ]
 
-    out.append('\\usepackage{enumitem,amssymb}')
     out.append('\\newlist{todolist}{itemize}{2}')
     out.append('\setlist[todolist]{label=$\square$}')
     # out.append('\\usepackage[colorlinks=true, linkcolor=grey, citecolor=red, urlcolor=magenta]{hyperref}')
@@ -191,100 +192,6 @@ def identify__tables(S):
     return table_indexes
 
 RAISE_EXCEPTION_IN_STYLISTIC_USER_ERRORS = False
-
-
-def simple_stylistic_replacements(S, type=None):
-    '''
-    For simple stylistic replacements. Ignores style characters inside `code`, $math$,
-    and also ignores any lines inside fenced code blocks (``` ... ```).
-    '''
-    # Define replacements for style types
-    type_category = 1
-    if type == ID__STYLE__BOLD:
-        style_char = r'\*\*'
-        replacement_func = lambda repl, string: repl.append(['**'+string+'**', '\\textbf{' + string + '}'])
-        l = 2
-    elif type == ID__STYLE__HIGHLIGHTER:
-        style_char = r'\=\='
-        replacement_func = lambda repl, string: repl.append(['=='+string+'==', '\\hl{' + string + '}'])
-        l = 2
-    elif type == ID__STYLE__ITALIC:
-        style_char = r'\*'
-        replacement_func = lambda repl, string: repl.append(['*'+string+'*', '\\textit{' + string + '}'])
-        l = 1
-    elif type == ID__STYLE__STRIKEOUT:
-        style_char = r'\~\~'
-        replacement_func = lambda repl, string: repl.append([f'~~{string}~~', f'\\st{{{string}}}'])
-        l = 2
-    elif type == ID__STYLE__COLORED_TEXT:
-        f_convert = lambda s: re.sub(
-            r'<span style="color:(.*?)">(.*?)</span>',
-            lambda m: f'\\textcolor{{{m.group(1)}}}{{{m.group(2)}}}',
-            s
-        )
-        type_category = 2
-    else:
-        raise NotImplementedError
-
-    S1 = []
-    in_code_block = False  # Track fenced code block state
-
-    for s in S:
-        if type_category == 2:
-            s = f_convert(s)
-            S1.append(s)
-            continue
-        
-        stripped = s.strip()
-
-        # Toggle when encountering a fenced code block line
-        if stripped.startswith("```"):
-            in_code_block = not in_code_block
-            S1.append(s)  # keep ``` lines as-is
-            continue
-
-        # Skip all processing if we're inside a fenced code block
-        if in_code_block:
-            S1.append(s)
-            continue
-
-        # --- process line outside code blocks ---
-
-        # 1. Protect inline code and math blocks
-        protected = []
-        def protect_match(m):
-            protected.append(m.group(0))
-            return f"__PROTECTED_{len(protected)-1}__"
-
-        s_protected = re.sub(r'`[^`]*`|\$[^$]*\$', protect_match, s)
-
-        # 2. Perform stylistic replacements
-        occurences = [x.start() for x in re.finditer(style_char, s_protected)]
-        L = len(occurences)
-
-        if L % l == 0 and L > 0:
-            replacements = []
-            for i in range(L // 2):
-                o0 = occurences[2*i]
-                o1 = occurences[2*i+1]
-                replacement_func(replacements, s_protected[o0+l:o1])
-
-            for R in replacements:
-                s_protected = s_protected.replace(R[0], R[1])
-
-        elif L % l != 0:
-            if RAISE_EXCEPTION_IN_STYLISTIC_USER_ERRORS:
-                raise Exception(f"You have added an odd number of the '{style_char}' character in the string: '{s}'")
-
-        # 3. Restore protected code/math blocks
-        for i, txt in enumerate(protected):
-            s_protected = s_protected.replace(f"__PROTECTED_{i}__", txt)
-
-        S1.append(s_protected)
-
-    return S1
-
-
  
 
 def images_converter(images, PARAMETERS):
@@ -352,6 +259,7 @@ PATHS = PARS['📁']
 
 markdown_file = get_fields_from_Obsidian_note(PATHS['command_note'], ['convert_note:: '])[0][0]
 PARS = get_parameters(version=markdown_file)
+PATHS = PARS['📁']
 
 has_2_cols = (PARS['⚙']['document_class']['class'] in doc_classes__2_cols) or False
 
@@ -648,8 +556,13 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
         if l.startswith(tmp1): l = l.replace(tmp1, '\\clearpage')
         LATEX_1.append(l)
         
+        
+        
     LATEX = copy.copy(LATEX_1)
     LATEX = convert_inline_code(LATEX)
+    
+    if paragraph['symbol_replacement_additions_patterns']:
+        LATEX = apply_replacements_to_lines(LATEX, paragraph['symbol_replacement_additions_patterns'])
         
     document_class = PARS['⚙']['document_class']
     
@@ -681,7 +594,14 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     #     "\\fi"
     #     if PARS['⚙']['TABLES']['include_list_of_tables'] else ""
     
-    PREAMBLE = [document_class_text] +\
+    custom_preamble_file=PARS['📁']['custom_preamble']
+    
+    if custom_preamble_file is not None:
+        custom_preamble_file=get_embedded_reference_path(PARS['📁']['custom_preamble'], PARS)
+        with open(custom_preamble_file, 'r', encoding='utf8') as f:
+            preamble_0 = code_block_converter(f.readlines(), PARS)
+    else:
+        preamble_0 = [document_class_text] +\
             [is_ifac*'\\newcounter{part} % fix the issue in the class'] +\
             [is_ifac*'\counterwithin*{section}{part}'] +\
             ['% Loading packages that were defined in `src\get_parameters.py`'] +\
@@ -696,8 +616,13 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
             ['% CUSTOM FUNCTIONS'] +\
             essential_latex+\
             custom_latex+\
+            ["\\renewcommand{\\twemoji}[1]{\ignorespaces}"]+\
             ['% ======================================='] +\
-            ['\n'*3] + ['\\begin{document}']+\
+            ['\n'*3]
+        
+    
+    PREAMBLE = preamble_0 +\
+            ['\\begin{document}']+\
             ['\\newcolumntype{P}[1]{>{\centering\\arraybackslash}m{#1}}']+\
             ['\\allowdisplaybreaks' if paragraph['allowdisplaybreaks'] else '']+\
             ['\date{}'*PARS['⚙']['use_date']]+\
@@ -723,7 +648,8 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
         LATEX_3.append(l.replace("\\\\_", "\\_"))
     
 
-    last_bib_lines_before_document_end = ['\\bibliographystyle{'+PARS['⚙']['bibliography']['style']+'}'] +\
+
+    last_bib_lines_before_document_end = ['\\bibliographystyle{'+PARS['⚙']['bibliography']['style']+'}']*bool(PARS['⚙']['bibliography']['style']) +\
             ['\\bibliography{' + PATHS['bibtex_file_name'] + '}'] 
     LATEX = PREAMBLE + LATEX_3 + [('\\newpage \n '*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5]+\
         last_bib_lines_before_document_end + ['\end{document}']
@@ -770,6 +696,33 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     # subprocess.run(["bash", bash_path])
     
     compile_pdf = get_fields_from_Obsidian_note(PATHS['command_note'], ['compile_pdf:: '])[0][0]
+    
+    if Path(r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\✍⌛writing--THESIS--Paper-3--Results.tex").stem==Path(PATHS['markdown-file']).stem:
+        output_folder = r"C:\Users\mariosg\latex_projects\projects\paper3_results"
+        rewrite_tex_file = True
+        # =======================
+        
+        move_project(
+            tex=r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\✍⌛writing--THESIS--Paper-3--Results.tex",
+            out=output_folder,
+            rewrite=rewrite_tex_file,
+        )
+        compile_pdf = 'false'
+        
+    elif Path(r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\elsarticle\✍⌛writing--THESIS--Paper-3.tex").stem==Path(PATHS['markdown-file']).stem:
+        output_folder = r"C:\Users\mariosg\latex_projects\projects\paper3"
+        rewrite_tex_file = True
+        # =======================
+        
+        move_project(
+            tex=r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\elsarticle\✍⌛writing--THESIS--Paper-3.tex",
+            out=output_folder,
+            rewrite=rewrite_tex_file,
+        )
+        # compile_pdf = 'false'
+        PATHS['tex-file'] = r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\elsarticle\✍⌛writing--THESIS--Paper-3.tex"
+
+    
     
     if compile_pdf=='true' or compile_pdf == '🟢' or compile_pdf == 'y' or compile_pdf == 'Y' or compile_pdf == 'yes' or compile_pdf == 'YES':
         BASE_PATH = '\\'.join(PATHS['tex-file'].split('\\')[:-1])
