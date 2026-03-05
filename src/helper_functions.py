@@ -5,6 +5,109 @@ import unicodedata
 import datetime
 import copy
 from path_searching import *
+import json
+from typing import Iterable, List, Sequence, Tuple
+from pathlib import Path
+
+ID__STYLE__BOLD             = 0
+ID__STYLE__HIGHLIGHTER      = 1
+ID__STYLE__ITALIC           = 2
+ID__STYLE__STRIKEOUT        = 3
+ID__STYLE__COLORED_TEXT     = 4
+
+RAISE_EXCEPTION_IN_STYLISTIC_USER_ERRORS = False
+
+
+def simple_stylistic_replacements(S, type=None):
+    '''
+    For simple stylistic replacements. Ignores style characters inside `code`, $math$,
+    and also ignores any lines inside fenced code blocks (``` ... ```).
+    '''
+    # Define replacements for style types
+    type_category = 1
+    if type == ID__STYLE__BOLD:
+        style_char = r'\*\*'
+        replacement_func = lambda repl, string: repl.append(['**'+string+'**', '\\textbf{' + string + '}'])
+        l = 2
+    elif type == ID__STYLE__HIGHLIGHTER:
+        style_char = r'\=\='
+        replacement_func = lambda repl, string: repl.append(['=='+string+'==', '\\hl{' + string + '}'])
+        l = 2
+    elif type == ID__STYLE__ITALIC:
+        style_char = r'\*'
+        replacement_func = lambda repl, string: repl.append(['*'+string+'*', '\\textit{' + string + '}'])
+        l = 1
+    elif type == ID__STYLE__STRIKEOUT:
+        style_char = r'\~\~'
+        replacement_func = lambda repl, string: repl.append([f'~~{string}~~', f'\\st{{{string}}}'])
+        l = 2
+    elif type == ID__STYLE__COLORED_TEXT:
+        f_convert = lambda s: re.sub(
+            r'<span style="color:(.*?)">(.*?)</span>',
+            lambda m: f'\\textcolor{{{m.group(1)}}}{{{m.group(2)}}}',
+            s
+        )
+        type_category = 2
+    else:
+        raise NotImplementedError
+
+    S1 = []
+    in_code_block = False  # Track fenced code block state
+
+    for s in S:
+        if type_category == 2:
+            s = f_convert(s)
+            S1.append(s)
+            continue
+        
+        stripped = s.strip()
+
+        # Toggle when encountering a fenced code block line
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            S1.append(s)  # keep ``` lines as-is
+            continue
+
+        # Skip all processing if we're inside a fenced code block
+        if in_code_block:
+            S1.append(s)
+            continue
+
+        # --- process line outside code blocks ---
+
+        # 1. Protect inline code and math blocks
+        protected = []
+        def protect_match(m):
+            protected.append(m.group(0))
+            return f"__PROTECTED_{len(protected)-1}__"
+
+        s_protected = re.sub(r'`[^`]*`|\$[^$]*\$', protect_match, s)
+
+        # 2. Perform stylistic replacements
+        occurences = [x.start() for x in re.finditer(style_char, s_protected)]
+        L = len(occurences)
+
+        if L % l == 0 and L > 0:
+            replacements = []
+            for i in range(L // 2):
+                o0 = occurences[2*i]
+                o1 = occurences[2*i+1]
+                replacement_func(replacements, s_protected[o0+l:o1])
+
+            for R in replacements:
+                s_protected = s_protected.replace(R[0], R[1])
+
+        elif L % l != 0:
+            if RAISE_EXCEPTION_IN_STYLISTIC_USER_ERRORS:
+                raise Exception(f"You have added an odd number of the '{style_char}' character in the string: '{s}'")
+
+        # 3. Restore protected code/math blocks
+        for i, txt in enumerate(protected):
+            s_protected = s_protected.replace(f"__PROTECTED_{i}__", txt)
+
+        S1.append(s_protected)
+
+    return S1
 
 
 def remove_emojis(text: str) -> str:
@@ -132,13 +235,15 @@ def get_start_and_end_indexes(strings, S):
     indexes_start = []
     indexes_end = []
     for i, line in enumerate(S):
-        if strings[0] in line:
-            indexes_start.append(i)
-        elif strings[1] in line:
-            indexes_end.append(i)
-        elif strings[0] in line and strings[1] in line:
-            indexes_start.append(i)
-            indexes_end.append(i)
+        if strings[0] in line or strings[1] in line:
+            if strings[0] in line and strings[1] in line:
+                indexes_start.append(i)
+                indexes_end.append(i)
+            else:
+                if strings[0] in line:
+                    indexes_start.append(i)
+                elif strings[1] in line:
+                    indexes_end.append(i)
             
     if len(indexes_start) != len(indexes_end):
         raise Exception('Some Latex code line is missing!')
@@ -540,3 +645,61 @@ def get_ref_from_note(markdown_ref):
     ).group(1)
     
     return '[[' + note_id + ']]'
+
+def kebab_to_camel(name: str) -> str:
+    parts = name.strip("'\"").split("-")
+    return parts[0] + "".join(word.capitalize() for word in parts[1:])
+
+
+def get_note_map():
+    note_map = {}
+    with open(Path(__file__).resolve().parent / 'note_map.json', "r", encoding="utf-8") as f:
+        note_map = json.load(f)
+    
+    return note_map
+
+def wrap_obsidian_content_in_clickable_latex_command(content, embedded_ref, note_map, PARS):
+    
+    instances_found = [k for k,n in note_map.items() if embedded_ref+".md" in n]
+    assert len(instances_found) < 2, "The same embedded reference is found in multiple notes, which is not allowed. Found in: "+str(instances_found)
+    
+    if not instances_found:
+        new_instance = kebab_to_camel(obsidian_to_latex_ref(embedded_ref))
+        note_map[new_instance] = get_embedded_reference_path(embedded_ref, PARS)
+        instance_use = new_instance
+        with open(Path(__file__).resolve().parent / 'note_map.json', "w", encoding="utf-8") as f:
+            json.dump(note_map, f, indent=4)
+    else:
+        instance_use = instances_found[0]
+        
+    
+    content = ["\\begin{launchblock}{runNote:" + instance_use + "}\n"] + content +['\n']+ ['\end{launchblock}\n']
+    
+    return content
+
+
+def assert_condition(s):
+    if s in ['y', 'Y', 'yes', 'Yes', 'YES', 'true', 'True', 'TRUE', '🟢', '✅', '☑️', '✔️']:
+        return True
+    elif s in ['n', 'N', 'no', 'No', 'NO', 'false', 'False', 'FALSE', '🔴', '❌', '✖️']:
+        return False
+    else:
+        raise ValueError(f"Invalid boolean value: {s}")
+    
+def apply_replacements_to_lines(
+    lines: Sequence[str],
+    rules: Iterable[Tuple[str, str]],
+    flags: int = 0,
+) -> List[str]:
+    """
+    Applies each (pattern, replacement) rule to each line in `lines`.
+    Returns a new list of lines.
+    """
+    compiled = [(re.compile(pat, flags), repl) for pat, repl in rules]
+
+    out: List[str] = []
+    for line in lines:
+        for cre, repl in compiled:
+            line = cre.sub(repl, line)
+        out.append(line)
+    return out
