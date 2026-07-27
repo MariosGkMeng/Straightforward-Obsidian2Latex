@@ -13,7 +13,7 @@ interface LatexConverterSettings {
 const DEFAULT_SETTINGS: LatexConverterSettings = {
 	pythonPath: "python",
 	converterPath: "",
-	commandNotePath: "C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\✍Writing\\👨‍💻convert_to_latex.md",
+	commandNotePath: "",
 };
 
 export default class LatexConverterPlugin extends Plugin {
@@ -73,6 +73,11 @@ export default class LatexConverterPlugin extends Plugin {
 	}
 
 	async runConverter(overrideNote: string | null, compile = false) {
+		if (!this.settings.commandNotePath) {
+			new Notice("Set 'Command note path' in the LaTeX Converter settings first.");
+			return;
+		}
+
 		const converterPath = this.resolveConverterPath();
 		const converterDir = path.dirname(converterPath);
 		let originalContent: string | null = null;
@@ -235,10 +240,14 @@ class ConverterSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Command note path")
-			.setDesc("Full absolute path to the convert_to_latex.md command note")
+			.setDesc(
+				"Required. Full absolute path to a note in your vault containing a line like " +
+					"'convert_note:: [[Note Name]]' — the plugin temporarily points this line at " +
+					"the note being converted before running the converter."
+			)
 			.addText((text) =>
 				text
-					.setPlaceholder("C:\\path\\to\\convert_to_latex.md")
+					.setPlaceholder("C:\\path\\to\\your-vault\\convert_to_latex.md")
 					.setValue(this.plugin.settings.commandNotePath)
 					.onChange(async (value) => {
 						this.plugin.settings.commandNotePath = value;
