@@ -68,8 +68,8 @@ This repository doubles as an installable Obsidian plugin that runs `converter.p
 - **Manual**: copy this whole repository into `<your-vault>/.obsidian/plugins/`, then enable "Ultimate LaTeX Converter" in Obsidian's Community plugins settings.
 
 ## Requirements
-- Python 3 on your `PATH` (or set a full path in the plugin settings)
-- [latexmk](https://mg.readthedocs.io/latexmk.html) on your `PATH`, only if you use the "compile to PDF" commands
+- Python 3 on your `PATH` (or set a full path in the plugin settings) — **no Python?** On Windows, click "Set up bundled Python" in the plugin settings and it'll download a private, self-contained Python + numpy just for this plugin (~30 MB), without touching any system-wide install.
+- [latexmk](https://mg.readthedocs.io/latexmk.html) on your `PATH`, only if you use the "compile to PDF" commands (no bundled option for this one — it requires a full LaTeX distribution like MiKTeX or TeX Live)
 
 ## Settings
 Open **Settings → Ultimate LaTeX Converter**:

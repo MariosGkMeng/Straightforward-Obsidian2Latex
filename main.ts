@@ -2,6 +2,7 @@ import { App, FileSystemAdapter, Notice, Plugin, PluginSettingTab, Setting } fro
 import { spawn } from "child_process";
 import { shell } from "electron";
 import * as fs from "fs";
+import * as https from "https";
 import * as path from "path";
 
 interface LatexConverterSettings {
@@ -15,6 +16,10 @@ const DEFAULT_SETTINGS: LatexConverterSettings = {
 	converterPath: "",
 	commandNotePath: "",
 };
+
+const BUNDLED_PYTHON_VERSION = "3.12.10";
+const BUNDLED_PYTHON_ZIP_URL = `https://www.python.org/ftp/python/${BUNDLED_PYTHON_VERSION}/python-${BUNDLED_PYTHON_VERSION}-embed-amd64.zip`;
+const GET_PIP_URL = "https://bootstrap.pypa.io/get-pip.py";
 
 export default class LatexConverterPlugin extends Plugin {
 	settings: LatexConverterSettings;
@@ -70,6 +75,126 @@ export default class LatexConverterPlugin extends Plugin {
 	/** converter.py bundled with this plugin, unless the user overrode it in settings. */
 	resolveConverterPath(): string {
 		return this.settings.converterPath || path.join(this.getPluginDir(), "converter.py");
+	}
+
+	/** Downloads a URL to a local file, following redirects. */
+	private downloadFile(url: string, destPath: string, redirectsLeft = 5): Promise<void> {
+		return new Promise((resolve, reject) => {
+			const file = fs.createWriteStream(destPath);
+			https
+				.get(url, (res) => {
+					if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+						file.close();
+						fs.unlink(destPath, () => {
+							if (redirectsLeft <= 0) {
+								reject(new Error("Too many redirects"));
+								return;
+							}
+							this.downloadFile(res.headers.location as string, destPath, redirectsLeft - 1).then(
+								resolve,
+								reject
+							);
+						});
+						return;
+					}
+					if (res.statusCode !== 200) {
+						file.close();
+						fs.unlink(destPath, () => {});
+						reject(new Error(`Download failed: HTTP ${res.statusCode}`));
+						return;
+					}
+					res.pipe(file);
+					file.on("finish", () => file.close(() => resolve()));
+				})
+				.on("error", (err) => {
+					fs.unlink(destPath, () => {});
+					reject(err);
+				});
+		});
+	}
+
+	/** Runs a command to completion and collects its output. */
+	private runCommand(
+		cmd: string,
+		args: string[],
+		cwd?: string
+	): Promise<{ code: number; stdout: string; stderr: string }> {
+		return new Promise((resolve, reject) => {
+			const proc = spawn(cmd, args, { cwd, windowsHide: false });
+			let stdout = "";
+			let stderr = "";
+			proc.stdout.on("data", (d) => (stdout += d.toString()));
+			proc.stderr.on("data", (d) => (stderr += d.toString()));
+			proc.on("close", (code) => resolve({ code: code ?? -1, stdout, stderr }));
+			proc.on("error", reject);
+		});
+	}
+
+	/**
+	 * Downloads a private, self-contained Python (the official Windows embeddable
+	 * distribution) into this plugin's own folder, bootstraps pip, installs numpy
+	 * (the only third-party dependency converter.py needs), and points the
+	 * "Python executable" setting at it. Doesn't touch any system-wide Python.
+	 */
+	async setupBundledPython(): Promise<void> {
+		if (process.platform !== "win32" || process.arch !== "x64") {
+			new Notice("Bundled Python setup is only available on 64-bit Windows right now.");
+			return;
+		}
+
+		const pyDir = path.join(this.getPluginDir(), "python-embed");
+		const pythonExe = path.join(pyDir, "python.exe");
+
+		if (fs.existsSync(pythonExe)) {
+			this.settings.pythonPath = pythonExe;
+			await this.saveSettings();
+			new Notice("Bundled Python is already set up — pointed the plugin at it.");
+			return;
+		}
+
+		try {
+			fs.mkdirSync(pyDir, { recursive: true });
+
+			new Notice("Downloading Python...");
+			const zipPath = path.join(pyDir, "python-embed.zip");
+			await this.downloadFile(BUNDLED_PYTHON_ZIP_URL, zipPath);
+
+			new Notice("Extracting Python...");
+			const extract = await this.runCommand("powershell", [
+				"-NoProfile",
+				"-Command",
+				`Expand-Archive -LiteralPath '${zipPath}' -DestinationPath '${pyDir}' -Force`,
+			]);
+			if (extract.code !== 0) throw new Error(`Extraction failed: ${extract.stderr}`);
+			fs.unlinkSync(zipPath);
+
+			// Embeddable Python ships with site-packages disabled; enable it so
+			// pip-installed packages (numpy) are importable.
+			const pthFile = fs.readdirSync(pyDir).find((f) => /^python\d+\._pth$/.test(f));
+			if (pthFile) {
+				const pthPath = path.join(pyDir, pthFile);
+				const content = fs.readFileSync(pthPath, "utf8").replace(/#\s*import site/, "import site");
+				fs.writeFileSync(pthPath, content, "utf8");
+			}
+
+			new Notice("Installing pip...");
+			const getPipPath = path.join(pyDir, "get-pip.py");
+			await this.downloadFile(GET_PIP_URL, getPipPath);
+			const pipInstall = await this.runCommand(pythonExe, [getPipPath, "--no-warn-script-location"], pyDir);
+			if (pipInstall.code !== 0) throw new Error(`pip bootstrap failed: ${pipInstall.stderr}`);
+			fs.unlinkSync(getPipPath);
+
+			new Notice("Installing numpy...");
+			const numpyInstall = await this.runCommand(pythonExe, ["-m", "pip", "install", "numpy"], pyDir);
+			if (numpyInstall.code !== 0) throw new Error(`numpy install failed: ${numpyInstall.stderr}`);
+
+			this.settings.pythonPath = pythonExe;
+			await this.saveSettings();
+			new Notice("✓ Bundled Python set up! 'Python executable' setting updated automatically.");
+		} catch (e) {
+			new Notice(`Python setup failed: ${e.message}`);
+			console.error("[LaTeX Converter] Bundled Python setup failed:", e);
+		}
 	}
 
 	async runConverter(overrideNote: string | null, compile = false) {
@@ -221,6 +346,22 @@ class ConverterSettingTab extends PluginSettingTab {
 						this.plugin.settings.pythonPath = value;
 						await this.plugin.saveSettings();
 					})
+			);
+
+		new Setting(containerEl)
+			.setName("Bundled Python (Windows only)")
+			.setDesc(
+				"No Python installed? Download a private, self-contained Python + numpy just for this " +
+					"plugin (~30 MB) and point 'Python executable' below at it automatically. Doesn't touch " +
+					"any system-wide Python install."
+			)
+			.addButton((btn) =>
+				btn.setButtonText("Set up bundled Python").onClick(async () => {
+					btn.setDisabled(true).setButtonText("Setting up...");
+					await this.plugin.setupBundledPython();
+					btn.setDisabled(false).setButtonText("Set up bundled Python");
+					this.display();
+				})
 			);
 
 		new Setting(containerEl)
