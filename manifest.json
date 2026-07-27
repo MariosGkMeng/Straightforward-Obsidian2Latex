@@ -1,0 +1,10 @@
+{
+  "id": "ultimate-obsidian-to-latex-converter",
+  "name": "Ultimate Obsidian to LaTeX Converter",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "Trigger the Obsidian to LaTeX converter script from within Obsidian",
+  "author": "Marios Gkionis",
+  "authorUrl": "",
+  "isDesktopOnly": true
+}

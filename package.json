@@ -1,0 +1,22 @@
+{
+  "name": "ultimate-obsidian-to-latex-converter",
+  "version": "1.0.0",
+  "description": "Trigger the Obsidian to LaTeX converter script from within Obsidian",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production"
+  },
+  "keywords": [],
+  "author": "Marios Gkionis",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "builtin-modules": "3.3.0",
+    "electron": "^25.9.8",
+    "esbuild": "0.17.3",
+    "obsidian": "latest",
+    "tslib": "2.4.0",
+    "typescript": "4.7.4"
+  }
+}
