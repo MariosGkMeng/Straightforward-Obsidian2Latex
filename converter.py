@@ -12,6 +12,7 @@ import pstats
 import io
 import copy
 from pathlib import Path
+import json
 
 #
 
@@ -28,6 +29,7 @@ from equations import *
 from path_searching import *
 from get_parameters import *
 from move_images_to_local_folder import *
+from custom_text_replacements import final_text_replacements
 
 # Global constants
 ID__TABLES__alignment__center = 0
@@ -48,6 +50,7 @@ ID__STYLE__HIGHLIGHTER      = 1
 ID__STYLE__ITALIC           = 2
 ID__STYLE__STRIKEOUT        = 3
 ID__STYLE__COLORED_TEXT     = 4
+ID__STYLE__ITALIC_2         = 5
 
 ID__DOCUMENT_CLASS__ARTICLE = 'article'
 ID__DOCUMENT_CLASS__EXTARTICLE = 'extarticle'
@@ -255,6 +258,7 @@ def convert_any_tags(S):
 
     return S
 
+# get_backlinks("has-gap--Topic-Manufacturing",PARS)
 PATHS = PARS['📁']
 
 markdown_file = get_fields_from_Obsidian_note(PATHS['command_note'], ['convert_note:: '])[0][0]
@@ -313,7 +317,7 @@ for i_l, line in enumerate(reversed(content)):
 
 # Replace headers and map sections \==================================================
 Lc = len(content)-1
-content, sections = replace_markdown_headers(content)
+content, sections = replace_markdown_headers(content, use_first_level_header_as_chapter=PARS['⚙']['use_first_level_header_as_chapter'])
 # \==================================================\==================================================
 
 table_new_col_symbol = [['&',               '\&',                     1]]
@@ -597,7 +601,7 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     custom_preamble_file=PARS['📁']['custom_preamble']
     
     if custom_preamble_file is not None:
-        custom_preamble_file=get_embedded_reference_path(PARS['📁']['custom_preamble'], PARS)
+        custom_preamble_file = get_embedded_reference_path(custom_preamble_file, PARS)
         with open(custom_preamble_file, 'r', encoding='utf8') as f:
             preamble_0 = code_block_converter(f.readlines(), PARS)
     else:
@@ -623,7 +627,6 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     
     PREAMBLE = preamble_0 +\
             ['\\begin{document}']+\
-            ['\\newcolumntype{P}[1]{>{\centering\\arraybackslash}m{#1}}']+\
             ['\\allowdisplaybreaks' if paragraph['allowdisplaybreaks'] else '']+\
             ['\date{}'*PARS['⚙']['use_date']]+\
             [f"\\author{{{PARS['⚙']['author']}}}"*(len(PARS['⚙']['author'])>0)]+\
@@ -648,11 +651,51 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
         LATEX_3.append(l.replace("\\\\_", "\\_"))
     
 
+    if cleveref_allowed:
+        LATEX_3 = fix_cref(LATEX_3)
+
 
     last_bib_lines_before_document_end = ['\\bibliographystyle{'+PARS['⚙']['bibliography']['style']+'}']*bool(PARS['⚙']['bibliography']['style']) +\
             ['\\bibliography{' + PATHS['bibtex_file_name'] + '}'] 
     LATEX = PREAMBLE + LATEX_3 + [('\\newpage \n '*2)*paragraph['add_new_page_before_bibliography'] + '\n'*5]+\
         last_bib_lines_before_document_end + ['\end{document}']
+
+
+    LATEX = final_text_replacements(LATEX, markdown_file)
+
+
+    
+    if '✍⌛writing--THESIS--Paper-3' in markdown_file:
+
+
+        import shutil
+        import os
+
+        try:
+            # Path to your original .bib file
+            source_file = PATHS['bibtex']
+
+            # List of destination paths (folders)
+            destination_files = [
+                Path("C:\\Users\\mariosg\\latex_projects\\projects\\thesis\\BIBTEX.bib"),
+                Path("C:\\Users\\mariosg\\latex_projects\\projects\\paper3\\BIBTEX.bib"),
+                Path("C:\\Users\\mariosg\\latex_projects\\projects\\manufacturing_notes\\BIBTEX.bib"),
+                Path("C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\✍Writing\\els-cas-templates\\BIBTEX.bib"),
+                ]
+
+            for dest_file in destination_files:
+                dest_file.parent.mkdir(parents=True, exist_ok=True)
+
+                if dest_file.exists():
+                    dest_file.unlink()  # delete existing file
+
+                shutil.copy2(source_file, dest_file)
+                print(f"Copied to: {dest_file}")
+                
+        except:
+            None
+
+
 
 
     with open(PATHS['tex-file'], 'w', encoding='utf8') as f:
@@ -697,38 +740,87 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     
     compile_pdf = get_fields_from_Obsidian_note(PATHS['command_note'], ['compile_pdf:: '])[0][0]
     
+    BASE_PATH = '\\'.join(PATHS['tex-file'].split('\\')[:-1])
+    FILE_NAME = PATHS['tex-file'].split('\\')[-1].replace('.tex', '')
+    TEXFILE = os.path.join(BASE_PATH, FILE_NAME + ".tex")
+    PDFFILE = os.path.join(BASE_PATH, FILE_NAME + ".pdf")
+
+
     if Path(r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\✍⌛writing--THESIS--Paper-3--Results.tex").stem==Path(PATHS['markdown-file']).stem:
         output_folder = r"C:\Users\mariosg\latex_projects\projects\paper3_results"
         rewrite_tex_file = True
         # =======================
         
+        _src_tex = r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\✍⌛writing--THESIS--Paper-3--Results.tex"
         move_project(
-            tex=r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\✍⌛writing--THESIS--Paper-3--Results.tex",
+            tex=_src_tex,
             out=output_folder,
             rewrite=rewrite_tex_file,
         )
+        PATHS['tex-file'] = os.path.join(output_folder, os.path.basename(_src_tex))
         compile_pdf = 'false'
-        
+
     elif Path(r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\elsarticle\✍⌛writing--THESIS--Paper-3.tex").stem==Path(PATHS['markdown-file']).stem:
         output_folder = r"C:\Users\mariosg\latex_projects\projects\paper3"
         rewrite_tex_file = True
         # =======================
-        
+
         move_project(
-            tex=r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\elsarticle\✍⌛writing--THESIS--Paper-3.tex",
+            tex=TEXFILE,
             out=output_folder,
+            PARS=PARS,
             rewrite=rewrite_tex_file,
         )
         # compile_pdf = 'false'
-        PATHS['tex-file'] = r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\elsarticle\✍⌛writing--THESIS--Paper-3.tex"
+        PATHS['tex-file'] = os.path.join(output_folder, os.path.basename(TEXFILE))
 
+    elif Path(r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\✍⌛writing--THESIS--high-level-structure.tex").stem==Path(PATHS['markdown-file']).stem:
+        output_folder = r"C:\Users\mariosg\latex_projects\projects\thesis"
+        rewrite_tex_file = True
+        # =======================
+
+        move_project(
+            tex=TEXFILE,
+            out=output_folder,
+            PARS=PARS,
+            rewrite=rewrite_tex_file,
+        )
+        # compile_pdf = 'false'
+        PATHS['tex-file'] = os.path.join(output_folder, os.path.basename(TEXFILE))
+
+    elif Path(r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\✍⌛writing--THESIS--high-level-structure--before-papers.tex").stem==Path(PATHS['markdown-file']).stem:
+        output_folder = r"C:\Users\mariosg\latex_projects\projects\thesis_before_papers"
+        rewrite_tex_file = True
+        # =======================
+
+        move_project(
+            tex=TEXFILE,
+            out=output_folder,
+            PARS=PARS,
+            rewrite=rewrite_tex_file,
+        )
+        # compile_pdf = 'false'
+        PATHS['tex-file'] = os.path.join(output_folder, os.path.basename(TEXFILE))
+        
+    elif Path(r"C:\Users\mariosg\OneDrive - NTNU\FILES\workTips\✍Writing\✍️writing--manufacturing--research--status-quo-and-reflections.tex").stem==Path(PATHS['markdown-file']).stem:
+        output_folder = r"C:\Users\mariosg\latex_projects\projects\manufacturing_notes"
+        rewrite_tex_file = True
+        # =======================
+
+        move_project(
+            tex=TEXFILE,
+            out=output_folder,
+            PARS=PARS,
+            rewrite=rewrite_tex_file,
+        )
+        # compile_pdf = 'false'
+        PATHS['tex-file'] = os.path.join(output_folder, os.path.basename(TEXFILE))
+
+        
     
-    
+    print(f"TEX_OUTPUT:{PATHS['tex-file']}")
+
     if compile_pdf=='true' or compile_pdf == '🟢' or compile_pdf == 'y' or compile_pdf == 'Y' or compile_pdf == 'yes' or compile_pdf == 'YES':
-        BASE_PATH = '\\'.join(PATHS['tex-file'].split('\\')[:-1])
-        FILE_NAME = PATHS['tex-file'].split('\\')[-1].replace('.tex', '')
-        TEXFILE = os.path.join(BASE_PATH, FILE_NAME + ".tex")
-        PDFFILE = os.path.join(BASE_PATH, FILE_NAME + ".pdf")
 
         print(f"TEXFILE: {TEXFILE}")
         print(f"PDFFILE: {PDFFILE}")

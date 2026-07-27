@@ -5,6 +5,7 @@ import numpy as np
 from dataview_parser import write_Obsidian_table_from_dataview_query
 from helper_functions import *
 from typing import List
+from convert_code_blocks import *
 
 
 # For recognizing file names, section names, block names
@@ -349,15 +350,117 @@ def EQUATIONS__correct_aligned_equation(latex_equations):
     else:
         return None
 
-def EQUATIONS__check_and_correct_aligned_equations(S0):
+# def EQUATIONS__check_and_correct_aligned_equations(S0):
 
+#     # f_test = lambda S: bool([c for c in S if 'partial_{t} p_{a}(z,t' in c])
+
+#     indexes_start = []
+#     indexes_end = []
+#     for cmdl in aligned_or_split:
+#         indexes_start_add, indexes_end_add = get_start_and_end_indexes([f'\\begin{{{cmdl}}}', f'\end{{{cmdl}}}'], S0)
+#         indexes_start += indexes_start_add
+#         indexes_end += indexes_end_add
+    
+#     if len(indexes_start) == 0:
+#         return S0
+
+#     INDEXES = [0]
+#     for i, idx in enum(indexes_start):
+#         INDEXES.append(idx)
+#         INDEXES.append(indexes_end[i])
+
+#     INDEXES.append(len(S0))
+
+#     LISTS = []
+#     for i, idx in enum(INDEXES[:-1]):
+#         j = idx
+#         j1 = INDEXES[i+1]
+#         if i%2==0:
+#             # no need for modification
+#             LISTS.append(S0[j+1:j1])
+#         else:
+#             # need modification
+#             # Check if there is any text before the "$$ \\begin{aligned}" text, so we create a separate line with it
+#             match_equation = re.search(r'^(.*?)\$\$\s*\\begin{aligned}', S0[j])
+#             if match_equation:
+#                 text_before_equation_that_was_on_same_line = match_equation.group(1)
+
+#                 if len(text_before_equation_that_was_on_same_line) > 0:
+#                     to_append = [text_before_equation_that_was_on_same_line]
+#                     if to_append:
+#                         LISTS.append(to_append)
+#                     S0[j] = S0[j].replace(text_before_equation_that_was_on_same_line, "") # removing it for good measure
+#             #
+#             to_append = EQUATIONS__correct_aligned_equation(S0[j:j1+1])
+#             if to_append:
+#                 LISTS.append(to_append)
+
+#     S0_modified = []
+#     for list in LISTS:
+#         S0_modified += list
+
+#     return S0_modified
+
+
+
+import re
+
+def _split_by_latex_fences(lines):
+    """
+    Split lines into segments:
+    [
+        (False, [...normal lines...]),
+        (True,  [...raw latex block lines, including fences...]),
+        ...
+    ]
+
+    A raw latex block starts with a line like:
+        ```latex
+    and ends with:
+        ```
+    """
+    segments = []
+    current = []
+    inside_latex_fence = False
+
+    for line in lines:
+        stripped = line.strip()
+
+        if not inside_latex_fence:
+            if re.match(r"^```latex\s*$", stripped):
+                if current:
+                    segments.append((False, current))
+                    current = []
+                current = [line]
+                inside_latex_fence = True
+            else:
+                current.append(line)
+        else:
+            current.append(line)
+            if re.match(r"^```\s*$", stripped):
+                segments.append((True, current))
+                current = []
+                inside_latex_fence = False
+
+    if current:
+        segments.append((inside_latex_fence, current))
+
+    return segments
+
+
+def _check_and_correct_aligned_equations_unprotected(S0):
+    """
+    Your original logic, applied only to non-protected content.
+    """
     indexes_start = []
     indexes_end = []
     for cmdl in aligned_or_split:
-        indexes_start_add, indexes_end_add = get_start_and_end_indexes([f'\\begin{{{cmdl}}}', f'\end{{{cmdl}}}'], S0)
+        indexes_start_add, indexes_end_add = get_start_and_end_indexes(
+            [f'\\begin{{{cmdl}}}', f'\\end{{{cmdl}}}'], S0
+        )
         indexes_start += indexes_start_add
         indexes_end += indexes_end_add
-    
+
     if len(indexes_start) == 0:
         return S0
 
@@ -371,13 +474,15 @@ def EQUATIONS__check_and_correct_aligned_equations(S0):
     LISTS = []
     for i, idx in enum(INDEXES[:-1]):
         j = idx
-        j1 = INDEXES[i+1]
-        if i%2==0:
+        j1 = INDEXES[i + 1]
+
+        if i % 2 == 0:
             # no need for modification
-            LISTS.append(S0[j+1:j1])
+            LISTS.append(S0[j + 1:j1])
         else:
             # need modification
-            # Check if there is any text before the "$$ \\begin{aligned}" text, so we create a separate line with it
+
+            # Check if there is any text before the "$$ \\begin{aligned}" text
             match_equation = re.search(r'^(.*?)\$\$\s*\\begin{aligned}', S0[j])
             if match_equation:
                 text_before_equation_that_was_on_same_line = match_equation.group(1)
@@ -386,17 +491,39 @@ def EQUATIONS__check_and_correct_aligned_equations(S0):
                     to_append = [text_before_equation_that_was_on_same_line]
                     if to_append:
                         LISTS.append(to_append)
-                    S0[j] = S0[j].replace(text_before_equation_that_was_on_same_line, "") # removing it for good measure
-            #
-            to_append = EQUATIONS__correct_aligned_equation(S0[j:j1+1])
+
+                    S0[j] = S0[j].replace(
+                        text_before_equation_that_was_on_same_line, ""
+                    )
+
+            to_append = EQUATIONS__correct_aligned_equation(S0[j:j1 + 1])
             if to_append:
                 LISTS.append(to_append)
 
     S0_modified = []
-    for list in LISTS:
-        S0_modified += list
+    for lst in LISTS:
+        S0_modified += lst
 
     return S0_modified
+
+
+def EQUATIONS__check_and_correct_aligned_equations(S0):
+    """
+    Skip any lines inside ```latex ... ``` fences entirely.
+    """
+    segments = _split_by_latex_fences(S0)
+
+    result = []
+    for is_protected, segment_lines in segments:
+        if is_protected:
+            # keep raw latex blocks exactly as they are
+            result.extend(segment_lines)
+        else:
+            # only transform normal content
+            result.extend(_check_and_correct_aligned_equations_unprotected(segment_lines))
+
+    return result
+
 
 
 def EQUATIONS__convert_equation_referencing(S0, cleveref_allowed = False):
@@ -407,7 +534,7 @@ def EQUATIONS__convert_equation_referencing(S0, cleveref_allowed = False):
     pattern = r'\[\[eq__block_(.*?)\]\]'
     
     if cleveref_allowed:
-        pattern_ref = r'\\cref{eq:\1}'
+        pattern_ref = r'\\Cref{eq:\1}'
     else:
         pattern_ref = r'\\ref{eq:\1}'
     
@@ -425,7 +552,7 @@ def convert_referencing(S0, mode, cleveref_allowed = False):
     pattern = [r'\[\[table__block_(.*?)\]\]', r'\[\[figure__block_(.*?)\]\]']
     
     if cleveref_allowed:
-        replacement = [r'\\cref{tab:\1}', r'\\cref{fig:\1}']
+        replacement = [r'\\Cref{tab:\1}', r'\\Cref{fig:\1}']
     else:
         replacement = [r'\\ref{tab:\1}', r'\\ref{fig:\1}']
         
@@ -574,8 +701,16 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
         'caption_sub:: '
         ]
     
+    
+    is_latex_written_figure = False
 
     fields = get_fields_from_Obsidian_note(path_embedded_reference, look_for_fields)
+    fields_1 = []
+    
+    for fld in fields:
+        fields_1.append(convert_inline_field_placement_command(fld, PARS))
+    
+    fields = fields_1
     extensions = ['.png', '.jpg', '.pdf']
 
     i = None
@@ -588,24 +723,42 @@ def FIGURES__get_figure(content__unfold, embedded_ref, path_embedded_reference, 
     else:
         raise Exception("Did not find an image in your figure block note, or you did not place it in the beginning of a new line!")
     
-    try:
-        embedded_images = [x.replace(']]', '') for x in embedded_images_text.split("![[")[1:]]
-    except:
-        raise Exception("Probably could not find any images in your figure note file!")
+    # try:
+    #     embedded_images = [x.replace(']]', '') for x in embedded_images_text.split("![[")[1:]]
+    # except:
+    #     raise Exception("Probably could not find any images in your figure note file!")
     
+    # embedded_images_1 = []
+    # for image in embedded_images:
+    #     if "|" in image: image = image[:image.find("|")+1].replace("|", "")
+    #     embedded_images_1.append(image)
+    
+    # embedded_images = embedded_images_1
+    
+    embedded_images = embedded_references_recognizer(content__unfold,PARS['⚙']['EMBEDDED REFERENCES'],'normal')
     embedded_images_1 = []
-    for image in embedded_images:
-        if "|" in image: image = image[:image.find("|")+1].replace("|", "")
-        embedded_images_1.append(image)
-    
+    for e in embedded_images:
+        for e_i in e[1]:
+            embedded_images_1.append(e_i[0])
     embedded_images = embedded_images_1
     label = embedded_ref.replace('figure__block_', '')
     image_paths = [get_embedded_reference_path(x, PARS) for x in embedded_images]
     PARS['⚙']['figures']['num_columns'] = PARS['num_columns']
     
+    if 'weak_C' in embedded_ref:
+        print('deb')
+
     if len(image_paths) == 0:
-        raise Exception("Could not find any images in your figure")
-    converted = images_converter(image_paths, PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
+        if has_latex_code_block(content__unfold):
+            is_latex_written_figure = True
+        else:
+            raise Exception("Could not find any images in your figure")
+    
+    if not is_latex_written_figure:
+        converted = images_converter(image_paths, PARS['⚙']['figures'], [look_for_fields, fields], label, PARS['📁']['tex-file'])
+    else:
+        converted = extract_latex_code_blocks(content__unfold)
+    
 
     return converted
 
@@ -700,7 +853,8 @@ def images_converter(images, PARAMETERS, fields, label, latex_file_path):
 
         # check if image is in the same folder as the latex file (in which case, no need to have the absolute path)
         if (img_directory == '/'.join(latex_file_path.replace('\\', '/').split('/')[:-1])) or (not PARAMETERS['include_path']) or PARAMETERS['use_overleaf_all_in_the_same_folder']:
-            path_img = path_img.replace(img_directory+'/', '')
+            path_replacement = PARAMETERS['overleaf_subfolder'].replace("\\", "/") if  PARAMETERS['use_overleaf_all_in_the_same_folder'] else ''
+            path_img = path_img.replace(img_directory+'/', path_replacement)
 
         # label_img = IM.split('\\')[-1]
         
@@ -887,6 +1041,7 @@ def convert__tables(S, table_fields, embedded_ref, PARS):
     except:
         header_rotation = 0
         
+    S = convert_inline_field_placement_command(S, PARS)    
         
     data = []
     for s in S[iS_table_start+2:]:

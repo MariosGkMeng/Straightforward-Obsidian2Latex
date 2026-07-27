@@ -4,6 +4,7 @@ import re
 import unicodedata
 import datetime
 import copy
+from special_characters import *
 from path_searching import *
 import json
 from typing import Iterable, List, Sequence, Tuple
@@ -14,8 +15,17 @@ ID__STYLE__HIGHLIGHTER      = 1
 ID__STYLE__ITALIC           = 2
 ID__STYLE__STRIKEOUT        = 3
 ID__STYLE__COLORED_TEXT     = 4
+ID__STYLE__ITALIC_2         = 5
 
 RAISE_EXCEPTION_IN_STYLISTIC_USER_ERRORS = False
+special_cases = ['eq__block', 'figure__block', 'table__block']
+_LATEX_LEVELS = {
+    "section": 1,
+    "subsection": 2,
+    "subsubsection": 3,
+    "paragraph": 4,
+    "subparagraph": 5,
+}
 
 
 def simple_stylistic_replacements(S, type=None):
@@ -37,6 +47,11 @@ def simple_stylistic_replacements(S, type=None):
         style_char = r'\*'
         replacement_func = lambda repl, string: repl.append(['*'+string+'*', '\\textit{' + string + '}'])
         l = 1
+    elif type == ID__STYLE__ITALIC_2:
+        style_char = r'\_'
+        replacement_func = lambda repl, string: repl.append(['_'+string+'_', '\\textit{' + string + '}'])
+        l = 1
+
     elif type == ID__STYLE__STRIKEOUT:
         style_char = r'\~\~'
         replacement_func = lambda repl, string: repl.append([f'~~{string}~~', f'\\st{{{string}}}'])
@@ -164,6 +179,100 @@ def detect_code_snippet(strings):
             break
 
     return code_detected, language_detected
+
+def embedded_references_recognizer(S, options, mode):
+
+    # BUG2: SOMEHOW THE "SPECIAL_CHARACTERS" VARIABLE IS NOT GLOBALLY CORRECT. CHANGES IN THE GLOBAL VARIABLE NOT APPLIED IN THE FUNCTION, THEREFORE WRITING IT HERE FOR NOW
+    SPECIAL_CHARACTERS = get_special_characters()
+
+    # repeated conditions
+    cnd__mode_is__normal                = mode=='normal'
+
+    # all_chars = '\w' + SPECIAL_CHARACTERS + '\-'
+    
+    all_chars = r'\w' + SPECIAL_CHARACTERS + r'\- '
+    
+    if not isinstance(S, list):
+        raise Exception('Input of the function must be a list of strings!')
+        return np.nan
+
+    pattern_embedded_with_section_0 = '!\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
+    # pattern_embedded_with_section_path = r'!\[\[([\/\.' + all_chars + ']+)(\#[' + all_chars + ']+)?(\|[' + all_chars + ']+)?\]\]'
+    # pattern_embedded_with_section_path = (
+    #     r'!\[\[([\/\.' + all_chars + r']+)'
+    #     r'(\#[' + all_chars + r']+)?'
+    #     r'(\|[' + all_chars + r']+)?'
+    #     r'\]\]'
+    # )    
+    pattern_embedded_with_section_path = r'!\[\[([^#|\]]+)(#[^|\]]+)?(?:\|([^|\]]+))?(?:\|([^|\]]+))?\]\]'
+    # Pattern recognizing text starting with "[[eq__block"
+    pattern_eq_block = r'\[\[eq__block.*'
+
+    discard_special_cases = (cnd__mode_is__normal) and options['treat_equation_blocks_separately']
+    pattern_embedded_with_section = pattern_embedded_with_section_path
+    
+
+    MATCHES = []
+    for i, s in enumerate(S):
+        match_pattern_embedded = re.findall(pattern_embedded_with_section, s)
+        
+        # adding a dirty patch, cause both me and ChatGPT can't find a proper regex expression
+        if not "![[" in s: match_pattern_embedded = []
+    
+        # adding a dirty patch, cause both me and ChatGPT can't find a proper regex expression
+        if discard_special_cases:
+            match_pattern_embedded_tmp = []
+            if len(match_pattern_embedded) != 0:
+                for m in match_pattern_embedded:
+                    for sp in special_cases:
+                        is_not_special_case = True
+                        if m[0].startswith(sp):
+                            is_not_special_case = False
+                            break
+                        
+                    if is_not_special_case: match_pattern_embedded_tmp.append(m)
+
+            match_pattern_embedded = match_pattern_embedded_tmp
+
+        if len(match_pattern_embedded) != 0:
+              
+            # Extract text starting with '%%lcmd' and ending with 'lcmd%%'
+            match_latex_command_from_obsidian = re.search(r'%%lcmd(.*?)lcmd%%', s)
+
+            extracted_latex_command_from_obsidian = ''
+            if match_latex_command_from_obsidian:
+                extracted_latex_command_from_obsidian = match_latex_command_from_obsidian.group(0)  # Get the entire matched text
+
+            MATCHES.append([i, match_pattern_embedded, extracted_latex_command_from_obsidian])
+            # path-finder
+
+    # to see the names of the embedded files: `[m[1][0][0] for m in MATCHES]`
+    return MATCHES
+
+def non_embedded_references_recognizer(S):
+
+    '''
+    ⚠ Note that this does not pertain to internal links with sections!
+    '''
+
+    # BUG2: SOMEHOW THE "SPECIAL_CHARACTERS" VARIABLE IS NOT GLOBALLY CORRECT. CHANGES IN THE GLOBAL VARIABLE NOT APPLIED IN THE FUNCTION, THEREFORE WRITING IT HERE FOR NOW
+    SPECIAL_CHARACTERS = get_special_characters()
+
+    all_chars = '\w' + SPECIAL_CHARACTERS + '\-'
+    if not isinstance(S, list):
+        raise Exception('Input of the function must be a list of strings!')
+
+    # pattern_embedded = '\[\[([\.'+all_chars+']+)(\|[' + all_chars + ']+)?\]\]'
+    pattern_embedded_with_section = '\[\[([\.'+all_chars+']+)(\#['+all_chars+']+)?(\|[' + all_chars + ']+)?\]\]'
+    MATCHES = []
+    for i, s in enumerate(S):
+        match_pattern_embedded = re.findall(pattern_embedded_with_section, s)
+        if len(match_pattern_embedded) != 0:
+            for match in match_pattern_embedded:
+                MATCHES.append([i, match])
+            # path-finder
+
+    return MATCHES
 
 
 def get_file_cday(file_path):
@@ -447,7 +556,7 @@ def is_obsidian_note(s):
         
 import re
 
-def replace_markdown_headers(content):
+def replace_markdown_headers(content, use_first_level_header_as_chapter=False):
     """
     Replace Markdown headers in content with LaTeX equivalents,
     and return a list of detected sections as [index, title],
@@ -456,16 +565,29 @@ def replace_markdown_headers(content):
     sections = []
     in_code_block = False  # Track if we're inside a code block
 
-    header_map = [
-        (r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
-        (r'####### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
-        (r'###### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
-        (r'##### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
-        (r'#### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
-        (r'### (.*)', r'\\subsubsection{\1}'),
-        (r'## (.*)', r'\\subsection{\1}'),
-        (r'# (.*)', r'\\section{\1}')
-    ]
+    if not use_first_level_header_as_chapter:
+        header_map = [
+            (r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+            (r'####### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+            (r'###### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+            (r'##### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+            (r'#### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+            (r'### (.*)', r'\\subsubsection{\1}'),
+            (r'## (.*)', r'\\subsection{\1}'),
+            (r'# (.*)', r'\\section{\1}')
+        ]
+    else:
+        header_map = [
+            (r'######## (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+            (r'####### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+            (r'###### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+            (r'##### (.*)', r'\\paragraph{\1} \\hspace{0pt} \\\\'),
+            (r'#### (.*)',r'\\subsubsection{\1}'),
+            (r'### (.*)', r'\\subsection{\1}'),
+            (r'## (.*)', r'\\section{\1}'),
+            (r'# (.*)', r'\\chapter{\1}')
+        ]
+
 
     for i, line in enumerate(content):
         stripped = line.strip()
@@ -517,7 +639,7 @@ def evaluate_obsidian_expression(expr, markdown_file, PARS):
         if note_name == 'this':
             note_name = markdown_file
         
-        return get_fields_from_Obsidian_note(get_embedded_reference_path(note_name,PARS), [parts[1]+":: "])[0][0]    
+        return get_fields_from_Obsidian_note(get_embedded_reference_path(note_name,PARS), [parts[1]+":: "])[0][0]
     else:
         return expr.lower()
 
@@ -703,3 +825,107 @@ def apply_replacements_to_lines(
             line = cre.sub(repl, line)
         out.append(line)
     return out
+
+
+def fix_cref(lines):
+    """
+    Replace \\cref{...} with \\Cref{...} when it appears
+    at the beginning of a sentence.
+    """
+
+    new_lines = []
+    sentence_start = True
+
+    for line in lines:
+
+        if sentence_start:
+            line = re.sub(r'^\s*\\cref\{', lambda m: m.group(0).replace(r'\cref', r'\Cref'), line)
+
+        # also handle "... . \cref{...}" on same line
+        line = re.sub(r'([.!?]\s+)\\cref\{', r'\1\\Cref{', line)
+
+        sentence_start = bool(re.search(r'[.!?]\s*$', line.strip()))
+
+        new_lines.append(line)
+
+    return new_lines
+
+def non_embedded_references_converter(S, special_notes, PARS):
+
+    links = non_embedded_references_recognizer(S)
+    options = PARS['⚙']['EMBEDDED REFERENCES']
+    formatting_rules = PARS['⚙']['formatting_rules']['non_embedded_references']    
+
+    # Treat citations first before any other linked note
+    if options['treat_citations']:
+        # change citations, like: "[[p110]]" to "\cite{p110}"
+        for i, s in enumerate(S):
+            S[i] = replace_obsidian_bibliography_link_with_cite(s)
+    # 
+    
+    # Treat quotes and questions
+    for block_type in ['quotes', 'questions']:
+        for i, s in enumerate(S):
+            S[i] = convert_special_block_referencing(s, special_notes[block_type], block_type[:-1])
+    #
+
+    formatting_rules_keys = formatting_rules.keys()
+    
+    formatting_rules_to_check = ['notes_with_tags']
+
+    for link in links:
+        line = link[0]  
+        link1 = link[1]
+        # for link1 in link[1]:
+        tmp1 = link1
+        note_name = tmp1[0]
+        
+        if len(tmp1[1]) == 0 and len(tmp1[2]) == 0:
+            text_to_replace = f'[[{note_name}]]'
+            replacement_text = note_name
+        else:
+            text_to_replace = f'[[{note_name+tmp1[2]}]]' if len(tmp1[2])>0 else f'[[{note_name+tmp1[1]}]]'
+            replacement_text = tmp1[2][1:] if len(tmp1[2])>0 else tmp1[1][1:]
+
+        replacement_text = escape_underscore(replacement_text)
+
+        if formatting_rules['use']:
+            f = formatting_rules_to_check[0]
+            if f in formatting_rules_keys:
+                note_path = get_embedded_reference_path(note_name, PARS, search_in = 'vault')
+                formatting_notes = formatting_rules[f]
+                replacement_text = formatting_rule__notes_with_tags(note_path, replacement_text, formatting_notes)
+                        
+        S[line] = S[line].replace(text_to_replace, replacement_text)
+
+    return S
+
+
+def replace_obsidian_bibliography_link_with_cite(s):
+
+    """
+    Converts citation style according to the following example:
+
+    Obsidian Text: "In [[p23]], the authors mention that ..."
+    Latex Text:    "In \cite{p23}, the authors mention that ..."
+    """
+
+    pattern = r'\[\[p(\d+)\]\]'  # Updated regular expression pattern with capturing group
+    replaced_string = re.sub(pattern, r'\\cite{p\1}', s)
+    return replaced_string
+
+
+def convert_special_block_referencing(s, block_notes, block_type='quote'):
+    pattern = r'\[\[([^\[\]]+)\]\]'  # Regular expression pattern to match ![[note]]
+    
+    if block_type == 'quote':
+        f_converted_text = lambda m: f'Quote~\\ref{{qt:{obsidian_to_latex_ref(m)}}}'
+    elif block_type == 'question':        
+        f_converted_text = lambda m: f'Question~\\ref{{q:{obsidian_to_latex_ref(m)}}}'
+    
+    match=re.search(pattern, s)
+    if match:
+        for m in re.findall(pattern, s):
+            if f'[[{m}]]' in block_notes:
+                s = s.replace(f'[[{m}]]', f_converted_text(m))
+    return s

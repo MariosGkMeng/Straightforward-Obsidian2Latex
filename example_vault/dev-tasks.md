@@ -1,4 +1,0 @@
-- [ ] Allow user to create more complex configurations
-- [ ] Tables
-	- [ ] Fancy formatting
-- [ ] Allow the user to change settings from Obsidian, instead of Python

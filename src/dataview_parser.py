@@ -176,13 +176,10 @@ def parse_dataview_query(query: str, PATHS: dict, this_note_path: str):
                     
             else:
                 # get the list of notes that contain the tag
-                try:
-                    tagged_notes_file = get_fields_from_Obsidian_note(this_note_path, ["search_results_if_necessary:: "])[0][0]
-                    tagged_notes_file = get_embedded_reference_path(tagged_notes_file, PATHS)
-                    with open(tagged_notes_file, encoding='utf8') as f:
-                        result['files_with_the_tag'] = f.readlines()
-                except:
-                    result['files_with_the_tag'] = []
+                tagged_notes_file = get_fields_from_Obsidian_note(this_note_path, ["search_results_if_necessary:: "])[0][0]
+                tagged_notes_file = get_embedded_reference_path(tagged_notes_file, PATHS)
+                with open(tagged_notes_file, encoding='utf8') as f:
+                    result['files_with_the_tag'] = f.readlines()
 
             other_from_filters = parts[2::2]
             result["other__from__filters"] = other_from_filters
@@ -616,7 +613,8 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, this_file_path, 
             dum1 = file_path.split('\\')[-1]
             
         dum1 = f'[[{dum1.replace(".md", "")}]]'
-        table_data[row_index][1] = dum1
+        if 1 not in col_idx_excl:
+            table_data[row_index][1] = dum1
         
         for col_index, field in enumerate(file_fields):
             if not col_index + 2 in col_idx_excl:
@@ -634,7 +632,10 @@ def write_Obsidian_table_from_dataview_query(query_text, PATHS, this_file_path, 
             
     markdown_table = write_Obsidian_table(table_data_1)
 
-    obsidian_notes = [t[1] for (_,t) in table_data.items() if is_note(t[1])]
+    try:
+        obsidian_notes = [t[1] for (_,t) in table_data.items() if is_note(t[1])]
+    except:
+        obsidian_notes = []
     return markdown_table, obsidian_notes
 
 # print(filtered_files)

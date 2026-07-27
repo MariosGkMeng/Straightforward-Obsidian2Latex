@@ -79,7 +79,7 @@ def get_parameters(version = 'default'):
     path_equation_blocks = path_writing + 'equation blocks'
     path_table_blocks   = path_writing + 'table blocks'
     path_list_note_paths = path_vault + 'DO_NOT_DELETE__note_paths.txt'
-    path_BIBTEX          = path_writing + 'BIBTEX'
+    path_BIBTEX          = path_writing + 'BIBTEX.bib'
     
     if not os.path.exists(path_list_note_paths):
         with open(path_list_note_paths, 'w', encoding='utf-8') as file:
@@ -120,13 +120,15 @@ def get_parameters(version = 'default'):
     V__document_class = {'class': ID__DOCUMENT_CLASS__EXTARTICLE, 'fontsize': ''}
     V__author = 'Marios Gkionis'
     V__bib_package = 'natbib'
-    V__bib_style = ''
+    V__bib_style = 'plainnat'
     V__use_natbib = True
     V__use_pkg__minted = False
     V__custom_preamble_path = None
     V__include_list_of_tables = False
     V__include_list_of_figures = False
     V__add_table_of_contents = False
+    V__use_first_level_header_as_chapter = False
+    V__use_overleaf_all_in_same_folder = False
     symbol_replacement_additions_patterns = []
         
     if version =='[[👆👆RL--writing--1]]':
@@ -143,30 +145,38 @@ def get_parameters(version = 'default'):
         V__document_class = {'class': ID__DOCUMENT_CLASS__CONFERENCE__IFAC, 'fontsize': ''}
         V__author = ''
          
-    elif version =='[[✍⌛writing--THESIS--high-level-structure]]':
+    elif version in ['[[✍⌛writing--THESIS--high-level-structure]]', '[[✍⌛writing--THESIS--high-level-structure--before-papers]]']:
     # \documentclass[a4paper, 12pt, openany]{book} %chose the paper size and font size. Openany ensures that all all chapters and similar may begin at any page, not only odd pages. For the introductory pages and appendices we want openany, but for chapter pages in the main content we want chapters to begin only on odd pages (right hand side). The book class ensures that the margins are automatically adjusted such that left hand pages are slightly moved to the left and vice versa at the right, which makes the thesis very readable and good looking when printed in bound book format.
         V__document_class = {'class': '\documentclass[a4paper, 12pt, openany]{book}', 'fontsize': '12pt'}
         V__author = 'Marios Gkionis'
         V__include_list_of_tables = True
         V__include_list_of_figures = True
         V__add_table_of_contents = True
+        V__use_overleaf_all_in_same_folder = True
+        V__use_first_level_header_as_chapter = version=='[[✍⌛writing--THESIS--high-level-structure]]'
 
-        
-    elif version == '[[✍⌛writing--THESIS--Paper-3]]':
+        V__custom_preamble_path = '[[thesis_preamble]]'
+    elif version in ['[[✍⌛writing--THESIS--Paper-3]]', '[[plot_MTL_action_1]]']:
         V__document_class = {'class': '\documentclass[preprint,12pt,authoryear]{elsarticle}', 'fontsize': '12pt'}
-        V__author = 'Marios Gkionis'
-        V__bib_style = 'elsarticle-harv'
-        V__custom_preamble_path = '[[✍⌛writing--THESIS--Paper-3--latex-preamble]]'
+        V__author = ''
+        V__bib_style = 'cas-model2-names'
+        V__custom_preamble_path = '[[✍⌛writing--THESIS--Paper-3--latex-preamble-new]]'
         symbol_replacement_additions_patterns: List[Tuple[str, str]] = [
             (r"\\mathbb\{((?:[^{}]|\{[^{}]*\})*)\}", r"\\mathds{\1}"),
         ]
+        V__use_overleaf_all_in_same_folder = True
+    
     elif version == '[[✍⌛writing--THESIS--Paper-3--Results]]':
         V__custom_preamble_path = '[[✍⌛writing--THESIS--Paper-3--Results--latex-preamble]]'
-        V__bib_style = 'elsarticle-harv'
+        V__bib_style = 'cas-model2-names'
+        V__use_overleaf_all_in_same_folder = True
     elif version == '[[✍⌛writing--THESIS--Paper-3--Introduction]]':
         V__custom_preamble_path = '[[✍⌛writing--THESIS--Paper-3-Introduction--latex-preamble]]'
         V__bib_style = 'elsarticle-harv'
 
+    elif version=='[[✍️writing--manufacturing--research--status-quo-and-reflections]]':
+        V__use_overleaf_all_in_same_folder = True
+        V__custom_preamble_path = '[[✍️writing--manufacturing--research--status-quo-and-reflections--PREAMBLE]]'
         
         
     V__use_pkg__apacite = 'apacite' in V__bib_style
@@ -189,6 +199,7 @@ def get_parameters(version = 'default'):
                             'place_table_where_it_is_written': '🟢',
                             'include_list_of_tables': V__include_list_of_tables,
                     },
+            'use_first_level_header_as_chapter': V__use_first_level_header_as_chapter,
             'margin': '0.9in',
             'use_date': '🔴',
             'EXCEPTIONS': 
@@ -215,7 +226,8 @@ def get_parameters(version = 'default'):
                             {'reduce spacing between figures': '🔴',
                                       'put_figure_below_text': '🟢',
                                                'include_path': '🟢', # not including the path works only if all the figures are in the same folder (appropriate for Overleaf projects)
-                        'use_overleaf_all_in_the_same_folder': '🔴',
+                        'use_overleaf_all_in_the_same_folder': V__use_overleaf_all_in_same_folder,
+                        'overleaf_subfolder': 'figures\\', # if use_overleaf_all_in_the_same_folder is False, then this parameter is not used. If use_overleaf_all_in_the_same_folder is True, then this parameter specifies the subfolder in which the figures are located in the overleaf project. The figures will be included with \includegraphics{overleaf_subfolder/figure_name}
                                     'include_list_of_figures': V__include_list_of_figures,}, 
                                                         
             'paragraph':{
@@ -260,7 +272,8 @@ def get_parameters(version = 'default'):
             'quotes': [path_vault + 'Literature\\Notes\\quotes from papers\\'],
             'questions': [path_vault + '🏗small parts\\❓research_questions\\'],
             'bibliography': path_vault + 'Literature\\publication_note_objects\\',
-            'custom_preamble': V__custom_preamble_path
+            'custom_preamble': V__custom_preamble_path,
+            'bibtex': path_BIBTEX
                 },
         'par':
             {
@@ -345,7 +358,21 @@ def get_parameters(version = 'default'):
                                             ['🗣️',                  '\\twemoji{busts in silhouette}',           1],
                                             ['🏫',                  '\\twemoji{school}',           1],
                                             ['⚕️',                  '\\twemoji{medical symbol}',           1],
-											['⚪',					'\\twemoji{white circle}',		1]
+											['⚪',					'\\twemoji{white circle}',		1],
+                                            ['⌛',                  '\\twemoji{hourglass done}',           1],
+                                            ['✍',                  '\\twemoji{writing hand}',           1],
+                                            ['≈',                      '$\\approx$',                      1],
+                                            ['⬅️'    ,                  '\\twemoji{left arrow}',           1],
+                                            ['➡️',                  '\\twemoji{right arrow}',           1],
+                                            ['1️⃣',                  '\\twemoji{keycap 1}',           1],
+                                            ['2️⃣',                  '\\twemoji{keycap 2}',           1],
+                                            ['3️⃣',                  '\\twemoji{keycap 3}',           1],
+                                            ['4️⃣',                  '\\twemoji{keycap 4}',           1],
+                                            ['5️⃣',                  '\\twemoji{keycap 5}',           1],
+                                            ['6️⃣',                  '\\twemoji{keycap 6}',           1],
+                                            ['7️⃣',                  '\\twemoji{keycap 7}',           1],
+                                            ['8️⃣',                  '\\twemoji{keycap 8}',           1],
+                                            ['9️⃣',                  '\\twemoji{keycap 9}',           1],
                                             ]
             },
             #                                        ['\\text',          '\\textnormal',          1],

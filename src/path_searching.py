@@ -1,4 +1,7 @@
 import os
+import pathlib
+from pathlib import Path
+import json
 
 def count_calls(func):
     def wrapper(*args, **kwargs):
@@ -99,7 +102,8 @@ def get_embedded_reference_path(fileName, PARS, search_in = 'vault'):
                 update_list_of_embedded_note_paths(fileName.replace('.md', ''), path_found, path_list_of_notes)
                 return path_found
             else:
-                raise Exception(f"No information found for '{fileName}' in the provided text file and unable to find an alternative path.")
+                # raise Exception(f"No information found for '{fileName}' in the provided text file and unable to find an alternative path.")
+                print(f"No information found for '{fileName}' in the provided text file and unable to find an alternative path. Returning the original file name as a fallback.")
         else:
             path_found = PATH_dict['vault'] + fileName
             update_list_of_embedded_note_paths(fileName, path_found, path_list_of_notes)
@@ -110,3 +114,13 @@ def update_list_of_embedded_note_paths(filename, path, path_list_of_notes):
         # update path_list_of_notes for the next time
         file.write(f"{filename}: {path}\n")
         # print(f"Path for '{fileName}' appended as a new line in the text file.")
+        
+        
+def get_backlinks(note_name, PARS):
+    note_name = get_embedded_reference_path(f"[[{note_name}]]", PARS).replace(PARS['📁']['vault'], "").replace("\\", "/")
+    vault = Path(PARS['📁']['vault'])
+
+    with open(vault / "backlinks-cache.json", encoding="utf-8") as f:
+        backlinks = json.load(f)
+
+    return backlinks.get(note_name, [])

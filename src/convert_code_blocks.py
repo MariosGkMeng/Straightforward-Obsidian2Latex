@@ -2,11 +2,57 @@ import re
 import os
 from remove_markdown_comment import *
 from path_searching import *
-from embedded_notes import non_embedded_references_recognizer
+from helper_functions import non_embedded_references_recognizer
 from equations import get_fields_from_Obsidian_note
 from symbol_replacements import *
 
+def _convert_inline_latex_in_string(s: str) -> str:
+    out = []
+    i = 0
+    n = len(s)
 
+    while i < n:
+        start = s.find("`latex{", i)
+        if start == -1:
+            out.append(s[i:])
+            break
+
+        # copy text before the match
+        out.append(s[i:start])
+
+        # parse balanced braces starting right after "`latex{"
+        j = start + len("`latex{")
+        depth = 1
+        content_start = j
+
+        while j < n and depth > 0:
+            ch = s[j]
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+            j += 1
+
+        # If we didn't close braces properly, just keep the rest as-is
+        if depth != 0:
+            out.append(s[start:])
+            break
+
+        content = s[content_start : j - 1]  # exclude the final closing "}"
+        # We expect a trailing backtick after the closing brace
+        if j < n and s[j] == "`":
+            out.append(content)
+            i = j + 1  # skip the closing backtick
+        else:
+            # Not the pattern we want; keep original text
+            out.append(s[start:j])
+            i = j
+
+    return "".join(out)
+
+
+def convert_inline_latex_commands(S):
+    return [_convert_inline_latex_in_string(s) for s in S]
 # def convert_inline_code_of_line(text):
 #     # Case 1: Inside \hyperref[...] or \autoref{...} → strip backticks only
 #     text = re.sub(r'(\\hyperref\[[^\]]*?)`([^`]+)`', r'\1\2', text)
@@ -236,3 +282,27 @@ def protect_programmatic_comments(s, language):
     else:
         return s
         
+        
+        
+def has_latex_code_block(S):
+    for s in S:
+        if s.startswith('```latex'):
+            return True
+    return False
+
+
+def extract_latex_code_blocks(S):
+    in_latex_block = False
+    latex_code = []
+    for s in S:
+        if s.startswith('```latex'):
+            in_latex_block = True
+            continue
+        elif s.startswith('```') and in_latex_block:
+            in_latex_block = False
+            continue
+        
+        if in_latex_block:
+            latex_code.append(s)
+    
+    return latex_code
