@@ -1,4 +1,4 @@
-import { App, Notice, Plugin, PluginSettingTab, Setting } from "obsidian";
+import { App, FileSystemAdapter, Notice, Plugin, PluginSettingTab, Setting } from "obsidian";
 import { spawn } from "child_process";
 import { shell } from "electron";
 import * as fs from "fs";
@@ -12,7 +12,7 @@ interface LatexConverterSettings {
 
 const DEFAULT_SETTINGS: LatexConverterSettings = {
 	pythonPath: "python",
-	converterPath: "C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\Literature\\Straightforward-Obsidian2Latex\\converter.py",
+	converterPath: "",
 	commandNotePath: "C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\✍Writing\\👨‍💻convert_to_latex.md",
 };
 
@@ -58,8 +58,23 @@ export default class LatexConverterPlugin extends Plugin {
 		await this.runConverter(activeFile.basename, compile);
 	}
 
+	/** Absolute path to this plugin's own installed folder (desktop only). */
+	getPluginDir(): string {
+		const adapter = this.app.vault.adapter;
+		if (!(adapter instanceof FileSystemAdapter)) {
+			throw new Error("This plugin only supports the Obsidian desktop app.");
+		}
+		return path.join(adapter.getBasePath(), this.manifest.dir ?? "");
+	}
+
+	/** converter.py bundled with this plugin, unless the user overrode it in settings. */
+	resolveConverterPath(): string {
+		return this.settings.converterPath || path.join(this.getPluginDir(), "converter.py");
+	}
+
 	async runConverter(overrideNote: string | null, compile = false) {
-		const converterDir = path.dirname(this.settings.converterPath);
+		const converterPath = this.resolveConverterPath();
+		const converterDir = path.dirname(converterPath);
 		let originalContent: string | null = null;
 		let noteName = overrideNote;
 
@@ -84,7 +99,7 @@ export default class LatexConverterPlugin extends Plugin {
 
 		new Notice(`Converting ${noteName ?? "note"}...`);
 
-		const proc = spawn(this.settings.pythonPath, [this.settings.converterPath], {
+		const proc = spawn(this.settings.pythonPath, [converterPath], {
 			cwd: converterDir,
 			windowsHide: false,
 			env: { ...process.env, PYTHONIOENCODING: "utf-8" },
@@ -205,10 +220,12 @@ class ConverterSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("converter.py path")
-			.setDesc("Full absolute path to converter.py")
+			.setDesc(
+				"Leave empty to use the converter.py bundled with this plugin. Only set this if you keep converter.py somewhere else."
+			)
 			.addText((text) =>
 				text
-					.setPlaceholder("C:\\path\\to\\converter.py")
+					.setPlaceholder(this.plugin.getPluginDir() + path.sep + "converter.py")
 					.setValue(this.plugin.settings.converterPath)
 					.onChange(async (value) => {
 						this.plugin.settings.converterPath = value;
