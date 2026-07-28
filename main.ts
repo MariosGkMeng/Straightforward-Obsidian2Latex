@@ -246,7 +246,7 @@ export default class LatexConverterPlugin extends Plugin {
 			stderr += data.toString();
 		});
 
-		proc.on("close", async (code) => {
+		proc.on("close", (code) => {
 			if (originalContent !== null) {
 				try {
 					fs.writeFileSync(this.settings.commandNotePath, originalContent, "utf8");
@@ -263,8 +263,9 @@ export default class LatexConverterPlugin extends Plugin {
 					if (compile) {
 						this.compilePdf(texPath);
 					} else {
-						const openErr = await shell.openPath(texPath);
-						if (openErr) new Notice(`Failed to open ${texPath}: ${openErr}`);
+						void shell.openPath(texPath).then((openErr) => {
+							if (openErr) new Notice(`Failed to open ${texPath}: ${openErr}`);
+						});
 					}
 				}
 			} else {
@@ -297,22 +298,21 @@ export default class LatexConverterPlugin extends Plugin {
 			stderr += data.toString();
 		});
 
-		proc.on("close", async (code) => {
+		proc.on("close", (code) => {
 			if (code === 0) {
 				new Notice("✓ PDF ready!");
 				const pdfPath = texPath.replace(/\.tex$/, ".pdf");
-				await shell.openPath(texPath);
-				await shell.openPath(pdfPath);
+				void shell.openPath(texPath).then(() => shell.openPath(pdfPath));
 			} else {
 				new Notice(`PDF compilation failed (exit ${code}). See console for details.`);
 				console.error("[LaTeX Converter] latexmk stderr:", stderr);
-				await shell.openPath(texPath);
+				void shell.openPath(texPath);
 			}
 		});
 
-		proc.on("error", async (err) => {
+		proc.on("error", (err) => {
 			new Notice(`Failed to start latexmk: ${err.message}`);
-			await shell.openPath(texPath);
+			void shell.openPath(texPath);
 		});
 	}
 
@@ -381,73 +381,5 @@ class ConverterSettingTab extends PluginSettingTab {
 				},
 			},
 		];
-	}
-
-	/** Fallback for Obsidian versions older than 1.13.0 (below minAppVersion's declarative support). */
-	display(): void {
-		const { containerEl } = this;
-		containerEl.empty();
-		new Setting(containerEl).setName("LaTeX Converter Settings").setHeading();
-
-		new Setting(containerEl)
-			.setName("Python executable")
-			.setDesc('Path to python (e.g. "python", "python3", or full path like C:\\Python310\\python.exe)')
-			.addText((text) =>
-				text
-					.setPlaceholder("python")
-					.setValue(this.plugin.settings.pythonPath)
-					.onChange(async (value) => {
-						this.plugin.settings.pythonPath = value;
-						await this.plugin.saveSettings();
-					})
-			);
-
-		new Setting(containerEl)
-			.setName("Bundled Python (Windows only)")
-			.setDesc(
-				"No Python installed? Download a private, self-contained Python + numpy just for this " +
-					"plugin (~30 MB) and point 'Python executable' below at it automatically. Doesn't touch " +
-					"any system-wide Python install."
-			)
-			.addButton((btn) =>
-				btn.setButtonText("Set up bundled Python").onClick(async () => {
-					btn.setDisabled(true).setButtonText("Setting up...");
-					await this.plugin.setupBundledPython();
-					btn.setDisabled(false).setButtonText("Set up bundled Python");
-					this.display();
-				})
-			);
-
-		new Setting(containerEl)
-			.setName("converter.py path")
-			.setDesc(
-				"Leave empty to use the converter.py bundled with this plugin. Only set this if you keep converter.py somewhere else."
-			)
-			.addText((text) =>
-				text
-					.setPlaceholder(this.plugin.getPluginDir() + path.sep + "converter.py")
-					.setValue(this.plugin.settings.converterPath)
-					.onChange(async (value) => {
-						this.plugin.settings.converterPath = value;
-						await this.plugin.saveSettings();
-					})
-			);
-
-		new Setting(containerEl)
-			.setName("Command note path")
-			.setDesc(
-				"Required. Full absolute path to a note in your vault containing a line like " +
-					"'convert_note:: [[Note Name]]' — the plugin temporarily points this line at " +
-					"the note being converted before running the converter."
-			)
-			.addText((text) =>
-				text
-					.setPlaceholder("C:\\path\\to\\your-vault\\convert_to_latex.md")
-					.setValue(this.plugin.settings.commandNotePath)
-					.onChange(async (value) => {
-						this.plugin.settings.commandNotePath = value;
-						await this.plugin.saveSettings();
-					})
-			);
 	}
 }
