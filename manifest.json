@@ -1,7 +1,7 @@
 {
   "id": "ultimate-latex-converter",
   "name": "Ultimate LaTeX Converter",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "minAppVersion": "1.5.0",
   "description": "Convert notes to LaTeX and optionally compile them to PDF using a bundled Python converter script.",
   "author": "Marios Gkionis",
