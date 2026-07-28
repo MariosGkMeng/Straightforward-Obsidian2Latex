@@ -1,6 +1,6 @@
 {
   "name": "ultimate-latex-converter",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Convert notes to LaTeX and optionally compile them to PDF using a bundled Python converter script.",
   "main": "main.js",
   "scripts": {
@@ -12,7 +12,6 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^16.11.6",
-    "builtin-modules": "3.3.0",
     "electron": "^25.9.8",
     "esbuild": "0.17.3",
     "obsidian": "latest",

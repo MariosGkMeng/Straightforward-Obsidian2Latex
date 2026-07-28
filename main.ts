@@ -1,4 +1,4 @@
-import { App, FileSystemAdapter, Notice, Plugin, PluginSettingTab, Setting } from "obsidian";
+import { App, FileSystemAdapter, Notice, Plugin, PluginSettingTab, Setting, SettingDefinitionItem } from "obsidian";
 import { spawn } from "child_process";
 import { shell } from "electron";
 import * as fs from "fs";
@@ -123,8 +123,8 @@ export default class LatexConverterPlugin extends Plugin {
 			const proc = spawn(cmd, args, { cwd, windowsHide: false });
 			let stdout = "";
 			let stderr = "";
-			proc.stdout.on("data", (d) => (stdout += d.toString()));
-			proc.stderr.on("data", (d) => (stderr += d.toString()));
+			proc.stdout.on("data", (d: Buffer) => (stdout += d.toString()));
+			proc.stderr.on("data", (d: Buffer) => (stderr += d.toString()));
 			proc.on("close", (code) => resolve({ code: code ?? -1, stdout, stderr }));
 			proc.on("error", reject);
 		});
@@ -192,7 +192,8 @@ export default class LatexConverterPlugin extends Plugin {
 			await this.saveSettings();
 			new Notice("✓ Bundled Python set up! 'Python executable' setting updated automatically.");
 		} catch (e) {
-			new Notice(`Python setup failed: ${e.message}`);
+			const message = e instanceof Error ? e.message : String(e);
+			new Notice(`Python setup failed: ${message}`);
 			console.error("[LaTeX Converter] Bundled Python setup failed:", e);
 		}
 	}
@@ -214,7 +215,8 @@ export default class LatexConverterPlugin extends Plugin {
 				const updated = originalContent.replace(/convert_note::.*/, `convert_note:: [[${overrideNote}]]`);
 				fs.writeFileSync(this.settings.commandNotePath, updated, "utf8");
 			} catch (e) {
-				new Notice(`Failed to prepare command note: ${e.message}`);
+				const message = e instanceof Error ? e.message : String(e);
+				new Notice(`Failed to prepare command note: ${message}`);
 				return;
 			}
 		} else {
@@ -222,7 +224,7 @@ export default class LatexConverterPlugin extends Plugin {
 				const content = fs.readFileSync(this.settings.commandNotePath, "utf8");
 				const match = content.match(/convert_note::\s*\[\[([^\]]+)\]\]/);
 				if (match) noteName = match[1];
-			} catch (_) {
+			} catch {
 				// no command note yet — proceed without an override
 			}
 		}
@@ -237,18 +239,18 @@ export default class LatexConverterPlugin extends Plugin {
 
 		let stdout = "";
 		let stderr = "";
-		proc.stdout.on("data", (data) => {
+		proc.stdout.on("data", (data: Buffer) => {
 			stdout += data.toString();
 		});
-		proc.stderr.on("data", (data) => {
+		proc.stderr.on("data", (data: Buffer) => {
 			stderr += data.toString();
 		});
 
-		proc.on("close", (code) => {
+		proc.on("close", async (code) => {
 			if (originalContent !== null) {
 				try {
 					fs.writeFileSync(this.settings.commandNotePath, originalContent, "utf8");
-				} catch (_) {
+				} catch {
 					// best-effort restore
 				}
 			}
@@ -261,7 +263,8 @@ export default class LatexConverterPlugin extends Plugin {
 					if (compile) {
 						this.compilePdf(texPath);
 					} else {
-						shell.openPath(texPath);
+						const openErr = await shell.openPath(texPath);
+						if (openErr) new Notice(`Failed to open ${texPath}: ${openErr}`);
 					}
 				}
 			} else {
@@ -290,31 +293,32 @@ export default class LatexConverterPlugin extends Plugin {
 		);
 
 		let stderr = "";
-		proc.stderr.on("data", (data) => {
+		proc.stderr.on("data", (data: Buffer) => {
 			stderr += data.toString();
 		});
 
-		proc.on("close", (code) => {
+		proc.on("close", async (code) => {
 			if (code === 0) {
 				new Notice("✓ PDF ready!");
 				const pdfPath = texPath.replace(/\.tex$/, ".pdf");
-				shell.openPath(texPath);
-				shell.openPath(pdfPath);
+				await shell.openPath(texPath);
+				await shell.openPath(pdfPath);
 			} else {
 				new Notice(`PDF compilation failed (exit ${code}). See console for details.`);
 				console.error("[LaTeX Converter] latexmk stderr:", stderr);
-				shell.openPath(texPath);
+				await shell.openPath(texPath);
 			}
 		});
 
-		proc.on("error", (err) => {
+		proc.on("error", async (err) => {
 			new Notice(`Failed to start latexmk: ${err.message}`);
-			shell.openPath(texPath);
+			await shell.openPath(texPath);
 		});
 	}
 
 	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		const data = (await this.loadData()) as Partial<LatexConverterSettings> | null;
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, data);
 	}
 
 	async saveSettings() {
@@ -330,10 +334,60 @@ class ConverterSettingTab extends PluginSettingTab {
 		this.plugin = plugin;
 	}
 
+	/** Declarative settings for Obsidian 1.13.0+ (adds settings-search support). */
+	getSettingDefinitions(): SettingDefinitionItem[] {
+		return [
+			{
+				name: "Python executable",
+				desc: 'Path to python (e.g. "python", "python3", or full path like C:\\Python310\\python.exe)',
+				control: { type: "text", key: "pythonPath", placeholder: "python" },
+			},
+			{
+				name: "Bundled Python (Windows only)",
+				desc:
+					"No Python installed? Download a private, self-contained Python + numpy just for this " +
+					"plugin (~30 MB) and point 'Python executable' above at it automatically. Doesn't touch " +
+					"any system-wide Python install.",
+				render: (setting) => {
+					setting.addButton((btn) =>
+						btn.setButtonText("Set up bundled Python").onClick(async () => {
+							btn.setDisabled(true).setButtonText("Setting up...");
+							await this.plugin.setupBundledPython();
+							btn.setDisabled(false).setButtonText("Set up bundled Python");
+							this.update();
+						})
+					);
+				},
+			},
+			{
+				name: "converter.py path",
+				desc: "Leave empty to use the converter.py bundled with this plugin. Only set this if you keep converter.py somewhere else.",
+				control: {
+					type: "text",
+					key: "converterPath",
+					placeholder: this.plugin.getPluginDir() + path.sep + "converter.py",
+				},
+			},
+			{
+				name: "Command note path",
+				desc:
+					"Required. Full absolute path to a note in your vault containing a line like " +
+					"'convert_note:: [[Note Name]]' — the plugin temporarily points this line at " +
+					"the note being converted before running the converter.",
+				control: {
+					type: "text",
+					key: "commandNotePath",
+					placeholder: "C:\\path\\to\\your-vault\\convert_to_latex.md",
+				},
+			},
+		];
+	}
+
+	/** Fallback for Obsidian versions older than 1.13.0 (below minAppVersion's declarative support). */
 	display(): void {
 		const { containerEl } = this;
 		containerEl.empty();
-		containerEl.createEl("h2", { text: "LaTeX Converter Settings" });
+		new Setting(containerEl).setName("LaTeX Converter Settings").setHeading();
 
 		new Setting(containerEl)
 			.setName("Python executable")
