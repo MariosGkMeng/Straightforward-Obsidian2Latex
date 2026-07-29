@@ -1,11 +1,12 @@
 {
   "name": "ultimate-latex-converter",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Convert notes to LaTeX and optionally compile them to PDF using a bundled Python converter script.",
   "main": "main.js",
   "scripts": {
-    "dev": "node esbuild.config.mjs",
-    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production"
+    "generate-assets": "node scripts/generate-python-assets.mjs",
+    "dev": "npm run generate-assets && node esbuild.config.mjs",
+    "build": "npm run generate-assets && tsc -noEmit -skipLibCheck && node esbuild.config.mjs production"
   },
   "keywords": [],
   "author": "Marios Gkionis",

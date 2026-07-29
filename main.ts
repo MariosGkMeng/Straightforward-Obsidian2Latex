@@ -4,6 +4,7 @@ import { shell } from "electron";
 import * as fs from "fs";
 import * as https from "https";
 import * as path from "path";
+import { PYTHON_ASSETS } from "./python-assets.generated";
 
 interface LatexConverterSettings {
 	pythonPath: string;
@@ -26,6 +27,7 @@ export default class LatexConverterPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
+		this.ensurePythonAssets();
 
 		this.addCommand({
 			id: "convert-current-note",
@@ -75,6 +77,50 @@ export default class LatexConverterPlugin extends Plugin {
 	/** converter.py bundled with this plugin, unless the user overrode it in settings. */
 	resolveConverterPath(): string {
 		return this.settings.converterPath || path.join(this.getPluginDir(), "converter.py");
+	}
+
+	/**
+	 * Writes converter.py/src/ out to this plugin's own install folder, creating
+	 * or refreshing them to match the currently-installed plugin version.
+	 *
+	 * Obsidian's plugin installer (community browser or BRAT) only ever fetches
+	 * main.js/manifest.json from a GitHub release — never the rest of the repo —
+	 * so without this, converter.py wouldn't exist wherever the plugin actually
+	 * gets installed. Safe to call on every load: files are only (re)written
+	 * when missing or when their content differs from what's embedded.
+	 */
+	private ensurePythonAssets(): void {
+		let pluginDir: string;
+		try {
+			pluginDir = this.getPluginDir();
+		} catch {
+			return;
+		}
+
+		for (const [relPath, content] of Object.entries(PYTHON_ASSETS)) {
+			const dest = path.join(pluginDir, ...relPath.split("/"));
+			try {
+				fs.mkdirSync(path.dirname(dest), { recursive: true });
+				if (!fs.existsSync(dest) || fs.readFileSync(dest, "utf8") !== content) {
+					fs.writeFileSync(dest, content, "utf8");
+				}
+			} catch (e) {
+				console.error(`[LaTeX Converter] Failed to write bundled file ${relPath}:`, e);
+			}
+		}
+
+		// note_map.json is runtime-generated cache data the tool populates during
+		// use, not shipped source — seed it once if missing, but never overwrite
+		// it afterward (unlike the source files above).
+		const noteMapPath = path.join(pluginDir, "src", "note_map.json");
+		if (!fs.existsSync(noteMapPath)) {
+			try {
+				fs.mkdirSync(path.dirname(noteMapPath), { recursive: true });
+				fs.writeFileSync(noteMapPath, "{\n}\n", "utf8");
+			} catch (e) {
+				console.error("[LaTeX Converter] Failed to seed note_map.json:", e);
+			}
+		}
 	}
 
 	/** Downloads a URL to a local file, following redirects. */
