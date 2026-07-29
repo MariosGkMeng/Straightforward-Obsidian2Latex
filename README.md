@@ -1,7 +1,5 @@
 # Ultimate LaTeX Converter
 
-👆👆**SOON TO BE UPLOADED AS AN OBSIDIAN PLUGIN**
-
 - [Comparisons to other converters](#comparisons-to-other-converters)
 - [🎞General video showcasing the functions and the converted file (ongoing)](#general-video-under-development)
 
