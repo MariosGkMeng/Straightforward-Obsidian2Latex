@@ -6,6 +6,31 @@
 - [🎞General video showcasing the functions and the converted file (ongoing)](#general-video-under-development)
 
 
+# 🔌 Use as an Obsidian plugin (Ultimate LaTeX Converter)
+
+This repository doubles as an installable Obsidian plugin that runs `converter.py` for you, from inside Obsidian.
+
+## Install
+- **BRAT**: add this repository (`MariosGkMeng/Straightforward-Obsidian2Latex`) in the [BRAT](https://github.com/TfTHacker/obsidian42-brat) plugin.
+- **Manual**: copy this whole repository into `<your-vault>/.obsidian/plugins/`, then enable "Ultimate LaTeX Converter" in Obsidian's Community plugins settings.
+
+## Requirements
+- Python 3 on your `PATH` (or set a full path in the plugin settings) — **no Python?** On Windows, click "Set up bundled Python" in the plugin settings and it'll download a private, self-contained Python + numpy just for this plugin (~30 MB), without touching any system-wide install.
+- [latexmk](https://mg.readthedocs.io/latexmk.html) on your `PATH`, only if you use the "compile to PDF" commands (no bundled option for this one — it requires a full LaTeX distribution like MiKTeX or TeX Live)
+
+## Settings
+Open **Settings → Ultimate LaTeX Converter**:
+- **Python executable** — `python`, `python3`, or a full path. Defaults to `python`.
+- **converter.py path** — leave empty to use the `converter.py` bundled with this plugin install.
+- **Command note path** (required) — full path to a note in your vault containing a line like `convert_note:: [[Note Name]]`. The plugin temporarily rewrites this line to point at the note being converted, runs `converter.py`, then restores the note's original content.
+
+## Commands
+- **Convert current note to LaTeX** — converts the currently open note.
+- **Convert current note to LaTeX AND compile to PDF** — same, then runs `latexmk`.
+- **Run LaTeX converter (use convert_to_latex.md target)** — converts whatever note the command note currently points at.
+- **Convert AND compile (use convert_to_latex.md target)** — same, then runs `latexmk`.
+
+
 # Citing this work
 Please cite the following if you use it for publishable work (i.e., if you write your paper in Obsidian, and use this code to print to Latex)
 ```
@@ -61,29 +86,7 @@ It is the most complete that I have seen among existing ones, since it offers mo
 I consider LateX a very archaeic tool (Overleaf has come a long way and is quite comfortable to use), not suited for the intense knowledge-work of 2024. It is clunky, and forces the researcher to write code, when they just want to write about their work 😩
 I want to see it not being used at all, but due to its legacy, I doubt it will happen any time soon. So, what we are left with is the need to translate content from proper tools (like Obsidian) to not-so-good old LateX. 
 
-# 🔌 Use as an Obsidian plugin (Ultimate LaTeX Converter)
 
-This repository doubles as an installable Obsidian plugin that runs `converter.py` for you, from inside Obsidian.
-
-## Install
-- **BRAT**: add this repository (`MariosGkMeng/Straightforward-Obsidian2Latex`) in the [BRAT](https://github.com/TfTHacker/obsidian42-brat) plugin.
-- **Manual**: copy this whole repository into `<your-vault>/.obsidian/plugins/`, then enable "Ultimate LaTeX Converter" in Obsidian's Community plugins settings.
-
-## Requirements
-- Python 3 on your `PATH` (or set a full path in the plugin settings) — **no Python?** On Windows, click "Set up bundled Python" in the plugin settings and it'll download a private, self-contained Python + numpy just for this plugin (~30 MB), without touching any system-wide install.
-- [latexmk](https://mg.readthedocs.io/latexmk.html) on your `PATH`, only if you use the "compile to PDF" commands (no bundled option for this one — it requires a full LaTeX distribution like MiKTeX or TeX Live)
-
-## Settings
-Open **Settings → Ultimate LaTeX Converter**:
-- **Python executable** — `python`, `python3`, or a full path. Defaults to `python`.
-- **converter.py path** — leave empty to use the `converter.py` bundled with this plugin install.
-- **Command note path** (required) — full path to a note in your vault containing a line like `convert_note:: [[Note Name]]`. The plugin temporarily rewrites this line to point at the note being converted, runs `converter.py`, then restores the note's original content.
-
-## Commands
-- **Convert current note to LaTeX** — converts the currently open note.
-- **Convert current note to LaTeX AND compile to PDF** — same, then runs `latexmk`.
-- **Run LaTeX converter (use convert_to_latex.md target)** — converts whatever note the command note currently points at.
-- **Convert AND compile (use convert_to_latex.md target)** — same, then runs `latexmk`.
 
 # 💪 What it can convert (new capabilities regularly added)
 
