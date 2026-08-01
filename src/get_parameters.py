@@ -366,7 +366,7 @@ def get_parameters(version = 'default'):
                                             ['⚕️',                  '\\twemoji{medical symbol}',           1],
 											['⚪',					'\\twemoji{white circle}',		1],
                                             ['⌛',                  '\\twemoji{hourglass done}',           1],
-                                            ['✍',                  '\\twemoji{writing hand}',           1],
+                                            #['✍',                  '\\twemoji{writing hand}',           1],
                                             ['≈',                      '$\\approx$',                      1],
                                             ['⬅️'    ,                  '\\twemoji{left arrow}',           1],
                                             ['➡️',                  '\\twemoji{right arrow}',           1],
