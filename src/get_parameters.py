@@ -59,7 +59,13 @@ def get_parameters(version = 'default'):
 
 
     # USER PARAMETERS
-    path_vault          = 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\' 
+    # Set by the Obsidian plugin (main.ts) to the currently-open vault's path,
+    # so this doesn't have to be hardcoded to one person's machine. Falls back
+    # to the original hardcoded default for standalone/CLI usage outside the
+    # plugin, where that env var isn't set.
+    path_vault = os.environ.get('OBSIDIAN_VAULT_PATH') or 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\'
+    if not path_vault.endswith(os.sep) and not path_vault.endswith('/'):
+        path_vault += os.sep
     command_note        = path_vault+'✍Writing\\👨‍💻convert_to_latex.md'
     
     try:

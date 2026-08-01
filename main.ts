@@ -65,13 +65,18 @@ export default class LatexConverterPlugin extends Plugin {
 		await this.runConverter(activeFile.basename, compile);
 	}
 
-	/** Absolute path to this plugin's own installed folder (desktop only). */
-	getPluginDir(): string {
+	/** Absolute path to the current vault's root folder (desktop only). */
+	getVaultDir(): string {
 		const adapter = this.app.vault.adapter;
 		if (!(adapter instanceof FileSystemAdapter)) {
 			throw new Error("This plugin only supports the Obsidian desktop app.");
 		}
-		return path.join(adapter.getBasePath(), this.manifest.dir ?? "");
+		return adapter.getBasePath();
+	}
+
+	/** Absolute path to this plugin's own installed folder (desktop only). */
+	getPluginDir(): string {
+		return path.join(this.getVaultDir(), this.manifest.dir ?? "");
 	}
 
 	/** converter.py bundled with this plugin, unless the user overrode it in settings. */
@@ -280,7 +285,7 @@ export default class LatexConverterPlugin extends Plugin {
 		const proc = spawn(this.settings.pythonPath, [converterPath], {
 			cwd: converterDir,
 			windowsHide: false,
-			env: { ...process.env, PYTHONIOENCODING: "utf-8" },
+			env: { ...process.env, PYTHONIOENCODING: "utf-8", OBSIDIAN_VAULT_PATH: this.getVaultDir() },
 		});
 
 		let stdout = "";
