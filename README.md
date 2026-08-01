@@ -1,5 +1,4 @@
-⏳solving a few bugs before the plugin is ready for use...
-
+⚠️⚠️An additional step needed before you can use this plugin! 
 # Ultimate LaTeX Converter
 
 - [Comparisons to other converters](#comparisons-to-other-converters)
