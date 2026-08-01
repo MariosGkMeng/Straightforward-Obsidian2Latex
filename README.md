@@ -1,3 +1,5 @@
+⏳solving a few bugs before the plugin is ready for use...
+
 # Ultimate LaTeX Converter
 
 - [Comparisons to other converters](#comparisons-to-other-converters)
