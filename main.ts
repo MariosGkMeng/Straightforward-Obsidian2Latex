@@ -328,10 +328,45 @@ export default class LatexConverterPlugin extends Plugin {
 		}
 	}
 
+	/**
+	 * Creates the command note with the minimal 'convert_note::' line the
+	 * plugin looks for, if it doesn't exist yet. Called before every
+	 * conversion, so a missing command note is a non-issue rather than a
+	 * confusing raw filesystem error.
+	 */
+	private ensureCommandNote(): boolean {
+		const notePath = this.settings.commandNotePath;
+		if (fs.existsSync(notePath)) return true;
+		try {
+			fs.mkdirSync(path.dirname(notePath), { recursive: true });
+			fs.writeFileSync(notePath, "convert_note:: \n", "utf8");
+			new Notice(`Created command note at ${notePath}`, 8000);
+			return true;
+		} catch (e) {
+			const message = e instanceof Error ? e.message : String(e);
+			new Notice(`Command note doesn't exist and couldn't be created: ${message}`, 12000);
+			return false;
+		}
+	}
+
 	async runConverter(overrideNote: string | null, compile = false) {
 		if (!this.settings.commandNotePath) {
 			new Notice("Set 'Command note path' in the LaTeX Converter settings first.");
 			return;
+		}
+		if (!this.ensureCommandNote()) {
+			return;
+		}
+		if (overrideNote === null) {
+			const content = fs.readFileSync(this.settings.commandNotePath, "utf8");
+			if (!/convert_note::\s*\[\[([^\]]+)\]\]/.test(content)) {
+				new Notice(
+					"Command note has no target note yet — use 'Convert current note to LaTeX' first, " +
+						"or add a 'convert_note:: [[Note Name]]' line to it yourself.",
+					12000
+				);
+				return;
+			}
 		}
 
 		const converterPath = this.resolveConverterPath();
@@ -350,13 +385,10 @@ export default class LatexConverterPlugin extends Plugin {
 				return;
 			}
 		} else {
-			try {
-				const content = fs.readFileSync(this.settings.commandNotePath, "utf8");
-				const match = content.match(/convert_note::\s*\[\[([^\]]+)\]\]/);
-				if (match) noteName = match[1];
-			} catch {
-				// no command note yet — proceed without an override
-			}
+			// Already confirmed above to exist and contain a target note.
+			const content = fs.readFileSync(this.settings.commandNotePath, "utf8");
+			const match = content.match(/convert_note::\s*\[\[([^\]]+)\]\]/);
+			if (match) noteName = match[1];
 		}
 
 		new Notice(`Converting ${noteName ?? "note"}...`);
@@ -545,7 +577,8 @@ class ConverterSettingTab extends PluginSettingTab {
 				desc:
 					"Required. Full absolute path to a note in your vault containing a line like " +
 					"'convert_note:: [[Note Name]]' — the plugin temporarily points this line at " +
-					"the note being converted before running the converter.",
+					"the note being converted before running the converter. Created automatically " +
+					"(empty) if it doesn't exist yet the first time you run a conversion.",
 				control: {
 					type: "text",
 					key: "commandNotePath",

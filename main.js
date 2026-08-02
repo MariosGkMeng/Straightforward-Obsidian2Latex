@@ -6545,10 +6545,44 @@ var LatexConverterPlugin = class extends import_obsidian.Plugin {
       console.error("[LaTeX Converter] Bundled Python setup failed:", e);
     }
   }
+  /**
+   * Creates the command note with the minimal 'convert_note::' line the
+   * plugin looks for, if it doesn't exist yet. Called before every
+   * conversion, so a missing command note is a non-issue rather than a
+   * confusing raw filesystem error.
+   */
+  ensureCommandNote() {
+    const notePath = this.settings.commandNotePath;
+    if (fs.existsSync(notePath))
+      return true;
+    try {
+      fs.mkdirSync(path.dirname(notePath), { recursive: true });
+      fs.writeFileSync(notePath, "convert_note:: \n", "utf8");
+      new import_obsidian.Notice(`Created command note at ${notePath}`, 8e3);
+      return true;
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      new import_obsidian.Notice(`Command note doesn't exist and couldn't be created: ${message}`, 12e3);
+      return false;
+    }
+  }
   async runConverter(overrideNote, compile = false) {
     if (!this.settings.commandNotePath) {
       new import_obsidian.Notice("Set 'Command note path' in the LaTeX Converter settings first.");
       return;
+    }
+    if (!this.ensureCommandNote()) {
+      return;
+    }
+    if (overrideNote === null) {
+      const content = fs.readFileSync(this.settings.commandNotePath, "utf8");
+      if (!/convert_note::\s*\[\[([^\]]+)\]\]/.test(content)) {
+        new import_obsidian.Notice(
+          "Command note has no target note yet \u2014 use 'Convert current note to LaTeX' first, or add a 'convert_note:: [[Note Name]]' line to it yourself.",
+          12e3
+        );
+        return;
+      }
     }
     const converterPath = this.resolveConverterPath();
     const converterDir = path.dirname(converterPath);
@@ -6565,13 +6599,10 @@ var LatexConverterPlugin = class extends import_obsidian.Plugin {
         return;
       }
     } else {
-      try {
-        const content = fs.readFileSync(this.settings.commandNotePath, "utf8");
-        const match = content.match(/convert_note::\s*\[\[([^\]]+)\]\]/);
-        if (match)
-          noteName = match[1];
-      } catch (e) {
-      }
+      const content = fs.readFileSync(this.settings.commandNotePath, "utf8");
+      const match = content.match(/convert_note::\s*\[\[([^\]]+)\]\]/);
+      if (match)
+        noteName = match[1];
     }
     new import_obsidian.Notice(`Converting ${noteName != null ? noteName : "note"}...`);
     const proc = (0, import_child_process.spawn)(this.settings.pythonPath, [converterPath], {
@@ -6734,7 +6765,7 @@ var ConverterSettingTab = class extends import_obsidian.PluginSettingTab {
       },
       {
         name: "Command note path",
-        desc: "Required. Full absolute path to a note in your vault containing a line like 'convert_note:: [[Note Name]]' \u2014 the plugin temporarily points this line at the note being converted before running the converter.",
+        desc: "Required. Full absolute path to a note in your vault containing a line like 'convert_note:: [[Note Name]]' \u2014 the plugin temporarily points this line at the note being converted before running the converter. Created automatically (empty) if it doesn't exist yet the first time you run a conversion.",
         control: {
           type: "text",
           key: "commandNotePath",
