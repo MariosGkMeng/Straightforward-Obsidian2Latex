@@ -66,7 +66,11 @@ def get_parameters(version = 'default'):
     path_vault = os.environ.get('OBSIDIAN_VAULT_PATH') or 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\'
     if not path_vault.endswith(os.sep) and not path_vault.endswith('/'):
         path_vault += os.sep
-    command_note        = path_vault+'👨‍💻convert_to_latex.md'
+    # Set by the Obsidian plugin to whatever "Command note path" is configured
+    # to in its settings, so the command note isn't forced to a specific name
+    # or location. Falls back to the original hardcoded default for
+    # standalone/CLI usage outside the plugin.
+    command_note        = os.environ.get('OBSIDIAN_COMMAND_NOTE_PATH') or (path_vault+'👨‍💻convert_to_latex.md')
     
     try:
         add_clickable_to_embedded_obsidian_note = assert_condition(get_fields_from_Obsidian_note(command_note, ['add_clickable_to_embedded_obsidian_note:: '])[0][0])

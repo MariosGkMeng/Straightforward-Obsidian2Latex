@@ -396,7 +396,12 @@ export default class LatexConverterPlugin extends Plugin {
 		const proc = spawn(this.settings.pythonPath, [converterPath], {
 			cwd: converterDir,
 			windowsHide: false,
-			env: { ...process.env, PYTHONIOENCODING: "utf-8", OBSIDIAN_VAULT_PATH: this.getVaultDir() },
+			env: {
+				...process.env,
+				PYTHONIOENCODING: "utf-8",
+				OBSIDIAN_VAULT_PATH: this.getVaultDir(),
+				OBSIDIAN_COMMAND_NOTE_PATH: this.settings.commandNotePath,
+			},
 		});
 
 		let stdout = "";

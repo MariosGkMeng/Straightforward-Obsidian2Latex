@@ -4212,7 +4212,11 @@ def get_parameters(version = 'default'):\r
     path_vault = os.environ.get('OBSIDIAN_VAULT_PATH') or 'C:\\\\Users\\\\mariosg\\\\OneDrive - NTNU\\\\FILES\\\\workTips\\\\'\r
     if not path_vault.endswith(os.sep) and not path_vault.endswith('/'):\r
         path_vault += os.sep\r
-    command_note        = path_vault+'\u{1F468}\u200D\u{1F4BB}convert_to_latex.md'\r
+    # Set by the Obsidian plugin to whatever "Command note path" is configured\r
+    # to in its settings, so the command note isn't forced to a specific name\r
+    # or location. Falls back to the original hardcoded default for\r
+    # standalone/CLI usage outside the plugin.\r
+    command_note        = os.environ.get('OBSIDIAN_COMMAND_NOTE_PATH') or (path_vault+'\u{1F468}\u200D\u{1F4BB}convert_to_latex.md')\r
     \r
     try:\r
         add_clickable_to_embedded_obsidian_note = assert_condition(get_fields_from_Obsidian_note(command_note, ['add_clickable_to_embedded_obsidian_note:: '])[0][0])\r
@@ -6611,7 +6615,12 @@ var LatexConverterPlugin = class extends import_obsidian.Plugin {
     const proc = (0, import_child_process.spawn)(this.settings.pythonPath, [converterPath], {
       cwd: converterDir,
       windowsHide: false,
-      env: { ...process.env, PYTHONIOENCODING: "utf-8", OBSIDIAN_VAULT_PATH: this.getVaultDir() }
+      env: {
+        ...process.env,
+        PYTHONIOENCODING: "utf-8",
+        OBSIDIAN_VAULT_PATH: this.getVaultDir(),
+        OBSIDIAN_COMMAND_NOTE_PATH: this.settings.commandNotePath
+      }
     });
     let stdout = "";
     let stderr = "";
