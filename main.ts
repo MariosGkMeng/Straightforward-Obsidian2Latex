@@ -1,10 +1,12 @@
 import { App, FileSystemAdapter, Notice, Plugin, PluginSettingTab, Setting, SettingDefinitionItem } from "obsidian";
 import { spawn } from "child_process";
 import { shell } from "electron";
+import { randomUUID } from "crypto";
 import * as fs from "fs";
 import * as https from "https";
 import * as path from "path";
 import { PYTHON_ASSETS } from "./python-assets.generated";
+import { QUICKADD_CHOICES, QUICKADD_OUTPUT_FOLDERS, QUICKADD_TEMPLATES } from "./quickadd-assets";
 
 interface LatexConverterSettings {
 	pythonPath: string;
@@ -125,6 +127,83 @@ export default class LatexConverterPlugin extends Plugin {
 			} catch (e) {
 				console.error("[LaTeX Converter] Failed to seed note_map.json:", e);
 			}
+		}
+	}
+
+	/** Whether a given community plugin id is currently installed and enabled in this vault. */
+	isPluginEnabled(id: string): boolean {
+		// app.plugins isn't part of the public Obsidian API — this is read-only
+		// presence detection, not an attempt to control other plugins.
+		const anyApp = this.app as unknown as { plugins?: { enabledPlugins?: Set<string> } };
+		return !!anyApp.plugins?.enabledPlugins?.has(id);
+	}
+
+	/**
+	 * Sets up the QuickAdd templates/folders/commands that converter.py's
+	 * "note-block logic" (equation/figure/table blocks) depends on: writes the
+	 * 3 template files into <vault>/👨‍💻Automations/, creates the matching
+	 * output folders under ✍Writing/, and — if QuickAdd is installed — adds
+	 * the 3 matching QuickAdd commands, without touching any of the user's
+	 * other QuickAdd choices.
+	 */
+	async setupQuickAddTemplates(): Promise<void> {
+		const vaultDir = this.getVaultDir();
+		const automationsDir = path.join(vaultDir, "👨‍💻Automations");
+
+		try {
+			fs.mkdirSync(automationsDir, { recursive: true });
+			for (const [filename, content] of Object.entries(QUICKADD_TEMPLATES)) {
+				const dest = path.join(automationsDir, filename);
+				if (!fs.existsSync(dest)) {
+					fs.writeFileSync(dest, content, "utf8");
+				}
+			}
+			for (const folder of QUICKADD_OUTPUT_FOLDERS) {
+				fs.mkdirSync(path.join(vaultDir, ...folder.split("/")), { recursive: true });
+			}
+			new Notice("Created the equation/figure/table block templates and folders.");
+		} catch (e) {
+			const message = e instanceof Error ? e.message : String(e);
+			new Notice(`Failed to set up templates/folders: ${message}`);
+			return;
+		}
+
+		if (!this.isPluginEnabled("quickadd")) {
+			new Notice(
+				'QuickAdd isn\'t installed/enabled. Install it via Settings → Community plugins → Browse → "QuickAdd", enable it, then click this button again to add the commands.',
+				20000
+			);
+			return;
+		}
+
+		const quickAddDataPath = path.join(vaultDir, ".obsidian", "plugins", "quickadd", "data.json");
+		try {
+			const data: { choices?: Record<string, unknown>[] } = fs.existsSync(quickAddDataPath)
+				? JSON.parse(fs.readFileSync(quickAddDataPath, "utf8"))
+				: {};
+			if (!Array.isArray(data.choices)) data.choices = [];
+
+			let added = 0;
+			for (const choice of QUICKADD_CHOICES) {
+				const exists = data.choices.some((c) => c && c["name"] === choice["name"]);
+				if (!exists) {
+					data.choices.push({ ...choice, id: randomUUID() });
+					added++;
+				}
+			}
+
+			if (added > 0) {
+				fs.writeFileSync(quickAddDataPath, JSON.stringify(data, null, 2), "utf8");
+				new Notice(
+					`Added ${added} QuickAdd command(s): equation/figure/table block. Restart Obsidian (or reload QuickAdd) to see them.`,
+					15000
+				);
+			} else {
+				new Notice("QuickAdd already has these commands configured — nothing to add.");
+			}
+		} catch (e) {
+			const message = e instanceof Error ? e.message : String(e);
+			new Notice(`Failed to update QuickAdd's configuration: ${message}`);
 		}
 	}
 
@@ -320,14 +399,43 @@ export default class LatexConverterPlugin extends Plugin {
 					}
 				}
 			} else {
-				new Notice(`Converter failed (exit ${code}). See console for details.`);
+				void this.showErrorLog("last-conversion-error.txt", stderr).then((logPath) => {
+					new Notice(`Converter failed (exit ${code}). Full error: ${logPath}`, 15000);
+				});
 				console.error("[LaTeX Converter] stderr:", stderr);
 			}
 		});
 
 		proc.on("error", (err) => {
-			new Notice(`Failed to start converter: ${err.message}`);
+			new Notice(
+				`Failed to start converter using python path "${this.settings.pythonPath}": ${err.message}`,
+				15000
+			);
 		});
+	}
+
+	/**
+	 * Writes error output to a plain-text log file in the plugin's own folder
+	 * and opens it, so Python/latexmk tracebacks (with exact line numbers) are
+	 * easy to read without hunting through Obsidian's developer console
+	 * (Ctrl+Shift+I). Falls back to revealing the file in the file manager if
+	 * nothing has ".txt" associated as a default opener. Always returns the
+	 * absolute path so it can be shown even if opening it silently fails.
+	 */
+	private async showErrorLog(filename: string, content: string): Promise<string> {
+		const logPath = path.join(this.getPluginDir(), filename);
+		try {
+			fs.writeFileSync(logPath, content || "(no error output captured)", "utf8");
+		} catch (e) {
+			console.error("[LaTeX Converter] Failed to write error log:", e);
+			return logPath;
+		}
+		const openErr = await shell.openPath(logPath);
+		if (openErr) {
+			console.error("[LaTeX Converter] Failed to open error log, revealing it instead:", openErr);
+			shell.showItemInFolder(logPath);
+		}
+		return logPath;
 	}
 
 	compilePdf(texPath: string) {
@@ -355,14 +463,16 @@ export default class LatexConverterPlugin extends Plugin {
 				const pdfPath = texPath.replace(/\.tex$/, ".pdf");
 				void shell.openPath(texPath).then(() => shell.openPath(pdfPath));
 			} else {
-				new Notice(`PDF compilation failed (exit ${code}). See console for details.`);
+				void this.showErrorLog("last-compile-error.txt", stderr).then((logPath) => {
+					new Notice(`PDF compilation failed (exit ${code}). Full error: ${logPath}`, 15000);
+				});
 				console.error("[LaTeX Converter] latexmk stderr:", stderr);
 				void shell.openPath(texPath);
 			}
 		});
 
 		proc.on("error", (err) => {
-			new Notice(`Failed to start latexmk: ${err.message}`);
+			new Notice(`Failed to start latexmk: ${err.message}. Is latexmk installed and on PATH?`, 15000);
 			void shell.openPath(texPath);
 		});
 	}
@@ -383,6 +493,17 @@ class ConverterSettingTab extends PluginSettingTab {
 	constructor(app: App, plugin: LatexConverterPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
+	}
+
+	/** Explicit read from this.plugin.settings, rather than relying on the inherited default. */
+	getControlValue(key: string): unknown {
+		return (this.plugin.settings as unknown as Record<string, unknown>)[key];
+	}
+
+	/** Explicit write to this.plugin.settings + persist, rather than relying on the inherited default. */
+	async setControlValue(key: string, value: unknown): Promise<void> {
+		(this.plugin.settings as unknown as Record<string, unknown>)[key] = value;
+		await this.plugin.saveSettings();
 	}
 
 	/** Declarative settings for Obsidian 1.13.0+ (adds settings-search support). */
@@ -429,6 +550,41 @@ class ConverterSettingTab extends PluginSettingTab {
 					type: "text",
 					key: "commandNotePath",
 					placeholder: "C:\\path\\to\\your-vault\\convert_to_latex.md",
+				},
+			},
+			{
+				name: "Required plugins",
+				desc: "This converter's equation/figure/table block workflow depends on QuickAdd. Quick Latex is optional (just speeds up manual equation typing).",
+				render: (setting) => {
+					const quickAddOk = this.plugin.isPluginEnabled("quickadd");
+					const quickLatexOk = this.plugin.isPluginEnabled("quick-latex");
+					setting.descEl.createEl("div", {
+						text: `QuickAdd (required): ${quickAddOk ? "✓ installed and enabled" : "✗ not installed/enabled"}`,
+					});
+					setting.descEl.createEl("div", {
+						text: `Quick Latex (optional): ${quickLatexOk ? "✓ installed and enabled" : "not installed"}`,
+					});
+					if (!quickAddOk || !quickLatexOk) {
+						setting.descEl.createEl("div", {
+							text: 'Install missing plugins via Settings → Community plugins → Browse, then search by name.',
+						});
+					}
+				},
+			},
+			{
+				name: "QuickAdd templates (equation/figure/table blocks)",
+				desc:
+					"Creates the equation_block_single/figure_block/table_block template files and their " +
+					"output folders, and — if the QuickAdd plugin is installed and enabled — adds the " +
+					"matching QuickAdd commands. Existing choices with the same name are left untouched.",
+				render: (setting) => {
+					setting.addButton((btn) =>
+						btn.setButtonText("Set up QuickAdd templates").onClick(async () => {
+							btn.setDisabled(true).setButtonText("Setting up...");
+							await this.plugin.setupQuickAddTemplates();
+							btn.setDisabled(false).setButtonText("Set up QuickAdd templates");
+						})
+					);
 				},
 			},
 		];

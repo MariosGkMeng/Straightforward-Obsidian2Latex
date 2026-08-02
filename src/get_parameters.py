@@ -66,7 +66,7 @@ def get_parameters(version = 'default'):
     path_vault = os.environ.get('OBSIDIAN_VAULT_PATH') or 'C:\\Users\\mariosg\\OneDrive - NTNU\\FILES\\workTips\\'
     if not path_vault.endswith(os.sep) and not path_vault.endswith('/'):
         path_vault += os.sep
-    command_note        = path_vault+'✍Writing\\👨‍💻convert_to_latex.md'
+    command_note        = path_vault+'👨‍💻convert_to_latex.md'
     
     try:
         add_clickable_to_embedded_obsidian_note = assert_condition(get_fields_from_Obsidian_note(command_note, ['add_clickable_to_embedded_obsidian_note:: '])[0][0])
