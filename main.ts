@@ -334,7 +334,7 @@ export default class LatexConverterPlugin extends Plugin {
 	 * conversion, so a missing command note is a non-issue rather than a
 	 * confusing raw filesystem error.
 	 */
-	private ensureCommandNote(): boolean {
+	ensureCommandNote(): boolean {
 		const notePath = this.settings.commandNotePath;
 		if (fs.existsSync(notePath)) return true;
 		try {
@@ -577,12 +577,30 @@ class ConverterSettingTab extends PluginSettingTab {
 				desc:
 					"Required. Full absolute path to a note in your vault containing a line like " +
 					"'convert_note:: [[Note Name]]' — the plugin temporarily points this line at " +
-					"the note being converted before running the converter. Created automatically " +
-					"(empty) if it doesn't exist yet the first time you run a conversion.",
+					"the note being converted before running the converter.",
 				control: {
 					type: "text",
 					key: "commandNotePath",
 					placeholder: "C:\\path\\to\\your-vault\\convert_to_latex.md",
+				},
+			},
+			{
+				name: "Create command note",
+				desc: 'Creates the file set above (with the minimal \'convert_note::\' line) if it doesn\'t exist yet. Also happens automatically the first time you run a conversion.',
+				render: (setting) => {
+					setting.addButton((btn) =>
+						btn.setButtonText("Create now").onClick(() => {
+							const notePath = this.plugin.settings.commandNotePath;
+							if (!notePath) {
+								new Notice("Set the command note path above first.");
+								return;
+							}
+							const alreadyExisted = fs.existsSync(notePath);
+							if (this.plugin.ensureCommandNote() && alreadyExisted) {
+								new Notice(`Already exists at ${notePath}`);
+							}
+						})
+					);
 				},
 			},
 			{

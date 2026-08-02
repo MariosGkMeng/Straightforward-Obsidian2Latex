@@ -787,7 +787,10 @@ if not PARS['\u2699']['SEARCH_IN_FILE']['condition']:
     # ## run the subprocess
     # subprocess.run(["bash", bash_path])
     
-    compile_pdf = get_fields_from_Obsidian_note(PATHS['command_note'], ['compile_pdf:: '])[0][0]
+    try:
+        compile_pdf = get_fields_from_Obsidian_note(PATHS['command_note'], ['compile_pdf:: '])[0][0]
+    except IndexError:
+        compile_pdf = ''
     
     BASE_PATH = '\\\\'.join(PATHS['tex-file'].split('\\\\')[:-1])
     FILE_NAME = PATHS['tex-file'].split('\\\\')[-1].replace('.tex', '')
@@ -6765,11 +6768,30 @@ var ConverterSettingTab = class extends import_obsidian.PluginSettingTab {
       },
       {
         name: "Command note path",
-        desc: "Required. Full absolute path to a note in your vault containing a line like 'convert_note:: [[Note Name]]' \u2014 the plugin temporarily points this line at the note being converted before running the converter. Created automatically (empty) if it doesn't exist yet the first time you run a conversion.",
+        desc: "Required. Full absolute path to a note in your vault containing a line like 'convert_note:: [[Note Name]]' \u2014 the plugin temporarily points this line at the note being converted before running the converter.",
         control: {
           type: "text",
           key: "commandNotePath",
           placeholder: "C:\\path\\to\\your-vault\\convert_to_latex.md"
+        }
+      },
+      {
+        name: "Create command note",
+        desc: "Creates the file set above (with the minimal 'convert_note::' line) if it doesn't exist yet. Also happens automatically the first time you run a conversion.",
+        render: (setting) => {
+          setting.addButton(
+            (btn) => btn.setButtonText("Create now").onClick(() => {
+              const notePath = this.plugin.settings.commandNotePath;
+              if (!notePath) {
+                new import_obsidian.Notice("Set the command note path above first.");
+                return;
+              }
+              const alreadyExisted = fs.existsSync(notePath);
+              if (this.plugin.ensureCommandNote() && alreadyExisted) {
+                new import_obsidian.Notice(`Already exists at ${notePath}`);
+              }
+            })
+          );
         }
       },
       {

@@ -738,7 +738,10 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     # ## run the subprocess
     # subprocess.run(["bash", bash_path])
     
-    compile_pdf = get_fields_from_Obsidian_note(PATHS['command_note'], ['compile_pdf:: '])[0][0]
+    try:
+        compile_pdf = get_fields_from_Obsidian_note(PATHS['command_note'], ['compile_pdf:: '])[0][0]
+    except IndexError:
+        compile_pdf = ''
     
     BASE_PATH = '\\'.join(PATHS['tex-file'].split('\\')[:-1])
     FILE_NAME = PATHS['tex-file'].split('\\')[-1].replace('.tex', '')
