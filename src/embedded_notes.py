@@ -31,10 +31,16 @@ _LATEX_LEVELS = {
 # (\subparagraph) the way replace_markdown_headers already does.
 _MD_HEADING_RE = re.compile(r'^\s*(#{1,})\s+(.*?)\s*$')
 # Supports: \section{Title}, \section*{Title}, \section[Short]{Long}
+# No trailing \s*$ anchor: replace_markdown_headers emits paragraph/
+# subparagraph lines as '\paragraph{Title} \hspace{0pt} \\' (forcing a line
+# break after these otherwise run-in LaTeX commands), so anchoring the
+# match to end at the closing '}' meant it never matched those lines at
+# all — silently dropping any paragraph/subparagraph heading the moment it
+# got converted, on every pass after the first.
 _LATEX_HEADING_RE = re.compile(
     r'^\s*\\(?P<cmd>part|chapter|section|subsection|subsubsection|paragraph|subparagraph)\*?'
     r'(?:\[[^\]]*\])?\s*'
-    r'\{(?P<title>[^}]*)\}\s*$'
+    r'\{(?P<title>[^}]*)\}'
 )
 
 
