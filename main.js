@@ -5176,10 +5176,10 @@ def replace_markdown_headers(content, use_first_level_header_as_chapter=False):\
 \r
     if not use_first_level_header_as_chapter:\r
         header_map = [\r
-            (r'######## (.*)', r'\\\\paragraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
-            (r'####### (.*)', r'\\\\paragraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
-            (r'###### (.*)', r'\\\\paragraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
-            (r'##### (.*)', r'\\\\paragraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
+            (r'######## (.*)', r'\\\\subparagraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
+            (r'####### (.*)', r'\\\\subparagraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
+            (r'###### (.*)', r'\\\\subparagraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
+            (r'##### (.*)', r'\\\\subparagraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
             (r'#### (.*)', r'\\\\paragraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
             (r'### (.*)', r'\\\\subsubsection{\\1}'),\r
             (r'## (.*)', r'\\\\subsection{\\1}'),\r
@@ -5187,9 +5187,9 @@ def replace_markdown_headers(content, use_first_level_header_as_chapter=False):\
         ]\r
     else:\r
         header_map = [\r
-            (r'######## (.*)', r'\\\\paragraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
-            (r'####### (.*)', r'\\\\paragraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
-            (r'###### (.*)', r'\\\\paragraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
+            (r'######## (.*)', r'\\\\subparagraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
+            (r'####### (.*)', r'\\\\subparagraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
+            (r'###### (.*)', r'\\\\subparagraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
             (r'##### (.*)', r'\\\\paragraph{\\1} \\\\hspace{0pt} \\\\\\\\'),\r
             (r'#### (.*)',r'\\\\subsubsection{\\1}'),\r
             (r'### (.*)', r'\\\\subsection{\\1}'),\r
