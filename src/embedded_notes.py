@@ -22,7 +22,14 @@ _LATEX_LEVELS = {
     "subparagraph": 5,
 }
 
-_MD_HEADING_RE = re.compile(r'^\s*(#{1,6})\s+(.*?)\s*$')
+# Not capped at 6: change_section_hierarchy() below regenerates headings as
+# raw '#' runs by adding the embedding depth to a heading's own level, which
+# can legitimately exceed 6 once a note is embedded several levels deep. A
+# cap here silently dropped anything past it back to plain, unrecognized
+# text (extract_section_from_line returning None), losing the heading
+# entirely instead of just flattening it to the deepest LaTeX level
+# (\subparagraph) the way replace_markdown_headers already does.
+_MD_HEADING_RE = re.compile(r'^\s*(#{1,})\s+(.*?)\s*$')
 # Supports: \section{Title}, \section*{Title}, \section[Short]{Long}
 _LATEX_HEADING_RE = re.compile(
     r'^\s*\\(?P<cmd>part|chapter|section|subsection|subsubsection|paragraph|subparagraph)\*?'
