@@ -968,11 +968,17 @@ def convert__tables(S, table_fields, embedded_ref, PARS):
         S = S[:i0] + table + S[i1+1:]
         
 
-    # Mask internal links that have aliases, otherwise the converter gets confused
+    # Mask the pipe(s) inside internal links (e.g. [[Page#Section|alias]]),
+    # otherwise the naive '|'-based table-column split below breaks them
+    # apart. Previously this only handled a manually pre-escaped '\|', which
+    # isn't how Obsidian's own alias syntax is normally written, so a plain
+    # [[Page#Section|alias]] inside a table cell would get split into two
+    # cells and silently fail to convert.
     mask_alias = "--alias--"
     for i, s in enum(S):
+        s = re.sub(r'\[\[[^\[\]]*\]\]', lambda m: m.group(0).replace('|', mask_alias), s)
         S[i] = s.replace("\\|", mask_alias)
-    #     
+    #
         
     add_txt = ''
     if (ID__TABLES__alignment__center in TABLE_SETTINGS['alignment']) \
