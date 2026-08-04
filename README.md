@@ -1,4 +1,10 @@
-⚠️⚠️An additional step needed before you can use this plugin! 
+⚠️⚠️Additional steps needed before you can use this plugin:
+- Install BRAT (see below)
+- Install the QuickAdd community plugin, then navigate to the settings of this plugin and click to create the QuickAdd rules
+
+If any problems arise, feel free to email me at marios.gkionis@proton.me.
+
+
 # Ultimate LaTeX Converter
 
 - [Comparisons to other converters](#comparisons-to-other-converters)
