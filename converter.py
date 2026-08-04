@@ -275,7 +275,11 @@ PATHS['markdown-file'] = get_embedded_reference_path(markdown_file.replace("[[",
 split_path=PATHS['markdown-file'].split('\\')
 PATHS['tex-file'] = '\\'.join(split_path[:-1])+'\\'+split_path[-1].replace('.md', '') + '.tex'
 PARS['📁']['tex-file'] = PATHS['tex-file']
-with open(PATHS['markdown-file'], 'r', encoding='utf8') as f:
+_vault_real = os.path.realpath(PATHS['vault'])
+_md_real = os.path.realpath(PATHS['markdown-file'])
+if not _md_real.startswith(_vault_real + os.sep):
+    raise ValueError("Path traversal detected: markdown file is outside the vault")
+with open(_md_real, 'r', encoding='utf8') as f:
     content = f.readlines()
     
 # Remove "\n" from the end of the lines, since they are being added again later
@@ -477,7 +481,8 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
         ps.print_stats()
 
         # Save to text file
-        with open("profile_output.txt", "w") as f:
+        _profile_path = os.path.realpath("profile_output.txt")
+        with open(_profile_path, "w") as f:
             f.write(s.getvalue())
 
     
@@ -579,12 +584,22 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     is_ifac = document_class['class'] == 'ifacconf'
     
     try:
-        custom_latex = [line for line in open(PATHS['custom_latex_commands'])]
+        _cl_real = os.path.realpath(PATHS['custom_latex_commands'])
+        if not _cl_real.startswith(_vault_real + os.sep):
+            raise ValueError("Path traversal detected: custom_latex_commands is outside the vault")
+        custom_latex = [line for line in open(_cl_real)]
+    except ValueError:
+        raise
     except:
         custom_latex = []
         
     try:
-        essential_latex = [line for line in open(PATHS['essential_latex_commands'])]
+        _el_real = os.path.realpath(PATHS['essential_latex_commands'])
+        if not _el_real.startswith(_vault_real + os.sep):
+            raise ValueError("Path traversal detected: essential_latex_commands is outside the vault")
+        essential_latex = [line for line in open(_el_real)]
+    except ValueError:
+        raise
     except:
         essential_latex = []
         
@@ -602,7 +617,10 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
     
     if custom_preamble_file is not None:
         custom_preamble_file = get_embedded_reference_path(custom_preamble_file, PARS)
-        with open(custom_preamble_file, 'r', encoding='utf8') as f:
+        _cp_real = os.path.realpath(custom_preamble_file)
+        if not _cp_real.startswith(_vault_real + os.sep):
+            raise ValueError("Path traversal detected: custom preamble file is outside the vault")
+        with open(_cp_real, 'r', encoding='utf8') as f:
             preamble_0 = code_block_converter(f.readlines(), PARS)
     else:
         preamble_0 = [document_class_text] +\
@@ -698,7 +716,10 @@ if not PARS['⚙']['SEARCH_IN_FILE']['condition']:
 
 
 
-    with open(PATHS['tex-file'], 'w', encoding='utf8') as f:
+    _tex_real = os.path.realpath(PATHS['tex-file'])
+    if not _tex_real.startswith(_vault_real + os.sep):
+        raise ValueError("Path traversal detected: tex-file is outside the vault")
+    with open(_tex_real, 'w', encoding='utf8') as f:
         for l in LATEX:
             if not l.endswith('\n'): l+='\n'
             f.write(l)
@@ -1011,7 +1032,10 @@ else:
     MATCHES = []
     for note in ALL_EMBEDDED_NOTES:
         note_path = get_embedded_reference_path(note, PARS, search_in = 'vault')
-        with open(note_path, 'r', encoding='utf8') as file: content_i = '\n'.join(file.readlines())
+        _note_real = os.path.realpath(note_path)
+        if not _note_real.startswith(_vault_real + os.sep):
+            raise ValueError(f"Path traversal detected: note path '{note_path}' is outside the vault")
+        with open(_note_real, 'r', encoding='utf8') as file: content_i = '\n'.join(file.readlines())
         has_the_search_text = text_to_seach in content_i
         if has_the_search_text: 
             MATCHES.append(note_path)
@@ -1019,11 +1043,14 @@ else:
         
     if replace_with:
         for note in MATCHES:
-            with open(note, 'r', encoding='utf8') as file:
+            _note_wr_real = os.path.realpath(note)
+            if not _note_wr_real.startswith(_vault_real + os.sep):
+                raise ValueError(f"Path traversal detected: note path '{note}' is outside the vault")
+            with open(_note_wr_real, 'r', encoding='utf8') as file:
                 content_i = ''.join(file.readlines())
                 content_i = content_i.replace(text_to_seach, replace_with)
             
-            with open(note, 'w', encoding='utf8') as file:
+            with open(_note_wr_real, 'w', encoding='utf8') as file:
                 file.write(content_i)    
 
 
