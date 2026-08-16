@@ -109,7 +109,7 @@ def convert_inline_commands_with_choice(S, PARS):
         for m in mm:
             ee = non_embedded_references_recognizer([m])
             field = re.search(pattern2, m)[0].replace(']].', '') + ':: '
-            filePath = get_embedded_reference_path(f'{ee[0][1][0][0]}', PARS, search_in = 'vault')
+            filePath = get_embedded_reference_path(f'{ee[0][1][0]}', PARS, search_in = 'vault')
             fields_res = get_fields_from_Obsidian_note(filePath, [field])[0]
             if fields_res[0] == 'true':
                 try:

@@ -12,11 +12,15 @@ const repoRoot = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
 const BINARY_EXTENSIONS = new Set([".png", ".jpg", ".jpeg"]);
 
-const files = execFileSync("git", ["ls-files", "example/"], {
+// -z: NUL-separated, unquoted paths — several of these filenames contain
+// non-ASCII characters (✍Writing, 📚Literature), which git would otherwise
+// wrap in quotes with octal escapes (core.quotepath), breaking the path
+// when passed straight to `git show HEAD:<path>` below.
+const files = execFileSync("git", ["ls-files", "-z", "example/"], {
 	cwd: repoRoot,
 	encoding: "utf8",
 })
-	.split("\n")
+	.split("\0")
 	.map((f) => f.trim())
 	.filter(Boolean);
 
