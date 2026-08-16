@@ -6,3 +6,4 @@ __pycache__/
 # Obsidian plugin build
 node_modules/
 /python-assets.generated.ts
+/example-assets.generated.ts

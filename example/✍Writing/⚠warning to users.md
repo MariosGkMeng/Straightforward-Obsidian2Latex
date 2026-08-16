@@ -1,0 +1,3 @@
+1. Equations, tables, and figures should be written only inside the equation-block style (`README.md`)
+2. Any syntactic violation that happens inside the obsidian note will be passed into LateX. So far, I have not included any diagnostic routine. 
+3. When you have many embedded notes and linked notes in the note you want to convert, the algorithm searches within the vault to find them and save their paths in the `DO_NOT_DELETE__note_paths.txt` file. This searching process will take a few seconds (if you have many notes in your vault, and many linked mentions and embedded notes in your note), however, since the paths are now saved into this text file, any conversions you perform afterwards will be very fast. 

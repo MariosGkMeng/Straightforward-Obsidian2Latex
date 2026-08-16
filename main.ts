@@ -7,6 +7,7 @@ import * as https from "https";
 import * as path from "path";
 import { PYTHON_ASSETS } from "./python-assets.generated";
 import { QUICKADD_CHOICES, QUICKADD_OUTPUT_FOLDERS, QUICKADD_TEMPLATES } from "./quickadd-assets";
+import { EXAMPLE_ASSETS } from "./example-assets.generated";
 
 interface LatexConverterSettings {
 	pythonPath: string;
@@ -205,6 +206,44 @@ export default class LatexConverterPlugin extends Plugin {
 			const message = e instanceof Error ? e.message : String(e);
 			new Notice(`Failed to update QuickAdd's configuration: ${message}`);
 		}
+	}
+
+	/**
+	 * Writes a demo vault section (equation/figure/table blocks, a literature
+	 * note, and a main note exercising every conversion feature) into the
+	 * current vault, so the converter can be tried immediately. Never
+	 * overwrites anything that already exists.
+	 */
+	async generateExample(): Promise<void> {
+		const vaultDir = this.getVaultDir();
+		let written = 0;
+		let skipped = 0;
+
+		for (const [relPath, asset] of Object.entries(EXAMPLE_ASSETS)) {
+			const dest = path.join(vaultDir, ...relPath.split("/"));
+			if (fs.existsSync(dest)) {
+				skipped++;
+				continue;
+			}
+			try {
+				fs.mkdirSync(path.dirname(dest), { recursive: true });
+				const content: string | Buffer =
+					asset.type === "base64" ? Buffer.from(asset.content, "base64") : asset.content;
+				fs.writeFileSync(dest, content);
+				written++;
+			} catch (e) {
+				const message = e instanceof Error ? e.message : String(e);
+				new Notice(`Failed to write example file ${relPath}: ${message}`);
+			}
+		}
+
+		new Notice(
+			`Example generated: ${written} file(s) created` +
+				(skipped > 0 ? `, ${skipped} already existed (left untouched)` : "") +
+				'. Open "example_writing" in ✍Writing/ and run "Convert current note to LaTeX" ' +
+				"(set 'Command note path' above first if you haven't).",
+			20000
+		);
 	}
 
 	/** Downloads a URL to a local file, following redirects. */
@@ -639,6 +678,23 @@ class ConverterSettingTab extends PluginSettingTab {
 							btn.setDisabled(true).setButtonText("Setting up...");
 							await this.plugin.setupQuickAddTemplates();
 							btn.setDisabled(false).setButtonText("Set up QuickAdd templates");
+						})
+					);
+				},
+			},
+			{
+				name: "Example note",
+				desc:
+					"Generates a demo vault section (equation/figure/table blocks, a literature note, and a " +
+					"main note exercising every conversion feature — internal links, admonitions, inline " +
+					"code parameterization, and more) so you can see the converter working immediately. " +
+					"Won't overwrite anything that already exists.",
+				render: (setting) => {
+					setting.addButton((btn) =>
+						btn.setButtonText("Generate example").onClick(async () => {
+							btn.setDisabled(true).setButtonText("Generating...");
+							await this.plugin.generateExample();
+							btn.setDisabled(false).setButtonText("Generate example");
 						})
 					);
 				},
